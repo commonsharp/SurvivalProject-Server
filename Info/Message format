@@ -1,0 +1,8 @@
+The bytes are in little-endian format.
+
+
+int length (the entire packet's length. This field's length is included)
+int messageType
+int unknown // 11036 = 0x2B1C
+int checksum // unknown yet
+int state // login = -1
