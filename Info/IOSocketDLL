@@ -1,3 +1,3 @@
 CClientTCPSocket::GetSocket - Gets the message ID
 
-CGenericMessage::SetBasicHeader - Sets the header of the message
+CGenericMessage::SetBasicHeader - Sets the header of the message. Look for "push 2707h" to find the function that sends the login packet
