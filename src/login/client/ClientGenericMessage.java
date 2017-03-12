@@ -22,10 +22,9 @@ public abstract class ClientGenericMessage {
 		
 		interpretBytes(messageBytes);
 		processFields();
-		respond();
 	}
 	
 	public abstract void interpretBytes(byte[] messageBytes);
 	public abstract void processFields();
-	public abstract void respond();
+	public abstract byte[] getResponse();
 }

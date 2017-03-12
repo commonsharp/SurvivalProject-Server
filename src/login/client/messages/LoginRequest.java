@@ -1,6 +1,7 @@
 package login.client.messages;
 
 import login.client.ClientGenericMessage;
+import login.server.messages.LoginResponse;
 import tools.HexTools;
 
 public class LoginRequest extends ClientGenericMessage {
@@ -25,7 +26,7 @@ public class LoginRequest extends ClientGenericMessage {
 		System.out.println("Username " + username);
 		System.out.println("Password " + password);
 		
-		HexTools.printHexArray(buffer.peekNext(1000), false);
+//		HexTools.printHexArray(buffer.peekNext(1000), false);
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class LoginRequest extends ClientGenericMessage {
 	}
 
 	@Override
-	public void respond() {
-		
+	public byte[] getResponse() {
+		return new LoginResponse().getResponse();
 	}
 }

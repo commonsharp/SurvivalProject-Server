@@ -1,5 +1,6 @@
 package net;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -12,7 +13,10 @@ public class Server {
 		ServerSocket server = new ServerSocket(21000);
 		Socket socket = server.accept();
 		
+		OutputStream output;
+		// There's no need to use it... @TODO change it 
 		ExtendedInputStream input = new ExtendedInputStream(socket.getInputStream());
+		output = socket.getOutputStream();
 		
 		while (true) {
 			int length = input.readInt();
@@ -21,6 +25,7 @@ public class Server {
 				System.out.println("User disconnected");
 				break;
 			}
+			
 			byte[] messageBytes = new byte[length];
 			HexTools.putIntegerInByteArray(messageBytes, 0, length);
 			input.readBytes(messageBytes, 4, length - 4);
@@ -30,6 +35,11 @@ public class Server {
 			System.out.println(messageID);
 			
 			LoginRequest message = new LoginRequest(messageBytes);
+			byte[] response = message.getResponse();
+			
+			HexTools.printHexArray(response, false);
+			output.write(response);
+			output.flush();
 		}
 		
 		server.close();
