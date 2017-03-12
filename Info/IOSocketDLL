@@ -1,0 +1,3 @@
+CClientTCPSocket::GetSocket - Gets the message ID
+
+CGenericMessage::SetBasicHeader - Sets the header of the message
