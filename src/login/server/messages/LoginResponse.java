@@ -37,40 +37,13 @@ public class LoginResponse extends ServerGenericMessage {
     int unk25; //64
     
 	public LoginResponse() {
-		super(10247, 0, 0);
-		
-		response = 0;
-		UserType = 0x1E;
-		UserLevel1 = 2;
-		UserLevel2 = 2;
+		super(10247, 0);
+	}
+	
+	@Override
+	public void changeData() {
+		response = 1;
 		ageCheck = 1;
-		
-		/*
-		 * Login_Response.size = 0xA8;
-		Login_Response.type = LOGIN_RESPONSE;
-		Login_Response.unk1 = 11036;
-		Login_Response.state = UpdateState();
-		if (!IsCorrectLogin())
-		{
-			Login_Response.Response = WrongPasswd;
-		}
-		else
-		{
-			Login_Response.Response = CorrectPasswd;
-			MyCharInfo UsrInfo;
-			GetCharInfo(Login_Info->username,UsrInfo);
-			Login_Response.UserType = UsrInfo.UserType;
-			*(int*)&Login_Response.DefaultCharacter = UsrInfo.DefaultCharacter;
-			Login_Response.UserLevel1 = UsrInfo.Level;
-			Login_Response.UserLevel2 = UsrInfo.Level;
-			Login_Response.AgeCheck = 1;
-			Login_Response.Points = UsrInfo.Points;
-			Login_Response.Code = UsrInfo.Code;
-			memset(&Login_Response.unk5,0,20*4);
-		}
-		Login_Response.checksum = cIOSocket.MakeDigest((unsigned char*)&Login_Response);
-		buffer = (unsigned char*)&Login_Response;
-		 */
 	}
 
 	@Override

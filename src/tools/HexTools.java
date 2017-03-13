@@ -52,14 +52,27 @@ public class HexTools {
 		}
 	}
 	
-	public static byte[] intToByteArray(int number) {
-		byte[] bytes = new byte[4];
-		
-		for (int i = 0; i < 4; i++) {
-			bytes[i] = (byte) (number % 256);
-			number /= 256;
-		}
-		
-		return bytes;
+	public static final byte[] intToByteArray(int value) {
+//		return new byte[] {
+//	            (byte)(value >> 24),
+//	            (byte)(value >> 16),
+//	            (byte)(value >> 8),
+//	            (byte)(value >> 0)};
+	    return new byte[] {
+	            (byte)(value >> 0),
+	            (byte)(value >> 8),
+	            (byte)(value >> 16),
+	            (byte)(value >> 24)};
 	}
+	
+//	public static byte[] intToByteArray(int number) {
+//		byte[] bytes = new byte[4];
+//		
+//		for (int i = 0; i < 4; i++) {
+//			bytes[i] = (byte) (number % 256);
+//			number /= 256;
+//		}
+//		
+//		return bytes;
+//	}
 }

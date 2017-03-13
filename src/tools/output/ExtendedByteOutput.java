@@ -2,6 +2,8 @@ package tools.output;
 
 import java.util.LinkedList;
 
+import tools.HexTools;
+
 public class ExtendedByteOutput {
 	protected LinkedList<Byte> buffer;
 	
@@ -18,17 +20,21 @@ public class ExtendedByteOutput {
 		
 		for (Byte b : buffer) {
 			bytes[offset + i] = b;
+			i++;
 		}
 	}
 	
 	public void putByte(byte b) {
-		buffer.push(b);
+//		buffer.push(b);
+//		buffer.add(b);
+		buffer.addLast(b);
 	}
 	
 	public void putInteger(int i) {
+		byte[] bytes = HexTools.intToByteArray(i);
+		
 		for (int j = 0; j < 4; j++) {
-			putByte((byte) (i % 256));
-			i /= 256;
+			putByte(bytes[j]);
 		}
 	}
 	
