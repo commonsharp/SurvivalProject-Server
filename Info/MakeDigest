@@ -1,6 +1,7 @@
 The function calculates the checksum of each message.
 
 Assuming messageBytes is the bytes of each message, then:
+
 public static int getDigest(byte[] messageBytes) throws NoSuchAlgorithmException {
 	byte[] buff;
 	
