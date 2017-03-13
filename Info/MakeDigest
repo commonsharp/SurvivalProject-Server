@@ -1,0 +1,23 @@
+The function calculates the checksum of each message.
+
+Assuming messageBytes is the bytes of each message, then:
+public static int getDigest(byte[] messageBytes) throws NoSuchAlgorithmException {
+		byte[] buff;
+		
+		// MUST PUT 0 IN THE CHECKSUM OR ELSE THE MD5 WILL BE COMPLETELY DIFFERENT
+		HexTools.putIntegerInByteArray(messageBytes, 12, 0);
+		
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(messageBytes);
+		buff = md.digest();
+		
+		int int0 = HexTools.getIntegerInByteArray(buff, 0x0);
+		int int1 = HexTools.getIntegerInByteArray(buff, 0x4);
+		int int2 = HexTools.getIntegerInByteArray(buff, 0x8);
+		int int3 = HexTools.getIntegerInByteArray(buff, 0xC);
+
+		return int0 ^ int1 ^ int2 ^ int3;
+	}
+  
+  
+  Note that the 12'th byte in each message represents the checksum, and it must be set to 0 before the calculations (can't be junk).
