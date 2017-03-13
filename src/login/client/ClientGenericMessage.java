@@ -24,6 +24,30 @@ public abstract class ClientGenericMessage {
 		processFields();
 	}
 	
+	public int getLength() {
+		return length;
+	}
+
+	public int getMessageID() {
+		return messageID;
+	}
+
+	public int getUnknown1() {
+		return unknown1;
+	}
+
+	public int getChecksum() {
+		return checksum;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public ExtendedByteBuffer getBuffer() {
+		return buffer;
+	}
+
 	public abstract void interpretBytes(byte[] messageBytes);
 	public abstract void processFields();
 	public abstract byte[] getResponse();

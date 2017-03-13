@@ -17,16 +17,30 @@ public class HexTools {
 		}
 	}
 	
+	public static String integerToHexString(int i) {
+		String result = Integer.toHexString(i).toUpperCase();
+		return result.length() == 1 ? "0" + result : result; // to change
+	}
+	
 	public static String byteToHexString(byte b) {
 		String result = Integer.toHexString(b & 0xFF).toUpperCase();
 		return result.length() == 1 ? "0" + result : result;
 	}
 	
+	public static int getIntegerInByteArrayBigEndian(byte[] arr, int offset) {
+		int byte0 = arr[offset] & 0xFF;
+		int byte1 = arr[offset + 1] & 0xFF;
+		int byte2 = arr[offset + 2] & 0xFF;
+		int byte3 = arr[offset + 3] & 0xFF;
+		
+		return (byte0 << 24) + (byte1 << 16) + (byte2 << 8) + byte3;
+	}
+	
 	public static int getIntegerInByteArray(byte[] arr, int offset) {
-		int byte0 = arr[offset];
-		int byte1 = arr[offset + 1];
-		int byte2 = arr[offset + 2];
-		int byte3 = arr[offset + 3];
+		int byte0 = arr[offset] & 0xFF;
+		int byte1 = arr[offset + 1] & 0xFF;
+		int byte2 = arr[offset + 2] & 0xFF;
+		int byte3 = arr[offset + 3] & 0xFF;
 		
 		return (byte3 << 24) + (byte2 << 16) + (byte1 << 8) + byte0;
 	}
