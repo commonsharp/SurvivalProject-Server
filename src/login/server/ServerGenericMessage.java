@@ -1,5 +1,6 @@
 package login.server;
 
+import net.MD5;
 import tools.HexTools;
 import tools.output.ExtendedByteOutput;
 
@@ -26,8 +27,12 @@ public abstract class ServerGenericMessage {
 		HexTools.putIntegerInByteArray(response, 0, length);
 		HexTools.putIntegerInByteArray(response, 4, messageID);
 		HexTools.putIntegerInByteArray(response, 8, 11036); // TODO change
-		HexTools.putIntegerInByteArray(response, 16, state);
+		int State = -1;
+		int state2 = Math.abs(((State = (~State + 0x14fb) * 0x1f) >> 16) ^ State);
+		HexTools.putIntegerInByteArray(response, 16, state2);
 		payload.getBytes(response, 20);
+		
+		HexTools.putIntegerInByteArray(response, 12, MD5.getDigest(response));
 		
 		return response;
 	}
