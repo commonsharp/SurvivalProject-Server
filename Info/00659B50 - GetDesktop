@@ -1,0 +1,4 @@
+The function is called "GetDeskTop".
+It returns the current desktop of each gamestate.
+
+The states range from 0 to 5 or 6 (not sure yet, probably 5)
