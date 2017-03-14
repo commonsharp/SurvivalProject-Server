@@ -1,0 +1,20 @@
+int response; // 1 - everything is okay. 0 - wrong password. need to add more option...
+int userType; // 0 - tutorial. 10 - beginner. 20 - hero. 30 - epic.
+int activeCharacter;
+int playerLevel;
+int usuableCharacterCount; // 1-12. 12 = all 12 characters are available and so on.
+int isMuted; // maybe
+int daysToMute; // maybe
+int ageRestriction;
+int notUsed;
+long playerExperience;
+long playerMoney;
+String guildName; // 12+0
+String guildTitle; // 26+0
+int unknown1;
+int unknown2;
+String unknown3; // 24+0
+String unknown4; // 10+0
+int unknown5;
+int unknown6;
+int unknown7;
