@@ -2,11 +2,11 @@
 Server files for the game Survival Project, written in Java.
 
 # 03/14/2017
+* RequestServersInformationMessage added, and it works like a charm! :D
+
 * Fixed a bug that didn't calculate the checksum properly.
 
 * Login request message format added.
-
-* Request servers info message added in the code.
 
 * Debug-mode sp.exe added (called sp2.exe)
 
