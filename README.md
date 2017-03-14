@@ -1,6 +1,14 @@
 # SurvivalProject-Server
 Server files for the game Survival Project, written in Java.
 
+# 03/14/2017
+* Login request message format added.
+
+* Request servers info message added in the code.
+
+* Debug-mode sp.exe added (called sp2.exe)
+
+
 # 03/13/2017
 * Support for multiple packets
 
