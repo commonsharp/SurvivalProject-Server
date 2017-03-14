@@ -8,6 +8,8 @@ Server files for the game Survival Project, written in Java.
 
 * Debug-mode sp.exe added (called sp2.exe)
 
+* sp.exe program arguments added.
+
 
 # 03/13/2017
 * Support for multiple packets
