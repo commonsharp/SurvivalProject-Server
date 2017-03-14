@@ -1,0 +1,14 @@
+Example: sp.exe /showcode
+
+/bugcheck2
+/bugcheck
+/forcerun
+/bugcheckfull
+/showcode
+/showcode2
+/dis1
+/showinstance
+/getwlstatus
+/logstatus
+/dumpstatus
+/checkprotection
