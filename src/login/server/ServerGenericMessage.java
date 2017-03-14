@@ -15,10 +15,11 @@ public abstract class ServerGenericMessage {
 		this.messageID = messageID;
 		this.state = state;
 		changeData();
-		addPayload();
 	}
 	
 	public byte[] getResponse() {
+		addPayload();
+		
 		int length = 20 + payload.getSize();
 		
 		byte[] response = new byte[length];
@@ -39,7 +40,8 @@ public abstract class ServerGenericMessage {
 	}
 	
 	public int newState(int oldState) {
-		return 31 * (~oldState) ^ (31 * (~oldState) >> 16);
+		return -1;
+//		return 31 * (~oldState) ^ (31 * (~oldState) >> 16);
 	}
 	
 	public abstract void changeData();

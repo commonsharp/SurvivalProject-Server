@@ -3,8 +3,12 @@ package tools;
 
 public class HexTools {
 	public static void printHexArray(byte[] arr, boolean isAscii) {
-		for (int i = 0; i < arr.length; i++) {
-			if (i > 0 && i % 32 == 0) {
+		printHexArray(arr, 0, isAscii);
+	}
+	
+	public static void printHexArray(byte[] arr, int offset, boolean isAscii) {
+		for (int i = offset; i < arr.length; i++) {
+			if ((i - offset) > 0 && (i - offset) % 32 == 0) {
 				System.out.println();
 			}
 			
@@ -15,6 +19,8 @@ public class HexTools {
 				System.out.print(byteToHexString(arr[i]) + " ");
 			}
 		}
+		
+		System.out.println();
 	}
 	
 	public static String integerToHexString(int i) {

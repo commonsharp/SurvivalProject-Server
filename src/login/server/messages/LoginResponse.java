@@ -4,81 +4,81 @@ import login.server.ServerGenericMessage;
 
 public class LoginResponse extends ServerGenericMessage {
 	int response;
-    int UserType; //Not sure, but It control/close servers 0x1E open all servers
-    int defaultCharacter;
-    int UserLevel1;
-    int UserLevel2;
-    int unk2;
-    int unk3;
-    int ageCheck; //1 is ok, other will give korean announcement
-    int unk4; //Always 0x40000000, can be 0
-    long Points;
-    long Code;
-    int unk5;
-    int unk6;
-    int unk7;
-    int unk8; //5
-    int unk9;
-    int unk10;
-    int unk11; //2
-    int unk12;
-    int unk13; //5
-    int unk14; //2
-    int unk15;
-    int unk16;
-    int unk17;
-    int unk18;
-    int unk19;
-    int unk20;
-    int unk21;
-    int unk22;
-    int unk23; //-1
-    int unk24; //7
-    int unk25; //64
+    int userType; //Not sure, but It control/close servers 0x1E open all servers
+    int activeCharacter;
+    int playerLevel;
+    int usuableCharacterCount; // 1 - 12?
+    int isMuted;
+    int daysToMute;
+    int ageRestriction; //1 is ok, other will give korean announcement
+    int notUsed; //Always 0x40000000, can be 0 // not used maybe
+    long playerExperience;
+    long playerMoney; // money?
+    String guildName; // 12+0
+    String guildTitle; // 26+0
+    int unknown1;
+    int unknown2;
+    String unknown3; // 24+0
+    String unknown4; // 10+0
+    int unknown5;
+    int unknown6;
+    int unknown7;
     
 	public LoginResponse() {
-		super(10247, 0);
+		super(0x2807, 0);
 	}
 	
 	@Override
 	public void changeData() {
 		response = 1;
-		ageCheck = 1;
+		ageRestriction = -1;
+//		unknown5 = ageRestriction;
+		playerLevel = 30;
+//		playerMoney = 100;
+		usuableCharacterCount = 10;
+//		playerExperience = 100;
+		userType = 30;
+//		activeCharacter = 10;
+		guildName = "barakguild";
+//		isMuted = 1;
+//		daysToMute = 30;
+//		guildTitle = "whatwhat";
+//		playerLevel = 5;
+//		userType = 0x1E;
 	}
 
 	@Override
 	public void addPayload() {
 		payload.putInteger(response);
-		payload.putInteger(UserType);
-		payload.putInteger(defaultCharacter);
-		payload.putInteger(UserLevel1);
-		payload.putInteger(UserLevel2);
-		payload.putInteger(unk2);
-		payload.putInteger(unk3);
-		payload.putInteger(ageCheck);
-		payload.putInteger(unk4);
-		payload.putLong(Points);
-		payload.putLong(Code);
-		payload.putInteger(unk5);
-		payload.putInteger(unk6);
-		payload.putInteger(unk7);
-		payload.putInteger(unk8);
-		payload.putInteger(unk9);
-		payload.putInteger(unk10);
-		payload.putInteger(unk11);
-		payload.putInteger(unk12);
-		payload.putInteger(unk13);
-		payload.putInteger(unk14);
-		payload.putInteger(unk15);
-		payload.putInteger(unk16);
-		payload.putInteger(unk17);
-		payload.putInteger(unk18);
-		payload.putInteger(unk19);
-		payload.putInteger(unk20);
-		payload.putInteger(unk21);
-		payload.putInteger(unk22);
-		payload.putInteger(unk23);
-		payload.putInteger(unk24);
-		payload.putInteger(unk25);
+		payload.putInteger(userType);
+		payload.putInteger(activeCharacter);
+		payload.putInteger(playerLevel);
+		payload.putInteger(usuableCharacterCount);
+		payload.putInteger(isMuted);
+		payload.putInteger(daysToMute);
+		payload.putInteger(ageRestriction);
+		payload.putInteger(notUsed);
+		payload.putLong(playerExperience);
+		payload.putLong(playerMoney);
+		payload.putString(guildName, 12);
+		payload.putString(guildTitle, 26);
+		payload.putInteger(unknown1);
+		payload.putInteger(unknown2);
+		payload.putString(unknown3, 24);
+		payload.putString(unknown3, 10);
+		payload.putInteger(unknown5);
+		payload.putInteger(unknown6);
+		payload.putInteger(unknown7);
+		
+//		payload.putBytes(new byte[13]);
+//		payload.putBytes(new byte[13]);
+//		payload.putBytes(new byte[23]);
+//		payload.putBytes(new byte[13]);
+//		payload.putBytes(new byte[10]);
+//		payload.putBytes(new byte[12]);
+		// it should be: remove last line and add the next 3...
+//		payload.putBytes(new byte[16]);
+//		payload.putInteger(0);
+//		payload.putInteger(0);
 	}
 }

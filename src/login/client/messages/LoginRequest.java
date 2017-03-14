@@ -2,7 +2,6 @@ package login.client.messages;
 
 import login.client.ClientGenericMessage;
 import login.server.messages.LoginResponse;
-import tools.HexTools;
 
 public class LoginRequest extends ClientGenericMessage {
 	protected byte[] versionHash; // 36 bytes
@@ -21,10 +20,6 @@ public class LoginRequest extends ClientGenericMessage {
 		
 		username = buffer.readNullTerminatedString(12);
 		password = buffer.readNullTerminatedString(12);
-		
-		System.out.println("Version code " + versionCode);
-		System.out.println("Username " + username);
-		System.out.println("Password " + password);
 		
 //		HexTools.printHexArray(buffer.peekNext(1000), false);
 	}
