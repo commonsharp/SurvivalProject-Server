@@ -58,7 +58,9 @@ public abstract class GenericUDPServer implements Runnable {
 				Cryptography.decryptMessage(messageBytes);
 				
 				int messageID = HexTools.getIntegerInByteArray(messageBytes, 4);
+				int state = HexTools.getIntegerInByteArray(messageBytes, 16);
 				
+				System.out.println("State: " + state);
 				Log.log(name + ": New client packet: 0x" + HexTools.integerToHexString(messageID));
 				
 				ClientGenericMessage message = processPacket(messageID, messageBytes);
@@ -68,7 +70,7 @@ public abstract class GenericUDPServer implements Runnable {
 					
 					// Response can be null if there is no response (not implemented)
 					if (response != null) {
-						sendMessage(ipAddress, port, response);
+						sendMessage(state, ipAddress, port, response);
 					}
 				}
 			}
@@ -77,9 +79,17 @@ public abstract class GenericUDPServer implements Runnable {
 		}
 	}
 	
-	public void sendMessage(InetAddress ipAddress, int port, byte[] response) throws IOException {
+	public static int newState(int oldState) {
+		if (oldState == -1)
+			return 0;
+		
+		oldState = (~oldState + 0x14fb) * 0x1f;
+		return Math.abs((oldState >> 16) ^ oldState);
+	}
+	
+	public void sendMessage(int state, InetAddress ipAddress, int port, byte[] response) throws IOException {
 		// Change the state
-		HexTools.putIntegerInByteArray(response, 16, 0);
+		HexTools.putIntegerInByteArray(response, 16, state);
 		
 		// Change the checksum
 		HexTools.putIntegerInByteArray(response, 12, Cryptography.getDigest(response));

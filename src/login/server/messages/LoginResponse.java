@@ -41,6 +41,11 @@ public class LoginResponse extends ServerGenericMessage {
 		isMuted = 0;
 		daysToMute = 0;
 		guildTitle = "whatwhat";
+		unknown3 = "what3";
+		unknown4 = "what4";
+		unknown5 = 560;
+		unknown6 = 10;
+		unknown7 = 10;
 	}
 
 	@Override

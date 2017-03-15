@@ -13,11 +13,11 @@ public class JoinLobbyResponse extends ServerGenericMessage {
 			1677721600};
     final long minPointForLevelQword[] = {3355443200L, 6710886400L, 13421772800L, 26843545600L};
 	
-    byte playerCardItemExist[] = {1, 1, 1, 1};
+    byte playerCardItemExist[] = {1, 1, 1, 1}; // if it's 0, this item is not going to be available (must be set to 1...)
 	
-	int playerCardItemId[] = {1111, 1211, 1311, 1322};
+	int playerCardItemId[] = {1111, 1122, 1133, 1144};
 	int playerCardItemDays[] = {10, 1, 1, 1};
-	int playerCardItemLevelIdx[] = {3, 3, 7, 8};
+	int playerCardItemLevelIdx[] = {8, 8, 7, 8, 5};
 	int playerCardItemSkill[] = {36100300, 0, 33200000, 0};
 	int playerAvatarEquipIdx[] = {-1, -1, -1, -1, -1, -1, -1}; //Idx not ItemId!!!
 	byte playerEventFlags[] = {0, 0, 0, 0, 0, 0, 0}; //see debug mode
@@ -30,7 +30,7 @@ public class JoinLobbyResponse extends ServerGenericMessage {
 	int playerChannelType = 3; //the channel type player is currently in
 	
 	int playerLevel = 30;
-	int playerInventorySlots = 18;
+	int playerInventorySlots = 24;
 	int playerType = 0; //set to 7 for GM...
 	int whiteCards[] = {200, 20, 30, 40};
 	int scrolls[] = {0, 0, 0};

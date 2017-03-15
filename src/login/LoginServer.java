@@ -5,7 +5,6 @@ import login.client.messages.SetActiveCharacterRequest;
 import login.client.messages.TutorialCompletedNotification;
 import net.ClientGenericMessage;
 import net.GenericTCPServer;
-import tools.HexTools;
 
 public class LoginServer extends GenericTCPServer {
 	public LoginServer(int port) {
