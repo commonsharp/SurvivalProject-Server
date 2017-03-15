@@ -1,7 +1,7 @@
 package login.client.messages;
 
-import login.client.ClientGenericMessage;
 import login.server.messages.ServerInfoResponse;
+import net.ClientGenericMessage;
 
 public class ReconnectRequest extends ClientGenericMessage {
 	protected String username;

@@ -1,6 +1,6 @@
 package login.server.messages;
 
-import login.server.ServerGenericMessage;
+import net.ServerGenericMessage;
 
 public class ServerInfoResponse extends ServerGenericMessage {
 	protected short channelType; // between 0 and 3
@@ -26,7 +26,7 @@ public class ServerInfoResponse extends ServerGenericMessage {
 	public void changeData() {
 		ip = new String("10.0.0.2");
 		channelID = 0;
-		port = 21000;
+		port = 21001;
 		name = "Test Channel " + channelType;
 		bestGuildName = "Obamas";
 		

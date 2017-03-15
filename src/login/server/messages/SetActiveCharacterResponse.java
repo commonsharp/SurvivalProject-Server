@@ -1,6 +1,6 @@
 package login.server.messages;
 
-import login.server.ServerGenericMessage;
+import net.ServerGenericMessage;
 
 public class SetActiveCharacterResponse extends ServerGenericMessage {
 	protected int unknown1;

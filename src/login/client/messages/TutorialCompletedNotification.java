@@ -1,7 +1,7 @@
 package login.client.messages;
 
-import login.client.ClientGenericMessage;
 import login.server.messages.TutorialCompletedResponse;
+import net.ClientGenericMessage;
 
 public class TutorialCompletedNotification extends ClientGenericMessage {
 	public TutorialCompletedNotification(byte[] messageBytes) {

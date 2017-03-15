@@ -1,8 +1,8 @@
 package login.client.messages;
 
-import login.client.ClientGenericMessage;
 import login.server.messages.GuildMarkResponse;
 import login.server.messages.ServerInfoResponse;
+import net.ClientGenericMessage;
 
 public class GuildMarkRequest extends ClientGenericMessage {
 	

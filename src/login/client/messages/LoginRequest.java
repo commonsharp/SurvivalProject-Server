@@ -1,7 +1,7 @@
 package login.client.messages;
 
-import login.client.ClientGenericMessage;
 import login.server.messages.LoginResponse;
+import net.ClientGenericMessage;
 
 public class LoginRequest extends ClientGenericMessage {
 	protected byte[] versionHash; // 36 bytes

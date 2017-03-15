@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.Socket;
 
 import log.Log;
-import login.client.ClientGenericMessage;
 import tools.HexTools;
 import tools.input.ExtendedInputStream;
 
@@ -46,7 +45,7 @@ public class UserSession implements Runnable {
 				int messageID = HexTools.getIntegerInByteArray(messageBytes, 4);
 				int stateFromMessage = HexTools.getIntegerInByteArray(messageBytes, 16);
 				
-				Log.log("New client packet: 0x" + HexTools.integerToHexString(messageID));
+				Log.log(server.getName() + ": New client packet: 0x" + HexTools.integerToHexString(messageID));
 				
 				ClientGenericMessage message = server.processPacket(messageID, messageBytes);
 				
