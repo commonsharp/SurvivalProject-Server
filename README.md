@@ -2,6 +2,8 @@
 Server files for the game Survival Project, written in Java.
 
 It seems that using the unpacked version of sp.exe (debug-mode or release-mode) causes the game to crash, unfortunately. 
+I believe it's because the IOProtect isn't running, and sp.exe throws an exception after a few seconds (10?)
+
 # 03/14/2017
 * RequestServersInformationMessage added, and it works like a charm! :D
 
