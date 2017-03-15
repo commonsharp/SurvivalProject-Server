@@ -16,9 +16,7 @@ public class LoginResponse extends ServerGenericMessage {
     long playerMoney; // money?
     String guildName; // 12+0
     String guildTitle; // 26+0
-    long unknown1;
-//    int unknown1;
-//    int unknown2;
+    long unknown1; // probably cash (premium money)
     String unknown3; // 24+0
     String unknown4; // 10+0
     int unknown5;
@@ -32,22 +30,24 @@ public class LoginResponse extends ServerGenericMessage {
 	@Override
 	public void changeData() {
 		response = 1;
-		ageRestriction = -1;
+		ageRestriction = 1;
 //		unknown5 = ageRestriction;
-		playerLevel = 25;
+		playerLevel = 1;
 		playerMoney = 100;
 		usuableCharacterCount = 12;
 		playerExperience = 100;
-		userType = 30;
+		userType = 10;
 		activeCharacter = 20;
 		guildName = "barakguild";
-//		unknown1 = 100;
-//		unknown3 = "what";
-//		unknown4 = "what2";
-		isMuted = 1;
-		daysToMute = 30;
+		unknown1 = 1111;
+		unknown3 = "what";
+		unknown4 = "what2";
+		isMuted = 0;
+		daysToMute = 0;
 		guildTitle = "whatwhat";
-//		unknown6 = 580;
+		unknown5 = 1111;
+		unknown6 = 1111;
+		unknown7 = 1111;
 	}
 
 	@Override
@@ -66,13 +66,10 @@ public class LoginResponse extends ServerGenericMessage {
 		payload.putString(guildName, 12);
 		payload.putString(guildTitle, 26);
 		payload.putLong(unknown1);
-//		payload.putInteger(unknown1);
-//		payload.putInteger(unknown2);
 		payload.putString(unknown3, 24);
 		payload.putString(unknown3, 10);
-		// those need to be included, but it seems like we need to change more fields before that
-//		payload.putInteger(unknown5);
-//		payload.putInteger(unknown6);
-//		payload.putInteger(unknown7);
+		payload.putInteger(unknown5);
+		payload.putInteger(unknown6);
+		payload.putInteger(unknown7);
 	}
 }

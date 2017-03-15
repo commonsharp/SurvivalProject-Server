@@ -1,6 +1,6 @@
 package login.server;
 
-import net.MD5;
+import net.Cryptography;
 import tools.HexTools;
 import tools.output.ExtendedByteOutput;
 

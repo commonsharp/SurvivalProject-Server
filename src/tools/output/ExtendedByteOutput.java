@@ -52,6 +52,12 @@ public class ExtendedByteOutput {
 		}
 	}
 	
+	public void putIntArray(int[] arr) {
+		for (int i = 0; i < arr.length; i++) {
+			putInteger(arr[i]);
+		}
+	}
+	
 	// Assumes s.length <= length
 	public void putString(String s, int length) {
 		if (s == null) {
