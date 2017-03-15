@@ -1,21 +1,17 @@
 package login.client.messages;
 
 import login.client.ClientGenericMessage;
+import login.server.messages.GuildMarkResponse;
 import login.server.messages.ServerInfoResponse;
 
-public class ServerInfoRequest extends ClientGenericMessage {
-	protected int unknown1;
-	protected int channelType;
+public class GuildMarkRequest extends ClientGenericMessage {
 	
-	public ServerInfoRequest(byte[] messageBytes) {
+	public GuildMarkRequest(byte[] messageBytes) {
 		super(messageBytes);
 	}
 
 	@Override
 	public void interpretBytes(byte[] messageBytes) {
-		unknown1 = buffer.readInt();
-		channelType = buffer.readInt();
-//		System.out.println("NOTTIME!!!Time: " + unknown1);
 	}
 
 	@Override
@@ -25,6 +21,6 @@ public class ServerInfoRequest extends ClientGenericMessage {
 
 	@Override
 	public byte[] getResponse() {
-		return new ServerInfoResponse((short) channelType).getResponse();
+		return new GuildMarkResponse().getResponse();
 	}
 }

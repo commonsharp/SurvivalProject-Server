@@ -13,11 +13,11 @@ public class ServerInfoResponse extends ServerGenericMessage {
 	protected short unknown1;
 	protected int maxPopulation; // default 200??
 	protected byte guildSomething;
-	protected byte[] unused; //3
+	protected byte[] unused = new byte[3]; //3
 	protected int unknown2;
 	
 	public ServerInfoResponse(short channelType) {
-		super(0x2908, 0);
+		super(0x2908);
 		
 		this.channelType = channelType;
 	}
@@ -27,14 +27,14 @@ public class ServerInfoResponse extends ServerGenericMessage {
 		ip = new String("10.0.0.2");
 		channelID = 0;
 		port = 21000;
-		name = "Test Channel";
-		bestGuildName = "HKGolden";
-		population = 100;
+		name = "Test Channel " + channelType;
+		bestGuildName = "Obamas";
+		
+		population = 50;
 		maxPopulation = 200;
-
-		unknown1 = 0;
-		unused = new byte[3];
-		unknown2 = 0;
+//		guildSomething = 100;
+		unknown1 = 1;
+		unknown2 = -1;
 	}
 
 	@Override

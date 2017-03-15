@@ -52,9 +52,9 @@ public class HexTools {
 	}
 	
 	public static void putIntegerInByteArray(byte[] arr, int offset, int number) {
+		byte[] intArray = intToByteArray(number);
 		for (int i = 0; i < 4; i++) {
-			arr[offset + i] = (byte) (number % 256);
-			number /= 256;
+			arr[offset + i] = intArray[i];
 		}
 	}
 	
@@ -70,15 +70,4 @@ public class HexTools {
 	            (byte)(value >> 16),
 	            (byte)(value >> 24)};
 	}
-	
-//	public static byte[] intToByteArray(int number) {
-//		byte[] bytes = new byte[4];
-//		
-//		for (int i = 0; i < 4; i++) {
-//			bytes[i] = (byte) (number % 256);
-//			number /= 256;
-//		}
-//		
-//		return bytes;
-//	}
 }

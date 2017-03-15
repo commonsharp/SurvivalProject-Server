@@ -16,8 +16,9 @@ public class LoginResponse extends ServerGenericMessage {
     long playerMoney; // money?
     String guildName; // 12+0
     String guildTitle; // 26+0
-    int unknown1;
-    int unknown2;
+    long unknown1;
+//    int unknown1;
+//    int unknown2;
     String unknown3; // 24+0
     String unknown4; // 10+0
     int unknown5;
@@ -25,7 +26,7 @@ public class LoginResponse extends ServerGenericMessage {
     int unknown7;
     
 	public LoginResponse() {
-		super(0x2807, 0);
+		super(0x2807);
 	}
 	
 	@Override
@@ -33,18 +34,20 @@ public class LoginResponse extends ServerGenericMessage {
 		response = 1;
 		ageRestriction = -1;
 //		unknown5 = ageRestriction;
-		playerLevel = 30;
-//		playerMoney = 100;
-		usuableCharacterCount = 10;
-//		playerExperience = 100;
+		playerLevel = 25;
+		playerMoney = 100;
+		usuableCharacterCount = 12;
+		playerExperience = 100;
 		userType = 30;
-//		activeCharacter = 10;
+		activeCharacter = 20;
 		guildName = "barakguild";
-//		isMuted = 1;
-//		daysToMute = 30;
-//		guildTitle = "whatwhat";
-//		playerLevel = 5;
-//		userType = 0x1E;
+//		unknown1 = 100;
+//		unknown3 = "what";
+//		unknown4 = "what2";
+		isMuted = 1;
+		daysToMute = 30;
+		guildTitle = "whatwhat";
+//		unknown6 = 580;
 	}
 
 	@Override
@@ -62,23 +65,14 @@ public class LoginResponse extends ServerGenericMessage {
 		payload.putLong(playerMoney);
 		payload.putString(guildName, 12);
 		payload.putString(guildTitle, 26);
-		payload.putInteger(unknown1);
-		payload.putInteger(unknown2);
+		payload.putLong(unknown1);
+//		payload.putInteger(unknown1);
+//		payload.putInteger(unknown2);
 		payload.putString(unknown3, 24);
 		payload.putString(unknown3, 10);
-		payload.putInteger(unknown5);
-		payload.putInteger(unknown6);
-		payload.putInteger(unknown7);
-		
-//		payload.putBytes(new byte[13]);
-//		payload.putBytes(new byte[13]);
-//		payload.putBytes(new byte[23]);
-//		payload.putBytes(new byte[13]);
-//		payload.putBytes(new byte[10]);
-//		payload.putBytes(new byte[12]);
-		// it should be: remove last line and add the next 3...
-//		payload.putBytes(new byte[16]);
-//		payload.putInteger(0);
-//		payload.putInteger(0);
+		// those need to be included, but it seems like we need to change more fields before that
+//		payload.putInteger(unknown5);
+//		payload.putInteger(unknown6);
+//		payload.putInteger(unknown7);
 	}
 }

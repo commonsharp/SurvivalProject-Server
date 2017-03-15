@@ -6,18 +6,14 @@ import java.net.Socket;
 
 import log.Log;
 import login.client.ClientGenericMessage;
-import login.client.messages.ServerInfoRequest;
-import login.client.messages.SetActiveCharacterRequest;
 import login.client.messages.LoginRequest;
 import login.client.messages.GuildMarkRequest;
 import tools.HexTools;
 import tools.input.ExtendedInputStream;
 
-public class Server {
+public class ServerBackup {
 	final static boolean IS_TEST = false;
-	public static int clientState = -1;
-	public static int serverState = -1;
-	
+	public static int state = -1;
 	public static void main(String[] args) throws IOException {
 		if (IS_TEST) {
 			test();
@@ -53,27 +49,22 @@ public class Server {
 						int messageID = HexTools.getIntegerInByteArray(messageBytes, 4);
 						Log.log("New client packet: 0x" + HexTools.integerToHexString(messageID));
 						ClientGenericMessage message = null;
-						
-						int stateFromMessage = HexTools.getIntegerInByteArray(messageBytes, 16);
-						System.out.println("State from message:" + stateFromMessage);
+						int clientState = HexTools.getIntegerInByteArray(messageBytes, 16);
+						System.out.println("State: " + clientState);
 						
 						switch (messageID) {
 						case 0x2707:
 							message = new LoginRequest(messageBytes);
 							break;
 						case 0x2907:
-							message = new ServerInfoRequest(messageBytes);
+							message = new GuildMarkRequest(messageBytes);
 							break;
-						case 0x2911:
-							message = new SetActiveCharacterRequest(messageBytes);
+						case 0x2917:
 							break;
-//						case 0x2917:
-//							message = new GuildMarkRequest(messageBytes);
-//							break;
 						default:
-							HexTools.printHexArray(messageBytes, 20, false);
-							System.out.println();
-							HexTools.printHexArray(messageBytes, 20, true);
+//							HexTools.printHexArray(messageBytes, 20, false);
+//							System.out.println();
+//							HexTools.printHexArray(messageBytes, 20, true);
 						}
 						
 	//					Server responses... X_X
@@ -99,21 +90,16 @@ public class Server {
 	//				    	break;
 						
 						
-						whenReceived(stateFromMessage);
+						
+						state = newState(state);
 						
 						if (message != null) {
 							byte[] response = message.getResponse();
-							
-							// Response can be null if there is no response
-							if (response != null) {
-								HexTools.putIntegerInByteArray(response, 16, clientState);
-								HexTools.printHexArray(response, false);
-								HexTools.putIntegerInByteArray(response, 12, MD5.getDigest(response));
-								encrypt(response);
-								output.write(response);
-								output.flush();
-								clientState = newState(clientState);
-							}
+							HexTools.putIntegerInByteArray(response, 16, state);
+							HexTools.printHexArray(response, false);
+							encrypt(response);
+							output.write(response);
+							output.flush();
 						}
 					}
 				} catch (IOException e) {
@@ -125,24 +111,6 @@ public class Server {
 		}
 		
 //		server.close();
-	}
-	
-	public static void whenReceived(int stateFromMessage) {
-		if (serverState == -1) {
-			serverState = stateFromMessage;
-			clientState = stateFromMessage;
-			clientState = newState(clientState);
-			serverState = newState(serverState);
-			return; // good
-		}
-
-		if (serverState == stateFromMessage) {
-			serverState = newState(serverState);
-			// good
-		}
-		else {
-			// bad
-		}
 	}
 	
 	public static int newState(int oldState) {
