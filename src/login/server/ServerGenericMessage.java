@@ -1,12 +1,10 @@
 package login.server;
 
-import net.Cryptography;
+import net.GenericMessage;
 import tools.HexTools;
 import tools.output.ExtendedByteOutput;
 
-public abstract class ServerGenericMessage {
-	protected int messageID;
-	
+public abstract class ServerGenericMessage extends GenericMessage {
 	protected ExtendedByteOutput payload;
 	
 	public ServerGenericMessage(int messageID) {
@@ -24,7 +22,7 @@ public abstract class ServerGenericMessage {
 		
 		HexTools.putIntegerInByteArray(response, 0, length);
 		HexTools.putIntegerInByteArray(response, 4, messageID);
-		HexTools.putIntegerInByteArray(response, 8, 11036); // TODO change? it's fixed...
+		HexTools.putIntegerInByteArray(response, 8, 11036); // This is fixed.
 
 		payload.getBytes(response, 20);
 		

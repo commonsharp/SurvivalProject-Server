@@ -1,6 +1,6 @@
 package net;
 
-public class GenericMessage {
+public abstract class GenericMessage {
 	protected int length;
 	protected int messageID;
 	protected int unknown1;

@@ -1,14 +1,9 @@
 package login.client;
 
+import net.GenericMessage;
 import tools.input.ExtendedByteBuffer;
 
-public abstract class ClientGenericMessage {
-	protected int length;
-	protected int messageID;
-	protected int unknown1;
-	protected int checksum;
-	protected int state;
-	
+public abstract class ClientGenericMessage extends GenericMessage {
 	protected ExtendedByteBuffer buffer;
 	
 	public ClientGenericMessage(byte[] messageBytes) {
@@ -24,26 +19,6 @@ public abstract class ClientGenericMessage {
 		processFields();
 	}
 	
-	public int getLength() {
-		return length;
-	}
-
-	public int getMessageID() {
-		return messageID;
-	}
-
-	public int getUnknown1() {
-		return unknown1;
-	}
-
-	public int getChecksum() {
-		return checksum;
-	}
-
-	public int getState() {
-		return state;
-	}
-
 	public ExtendedByteBuffer getBuffer() {
 		return buffer;
 	}
