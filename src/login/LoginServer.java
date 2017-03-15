@@ -4,10 +4,10 @@ import login.client.messages.ServerInfoRequest;
 import login.client.messages.SetActiveCharacterRequest;
 import login.client.messages.TutorialCompletedNotification;
 import net.ClientGenericMessage;
-import net.GenericServer;
+import net.GenericTCPServer;
 import tools.HexTools;
 
-public class LoginServer extends GenericServer {
+public class LoginServer extends GenericTCPServer {
 	public LoginServer(int port) {
 		super("Login server", port);
 	}

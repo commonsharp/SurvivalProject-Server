@@ -2,8 +2,6 @@ package tools.output;
 
 import java.util.LinkedList;
 
-import tools.HexTools;
-
 public class ExtendedByteOutput {
 	protected LinkedList<Byte> buffer;
 	
@@ -55,6 +53,12 @@ public class ExtendedByteOutput {
 	public void putIntArray(int[] arr) {
 		for (int i = 0; i < arr.length; i++) {
 			putInteger(arr[i]);
+		}
+	}
+	
+	public void putLongArray(long[] arr) {
+		for (int i = 0; i < arr.length; i++) {
+			putLong(arr[i]);
 		}
 	}
 	

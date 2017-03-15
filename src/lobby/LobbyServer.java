@@ -1,9 +1,11 @@
 package lobby;
 
+import lobby.client.messages.JoinLobbyRequest;
 import net.ClientGenericMessage;
-import net.GenericServer;
+import net.GenericTCPServer;
+import tools.HexTools;
 
-public class LobbyServer extends GenericServer {
+public class LobbyServer extends GenericTCPServer {
 	public LobbyServer(int port) {
 		super("Lobby server", port);
 	}
@@ -13,7 +15,11 @@ public class LobbyServer extends GenericServer {
 		ClientGenericMessage message = null;
 
 		switch (messageID) {
-		
+		case 0x4301:
+			message = new JoinLobbyRequest(messageBytes);
+			System.out.println(message.getResponse()[0x92c]);
+//			HexTools.printHexArray(message.getResponse(), false);
+			break;
 		}
 		
 		return message;

@@ -2,6 +2,7 @@ package main;
 
 import java.io.IOException;
 
+import game.GameServer;
 import lobby.LobbyServer;
 import login.LoginServer;
 
@@ -12,5 +13,8 @@ public class Main {
 		
 		LobbyServer lobbyServer = new LobbyServer(21001);
 		lobbyServer.startServer();
+		
+		GameServer gameServer = new GameServer(21001);
+		gameServer.startServer();
 	}
 }

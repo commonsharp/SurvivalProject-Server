@@ -31,23 +31,16 @@ public class LoginResponse extends ServerGenericMessage {
 	public void changeData() {
 		response = 1;
 		ageRestriction = 1;
-//		unknown5 = ageRestriction;
-		playerLevel = 1;
-		playerMoney = 100;
+		playerLevel = 30;
+		playerMoney = 1234567;
 		usuableCharacterCount = 12;
-		playerExperience = 100;
-		userType = 10;
-		activeCharacter = 20;
+		playerExperience = 7654321;
+		userType = 30;
+		activeCharacter = 30;
 		guildName = "barakguild";
-		unknown1 = 1111;
-		unknown3 = "what";
-		unknown4 = "what2";
 		isMuted = 0;
 		daysToMute = 0;
 		guildTitle = "whatwhat";
-		unknown5 = 1111;
-		unknown6 = 1111;
-		unknown7 = 1111;
 	}
 
 	@Override
