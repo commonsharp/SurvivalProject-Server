@@ -8,6 +8,10 @@ Server files for the game Survival Project, written in Java.
 
 * Added multiple servers support.
 
+* Added UDP servers support.
+
+* We can get into the lobby :D
+
 
 
 # 14/03/2017
