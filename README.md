@@ -3,7 +3,7 @@ Server files for the game Survival Project, written in Java.
 
 # 16/03/2017
 * Big changes in the server packets code. Each packet is in a fixed size now and we can insert fields easier.
-* Figured out how items work. Still need to write code to handle them.
+* Figured out how normal items (not premium) work. Still need to write code to handle them.
 
 # 15/03/2017
 * It seems that using the unpacked version of sp.exe (debug-mode or release-mode) causes the game to crash, unfortunately. I believe it's because the IOProtect isn't running, and sp.exe throws an exception after a few seconds (10?). Maybe there's a way to bypass it.
