@@ -71,7 +71,7 @@ public class UserTCPSession implements Runnable {
 		
 		// Change the checksum
 		HexTools.putIntegerInByteArray(response, 12, Cryptography.getDigest(response));
-		
+		HexTools.printHexArray(response, false);
 		// Encrypt and send
 		Cryptography.encryptMessage(response);
 		output.write(response);

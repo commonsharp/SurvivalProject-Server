@@ -5,7 +5,7 @@ import net.ServerGenericMessage;
 public class JoinServerResponse extends ServerGenericMessage {
 
 	public JoinServerResponse() {
-		super(0x1101);
+		super(0x14, 0x1101);
 	}
 
 	@Override

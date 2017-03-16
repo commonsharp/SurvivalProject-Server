@@ -17,7 +17,7 @@ public class ServerInfoResponse extends ServerGenericMessage {
 	protected int unknown2;
 	
 	public ServerInfoResponse(short channelType) {
-		super(0x2908);
+		super(0x68, 0x2908);
 		
 		this.channelType = channelType;
 	}
@@ -39,17 +39,16 @@ public class ServerInfoResponse extends ServerGenericMessage {
 
 	@Override
 	public void addPayload() {
-		payload.putShort(channelType);
-		payload.putShort(channelID);
-		payload.putString(ip, 15);
-		payload.putInteger(port);
-		payload.putInteger(population);
-		payload.putString(name, 28);
-		payload.putString(bestGuildName, 12);
-		payload.putShort(unknown1);
-		payload.putInteger(maxPopulation);
-		payload.putByte(guildSomething);
-		payload.putBytes(unused);
-		payload.putInteger(unknown2);
+		buffer.putShort(0x14, channelType);
+		buffer.putShort(0x16, channelID);
+		buffer.putString(0x18, ip);
+		buffer.putInt(0x28, port);
+		buffer.putInt(0x2C, population);
+		buffer.putString(0x30, name);
+		buffer.putString(0x4D, bestGuildName);
+		buffer.putShort(0x5A, unknown1);
+		buffer.putInt(0x5C, maxPopulation);
+		buffer.putByte(0x60, guildSomething);
+		buffer.putInt(0x64, unknown2);
 	}
 }

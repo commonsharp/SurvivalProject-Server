@@ -4,7 +4,7 @@ import net.ServerGenericMessage;
 
 public class ReconnectResponse extends ServerGenericMessage {
 	public ReconnectResponse() {
-		super(0);
+		super(0x14, 0);
 		// TODO Auto-generated constructor stub
 	}
 

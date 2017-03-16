@@ -5,7 +5,7 @@ import net.ServerGenericMessage;
 public class GuildMarkResponse extends ServerGenericMessage {
 
 	public GuildMarkResponse() {
-		super(0x2922);
+		super(1, 0x2922); // NOT GOOD.
 	}
 
 	@Override
@@ -16,7 +16,7 @@ public class GuildMarkResponse extends ServerGenericMessage {
 
 	@Override
 	public void addPayload() {
-		payload.putString("barakguild", 16);
-		payload.putBytes(new byte[79]);
+//		buffer.putString("barakguild", 16);
+//		buffer.putBytes(new byte[79]);
 	}
 }

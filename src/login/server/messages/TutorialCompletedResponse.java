@@ -37,7 +37,7 @@ public class TutorialCompletedResponse extends ServerGenericMessage {
 	}
 	
 	public TutorialCompletedResponse() {
-		super(0x2923);
+		super(0x98, 0x2923); // NOT GOOD.
 		
 		final int t_items[] = {11204, 11203, 11202, 11201, 11101, 11102, 11103, 11104, 11301, 2910};
 		
@@ -76,12 +76,12 @@ public class TutorialCompletedResponse extends ServerGenericMessage {
 
 	@Override
 	public void addPayload() {
-		payload.putIntArray(itemTypes);
-		payload.putIntArray(zeros);
-		payload.putIntArray(itemRemainingForceDays);
-		payload.putInteger(unk2);
-		payload.putInteger(unk3);
-		payload.putInteger(unk4);
+		buffer.putInts(0x14, itemTypes);
+		buffer.putInts(0x3c, zeros);
+		buffer.putInts(0x64, itemRemainingForceDays);
+		buffer.putInt(0x8c, unk2);
+		buffer.putInt(0x90, unk3);
+		buffer.putInt(0x94, unk4);
 		
 	}
 

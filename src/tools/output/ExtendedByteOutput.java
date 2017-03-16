@@ -1,78 +1,62 @@
 package tools.output;
 
-import java.util.LinkedList;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class ExtendedByteOutput {
-	protected LinkedList<Byte> buffer;
+	protected ByteBuffer buffer;
 	
-	public ExtendedByteOutput() {
-		buffer = new LinkedList<Byte>();
+	public ExtendedByteOutput(int length) {
+		buffer = ByteBuffer.allocate(length);
+		buffer.order(ByteOrder.LITTLE_ENDIAN);
 	}
 	
-	public int getSize() {
-		return buffer.size();
+	// maybe & 0xFF? o_O
+	public void putByte(int index, byte value) {
+		buffer.put(index, value);
 	}
 	
-	public void getBytes(byte[] bytes, int offset) {
-		int i = 0;
-		
-		for (Byte b : buffer) {
-			bytes[offset + i] = b;
-			i++;
-		}
+	public void putShort(int index, short value) {
+		buffer.putShort(index, value);
 	}
 	
-	public void putByte(byte value) {
-		buffer.addLast(value);
+	public void putInt(int index, int value) {
+		buffer.putInt(index, value);
 	}
 	
-	public void putShort(int value) {
-		for (int j = 0; j < 2; j++) {
-			putByte((byte) (value >> (j * 8)));
-		}
+	public void putLong(int index, long value) {
+		buffer.putLong(index, value);
 	}
 	
-	public void putInteger(int value) {
-		for (int j = 0; j < 4; j++) {
-			putByte((byte) (value >> (j * 8)));
-		}
-	}
-	
-	public void putLong(long value) {
-		for (int j = 0; j < 8; j++) {
-			putByte((byte) (value >> (j * 8)));
-		}
-	}
-	
-	public void putBytes(byte[] bytes) {
+	public void putBytes(int index, byte[] bytes) {
 		for (int i = 0; i < bytes.length; i++) {
-			putByte(bytes[i]);
+			putByte(index + i, bytes[i]);
 		}
 	}
 	
-	public void putIntArray(int[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			putInteger(arr[i]);
+	public void putInts(int index, int[] bytes) {
+		for (int i = 0; i < bytes.length; i++) {
+			putInt(index + 4 * i, bytes[i]);
 		}
 	}
 	
-	public void putLongArray(long[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			putLong(arr[i]);
+	public void putLongs(int index, long[] bytes) {
+		for (int i = 0; i < bytes.length; i++) {
+			putLong(index + 8 * i, bytes[i]);
 		}
 	}
 	
-	// Assumes s.length <= length
-	public void putString(String s, int length) {
+	public void putString(int index, String s) {
 		if (s == null) {
-			putBytes(new byte[length + 1]);
 			return;
 		}
 		
 		for (int i = 0; i < s.length(); i++) {
-			putByte((byte) s.charAt(i));
+			putByte(index + i, (byte) s.charAt(i));
 		}
-		
-		putBytes(new byte[length - s.length() + 1]);
+	}
+	
+	public byte[] toArray() {
+		return buffer.array();
 	}
 }

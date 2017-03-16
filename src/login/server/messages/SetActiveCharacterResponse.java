@@ -7,18 +7,18 @@ public class SetActiveCharacterResponse extends ServerGenericMessage {
 	protected int character;
 	
 	public SetActiveCharacterResponse(int character) {
-		super(0x2912);
+		super(0x1C, 0x2912);
 		this.character = character;
 	}
 
 	@Override
 	public void changeData() {
-		unknown1 = 1;
+		unknown1 = 1; // ?
 	}
 
 	@Override
 	public void addPayload() {
-		payload.putInteger(unknown1);
-		payload.putInteger(character);
+		buffer.putInt(0x14, unknown1);
+		buffer.putInt(0x18, character);
 	}
 }
