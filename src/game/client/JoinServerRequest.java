@@ -1,9 +1,9 @@
 package game.client;
 
 import game.server.JoinServerResponse;
-import net.ClientGenericMessage;
+import net.GenericClientMessage;
 
-public class JoinServerRequest extends ClientGenericMessage {
+public class JoinServerRequest extends GenericClientMessage {
 
 	public JoinServerRequest(byte[] messageBytes) {
 		super(messageBytes);

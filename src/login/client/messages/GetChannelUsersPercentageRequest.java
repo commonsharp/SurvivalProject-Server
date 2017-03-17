@@ -1,10 +1,11 @@
 package login.client.messages;
 
-import login.server.messages.TutorialCompletedResponse;
+import login.server.messages.GetChannelUsersPercentageResponse;
 import net.GenericClientMessage;
 
-public class TutorialCompletedNotification extends GenericClientMessage {
-	public TutorialCompletedNotification(byte[] messageBytes) {
+public class GetChannelUsersPercentageRequest extends GenericClientMessage {
+	
+	public GetChannelUsersPercentageRequest(byte[] messageBytes) {
 		super(messageBytes);
 	}
 
@@ -19,6 +20,6 @@ public class TutorialCompletedNotification extends GenericClientMessage {
 
 	@Override
 	public byte[] getResponse() {
-		return new TutorialCompletedResponse().getResponse();
+		return new GetChannelUsersPercentageResponse().getResponse();
 	}
 }

@@ -1,11 +1,11 @@
-package login.server.messages;
+package lobby.server.messages;
 
 import net.GenericServerMessage;
 
-public class GuildMarkResponse extends GenericServerMessage {
+public class GetTopGuildsMarkResponse extends GenericServerMessage {
 
-	public GuildMarkResponse() {
-		super(1000, 0x2922);
+	public GetTopGuildsMarkResponse() {
+		super(1000, 0x4487);
 	}
 
 	@Override
@@ -16,7 +16,7 @@ public class GuildMarkResponse extends GenericServerMessage {
 
 	@Override
 	public void addPayload() {
-		buffer.putString(0x14, "barakguild"); // TODO - change to the player's guild
+		buffer.putString(0x14, "hello7");
 		byte[] pixels = new byte[12 * 13 * 2];
 		
 		// 16 bits per color. probably High Color.

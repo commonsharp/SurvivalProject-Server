@@ -1,7 +1,9 @@
 package lobby;
 
+import lobby.client.messages.GetTopGuildsMarkRequest;
+import lobby.client.messages.GetTopGuildsRequest;
 import lobby.client.messages.JoinLobbyRequest;
-import net.ClientGenericMessage;
+import net.GenericClientMessage;
 import net.GenericTCPServer;
 import tools.HexTools;
 
@@ -11,16 +13,21 @@ public class LobbyServer extends GenericTCPServer {
 	}
 
 	@Override
-	public ClientGenericMessage processPacket(int messageID, byte[] messageBytes) {
-		ClientGenericMessage message = null;
+	public GenericClientMessage processPacket(int messageID, byte[] messageBytes) {
+		GenericClientMessage message = null;
 
 		switch (messageID) {
 		case 0x4301:
 			message = new JoinLobbyRequest(messageBytes);
-			System.out.println(message.getResponse()[0x92c]);
-//			HexTools.printHexArray(message.getResponse(), false);
+			break;
+		case 0x4388:
+			message = new GetTopGuildsRequest(messageBytes);
+			break;
+		case 0x4486:
+			message = new GetTopGuildsMarkRequest(messageBytes);
 			break;
 		}
+		
 		
 		return message;
 	}

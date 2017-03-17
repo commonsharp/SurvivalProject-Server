@@ -1,9 +1,11 @@
 package login;
+import login.client.messages.GetChannelUsersPercentageRequest;
+import login.client.messages.GuildMarkRequest;
 import login.client.messages.LoginRequest;
 import login.client.messages.ServerInfoRequest;
 import login.client.messages.SetActiveCharacterRequest;
 import login.client.messages.TutorialCompletedNotification;
-import net.ClientGenericMessage;
+import net.GenericClientMessage;
 import net.GenericTCPServer;
 import tools.HexTools;
 
@@ -13,8 +15,8 @@ public class LoginServer extends GenericTCPServer {
 	}
 	
 	@Override
-	public ClientGenericMessage processPacket(int messageID, byte[] messageBytes) {
-		ClientGenericMessage message = null;
+	public GenericClientMessage processPacket(int messageID, byte[] messageBytes) {
+		GenericClientMessage message = null;
 		
 		switch (messageID) {
 		case 0x2707:
@@ -29,9 +31,12 @@ public class LoginServer extends GenericTCPServer {
 		case 0x2915:
 			message = new TutorialCompletedNotification(messageBytes);
 			break;
-//		case 0x2917:
-//			message = new GuildMarkRequest(messageBytes);
-//			break;
+		case 0x2917:
+			message = new GetChannelUsersPercentageRequest(messageBytes);
+			break;
+		case 0x2921:
+			message = new GuildMarkRequest(messageBytes);
+			break;
 		default:
 //			HexTools.printHexArray(messageBytes, 20, false);
 //			System.out.println();

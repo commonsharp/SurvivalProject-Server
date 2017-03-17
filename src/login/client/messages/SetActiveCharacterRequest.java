@@ -1,9 +1,9 @@
 package login.client.messages;
 
 import login.server.messages.SetActiveCharacterResponse;
-import net.ClientGenericMessage;
+import net.GenericClientMessage;
 
-public class SetActiveCharacterRequest extends ClientGenericMessage {
+public class SetActiveCharacterRequest extends GenericClientMessage {
 	protected String username;
 	protected int character;
 	

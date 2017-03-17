@@ -1,8 +1,8 @@
 package login.server.messages;
 
-import net.ServerGenericMessage;
+import net.GenericServerMessage;
 
-public class ServerInfoResponse extends ServerGenericMessage {
+public class ServerInfoResponse extends GenericServerMessage {
 	protected short channelType; // between 0 and 3
 	protected short channelID; // between 0 and 39
 	protected String ip; // 15+0

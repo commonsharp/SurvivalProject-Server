@@ -1,8 +1,8 @@
 package login.server.messages;
 
-import net.ServerGenericMessage;
+import net.GenericServerMessage;
 
-public class ReconnectResponse extends ServerGenericMessage {
+public class ReconnectResponse extends GenericServerMessage {
 	public ReconnectResponse() {
 		super(0x14, 0);
 		// TODO Auto-generated constructor stub

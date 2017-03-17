@@ -47,7 +47,7 @@ public class UserTCPSession implements Runnable {
 				
 				Log.log(server.getName() + ": New client packet: 0x" + HexTools.integerToHexString(messageID));
 				
-				ClientGenericMessage message = server.processPacket(messageID, messageBytes);
+				GenericClientMessage message = server.processPacket(messageID, messageBytes);
 				
 				changeStateWhenRecieve(stateFromMessage);
 				
@@ -71,7 +71,6 @@ public class UserTCPSession implements Runnable {
 		
 		// Change the checksum
 		HexTools.putIntegerInByteArray(response, 12, Cryptography.getDigest(response));
-		HexTools.printHexArray(response, false);
 		// Encrypt and send
 		Cryptography.encryptMessage(response);
 		output.write(response);

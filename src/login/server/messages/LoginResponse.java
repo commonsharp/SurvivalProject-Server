@@ -1,8 +1,8 @@
 package login.server.messages;
 
-import net.ServerGenericMessage;
+import net.GenericServerMessage;
 
-public class LoginResponse extends ServerGenericMessage {
+public class LoginResponse extends GenericServerMessage {
 	int response;
     int userType; //Not sure, but It control/close servers 0x1E open all servers
     int activeCharacter;
@@ -10,8 +10,7 @@ public class LoginResponse extends ServerGenericMessage {
     int usuableCharacterCount; // 1 - 12?
     int isMuted;
     int daysToMute;
-    int ageRestriction; //1 is ok, other will give korean announcement
-    int notUsed; //Always 0x40000000, can be 0 // not used maybe
+    int ageRestriction;
     long playerExperience;
     long playerMoney; // money?
     String guildName; // 12+0
@@ -31,22 +30,22 @@ public class LoginResponse extends ServerGenericMessage {
 	public void changeData() {
 		response = 1;
 		ageRestriction = 1;
-		playerLevel = 0;
+		playerLevel = 30;
 		playerMoney = 1234567;
 		usuableCharacterCount = 12;
 		playerExperience = 7654321;
-		userType = 0;
-		activeCharacter = 0;
+		userType = 30;
+		activeCharacter = 40;
 		guildName = "barakguild";
-		isMuted = 0;
-		daysToMute = 0;
+		isMuted = 12;
+		daysToMute = 34;
 		guildTitle = "whatwhat";
-//		unknown1 = 1234;
-//		unknown3 = "what3";
-//		unknown4 = "what4";
-//		unknown5 = 560;
-//		unknown6 = 10;
-//		unknown7 = 10;
+		unknown1 = 1234;
+		unknown3 = "what3";
+		unknown4 = "what4";
+		unknown5 = 560;
+		unknown6 = 10;
+		unknown7 = 10;
 	}
 
 	@Override

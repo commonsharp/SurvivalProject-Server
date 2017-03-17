@@ -1,10 +1,10 @@
 package login.client.messages;
 
 import login.server.messages.GuildMarkResponse;
-import login.server.messages.ServerInfoResponse;
-import net.ClientGenericMessage;
+import net.GenericClientMessage;
+import tools.HexTools;
 
-public class GuildMarkRequest extends ClientGenericMessage {
+public class GuildMarkRequest extends GenericClientMessage {
 	
 	public GuildMarkRequest(byte[] messageBytes) {
 		super(messageBytes);

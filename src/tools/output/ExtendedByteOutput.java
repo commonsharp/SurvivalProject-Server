@@ -34,6 +34,12 @@ public class ExtendedByteOutput {
 		}
 	}
 	
+	public void putShorts(int index, short[] bytes) {
+		for (int i = 0; i < bytes.length; i++) {
+			putShort(index + 2 * i, bytes[i]);
+		}
+	}
+	
 	public void putInts(int index, int[] bytes) {
 		for (int i = 0; i < bytes.length; i++) {
 			putInt(index + 4 * i, bytes[i]);

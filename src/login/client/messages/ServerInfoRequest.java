@@ -1,9 +1,9 @@
 package login.client.messages;
 
 import login.server.messages.ServerInfoResponse;
-import net.ClientGenericMessage;
+import net.GenericClientMessage;
 
-public class ServerInfoRequest extends ClientGenericMessage {
+public class ServerInfoRequest extends GenericClientMessage {
 	protected int unknown1;
 	protected int channelType;
 	

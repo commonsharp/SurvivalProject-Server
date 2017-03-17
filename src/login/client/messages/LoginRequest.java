@@ -1,9 +1,9 @@
 package login.client.messages;
 
 import login.server.messages.LoginResponse;
-import net.ClientGenericMessage;
+import net.GenericClientMessage;
 
-public class LoginRequest extends ClientGenericMessage {
+public class LoginRequest extends GenericClientMessage {
 	protected byte[] versionHash; // 36 bytes
 	protected int versionCode;
 	String username; // 12 characters+0

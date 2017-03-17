@@ -14,7 +14,7 @@ public abstract class GenericTCPServer implements Runnable {
 	
 	protected ArrayList<UserTCPSession> usersSessions;
 	
-	public abstract ClientGenericMessage processPacket(int messageID, byte[] messageBytes);
+	public abstract GenericClientMessage processPacket(int messageID, byte[] messageBytes);
 	
 	public GenericTCPServer(String name, int port) {
 		this.name = name;

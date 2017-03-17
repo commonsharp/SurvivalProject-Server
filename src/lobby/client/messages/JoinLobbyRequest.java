@@ -1,9 +1,9 @@
 package lobby.client.messages;
 
 import lobby.server.messages.JoinLobbyResponse;
-import net.ClientGenericMessage;
+import net.GenericClientMessage;
 
-public class JoinLobbyRequest extends ClientGenericMessage {
+public class JoinLobbyRequest extends GenericClientMessage {
 	protected byte[] versionHash; // 36 bytes
 	protected int versionCode;
 	String username; // 12 characters+0

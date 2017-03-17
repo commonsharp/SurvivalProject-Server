@@ -1,8 +1,8 @@
 package login.server.messages;
 
-import net.ServerGenericMessage;
+import net.GenericServerMessage;
 
-public class TutorialCompletedResponse extends ServerGenericMessage {
+public class TutorialCompletedResponse extends GenericServerMessage {
 	// big...
 	int itemTypes[]; // 10
 	int zeros[]; //10 // skills? just guessing

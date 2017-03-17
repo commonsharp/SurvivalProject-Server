@@ -16,7 +16,7 @@ public abstract class GenericUDPServer implements Runnable {
 	
 	protected Thread serverThread;
 	
-	public abstract ClientGenericMessage processPacket(int messageID, byte[] messageBytes);
+	public abstract GenericClientMessage processPacket(int messageID, byte[] messageBytes);
 	
 	public GenericUDPServer(String name, int port) {
 		this.name = name;
@@ -63,7 +63,7 @@ public abstract class GenericUDPServer implements Runnable {
 				System.out.println("State: " + state);
 				Log.log(name + ": New client packet: 0x" + HexTools.integerToHexString(messageID));
 				
-				ClientGenericMessage message = processPacket(messageID, messageBytes);
+				GenericClientMessage message = processPacket(messageID, messageBytes);
 				
 				if (message != null) {
 					byte[] response = message.getResponse();
