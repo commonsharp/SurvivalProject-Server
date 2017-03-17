@@ -10,6 +10,8 @@ public class CreateRoomHandler extends GenericHandler {
 	public static final int RESPONSE_ID = 0x4308;
 	public static final int RESPONSE_LENGTH = 0x6C;
 	
+	public static int state;
+	
 	protected int roomNumber; // starts with 0. room #1 - 0
 	protected String roomName;
 	protected int gameType;
@@ -23,6 +25,7 @@ public class CreateRoomHandler extends GenericHandler {
 	protected byte unknown8;
 	protected byte unknown9;
 	protected byte unknown10;
+	protected byte isLimitAnger; // 0 = limit. other values = no limit.
 	
 	public CreateRoomHandler(UserTCPSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
@@ -30,6 +33,7 @@ public class CreateRoomHandler extends GenericHandler {
 
 	@Override
 	public void interpretBytes() {
+		state = 2;
 		roomNumber = input.getInt(0x14);
 		roomName = input.getString(0x18);
 		gameType = input.getInt(0x38);
@@ -76,18 +80,18 @@ public class CreateRoomHandler extends GenericHandler {
 		output.putInt(0x3C, gameType);
 		output.putInt(0x40, gameMap);
 		output.putInt(0x54, numberOfPlayers);
-		output.putByte(0x58, isWithScrolls);
-		output.putByte(0x59, isWithTeams);
+		output.putByte(0x58, (byte) isWithScrolls);
+		output.putByte(0x59, (byte) 0);
 		output.putInt(0x5C, 10);
-		output.putByte(0x60, (byte) 10);
+		output.putByte(0x60, (byte) isWithTeams);
 		output.putInt(0x64, cardsLimit);
-		output.putShort(0x68, (short) 10);
-		output.putByte(0x6A, (byte) 10);
-		output.putByte(0x6B, (byte) 10);
+		output.putShort(0x68, (short) 0);
+		output.putByte(0x6A, isLimitAnger);
+		output.putByte(0x6B, (byte) 1);
 	}
 
 	@Override
 	public void afterSend() throws IOException {
-		sendTCPMessage(new PlayerJoinedRoomHandler(tcpServer, new byte[1280]).getResponse());
+		sendTCPMessage(new EquipChangedHandler(tcpServer, new byte[1280]).getResponse());
 	}
 }

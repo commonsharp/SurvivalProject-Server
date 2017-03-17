@@ -26,7 +26,7 @@ public class JoinLobbyHandler extends GenericHandler {
     // if it's 0, this item is not going to be available (must be set to 1...)
     byte playerCardItemExist[] = {1, 1, 1, 1, 1};
 	
-	int playerCardItemId[] = {1111, 1122, 1133, 1144, 1244};
+	int playerCardItemId[] = {1211, 1321, 1131, 1211, 1212};
 	int playerCardItemDays[] = {10, 1, 1, 1, 10};
 	int playerCardItemLevelIdx[] = {8, 8, 7, 8, 5, 6};
 	int playerCardItemSkill[] = {36100300, 0, 33200000, 0, 0};

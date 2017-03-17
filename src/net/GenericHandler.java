@@ -90,7 +90,7 @@ public abstract class GenericHandler {
 	}
 	
 	public void printMessage() {
-		HexTools.printHexArray(messageBytes, false);
+		HexTools.printHexArray(messageBytes, 0x14, false);
 	}
 	
 	public void sendTCPMessage(byte[] messageBytes) throws IOException {

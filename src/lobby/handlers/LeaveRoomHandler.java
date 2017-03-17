@@ -1,5 +1,7 @@
 package lobby.handlers;
 
+import java.io.IOException;
+
 import net.GenericHandler;
 import net.UserTCPSession;
 
@@ -29,13 +31,13 @@ public class LeaveRoomHandler extends GenericHandler {
 
 	@Override
 	public void addPayload() {
-		output.putInt(0x14, 2);
-		output.putInt(0x18, 2);
+		output.putInt(0x14, 0);
+		output.putString(0x18, "b");
 	}
 
 	@Override
-	public void afterSend() {
-		// TODO Auto-generated method stub
-		
+	public void afterSend() throws IOException {
+		sendTCPMessage(new RoomPlayersChangedHandler(tcpServer, new byte[3000]).getResponse());
+		sendTCPMessage(new JoinLobbyHandler(tcpServer, new byte[3000]).getResponse());
 	}
 }

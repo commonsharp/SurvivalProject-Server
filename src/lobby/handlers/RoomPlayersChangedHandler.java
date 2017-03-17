@@ -10,10 +10,10 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 	
 	int unknown01;
 	int character;
-	int unknown02;
-	byte unknown03;
-	int unknown04;
-	int unknown05;
+	int team;
+	byte magic;
+	int weapon;
+	int accessory;
 	int unknown06;
 	
 	public RoomPlayersChangedHandler(UserTCPSession tcpServer, byte[] messageBytes) {
@@ -24,11 +24,17 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 	public void interpretBytes() {
 		unknown01 = input.getInt(0x14);
 		character = input.getInt(0x18);
-		unknown02 = input.getInt(0x1C);
-		unknown03 = input.getByte(0x20);
-		unknown04 = input.getInt(0x24);
-		unknown05 = input.getInt(0x28);
+		team = input.getInt(0x1C);
+		magic = input.getByte(0x20);
+		weapon = input.getInt(0x24);
+		accessory = input.getInt(0x28);
 		unknown06 = input.getInt(0x2C);
+		
+		System.out.println(unknown01);
+		System.out.println(magic); // magic
+		System.out.println(weapon); // weapon
+		System.out.println(accessory); // access.?
+		System.out.println(unknown06);
 	}
 
 	@Override
