@@ -1,8 +1,9 @@
 package lobby.handlers;
 
-import net.GenericMessage;
+import net.GenericHandler;
+import net.UserTCPSession;
 
-public class JoinLobbyHandler extends GenericMessage {
+public class JoinLobbyHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x4301;
 	public static final int RESPONSE_ID = 0x4302;
 	public static final int RESPONSE_LENGTH = 0x979;
@@ -69,8 +70,8 @@ public class JoinLobbyHandler extends GenericMessage {
 	/* calculate channel flag from playerLevel */
 	int channelFlag = (playerLevel == 0) ? 0 : (playerLevel >= 17) ? 30 : (playerLevel >= 13) ? 20 : 10;
 	
-	public JoinLobbyHandler(byte[] messageBytes) {
-		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+	public JoinLobbyHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -92,61 +93,63 @@ public class JoinLobbyHandler extends GenericMessage {
 
 	@Override
 	public void addPayload() {
-		outputBuffer.putInt(0x14, response); // 0x14
-		outputBuffer.putString(0x18, guildName); // 0x18
-		outputBuffer.putString(0x25, guildDuty); // 0x25
-		outputBuffer.putByte(0x32, gender); // 0x32
-		outputBuffer.putInt(0x34, playerWins); // 0x34
-		outputBuffer.putInt(0x38, playerLoses); // 0x38
-		outputBuffer.putInt(0x3c, 11); // 0x3c
-		outputBuffer.putInt(0x40, 22); // 0x40
-		outputBuffer.putInt(0x44, playerKOs); // 0x44
-		outputBuffer.putInt(0x48, playerDowns); // 0x48
-		outputBuffer.putInt(0x50, 33); // 0x50
-		outputBuffer.putInt(0x54, 44); // 0x54
-		outputBuffer.putInt(0x5c, 55); // 0x5c
-		outputBuffer.putLong(0x60, playerPoint); // 0x60
-		outputBuffer.putLong(0x68, playerCode); // 0x68
-		outputBuffer.putLong(0x70, avatarMoney); // 0x70
-		outputBuffer.putInt(0x78, playerLevel); // 0x78
-		outputBuffer.putInt(0x7C, usuableCharactersCount); // 0x7c
-		outputBuffer.putInt(0x80, scrolls[0]); // 0x80
-		outputBuffer.putInt(0x84, scrolls[1]); // 0x84
-		outputBuffer.putInt(0x88, scrolls[2]); // 0x88
-		
-		/* white cards */
-		outputBuffer.putInt(0x8C, whiteCards[0]); // 0x8c
-		outputBuffer.putInt(0x90, whiteCards[1]); // 0x90
-		outputBuffer.putInt(0x94, whiteCards[2]); // 0x94
-		outputBuffer.putInt(0x98, whiteCards[3]); // 0x98
+		output.putInt(0x14, response); // 0x14
+		output.putString(0x18, guildName); // 0x18
+		output.putString(0x25, guildDuty); // 0x25
+		output.putByte(0x32, gender); // 0x32
+		output.putInt(0x34, playerWins); // 0x34
+		output.putInt(0x38, playerLoses); // 0x38
+		output.putInt(0x3c, 11); // 0x3c
+		output.putInt(0x40, 22); // 0x40
+		output.putInt(0x44, playerKOs); // 0x44
+		output.putInt(0x48, playerDowns); // 0x48
+		output.putInt(0x50, 33); // 0x50
+		output.putInt(0x54, 44); // 0x54
+		output.putInt(0x5c, 55); // 0x5c
+		output.putLong(0x60, playerPoint); // 0x60
+		output.putLong(0x68, playerCode); // 0x68
+		output.putLong(0x70, avatarMoney); // 0x70
+		output.putInt(0x78, playerLevel); // 0x78
+		output.putInt(0x7C, usuableCharactersCount); // 0x7c
+		output.putInt(0x80, scrolls[0]); // 0x80
+		output.putInt(0x84, scrolls[1]); // 0x84
+		output.putInt(0x88, scrolls[2]); // 0x88
+		output.putInt(0x8C, whiteCards[0]); // 0x8c
+		output.putInt(0x90, whiteCards[1]); // 0x90
+		output.putInt(0x94, whiteCards[2]); // 0x94
+		output.putInt(0x98, whiteCards[3]); // 0x98
+		output.putInt(0x9C, channelFlag); // 0x9c
+		output.putBytes(0xA0, playerCardItemExist); // 0xA0
+		output.putInts(0x280, playerCardItemId); // 0x280
+		output.putInts(0x400, playerCardItemDays); // 0x400
+		output.putInts(0x580, playerCardItemLevelIdx); // 0x580
+		output.putInts(0x700, playerCardItemSkill); // 0x700
+		output.putInt(0x880, playerInventorySlots); // 0x880
+		output.putInts(0x884, minPointForeveDword); // 0x884
+		output.putLongs(0x8F8, minPointForLevelQword); //0x8F8
+		output.putInt(0x918, playerChannelType); // 0x918
+		output.putInt(0x91C, 88); // 0x91c
+		output.putInt(0x920, 77); // 0x920
+		output.putInt(0x924, 66); // 0x924
+		output.putInt(0x928, visitBonusMoney);
+		output.putInt(0x92C, visitBonusElementsType);
+		output.putInt(0x930, visitBonusElements);
+		output.putInt(0x934, visitBonusElementsMultiplier);
+		output.putInt(0x938, visitBonusAvatarMoney);
+		output.putBytes(0x93C, playerEventFlags); // 0x93C
+		output.putInt(0x944, playerRank); // 0x944
+		output.putInt(0x948, 33); // 0x948 - not used
+		output.putInt(0x94C, lobbyMaxRooms); // 0x94c
+		output.putInts(0x950, playerAvatarEquipIdx); // 0x950
+		output.putInt(0x96C, 22); // 0x96C
+		output.putInt(0x970, 11); // 0x970 = field_A0 in Login
+		output.putInt(0x974, playerType); // 0x974
+		output.putByte(0x978, (byte) 0); // 0x978
+	}
 
-		outputBuffer.putInt(0x9C, channelFlag); // 0x9c
-		outputBuffer.putBytes(0xA0, playerCardItemExist); // 0xA0
+	@Override
+	public void afterSend() {
+		// TODO Auto-generated method stub
 		
-		outputBuffer.putInts(0x280, playerCardItemId); // 0x280
-		outputBuffer.putInts(0x400, playerCardItemDays); // 0x400
-		outputBuffer.putInts(0x580, playerCardItemLevelIdx); // 0x580
-		outputBuffer.putInts(0x700, playerCardItemSkill); // 0x700
-		outputBuffer.putInt(0x880, playerInventorySlots); // 0x880
-		outputBuffer.putInts(0x884, minPointForeveDword); // 0x884
-		outputBuffer.putLongs(0x8F8, minPointForLevelQword); //0x8F8
-		outputBuffer.putInt(0x918, playerChannelType); // 0x918
-		outputBuffer.putInt(0x91C, 88); // 0x91c
-		outputBuffer.putInt(0x920, 77); // 0x920
-		outputBuffer.putInt(0x924, 66); // 0x924
-		outputBuffer.putInt(0x928, visitBonusMoney);
-		outputBuffer.putInt(0x92C, visitBonusElementsType);
-		outputBuffer.putInt(0x930, visitBonusElements);
-		outputBuffer.putInt(0x934, visitBonusElementsMultiplier);
-		outputBuffer.putInt(0x938, visitBonusAvatarMoney);
-		outputBuffer.putBytes(0x93C, playerEventFlags); // 0x93C
-		outputBuffer.putInt(0x944, playerRank); // 0x944
-		outputBuffer.putInt(0x948, 33); // 0x948 - not used
-		outputBuffer.putInt(0x94C, lobbyMaxRooms); // 0x94c
-		outputBuffer.putInts(0x950, playerAvatarEquipIdx); // 0x950
-		outputBuffer.putInt(0x96C, 22); // 0x96C
-		outputBuffer.putInt(0x970, 11); // 0x970 = field_A0 in Login
-		outputBuffer.putInt(0x974, playerType); // 0x974
-		outputBuffer.putByte(0x978, (byte) 0); // 0x978
 	}
 }

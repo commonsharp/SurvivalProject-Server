@@ -1,8 +1,9 @@
 package login.handlers;
 
-import net.GenericMessage;
+import net.GenericHandler;
+import net.UserTCPSession;
 
-public class LoginHandler extends GenericMessage {
+public class LoginHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x2707;
 	public static final int RESPONSE_ID = 0x2807;
 	public static final int RESPONSE_LENGTH = 0xA8;
@@ -32,17 +33,17 @@ public class LoginHandler extends GenericMessage {
     int unknown6;
     int unknown7;
 	
-	public LoginHandler(byte[] messageBytes) {
-		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+	public LoginHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 	}
 	
 	@Override
 	public void interpretBytes() {
-		versionHash = inputBuffer.getBytes(0x14, 36);
-		versionCode = inputBuffer.getInt(0x38);
+		versionHash = input.getBytes(0x14, 36);
+		versionCode = input.getInt(0x38);
 		
-		username = inputBuffer.getString(0x3C);
-		password = inputBuffer.getString(0x49);
+		username = input.getString(0x3C);
+		password = input.getString(0x49);
 	}
 
 	@Override
@@ -74,23 +75,29 @@ public class LoginHandler extends GenericMessage {
 
 	@Override
 	public void addPayload() {
-		outputBuffer.putInt(0x14, response);
-		outputBuffer.putInt(0x18, userType);
-		outputBuffer.putInt(0x1C, activeCharacter);
-		outputBuffer.putInt(0x20, playerLevel);
-		outputBuffer.putInt(0x24, usuableCharacterCount);
-		outputBuffer.putInt(0x28, isMuted);
-		outputBuffer.putInt(0x2C, daysToMute);
-		outputBuffer.putInt(0x30, ageRestriction);
-		outputBuffer.putLong(0x38, playerExperience);
-		outputBuffer.putLong(0x40, playerMoney);
-		outputBuffer.putString(0x48, guildName);
-		outputBuffer.putString(0x55, guildTitle);
-		outputBuffer.putLong(0x70, unknown1);
-		outputBuffer.putString(0x78, unknown3);
-		outputBuffer.putString(0x91, unknown4);
-		outputBuffer.putInt(0x9C, unknown5);
-		outputBuffer.putInt(0xA0, unknown6);
-		outputBuffer.putInt(0xA4, unknown7);
+		output.putInt(0x14, response);
+		output.putInt(0x18, userType);
+		output.putInt(0x1C, activeCharacter);
+		output.putInt(0x20, playerLevel);
+		output.putInt(0x24, usuableCharacterCount);
+		output.putInt(0x28, isMuted);
+		output.putInt(0x2C, daysToMute);
+		output.putInt(0x30, ageRestriction);
+		output.putLong(0x38, playerExperience);
+		output.putLong(0x40, playerMoney);
+		output.putString(0x48, guildName);
+		output.putString(0x55, guildTitle);
+		output.putLong(0x70, unknown1);
+		output.putString(0x78, unknown3);
+		output.putString(0x91, unknown4);
+		output.putInt(0x9C, unknown5);
+		output.putInt(0xA0, unknown6);
+		output.putInt(0xA4, unknown7);
+	}
+
+	@Override
+	public void afterSend() {
+		// TODO Auto-generated method stub
+		
 	}
 }

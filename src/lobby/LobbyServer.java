@@ -1,10 +1,14 @@
 package lobby;
 
-import lobby.handlers.GetTopGuildsMarkHandler;
+import lobby.handlers.CreateRoomHandler;
 import lobby.handlers.GetTopGuildsHandler;
+import lobby.handlers.GetTopGuildsMarkHandler;
 import lobby.handlers.JoinLobbyHandler;
-import net.GenericMessage;
+import lobby.handlers.PlayerJoinedRoomHandler;
+import lobby.handlers.RoomPlayersChangedHandler;
+import net.GenericHandler;
 import net.GenericTCPServer;
+import net.UserTCPSession;
 import tools.HexTools;
 
 public class LobbyServer extends GenericTCPServer {
@@ -13,23 +17,34 @@ public class LobbyServer extends GenericTCPServer {
 	}
 
 	@Override
-	public GenericMessage processPacket(int messageID, byte[] messageBytes) {
-		GenericMessage message = null;
+	public GenericHandler processPacket(UserTCPSession tcpServer, int messageID, byte[] messageBytes) {
+		GenericHandler message = null;
 
 		switch (messageID) {
 		case JoinLobbyHandler.REQUEST_ID:
-			message = new JoinLobbyHandler(messageBytes);
+			message = new JoinLobbyHandler(tcpServer, messageBytes);
 			break;
+		case CreateRoomHandler.REQUEST_ID:
+			message = new CreateRoomHandler(tcpServer, messageBytes);
+			break;
+		case RoomPlayersChangedHandler.REQUEST_ID:
+			message = new RoomPlayersChangedHandler(tcpServer, messageBytes);
+			break;
+		case PlayerJoinedRoomHandler.REQUEST_ID:
+			message = new PlayerJoinedRoomHandler(tcpServer, messageBytes);
+			break;
+//		case LeaveRoomHandler.REQUEST_ID:
+//			message = new LeaveRoomHandler(messageBytes);
+//			break;
 		case GetTopGuildsHandler.REQUEST_ID:
-			message = new GetTopGuildsHandler(messageBytes);
+			message = new GetTopGuildsHandler(tcpServer, messageBytes);
 			break;
 		case GetTopGuildsMarkHandler.REQUEST_ID:
-			message = new GetTopGuildsMarkHandler(messageBytes);
+			message = new GetTopGuildsMarkHandler(tcpServer, messageBytes);
 			break;
 		default:
-			HexTools.printHexArray(messageBytes, false);
+			HexTools.printHexArray(messageBytes, 0x14, false);
 		}
-		
 		
 		return message;
 	}

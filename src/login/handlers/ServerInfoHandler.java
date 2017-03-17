@@ -1,8 +1,9 @@
 package login.handlers;
 
-import net.GenericMessage;
+import net.GenericHandler;
+import net.UserTCPSession;
 
-public class ServerInfoHandler extends GenericMessage {
+public class ServerInfoHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x2907;
 	public static final int RESPONSE_ID = 0x2908;
 	public static final int RESPONSE_LENGTH = 0x68;
@@ -20,8 +21,8 @@ public class ServerInfoHandler extends GenericMessage {
 	protected byte[] unused = new byte[3]; //3
 	protected int unknown2;
 	
-	public ServerInfoHandler(byte[] messageBytes) {
-		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+	public ServerInfoHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -29,8 +30,8 @@ public class ServerInfoHandler extends GenericMessage {
 
 	@Override
 	public void interpretBytes() {
-		unknown10 = inputBuffer.getInt(0x14);
-		channelType = (short) inputBuffer.getInt(0x18);
+		unknown10 = input.getInt(0x14);
+		channelType = (short) input.getInt(0x18);
 //		System.out.println("NOTTIME!!!Time: " + unknown1);
 	}
 
@@ -56,16 +57,22 @@ public class ServerInfoHandler extends GenericMessage {
 
 	@Override
 	public void addPayload() {
-		outputBuffer.putShort(0x14, channelType);
-		outputBuffer.putShort(0x16, channelID);
-		outputBuffer.putString(0x18, ip);
-		outputBuffer.putInt(0x28, port);
-		outputBuffer.putInt(0x2C, population);
-		outputBuffer.putString(0x30, name);
-		outputBuffer.putString(0x4D, bestGuildName);
-		outputBuffer.putShort(0x5A, unknown1);
-		outputBuffer.putInt(0x5C, maxPopulation);
-		outputBuffer.putByte(0x60, guildSomething);
-		outputBuffer.putInt(0x64, unknown2);
+		output.putShort(0x14, channelType);
+		output.putShort(0x16, channelID);
+		output.putString(0x18, ip);
+		output.putInt(0x28, port);
+		output.putInt(0x2C, population);
+		output.putString(0x30, name);
+		output.putString(0x4D, bestGuildName);
+		output.putShort(0x5A, unknown1);
+		output.putInt(0x5C, maxPopulation);
+		output.putByte(0x60, guildSomething);
+		output.putInt(0x64, unknown2);
+	}
+
+	@Override
+	public void afterSend() {
+		// TODO Auto-generated method stub
+		
 	}
 }

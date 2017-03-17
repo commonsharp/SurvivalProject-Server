@@ -46,10 +46,15 @@ public class UserTCPSession implements Runnable {
 				int messageID = HexTools.getIntegerInByteArray(messageBytes, 4);
 				int stateFromMessage = HexTools.getIntegerInByteArray(messageBytes, 16);
 				
-				Log.log(server.getName() + ": New client packet: 0x" + HexTools.integerToHexString(messageID));
 				
-				GenericMessage message = server.processPacket(messageID, messageBytes);
+				GenericHandler message = server.processPacket(this, messageID, messageBytes);
 				
+				if (message == null) {
+					Log.log(server.getName() + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - unimplemented yet");
+				}
+				else {
+					Log.log(server.getName() + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - " + message.getClass().getCanonicalName());
+				}
 				changeStateWhenRecieve(stateFromMessage);
 				
 				if (message != null) {
@@ -59,6 +64,8 @@ public class UserTCPSession implements Runnable {
 					if (response != null) {
 						sendMessage(response);
 					}
+					
+					message.afterSend();
 				}
 			}
 		} catch (IOException e) {

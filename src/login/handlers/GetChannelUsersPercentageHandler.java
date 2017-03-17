@@ -1,14 +1,15 @@
 package login.handlers;
 
-import net.GenericMessage;
+import net.GenericHandler;
+import net.UserTCPSession;
 
-public class GetChannelUsersPercentageHandler extends GenericMessage {
+public class GetChannelUsersPercentageHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x2917;
 	public static final int RESPONSE_ID = 0x2918;
 	public static final int RESPONSE_LENGTH = 0x1000;
 	
-	public GetChannelUsersPercentageHandler(byte[] messageBytes) {
-		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+	public GetChannelUsersPercentageHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 	}
 
 	@Override
@@ -28,9 +29,15 @@ public class GetChannelUsersPercentageHandler extends GenericMessage {
 
 	@Override
 	public void addPayload() {
-		outputBuffer.putInt(0x14, 0); // tutorial channel
-		outputBuffer.putInt(0x18, 33); // beginner channel
-		outputBuffer.putInt(0x1C, 66); // hero channel
-		outputBuffer.putInt(0x20, 100); // epic channel
+		output.putInt(0x14, 0); // tutorial channel
+		output.putInt(0x18, 33); // beginner channel
+		output.putInt(0x1C, 66); // hero channel
+		output.putInt(0x20, 100); // epic channel
+	}
+
+	@Override
+	public void afterSend() {
+		// TODO Auto-generated method stub
+		
 	}
 }

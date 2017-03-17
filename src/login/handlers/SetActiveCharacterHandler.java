@@ -1,8 +1,9 @@
 package login.handlers;
 
-import net.GenericMessage;
+import net.GenericHandler;
+import net.UserTCPSession;
 
-public class SetActiveCharacterHandler extends GenericMessage {
+public class SetActiveCharacterHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x2911;
 	public static final int RESPONSE_ID = 0x2912;
 	public static final int RESPONSE_LENGTH = 0x1C;
@@ -12,14 +13,14 @@ public class SetActiveCharacterHandler extends GenericMessage {
 	
 	protected int unknown1;
 	
-	public SetActiveCharacterHandler(byte[] messageBytes) {
-		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+	public SetActiveCharacterHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 	}
 
 	@Override
 	public void interpretBytes() {
-		username = inputBuffer.getString(0x14);
-		character = inputBuffer.getInt(0x24);
+		username = input.getString(0x14);
+		character = input.getInt(0x24);
 	}
 
 	@Override
@@ -34,7 +35,13 @@ public class SetActiveCharacterHandler extends GenericMessage {
 
 	@Override
 	public void addPayload() {
-		outputBuffer.putInt(0x14, unknown1);
-		outputBuffer.putInt(0x18, character);
+		output.putInt(0x14, unknown1);
+		output.putInt(0x18, character);
+	}
+
+	@Override
+	public void afterSend() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,13 +1,14 @@
 package login.handlers;
 
-import net.GenericMessage;
+import net.GenericHandler;
+import net.UserTCPSession;
 
-public class ReconnectHandler extends GenericMessage {
+public class ReconnectHandler extends GenericHandler {
 	public static final int RESPONSE_ID = 0; //?
 	public static final int RESPONSE_LENGTH = 0x1000;
 	
-	public ReconnectHandler(byte[] messageBytes) {
-		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+	public ReconnectHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -19,10 +20,10 @@ public class ReconnectHandler extends GenericMessage {
 
 	@Override
 	public void interpretBytes() {
-		username = inputBuffer.getString(0x14);
-		unknown1 = inputBuffer.getInt(0x21);
-		unknown2 = inputBuffer.getInt(0x25);
-		unknown3 = inputBuffer.getInt(0x29);
+		username = input.getString(0x14);
+		unknown1 = input.getInt(0x21);
+		unknown2 = input.getInt(0x25);
+		unknown3 = input.getInt(0x29);
 	}
 
 	@Override
@@ -38,6 +39,12 @@ public class ReconnectHandler extends GenericMessage {
 
 	@Override
 	public void addPayload() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void afterSend() {
 		// TODO Auto-generated method stub
 		
 	}

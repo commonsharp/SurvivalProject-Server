@@ -1,8 +1,9 @@
 package login.handlers;
 
-import net.GenericMessage;
+import net.GenericHandler;
+import net.UserTCPSession;
 
-public class TutorialCompletedHandler extends GenericMessage {
+public class TutorialCompletedHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x2915;
 	public static final int RESPONSE_ID = 0x2923;
 	public static final int RESPONSE_LENGTH = 0x98;
@@ -40,8 +41,8 @@ public class TutorialCompletedHandler extends GenericMessage {
 		}
 	}
 	
-	public TutorialCompletedHandler(byte[] messageBytes) {
-		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+	public TutorialCompletedHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 		
 		final int t_items[] = {11204, 11203, 11202, 11201, 11101, 11102, 11103, 11104, 11301, 2910};
 		
@@ -89,11 +90,17 @@ public class TutorialCompletedHandler extends GenericMessage {
 
 	@Override
 	public void addPayload() {
-		outputBuffer.putInts(0x14, itemTypes);
-		outputBuffer.putInts(0x3c, zeros);
-		outputBuffer.putInts(0x64, itemRemainingForceDays);
-		outputBuffer.putInt(0x8c, unk2);
-		outputBuffer.putInt(0x90, unk3);
-		outputBuffer.putInt(0x94, unk4);
+		output.putInts(0x14, itemTypes);
+		output.putInts(0x3c, zeros);
+		output.putInts(0x64, itemRemainingForceDays);
+		output.putInt(0x8c, unk2);
+		output.putInt(0x90, unk3);
+		output.putInt(0x94, unk4);
+	}
+
+	@Override
+	public void afterSend() {
+		// TODO Auto-generated method stub
+		
 	}
 }

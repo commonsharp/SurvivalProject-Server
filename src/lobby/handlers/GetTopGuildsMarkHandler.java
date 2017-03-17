@@ -1,8 +1,9 @@
 package lobby.handlers;
 
-import net.GenericMessage;
+import net.GenericHandler;
+import net.UserTCPSession;
 
-public class GetTopGuildsMarkHandler extends GenericMessage {
+public class GetTopGuildsMarkHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x4486;
 	public static final int RESPONSE_ID = 0x4487;
 	public static final int RESPONSE_LENGTH = 0x1400;
@@ -10,14 +11,14 @@ public class GetTopGuildsMarkHandler extends GenericMessage {
 	protected String guildName;
 	protected int window;
 	
-	public GetTopGuildsMarkHandler(byte[] messageBytes) {
-		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+	public GetTopGuildsMarkHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 	}
 
 	@Override
 	public void interpretBytes() {
-		guildName = inputBuffer.getString(0x14);
-		window = inputBuffer.getInt(0x24);
+		guildName = input.getString(0x14);
+		window = input.getInt(0x24);
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class GetTopGuildsMarkHandler extends GenericMessage {
 
 	@Override
 	public void addPayload() {
-		outputBuffer.putString(0x14, "hello7");
+		output.putString(0x14, "hello7");
 		byte[] pixels = new byte[12 * 13 * 2];
 		
 		// 16 bits per color. probably High Color.
@@ -42,7 +43,13 @@ public class GetTopGuildsMarkHandler extends GenericMessage {
 			pixels[i] = (byte) 0; // color
 			pixels[i + 1] = (byte) 255; // brightness
 		}
-		outputBuffer.putInt(0x24, 1); // 0 = nothing. other = mark??
-		outputBuffer.putBytes(0x28, pixels); // the colors. 2 bytes per pixel
+		output.putInt(0x24, 1); // 0 = nothing. other = mark??
+		output.putBytes(0x28, pixels); // the colors. 2 bytes per pixel
+	}
+
+	@Override
+	public void afterSend() {
+		// TODO Auto-generated method stub
+		
 	}
 }

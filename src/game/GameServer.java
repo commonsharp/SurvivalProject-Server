@@ -1,6 +1,6 @@
 package game;
 import game.handlers.JoinServerHandler;
-import net.GenericMessage;
+import net.GenericHandler;
 import net.GenericUDPServer;
 
 public class GameServer extends GenericUDPServer {
@@ -9,12 +9,12 @@ public class GameServer extends GenericUDPServer {
 	}
 	
 	@Override
-	public GenericMessage processPacket(int messageID, byte[] messageBytes) {
-		GenericMessage message = null;
+	public GenericHandler processPacket(GenericUDPServer udpServer, int messageID, byte[] messageBytes) {
+		GenericHandler message = null;
 		
 		switch (messageID) {
 		case JoinServerHandler.REQUEST_ID:
-			message = new JoinServerHandler(messageBytes);
+			message = new JoinServerHandler(udpServer, messageBytes);
 			break;
 		}
 		return message;

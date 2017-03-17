@@ -5,8 +5,9 @@ import login.handlers.LoginHandler;
 import login.handlers.ServerInfoHandler;
 import login.handlers.SetActiveCharacterHandler;
 import login.handlers.TutorialCompletedHandler;
-import net.GenericMessage;
+import net.GenericHandler;
 import net.GenericTCPServer;
+import net.UserTCPSession;
 
 public class LoginServer extends GenericTCPServer {
 	public LoginServer(int port) {
@@ -14,27 +15,27 @@ public class LoginServer extends GenericTCPServer {
 	}
 	
 	@Override
-	public GenericMessage processPacket(int messageID, byte[] messageBytes) {
-		GenericMessage message = null;
+	public GenericHandler processPacket(UserTCPSession tcpServer, int messageID, byte[] messageBytes) {
+		GenericHandler message = null;
 		
 		switch (messageID) {
 		case LoginHandler.REQUEST_ID:
-			message = new LoginHandler(messageBytes);
+			message = new LoginHandler(tcpServer, messageBytes);
 			break;
 		case ServerInfoHandler.REQUEST_ID:
-			message = new ServerInfoHandler(messageBytes);
+			message = new ServerInfoHandler(tcpServer, messageBytes);
 			break;
 		case SetActiveCharacterHandler.REQUEST_ID:
-			message = new SetActiveCharacterHandler(messageBytes);
+			message = new SetActiveCharacterHandler(tcpServer, messageBytes);
 			break;
 		case TutorialCompletedHandler.REQUEST_ID:
-			message = new TutorialCompletedHandler(messageBytes);
+			message = new TutorialCompletedHandler(tcpServer, messageBytes);
 			break;
 		case GetChannelUsersPercentageHandler.REQUEST_ID:
-			message = new GetChannelUsersPercentageHandler(messageBytes);
+			message = new GetChannelUsersPercentageHandler(tcpServer, messageBytes);
 			break;
 		case GuildMarkHandler.REQUEST_ID:
-			message = new GuildMarkHandler(messageBytes);
+			message = new GuildMarkHandler(tcpServer, messageBytes);
 			break;
 		default:
 //			HexTools.printHexArray(messageBytes, 20, false);
