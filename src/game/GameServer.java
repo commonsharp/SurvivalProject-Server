@@ -13,7 +13,7 @@ public class GameServer extends GenericUDPServer {
 		GenericMessage message = null;
 		
 		switch (messageID) {
-		case 0x1101:
+		case JoinServerHandler.REQUEST_ID:
 			message = new JoinServerHandler(messageBytes);
 			break;
 		}

@@ -3,17 +3,19 @@ package lobby.handlers;
 import net.GenericMessage;
 
 public class GetTopGuildsMarkHandler extends GenericMessage {
+	public static final int REQUEST_ID = 0x4486;
 	public static final int RESPONSE_ID = 0x4487;
+	public static final int RESPONSE_LENGTH = 0x1400;
 	
 	protected String guildName;
 	protected int window;
 	
 	public GetTopGuildsMarkHandler(byte[] messageBytes) {
-		super(messageBytes, 1000, RESPONSE_ID);
+		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 	}
 
 	@Override
-	public void interpretBytes(byte[] messageBytes) {
+	public void interpretBytes() {
 		guildName = inputBuffer.getString(0x14);
 		window = inputBuffer.getInt(0x24);
 	}

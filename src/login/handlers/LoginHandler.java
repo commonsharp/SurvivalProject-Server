@@ -1,11 +1,11 @@
 package login.handlers;
 
 import net.GenericMessage;
-import tools.HexTools;
 
 public class LoginHandler extends GenericMessage {
 	public static final int REQUEST_ID = 0x2707;
 	public static final int RESPONSE_ID = 0x2807;
+	public static final int RESPONSE_LENGTH = 0xA8;
 	
 	protected byte[] versionHash; // 36 bytes
 	protected int versionCode;
@@ -33,12 +33,11 @@ public class LoginHandler extends GenericMessage {
     int unknown7;
 	
 	public LoginHandler(byte[] messageBytes) {
-		super(messageBytes, 0xA8, RESPONSE_ID);
+		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 	}
 	
 	@Override
-	public void interpretBytes(byte[] messageBytes) {
-		HexTools.printHexArray(messageBytes, false);
+	public void interpretBytes() {
 		versionHash = inputBuffer.getBytes(0x14, 36);
 		versionCode = inputBuffer.getInt(0x38);
 		

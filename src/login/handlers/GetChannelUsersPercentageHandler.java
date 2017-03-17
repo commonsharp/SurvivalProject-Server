@@ -3,14 +3,16 @@ package login.handlers;
 import net.GenericMessage;
 
 public class GetChannelUsersPercentageHandler extends GenericMessage {
+	public static final int REQUEST_ID = 0x2917;
 	public static final int RESPONSE_ID = 0x2918;
+	public static final int RESPONSE_LENGTH = 0x1000;
 	
 	public GetChannelUsersPercentageHandler(byte[] messageBytes) {
-		super(messageBytes, 1000, RESPONSE_ID);
+		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 	}
 
 	@Override
-	public void interpretBytes(byte[] messageBytes) {
+	public void interpretBytes() {
 	}
 
 	@Override

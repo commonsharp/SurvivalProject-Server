@@ -3,7 +3,9 @@ package login.handlers;
 import net.GenericMessage;
 
 public class ServerInfoHandler extends GenericMessage {
+	public static final int REQUEST_ID = 0x2907;
 	public static final int RESPONSE_ID = 0x2908;
+	public static final int RESPONSE_LENGTH = 0x68;
 	
 	protected short channelType; // between 0 and 3
 	protected short channelID; // between 0 and 39
@@ -19,14 +21,14 @@ public class ServerInfoHandler extends GenericMessage {
 	protected int unknown2;
 	
 	public ServerInfoHandler(byte[] messageBytes) {
-		super(messageBytes, 0x68, RESPONSE_ID);
+		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 		// TODO Auto-generated constructor stub
 	}
 
 	protected int unknown10;
 
 	@Override
-	public void interpretBytes(byte[] messageBytes) {
+	public void interpretBytes() {
 		unknown10 = inputBuffer.getInt(0x14);
 		channelType = (short) inputBuffer.getInt(0x18);
 //		System.out.println("NOTTIME!!!Time: " + unknown1);

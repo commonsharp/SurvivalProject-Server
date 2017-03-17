@@ -3,14 +3,16 @@ package lobby.handlers;
 import net.GenericMessage;
 
 public class GetTopGuildsHandler extends GenericMessage {
+	public static final int REQUEST_ID = 0x4388;
 	public static final int RESPONSE_ID = 0x4389;
+	public static final int RESPONSE_LENGTH = 0xC4;
 	
 	public GetTopGuildsHandler(byte[] messageBytes) {
-		super(messageBytes, 0xC4, RESPONSE_ID);
+		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 	}
 
 	@Override
-	public void interpretBytes(byte[] messageBytes) {
+	public void interpretBytes() {
 	}
 
 	@Override

@@ -3,14 +3,16 @@ package login.handlers;
 import net.GenericMessage;
 
 public class GuildMarkHandler extends GenericMessage {
+	public static final int REQUEST_ID = 0x2921;
 	public static final int RESPONSE_ID = 0x2922;
+	public static final int RESPONSE_LENGTH = 0x1000;
 	
 	public GuildMarkHandler(byte[] messageBytes) {
-		super(messageBytes, 1000, RESPONSE_ID);
+		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 	}
 
 	@Override
-	public void interpretBytes(byte[] messageBytes) {
+	public void interpretBytes() {
 	}
 
 	@Override

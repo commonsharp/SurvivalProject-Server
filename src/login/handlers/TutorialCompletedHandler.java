@@ -3,7 +3,9 @@ package login.handlers;
 import net.GenericMessage;
 
 public class TutorialCompletedHandler extends GenericMessage {
+	public static final int REQUEST_ID = 0x2915;
 	public static final int RESPONSE_ID = 0x2923;
+	public static final int RESPONSE_LENGTH = 0x98;
 
 	// big...
 	int itemTypes[]; // 10
@@ -39,7 +41,7 @@ public class TutorialCompletedHandler extends GenericMessage {
 	}
 	
 	public TutorialCompletedHandler(byte[] messageBytes) {
-		super(messageBytes, 0x98, RESPONSE_ID);
+		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 		
 		final int t_items[] = {11204, 11203, 11202, 11201, 11101, 11102, 11103, 11104, 11301, 2910};
 		
@@ -71,7 +73,7 @@ public class TutorialCompletedHandler extends GenericMessage {
 	}
 
 	@Override
-	public void interpretBytes(byte[] messageBytes) {
+	public void interpretBytes() {
 	}
 
 	@Override

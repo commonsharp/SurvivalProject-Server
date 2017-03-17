@@ -1,6 +1,7 @@
 package net;
 
-import tools.output.ExtendedByteOutput;
+import tools.ExtendedByteBuffer;
+import tools.HexTools;
 
 public abstract class GenericMessage {
 	protected int length;
@@ -8,18 +9,20 @@ public abstract class GenericMessage {
 	protected int unknown1;
 	protected int checksum;
 	protected int state;
+	private byte[] messageBytes;
 	
-	protected ExtendedByteOutput inputBuffer;
-	protected ExtendedByteOutput outputBuffer;
+	protected ExtendedByteBuffer inputBuffer;
+	protected ExtendedByteBuffer outputBuffer;
 	
-	public abstract void interpretBytes(byte[] messageBytes);
+	public abstract void interpretBytes();
 	public abstract void processFields();
 	
 	public abstract void changeData();
 	public abstract void addPayload();
 	
 	public GenericMessage(byte[] messageBytes, int responseLength, int responseMessageID) {
-		inputBuffer = new ExtendedByteOutput(messageBytes);
+		this.messageBytes = messageBytes;
+		inputBuffer = new ExtendedByteBuffer(messageBytes);
 		
 		length = inputBuffer.getInt(0x0);
 		messageID = inputBuffer.getInt(0x4);
@@ -27,10 +30,10 @@ public abstract class GenericMessage {
 		checksum = inputBuffer.getInt(0xC);
 		state = inputBuffer.getInt(0x10);
 		
-		interpretBytes(messageBytes);
+		interpretBytes();
 		processFields();
 		
-		outputBuffer = new ExtendedByteOutput(responseLength);
+		outputBuffer = new ExtendedByteBuffer(responseLength);
 		
 		outputBuffer.putInt(0x0, responseLength);
 		outputBuffer.putInt(0x4, responseMessageID);
@@ -62,5 +65,9 @@ public abstract class GenericMessage {
 		addPayload();
 		
 		return outputBuffer.toArray();
+	}
+	
+	public void printMessage() {
+		HexTools.printHexArray(messageBytes, false);
 	}
 }

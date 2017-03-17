@@ -5,6 +5,7 @@ import lobby.handlers.GetTopGuildsHandler;
 import lobby.handlers.JoinLobbyHandler;
 import net.GenericMessage;
 import net.GenericTCPServer;
+import tools.HexTools;
 
 public class LobbyServer extends GenericTCPServer {
 	public LobbyServer(int port) {
@@ -16,15 +17,17 @@ public class LobbyServer extends GenericTCPServer {
 		GenericMessage message = null;
 
 		switch (messageID) {
-		case 0x4301:
+		case JoinLobbyHandler.REQUEST_ID:
 			message = new JoinLobbyHandler(messageBytes);
 			break;
-		case 0x4388:
+		case GetTopGuildsHandler.REQUEST_ID:
 			message = new GetTopGuildsHandler(messageBytes);
 			break;
-		case 0x4486:
+		case GetTopGuildsMarkHandler.REQUEST_ID:
 			message = new GetTopGuildsMarkHandler(messageBytes);
 			break;
+		default:
+			HexTools.printHexArray(messageBytes, false);
 		}
 		
 		

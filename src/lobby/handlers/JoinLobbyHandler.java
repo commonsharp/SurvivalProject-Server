@@ -3,7 +3,9 @@ package lobby.handlers;
 import net.GenericMessage;
 
 public class JoinLobbyHandler extends GenericMessage {
+	public static final int REQUEST_ID = 0x4301;
 	public static final int RESPONSE_ID = 0x4302;
+	public static final int RESPONSE_LENGTH = 0x979;
 	
 	protected byte[] versionHash; // 36 bytes
 	protected int versionCode;
@@ -68,12 +70,12 @@ public class JoinLobbyHandler extends GenericMessage {
 	int channelFlag = (playerLevel == 0) ? 0 : (playerLevel >= 17) ? 30 : (playerLevel >= 13) ? 20 : 10;
 	
 	public JoinLobbyHandler(byte[] messageBytes) {
-		super(messageBytes, 0x979, RESPONSE_ID);
+		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void interpretBytes(byte[] messageBytes) {
+	public void interpretBytes() {
 		// TODO ...
 	}
 

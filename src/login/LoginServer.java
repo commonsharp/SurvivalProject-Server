@@ -18,22 +18,22 @@ public class LoginServer extends GenericTCPServer {
 		GenericMessage message = null;
 		
 		switch (messageID) {
-		case 0x2707:
+		case LoginHandler.REQUEST_ID:
 			message = new LoginHandler(messageBytes);
 			break;
-		case 0x2907:
+		case ServerInfoHandler.REQUEST_ID:
 			message = new ServerInfoHandler(messageBytes);
 			break;
-		case 0x2911:
+		case SetActiveCharacterHandler.REQUEST_ID:
 			message = new SetActiveCharacterHandler(messageBytes);
 			break;
-		case 0x2915:
+		case TutorialCompletedHandler.REQUEST_ID:
 			message = new TutorialCompletedHandler(messageBytes);
 			break;
-		case 0x2917:
+		case GetChannelUsersPercentageHandler.REQUEST_ID:
 			message = new GetChannelUsersPercentageHandler(messageBytes);
 			break;
-		case 0x2921:
+		case GuildMarkHandler.REQUEST_ID:
 			message = new GuildMarkHandler(messageBytes);
 			break;
 		default:

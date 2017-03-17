@@ -4,9 +4,10 @@ import net.GenericMessage;
 
 public class ReconnectHandler extends GenericMessage {
 	public static final int RESPONSE_ID = 0; //?
+	public static final int RESPONSE_LENGTH = 0x1000;
 	
 	public ReconnectHandler(byte[] messageBytes) {
-		super(messageBytes, 0x14, RESPONSE_ID);
+		super(messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -17,7 +18,7 @@ public class ReconnectHandler extends GenericMessage {
 	
 
 	@Override
-	public void interpretBytes(byte[] messageBytes) {
+	public void interpretBytes() {
 		username = inputBuffer.getString(0x14);
 		unknown1 = inputBuffer.getInt(0x21);
 		unknown2 = inputBuffer.getInt(0x25);
