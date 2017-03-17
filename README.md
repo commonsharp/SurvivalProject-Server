@@ -2,7 +2,7 @@
 Server files for the game Survival Project, written in Java.
 
 # 17/03/2017
-* Major change in the code - each message is no longer divided into 2 classes, resulting in a much better performance and less memory use. Instead, handlers are used. Also, the client buffer was changed to support absolute positions.
+* Major change in the code - each message is no longer divided into 2 classes, resulting in a much better performance, less memory use and a cleaner code. Instead, handlers are used. Also, the client buffer was changed to support absolute positions.
 
 * Handlers: Login: GetChannelUsersPercentageHandler added.
 * Handlers: Login: GuildMarkHandler added.
