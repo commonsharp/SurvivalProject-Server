@@ -1,6 +1,14 @@
 # SurvivalProject-Server
 Server files for the game Survival Project, written in Java.
 
+# 17/03/2017
+* Major change in the code - each message is no longer divided into 2 classes, resulting in a much better performance and less memory use. Instead, handlers are used. Also, the client buffer was changed to support absolute positions.
+
+* Handlers: Login: GetChannelUsersPercentageHandler added.
+* Handlers: Login: GuildMarkHandler added.
+* Handlers: Lobby: GetTopGuildsHandler added.
+* Handlers: Lobby: GetTopGuildsMarkHandler added.
+
 # 16/03/2017
 * Big changes in the server packets code. Each packet is in a fixed size now and we can insert fields easier.
 * Figured out how normal items (not premium) work. Still need to write code to handle them.
