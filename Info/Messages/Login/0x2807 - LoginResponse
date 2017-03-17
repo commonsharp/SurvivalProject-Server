@@ -1,0 +1,18 @@
+output.putInt(0x14, response); // 1 is good. 0 is wrong password. there are more values.
+output.putInt(0x18, userType); // 0 - training. 10 - beginner. 20 - hero. 30 - epic.
+output.putInt(0x1C, activeCharacter); // 10, 20, ... for the first,second... character
+output.putInt(0x20, playerLevel);
+output.putInt(0x24, usuableCharacterCount); // how many characters are available. max - 12
+output.putInt(0x28, isMuted); // maybe...
+output.putInt(0x2C, daysToMute); // maybe...
+output.putInt(0x30, ageRestriction); // 1 - good. -1 - need parent agreement. there are more values.
+output.putLong(0x38, playerExperience);
+output.putLong(0x40, playerMoney);
+output.putString(0x48, guildName);
+output.putString(0x55, guildTitle);
+output.putLong(0x70, unknown1);
+output.putString(0x78, unknown3);
+output.putString(0x91, unknown4);
+output.putInt(0x9C, unknown5);
+output.putInt(0xA0, unknown6);
+output.putInt(0xA4, unknown7);
