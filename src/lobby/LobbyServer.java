@@ -1,10 +1,11 @@
 package lobby;
 
 import lobby.handlers.CreateRoomHandler;
-import lobby.handlers.EquipChangedHandler;
 import lobby.handlers.GetTopGuildsHandler;
 import lobby.handlers.GetTopGuildsMarkHandler;
+import lobby.handlers.ItemsChangedHandler;
 import lobby.handlers.JoinLobbyHandler;
+import lobby.handlers.LeaveRoomHandler;
 import lobby.handlers.RoomPlayersChangedHandler;
 import net.GenericHandler;
 import net.GenericTCPServer;
@@ -30,12 +31,12 @@ public class LobbyServer extends GenericTCPServer {
 		case RoomPlayersChangedHandler.REQUEST_ID:
 			message = new RoomPlayersChangedHandler(tcpServer, messageBytes);
 			break;
-		case EquipChangedHandler.REQUEST_ID:
-			message = new EquipChangedHandler(tcpServer, messageBytes);
+		case ItemsChangedHandler.REQUEST_ID:
+			message = new ItemsChangedHandler(tcpServer, messageBytes);
 			break;
-//		case LeaveRoomHandler.REQUEST_ID:
-//			message = new LeaveRoomHandler(tcpServer, messageBytes);
-//			break;
+		case LeaveRoomHandler.REQUEST_ID:
+			message = new LeaveRoomHandler(tcpServer, messageBytes);
+			break;
 		case GetTopGuildsHandler.REQUEST_ID:
 			message = new GetTopGuildsHandler(tcpServer, messageBytes);
 			break;

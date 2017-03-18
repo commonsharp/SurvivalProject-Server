@@ -1,39 +1,173 @@
 package lobby.handlers;
 
+import java.io.IOException;
+
 import net.GenericHandler;
 import net.UserTCPSession;
+import tools.ExtendedByteBuffer;
 
 public class RoomPlayersChangedHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x4315;
-	public static final int RESPONSE_ID = 0x4304;
-	public static final int RESPONSE_LENGTH = 0xAF;
+	public static final int RESPONSE_ID = 0x4317;
+	public static final int RESPONSE_LENGTH = 0x118;
 	
-	int unknown01;
-	int character;
-	int team;
-	byte magic;
-	int weapon;
-	int accessory;
-	int unknown06;
+	int Slot; //0
+    String netIP; // 16
+    String localIP; // 16
+    int level;
+	byte gender;
+    int Ready;
+    int Character;
+    int magictype = -1;
+    int weapontype = -1;
+    int armortype = -1;
+    int pettype; //maybe
+    int magiclevel = -1;
+    int weaponlevel = -1;
+    int armorlevel = -1;
+    int petlevel; //maybe
+    int magicgf = -1;
+    int weapongf = -1;
+    int armorgf = -1;
+    int petgf; //maybe
+    int magicskill;
+    int weaponskill;
+    int armorskill;
+    int petskill; //maybe
+    int[] scroll = new int[3];
+    int foot;
+    int body;
+    int hand1;
+    int hand2;
+    int face;
+    int hair;
+    int head;
+    int Start; //2
+    int unk20 = -1; //-1
+    int unk21 = -1; //-1
+    int mission;
+    int missionlevel; //maybe
+    int unk24;
+    int unk25;
+    int unk26 = -1; //-1
+    
+    int team; // 10 for blue team. 20 for red team.
+    
+    int magic;
+    int weapon;
+    int accessory;
+    int pet;
+    
+    int unknown01, unknown04, unknown06;
 	
 	public RoomPlayersChangedHandler(UserTCPSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+	}
+	
+	public static byte[] generateFakeMessage(UserTCPSession tcpServer, int character, int team, byte ready, int start) {
+//		ExtendedByteBuffer buf = new ExtendedByteBuffer(0x30);
+//		buf.putInt(0x0, 0x30);
+//		buf.putInt(0x4, REQUEST_ID);
+//		buf.putInt(0x8, 11036);
+//		buf.putInt(0xC, 0);
+//		buf.putInt(0x10, tcpServer.clientState);
+//		buf.putInt(0x14, 0);
+//		buf.putInt(0x18, character);
+//		buf.putInt(0x1C, team);
+//		buf.putInt(0x20, ready);
+//		buf.putInt(0x24, start);
+//		buf.putInt(0x28, 0);
+//		buf.putInt(0x2C, 0);
+//		
+//		return new RoomPlayersChangedHandler(tcpServer, buf.toArray()).getResponse();
+		
+		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
+		output.putInt(0x0, RESPONSE_LENGTH);
+		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x8, 11036);
+		output.putInt(0x14, 0); // slot. first player in the room = slot 0. next one = slot 1 and so on.
+		output.putString(0x18, "10.0.0.2");
+		output.putString(0x28, "10.0.0.2");
+		output.putInt(0x38, 30);
+		output.putString(0x3C, "barak");
+		output.putString(0x49, "Obamas");
+		output.putString(0x56, "MasterLOL");
+		output.putByte(0x63, (byte) 0);
+		output.putInt(0x64, 0);
+		output.putInt(0x70, ready);
+		output.putInt(0x74, character);
+		output.putInt(0x78, 0);
+		output.putInt(0x7C, 0);
+		output.putInt(0x80, team); // 20 for the other team
+		output.putInt(0x84, 0);;
+		output.putInt(0x88, 0);
+		
+		output.putInt(0x8C, 0);
+		output.putInt(0x90, 0);
+		output.putInt(0x94, 0);
+		output.putInt(0x98, -1);
+		
+		output.putInt(0x9C, 0);
+		output.putInt(0xA0, 0);
+		output.putInt(0xA4, 0);
+		output.putInt(0xA8, 0);
+		
+		output.putInt(0xAC, 0);
+		output.putInt(0xB0, 0);
+		output.putInt(0xB4, 0);
+		output.putInt(0xB8, 0);
+		
+		output.putInt(0xBC, 0);
+		output.putInt(0xC0, 0);
+		output.putInt(0xC4, 0);
+		
+		output.putInts(0xCC, new int[3]);
+		output.putInt(0xD0, -1);
+		output.putInt(0xD4, -1);
+		output.putInt(0xD8, -1);
+		output.putInt(0xDC, -1);
+		output.putInt(0xE0, -1);
+		output.putInt(0xE4, -1);
+		output.putInt(0xE8, start);
+		output.putInt(0xEC, 0);
+		output.putInt(0xF0, 0);
+		
+		output.putInt(0xF4, 0);
+		output.putInt(0xF8, 0);
+		output.putInt(0xFC, 0);
+		
+		output.putByte(0x100, (byte) 0);
+		output.putByte(0x101, (byte) 0);
+		output.putByte(0x102, (byte) 0);
+		output.putByte(0x103, (byte) 0);
+
+		output.putInt(0x104, 0);
+		output.putInt(0x108, 0);
+		output.putInt(0x10C, 0);
+		output.putInt(0x110, 0);
+		output.putInt(0x114, 0);
+		
+		return output.toArray();
 	}
 
 	@Override
 	public void interpretBytes() {
 		unknown01 = input.getInt(0x14);
-		character = input.getInt(0x18);
+		Character = input.getInt(0x18);
 		team = input.getInt(0x1C);
-		magic = input.getByte(0x20);
-		weapon = input.getInt(0x24);
-		accessory = input.getInt(0x28);
+		Ready = input.getByte(0x20);
+		Start = input.getInt(0x24);
+		unknown04 = input.getInt(0x28);
 		unknown06 = input.getInt(0x2C);
 		
+		System.out.println("Ready: " + Ready);
+		System.out.println("Start: " + Start);
+		
+//		System.out.println("Team : " + team);
 		System.out.println(unknown01);
-		System.out.println(magic); // magic
-		System.out.println(weapon); // weapon
-		System.out.println(accessory); // access.?
+//		System.out.println(isReadyMaybe);
+//		System.out.println(gameStart);
+		System.out.println(unknown04);
 		System.out.println(unknown06);
 	}
 
@@ -51,31 +185,74 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 
 	@Override
 	public void addPayload() {
-		output.putByte(0x14, (byte) 1); //create?
-		output.putInt(0x18, 0); // room ID
-		output.putString(0x1C, "barak's room"); // room title
-		output.putInt(0x3C, 8); // room type
-		output.putInt(0x40, 10); // room map
-		output.putInt(0x44, 0); // unknown
-		output.putInt(0x48, 8); // max players
-		output.putByte(0x4C, (byte) 0); // is password
-		output.putByte(0x4D, (byte) 0); // is potion
-		output.putByte(0x4E, (byte) 0); // is closed
-		output.putByte(0x4F, (byte) 0); // is premium
-		output.putByte(0x50, (byte) 0);
-		output.putInt(0x54, 0);
-		output.putInt(0x58, 10);
-//		output.putString(0x58, "");
-		output.putInt(0x98, 0);
-		output.putInt(0xA8, 0);
-		output.putByte(0xAC, (byte) 0);
-		output.putByte(0xAD, (byte) 1);
-		output.putByte(0xAE, (byte) 0);
+//		output = null;
+		System.out.println("Ready: " + Ready);
+		System.out.println("Start: " + Start);
+		output.putInt(0x14, 0); // slot. first player in the room = slot 0. next one = slot 1 and so on.
+		output.putString(0x18, "10.0.0.2");
+		output.putString(0x28, "10.0.0.2");
+		output.putInt(0x38, 30);
+		output.putString(0x3C, "barak");
+		output.putString(0x49, "Obamas");
+		output.putString(0x56, "MasterLOL");
+		output.putByte(0x63, gender);
+		output.putInt(0x64, 0);
+		output.putInt(0x70, Ready);
+		output.putInt(0x74, Character);
+		output.putInt(0x78, 0);
+		output.putInt(0x7C, 0);
+		output.putInt(0x80, team); // 20 for the other team
+		output.putInt(0x84, 0);;
+		output.putInt(0x88, 0);
+		
+		output.putInt(0x8C, magictype);
+		output.putInt(0x90, weapontype);
+		output.putInt(0x94, armortype);
+		output.putInt(0x98, pettype);
+		
+		output.putInt(0x9C, magiclevel);
+		output.putInt(0xA0, weaponlevel);
+		output.putInt(0xA4, armorlevel);
+		output.putInt(0xA8, petlevel);
+		
+		output.putInt(0xAC, magicgf);
+		output.putInt(0xB0, weapongf);
+		output.putInt(0xB4, armorgf);
+		output.putInt(0xB8, petgf);
+		
+		output.putInt(0xBC, magicskill);
+		output.putInt(0xC0, weaponskill);
+		output.putInt(0xC4, armorskill);
+		
+		output.putInts(0xCC, scroll);
+		output.putInt(0xD0, -1);
+		output.putInt(0xD4, -1);
+		output.putInt(0xD8, -1);
+		output.putInt(0xDC, -1);
+		output.putInt(0xE0, -1);
+		output.putInt(0xE4, -1);
+		output.putInt(0xE8, Start);
+		output.putInt(0xEC, 0);
+		output.putInt(0xF0, 0);
+		
+		output.putInt(0xF4, 0);
+		output.putInt(0xF8, 0);
+		output.putInt(0xFC, 0);
+		
+		output.putByte(0x100, (byte) 0);
+		output.putByte(0x101, (byte) 0);
+		output.putByte(0x102, (byte) 0);
+		output.putByte(0x103, (byte) 0);
+
+		output.putInt(0x104, 0);
+		output.putInt(0x108, 0);
+		output.putInt(0x10C, 0);
+		output.putInt(0x110, 0);
+		output.putInt(0x114, 0);
 	}
 
 	@Override
-	public void afterSend() {
-		// TODO Auto-generated method stub
+	public void afterSend() throws IOException {
 		
 	}
 }

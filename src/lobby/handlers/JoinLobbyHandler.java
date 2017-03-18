@@ -8,11 +8,6 @@ public class JoinLobbyHandler extends GenericHandler {
 	public static final int RESPONSE_ID = 0x4302;
 	public static final int RESPONSE_LENGTH = 0x979;
 	
-	protected byte[] versionHash; // 36 bytes
-	protected int versionCode;
-	String username; // 12 characters+0
-	String password; // 12 characters+0
-	
 	final int minPointForeveDword[] = {-5, 1, 50, 100,
 			200, 400, 800, 1600,
 			2400, 3200, 6400, 12800,
@@ -33,17 +28,12 @@ public class JoinLobbyHandler extends GenericHandler {
 	int playerAvatarEquipIdx[] = {-1, -1, -1, -1, -1, -1, -1}; //Idx not ItemId!!!
 	byte playerEventFlags[] = {0, 0, 0, 0, 0, 0, 0, 0}; //see debug mode
 	
-	String guildName = "barakguild";
-	String guildDuty = "whatwhat";
-	long playerCode = 1234567;
-	long playerPoint = 7654321;
 	long avatarMoney = 1234;
 	
 	int playerChannelType = 3; //the channel type player is currently in
 	
-	int playerLevel = 30;
 	int playerInventorySlots = 24;
-	int playerType = 0; //set to 7 for GM...
+	int playerType = 70; //set to 7 for GM...
 	int whiteCards[] = {200, 20, 30, 40};
 	int scrolls[] = {0, 0, 0};
 	int playerWins = 10;
@@ -51,8 +41,7 @@ public class JoinLobbyHandler extends GenericHandler {
 	int playerKOs = 30;
 	int playerDowns = 40;
 	
-	byte gender = 1; // 0 - male. 1 - female
-	int usuableCharactersCount = 12;
+	byte gender = 0; // 0 - male. 1 - female
 	
 	// when you log in you get a visit bonus
 	int visitBonusMoney = 123456;
@@ -68,7 +57,12 @@ public class JoinLobbyHandler extends GenericHandler {
 	
 	int response = 1;
 	/* calculate channel flag from playerLevel */
-	int channelFlag = (playerLevel == 0) ? 0 : (playerLevel >= 17) ? 30 : (playerLevel >= 13) ? 20 : 10;
+	int channelFlag = (tcpServer.getUser().playerLevel == 0) ? 0 : (tcpServer.getUser().playerLevel >= 17) ? 30 : (tcpServer.getUser().playerLevel >= 13) ? 20 : 10;
+	
+	// Registry/IOSPK/Version
+	int spVersion = 11;
+	int ioProtectVersion = 11;
+	int survivalprojectVersion = 11;
 	
 	public JoinLobbyHandler(UserTCPSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
@@ -94,23 +88,23 @@ public class JoinLobbyHandler extends GenericHandler {
 	@Override
 	public void addPayload() {
 		output.putInt(0x14, response); // 0x14
-		output.putString(0x18, guildName); // 0x18
-		output.putString(0x25, guildDuty); // 0x25
+		output.putString(0x18, tcpServer.getUser().guildName); // 0x18
+		output.putString(0x25, tcpServer.getUser().guildDuty); // 0x25
 		output.putByte(0x32, gender); // 0x32
 		output.putInt(0x34, playerWins); // 0x34
 		output.putInt(0x38, playerLoses); // 0x38
-		output.putInt(0x3c, 11); // 0x3c
-		output.putInt(0x40, 22); // 0x40
+		output.putInt(0x3c, 11); // 0x3c - something with wins maybe...
+		output.putInt(0x40, 22); // 0x40 - something with losses maybe...
 		output.putInt(0x44, playerKOs); // 0x44
 		output.putInt(0x48, playerDowns); // 0x48
 		output.putInt(0x50, 33); // 0x50
 		output.putInt(0x54, 44); // 0x54
 		output.putInt(0x5c, 55); // 0x5c
-		output.putLong(0x60, playerPoint); // 0x60
-		output.putLong(0x68, playerCode); // 0x68
+		output.putLong(0x60, tcpServer.getUser().playerExperience); // 0x60
+		output.putLong(0x68, tcpServer.getUser().playerMoney); // 0x68
 		output.putLong(0x70, avatarMoney); // 0x70
-		output.putInt(0x78, playerLevel); // 0x78
-		output.putInt(0x7C, usuableCharactersCount); // 0x7c
+		output.putInt(0x78, tcpServer.getUser().playerLevel); // 0x78
+		output.putInt(0x7C, tcpServer.getUser().usuableCharacterCount); // 0x7c
 		output.putInt(0x80, scrolls[0]); // 0x80
 		output.putInt(0x84, scrolls[1]); // 0x84
 		output.putInt(0x88, scrolls[2]); // 0x88
@@ -128,9 +122,9 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putInts(0x884, minPointForeveDword); // 0x884
 		output.putLongs(0x8F8, minPointForLevelQword); //0x8F8
 		output.putInt(0x918, playerChannelType); // 0x918
-		output.putInt(0x91C, 88); // 0x91c
-		output.putInt(0x920, 77); // 0x920
-		output.putInt(0x924, 66); // 0x924
+		output.putInt(0x91C, spVersion); // 0x91c
+		output.putInt(0x920, ioProtectVersion); // 0x920
+		output.putInt(0x924, survivalprojectVersion); // 0x924
 		output.putInt(0x928, visitBonusMoney);
 		output.putInt(0x92C, visitBonusElementsType);
 		output.putInt(0x930, visitBonusElements);
@@ -138,10 +132,10 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putInt(0x938, visitBonusAvatarMoney);
 		output.putBytes(0x93C, playerEventFlags); // 0x93C
 		output.putInt(0x944, playerRank); // 0x944
-		output.putInt(0x948, 33); // 0x948 - not used
+		output.putByte(0x948, (byte) 1);
 		output.putInt(0x94C, lobbyMaxRooms); // 0x94c
 		output.putInts(0x950, playerAvatarEquipIdx); // 0x950
-		output.putInt(0x96C, 22); // 0x96C
+		output.putInt(0x96C, 1); // something with guild mark
 		output.putInt(0x970, 11); // 0x970 = field_A0 in Login
 		output.putInt(0x974, playerType); // 0x974
 		output.putByte(0x978, (byte) 0); // 0x978

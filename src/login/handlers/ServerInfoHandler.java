@@ -32,6 +32,8 @@ public class ServerInfoHandler extends GenericHandler {
 	public void interpretBytes() {
 		unknown10 = input.getInt(0x14);
 		channelType = (short) input.getInt(0x18);
+		
+		System.out.println("Server info: " + unknown10);
 //		System.out.println("NOTTIME!!!Time: " + unknown1);
 	}
 

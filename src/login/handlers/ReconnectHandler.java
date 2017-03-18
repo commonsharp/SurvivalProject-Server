@@ -4,6 +4,7 @@ import net.GenericHandler;
 import net.UserTCPSession;
 
 public class ReconnectHandler extends GenericHandler {
+	public static final int REQUEST_ID = 0x2913;
 	public static final int RESPONSE_ID = 0; //?
 	public static final int RESPONSE_LENGTH = 0x1000;
 	
@@ -21,9 +22,13 @@ public class ReconnectHandler extends GenericHandler {
 	@Override
 	public void interpretBytes() {
 		username = input.getString(0x14);
-		unknown1 = input.getInt(0x21);
-		unknown2 = input.getInt(0x25);
-		unknown3 = input.getInt(0x29);
+		unknown1 = input.getInt(0x24);
+		unknown2 = input.getInt(0x28);
+		unknown3 = input.getInt(0x2C);
+		
+		System.out.println(unknown1);
+		System.out.println(unknown2);
+		System.out.println(unknown3);
 	}
 
 	@Override

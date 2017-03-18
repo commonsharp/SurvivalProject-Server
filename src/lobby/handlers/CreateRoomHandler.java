@@ -12,10 +12,10 @@ public class CreateRoomHandler extends GenericHandler {
 	
 	public static int state;
 	
-	protected int roomNumber; // starts with 0. room #1 - 0
-	protected String roomName;
-	protected int gameType;
-	protected int gameMap;
+	protected static int roomNumber; // starts with 0. room #1 - 0
+	protected static String roomName;
+	protected static int gameType;
+	protected static int gameMap;
 	protected String password;
 	protected int numberOfPlayers;
 	protected byte isWithScrolls;
@@ -74,6 +74,11 @@ public class CreateRoomHandler extends GenericHandler {
 
 	@Override
 	public void addPayload() {
+		// 0 = "There's no room that can be made"
+		// 1 = "An error occurred. contact support"
+		// 2 = okay.
+		// 3 = "Observers can only enter king slayer and team mode rooms"
+		// 4 = dunno
 		output.putInt(0x14, 2); // 0,1,3 or 4
 		output.putInt(0x18, roomNumber);
 		output.putString(0x1C, roomName);
@@ -87,11 +92,13 @@ public class CreateRoomHandler extends GenericHandler {
 		output.putInt(0x64, cardsLimit);
 		output.putShort(0x68, (short) 0);
 		output.putByte(0x6A, isLimitAnger);
-		output.putByte(0x6B, (byte) 1);
+		output.putByte(0x6B, (byte) 0);
 	}
 
 	@Override
 	public void afterSend() throws IOException {
-		sendTCPMessage(new EquipChangedHandler(tcpServer, new byte[1280]).getResponse());
+		sendTCPMessage(RoomPlayersChangedHandler.generateFakeMessage(tcpServer, 10, 10, (byte) 0, 0));
+//		sendTCPMessage(new RoomPlayersChangedHandler(tcpServer, new byte[0x1000]).getResponse());
+//		sendTCPMessage(new ItemsChangedHandler(tcpServer, new byte[0x40]).getResponse());
 	}
 }

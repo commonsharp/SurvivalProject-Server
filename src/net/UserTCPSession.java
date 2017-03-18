@@ -14,14 +14,17 @@ public class UserTCPSession implements Runnable {
 	protected DataOutputStream output;
 	protected ExtendedInputStream input;
 	
-	protected int clientState = -1;
-	protected int serverState = -1;
+	public int clientState = -1;
+	public int serverState = -1;
+	
+	protected User user;
 	
 	public UserTCPSession(GenericTCPServer server, Socket socket) throws IOException {
 		this.server = server;
 		this.socket = socket;
 		input = new ExtendedInputStream(socket.getInputStream());
 		output = new DataOutputStream(socket.getOutputStream());
+		user = new User();
 	}
 	
 	@Override
@@ -112,5 +115,9 @@ public class UserTCPSession implements Runnable {
 		
 		oldState = (~oldState + 0x14fb) * 0x1f;
 		return Math.abs((oldState >> 16) ^ oldState);
+	}
+	
+	public User getUser() {
+		return user;
 	}
 }

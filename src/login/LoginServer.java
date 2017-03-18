@@ -2,6 +2,7 @@ package login;
 import login.handlers.GetChannelUsersPercentageHandler;
 import login.handlers.GuildMarkHandler;
 import login.handlers.LoginHandler;
+import login.handlers.ReconnectHandler;
 import login.handlers.ServerInfoHandler;
 import login.handlers.SetActiveCharacterHandler;
 import login.handlers.TutorialCompletedHandler;
@@ -27,6 +28,9 @@ public class LoginServer extends GenericTCPServer {
 			break;
 		case SetActiveCharacterHandler.REQUEST_ID:
 			message = new SetActiveCharacterHandler(tcpServer, messageBytes);
+			break;
+		case ReconnectHandler.REQUEST_ID:
+			message = new ReconnectHandler(tcpServer, messageBytes);
 			break;
 		case TutorialCompletedHandler.REQUEST_ID:
 			message = new TutorialCompletedHandler(tcpServer, messageBytes);
