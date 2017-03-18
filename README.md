@@ -1,6 +1,10 @@
 # SurvivalProject-Server
 Server files for the game Survival Project, written in Java.
 
+# 18/03/2017
+* Info: MyInfo structure added (incomplete). 
+* Info: Message:LoginRequest added.
+
 # 17/03/2017
 * Major change in the code - each message is no longer divided into 2 classes, resulting in a much better performance, less memory use and a cleaner code. Instead, handlers are used. Also, the client buffer was changed to support absolute positions.
 * Some work was done on rooms, still unfinished...
