@@ -6,17 +6,22 @@ last function : sub_46DA90+85
 8
 C
 10
+E4
 1B8
 B54
 7D0
-C7C - something with Window Active? Also Something with IO protect... maybe window related?
+C7C - username...
 C89 - player guild name
 C96 - player guild duty
 CA3 - gender
+CA4 - active character
+CA8
+CAC
 CB0 = First Join (In registry)
 CB4 - player rank
-C89 - guild mark or something
-CC0 - fieldA0 in login. field 970 in join lobby. something with event flag 5 and 7
+CB8 - guild mark
+CBC - guild name (or vise versa with CB8)
+CC0 - fieldA0 in login. field 970 in join lobby. something with event flag 5 and 7. special values: 244h, 230h
 CC4 - player type. 0 is normal. 7 is gm.
 D98 - channel flag
 D9C - player level
@@ -29,9 +34,10 @@ DB4 - lose count
 DB8  - field 40 in join lobby
 DC0 - exp high
 DC4 - exp low
+DC8
 DCC - money
-FD4 - experience
 ED0 - avatar money
+FD4 - experience
 10D8 - field50 in join lobby
 10DC - field54 in join lobby
 10E0 - field50 in join lobby
@@ -40,6 +46,8 @@ ED0 - avatar money
 10EC - field5C in join lobby
 10F0 - timer? in Join lobby
 10F4 - timer? in Join lobby
+10F8
+10FC
 1100 - scroll1
 1104 - scroll2
 1108 - scroll3
@@ -54,7 +62,36 @@ ED0 - avatar money
 174C - items (size: 480d)
 1BD0 - items (size: 480d)
 29DC - player channel type (0,10,20,30)
-2D48 to 2D60 - avatar items (head, hands and so on)
+2CC0
+2CE4
+2D08
+2D2C
+2D30
+2D34
+2D38 - current magic card
+2D3C - current weapon card
+2D40 - current accessory card
+2D44 - current pet card
+2D48 - current foot card
+2D4C - current body card
+2D50 - current hand1 card
+2D54 - current hand2 card
+2D58 - current face card
+2D5C - current hair card
+2D60 - current head card
+2D64
+2D71
+2D7E
+2D8B
+2D98
+2D9C
+2DA0-BYTE
+2DAC
+2DB0
+2DCD-BYTE
+2DDA-BYTE
+2DE7-BYTE
+2DF4-BYTE
 2E01 - event flag 1
 2E02 - event flag 2
 2E03 - event flag 3
@@ -69,6 +106,24 @@ ED0 - avatar money
 2E14 - visit bonus elements
 2E18 - visit bonus elements multiplier
 2E1C - visit bonus avatar money
+2E20
+2E24
+2E28
+2E2C
+2E30
+2E34
+2E38
+2E3C
+2E40
+2E44
+2E48
+2E4C
+2E50
+2E54
+2E58
+2E60
+2E64
+2E68
 2E6C - string possibly. something with Software\\IOSPK\\Macro Key
 30C4 - something with Software\\IOSPK\\Client
 3160 - exp high
@@ -89,12 +144,54 @@ ED0 - avatar money
 319C - set to 0 in JoinLobby
 31A0 - visit avatar money high
 31A4 - visit avatar money low
+31A8
+31AC
+31B0
+31B4
+31B8
+31BC
+31C0
+31C4
+31C8
+31CC
+31D0
+31D4
 31D8 - total elements
 31E0 - blacklist
 31E4 - blacklist
+31E8
 31EC - something with cards events
 31F0 - something with cards events
 31F4 - something with cards events
 31F8 - something with events. maybe x10000 elements event?
 31F9 - field948 in JoinLobby
-31FC - lobby max rooms
+31FC - lobby max rooms. DEFAULT: 54H. SEEMS TO BE A SHORT, NOT INT.
+3200
+3204
+3208
+3210-SHORT
+3212-SHORT
+3214-BYTE
+3215-BYTE
+32E0-BYTE
+32E4
+32F4
+32F8
+3304
+3308
+3318
+331C
+3320
+3324
+3328
+332C
+3330
+3334
+3338
+333C
+3340
+3344
+3348
+334C
+3350
+3354-BYTE
