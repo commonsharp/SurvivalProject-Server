@@ -17,6 +17,6 @@ I guess they were used in older versions of Survival project.
 5E-junk
 60-junk
 62-junk
-64 -string // this is equals to unknown3 in the response (what3)
+64 -string // this is equals to unknown3 in the response (what3) - field 0x78 in LoginResponse
 80- sub_4833A0()
 84 - process id of sp.exe
