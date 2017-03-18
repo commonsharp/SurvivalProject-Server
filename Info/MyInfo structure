@@ -1,0 +1,100 @@
+* NOT COMPLETED *
+
+last function : sub_46DA90+85
+
+0 - ?
+8
+C
+10
+1B8
+B54
+7D0
+C7C - something with Window Active? Also Something with IO protect... maybe window related?
+C89 - player guild name
+C96 - player guild duty
+CA3 - gender
+CB0 = First Join (In registry)
+CB4 - player rank
+C89 - guild mark or something
+CC0 - fieldA0 in login. field 970 in join lobby. something with event flag 5 and 7
+CC4 - player type. 0 is normal. 7 is gm.
+D98 - channel flag
+D9C - player level
+DA0 - usuable player count
+DA4 - ko count
+DA8 - down count
+DAC - win count
+DB0 - field 3c in join lobby
+DB4 - lose count
+DB8  - field 40 in join lobby
+DC0 - exp high
+DC4 - exp low
+DCC - money
+FD4 - experience
+ED0 - avatar money
+10D8 - field50 in join lobby
+10DC - field54 in join lobby
+10E0 - field50 in join lobby
+10E4 - field54 in join lobby
+10E8 - field5C in join lobby
+10EC - field5C in join lobby
+10F0 - timer? in Join lobby
+10F4 - timer? in Join lobby
+1100 - scroll1
+1104 - scroll2
+1108 - scroll3
+110C - water elements
+11E0 - fire elements
+12B4 - earth elements
+1388 - wind elements
+1460 to 1548 - experience before level 30
+1548 to 1564 - experience after level 30
+1568 - inventory slots
+156C - items (size: 480d)
+174C - items (size: 480d)
+1BD0 - items (size: 480d)
+29DC - player channel type (0,10,20,30)
+2D48 to 2D60 - avatar items (head, hands and so on)
+2E01 - event flag 1
+2E02 - event flag 2
+2E03 - event flag 3
+2E04 - event flag 4
+2E05 - event flag 5
+2E06 - event flag 6
+2E07 - event flag 7
+2E08 - event flag 8
+2E08 - weekend?
+2E0C - visit bonus money
+2E10 - visit bonus elements type
+2E14 - visit bonus elements
+2E18 - visit bonus elements multiplier
+2E1C - visit bonus avatar money
+2E6C - string possibly. something with Software\\IOSPK\\Macro Key
+30C4 - something with Software\\IOSPK\\Client
+3160 - exp high
+3164 - exp low
+3168 - money high
+316C - money low
+3170 - visit water elements
+3174 - visit fire elements
+3178 - visit earth elements
+317C - visit wind elements
+3180 - win count
+3184 - lose count
+3188 - ko count
+318C - down count
+3190 - set to 0 in JoinLobby
+3194 - set to 0 in JoinLobby
+3198 - set to 0 in JoinLobby
+319C - set to 0 in JoinLobby
+31A0 - visit avatar money high
+31A4 - visit avatar money low
+31D8 - total elements
+31E0 - blacklist
+31E4 - blacklist
+31EC - something with cards events
+31F0 - something with cards events
+31F4 - something with cards events
+31F8 - something with events. maybe x10000 elements event?
+31F9 - field948 in JoinLobby
+31FC - lobby max rooms
