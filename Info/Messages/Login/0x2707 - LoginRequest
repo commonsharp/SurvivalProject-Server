@@ -1,1 +1,22 @@
+Most of the fields are junk because they're referencing a 0 pointer.
+I guess they were used in older versions of Survival project.
 
+14 - junk
+18 - junk
+1D - junk
+21 - junk
+26 - junk
+2A - junk
+2F - junk
+33 - junk
+38 - dword_7F3C3C // version maybe? not sure...
+3C - username
+49 - password
+58 - string // "%" at the moment... o_O
+5C-junk
+5E-junk
+60-junk
+62-junk
+64 -string // this is equals to unknown3 in the response (what3)
+80- sub_4833A0()
+84 - process id of sp.exe
