@@ -88,24 +88,24 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		output.putInt(0x14, 0); // slot. first player in the room = slot 0. next one = slot 1 and so on.
 		output.putString(0x18, "10.0.0.2");
 		output.putString(0x28, "10.0.0.2");
-		output.putInt(0x38, 30);
+		output.putInt(0x38, 30); // user type
 		output.putString(0x3C, "barak");
 		output.putString(0x49, "Obamas");
 		output.putString(0x56, "MasterLOL");
 		output.putByte(0x63, (byte) 0);
-		output.putInt(0x64, 0);
-		output.putInt(0x70, ready);
-		output.putInt(0x74, character);
-		output.putInt(0x78, 0);
-		output.putInt(0x7C, 0);
-		output.putInt(0x80, team); // 20 for the other team
-		output.putInt(0x84, 0);;
-		output.putInt(0x88, 0);
+		output.putInt(0x64, -1);
+		output.putInt(0x70, -1);
+		output.putInt(0x74, 20); // character
+		output.putInt(0x78, -1);
+		output.putInt(0x7C, -1);
+		output.putInt(0x80, 20); // 20 for the other team
+		output.putInt(0x84, -1);
+		output.putInt(0x88, -1);
 		
 		output.putInt(0x8C, 0);
 		output.putInt(0x90, 0);
 		output.putInt(0x94, 0);
-		output.putInt(0x98, -1);
+		output.putInt(0x98, 0);
 		
 		output.putInt(0x9C, 0);
 		output.putInt(0xA0, 0);
@@ -128,11 +128,11 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		output.putInt(0xDC, -1);
 		output.putInt(0xE0, -1);
 		output.putInt(0xE4, -1);
-		output.putInt(0xE8, start);
-		output.putInt(0xEC, 0);
-		output.putInt(0xF0, 0);
+		output.putInt(0xE8, -1);
+		output.putInt(0xEC, -1);
+		output.putInt(0xF0, -1);
 		
-		output.putInt(0xF4, 0);
+		output.putInt(0xF4, -1); // this one. set this to 0 and the game starts automatically.
 		output.putInt(0xF8, 0);
 		output.putInt(0xFC, 0);
 		
@@ -205,24 +205,24 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		output.putInt(0x84, 0);;
 		output.putInt(0x88, 0);
 		
-		output.putInt(0x8C, magictype);
-		output.putInt(0x90, weapontype);
-		output.putInt(0x94, armortype);
-		output.putInt(0x98, pettype);
+		output.putInt(0x8C, 0);
+		output.putInt(0x90, 0);
+		output.putInt(0x94, 0);
+		output.putInt(0x98, 0);
 		
-		output.putInt(0x9C, magiclevel);
-		output.putInt(0xA0, weaponlevel);
-		output.putInt(0xA4, armorlevel);
-		output.putInt(0xA8, petlevel);
+		output.putInt(0x9C, 0);
+		output.putInt(0xA0, 0);
+		output.putInt(0xA4, 0);
+		output.putInt(0xA8, 0);
 		
-		output.putInt(0xAC, magicgf);
-		output.putInt(0xB0, weapongf);
-		output.putInt(0xB4, armorgf);
-		output.putInt(0xB8, petgf);
+		output.putInt(0xAC, 0);
+		output.putInt(0xB0, 0);
+		output.putInt(0xB4, 0);
+		output.putInt(0xB8, 0);
 		
-		output.putInt(0xBC, magicskill);
-		output.putInt(0xC0, weaponskill);
-		output.putInt(0xC4, armorskill);
+		output.putInt(0xBC, 0);
+		output.putInt(0xC0, 0);
+		output.putInt(0xC4, 0);
 		
 		output.putInts(0xCC, scroll);
 		output.putInt(0xD0, -1);
