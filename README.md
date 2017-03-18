@@ -2,6 +2,7 @@
 Server files for the game Survival Project, written in Java.
 
 # 18/03/2017
+* You can now create rooms, change characters in a room, change teams in a room, change items in a room and leave a room.
 * Info: MyInfo structure added (incomplete). 
 * Info: Message:LoginRequest added.
 
