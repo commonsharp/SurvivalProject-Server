@@ -1,0 +1,4 @@
+output.putInt(0x14, 0); // tutorial channel percentage
+output.putInt(0x18, 33); // beginner channel percentage
+output.putInt(0x1C, 66); // hero channel percentage
+output.putInt(0x20, 100); // epic channel percentage
