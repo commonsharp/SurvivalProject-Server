@@ -2,7 +2,9 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyServer;
 import net.GenericHandler;
+import net.Room;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
@@ -11,12 +13,10 @@ public class CreateRoomHandler extends GenericHandler {
 	public static final int RESPONSE_ID = 0x4308;
 	public static final int RESPONSE_LENGTH = 0x6C;
 	
-	public static int state;
-	
-	protected static int roomNumber; // starts with 0. room #1 - 0
-	protected static String roomName;
-	protected static int gameType;
-	protected static int gameMap;
+	protected int roomNumber; // starts with 0. room #1 - 0
+	protected String roomName;
+	protected int gameType;
+	protected int gameMap;
 	protected String password;
 	protected int numberOfPlayers;
 	protected byte isWithScrolls;
@@ -28,13 +28,14 @@ public class CreateRoomHandler extends GenericHandler {
 	protected byte unknown10;
 	protected byte isLimitAnger; // 0 = limit. other values = no limit.
 	
-	public CreateRoomHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+	protected LobbyServer lobby;
+	public CreateRoomHandler(LobbyServer lobby, UserTCPSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
+		this.lobby = lobby;
 	}
 
 	@Override
 	public void interpretBytes() {
-		state = 2;
 		roomNumber = input.getInt(0x14);
 		roomName = input.getString(0x18);
 		gameType = input.getInt(0x38);
@@ -64,7 +65,8 @@ public class CreateRoomHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		sendTCPMessage(new RoomPlayersChangedHandler(tcpServer).getResponse(10, 10, (byte) 0, 0, -1));
+		lobby.broadcastMessage(tcpServer, new LobbyRoomsChangedHandler(tcpServer).getResponse(lobby.getRoom(roomNumber)));
+		sendTCPMessage(new RoomPlayersChangedHandler(lobby, tcpServer).getResponse(10, 10, (byte) 0, 0, -1));
 //		sendTCPMessage(new RoomPlayersChangedHandler(tcpServer, new byte[0x1000]).getResponse());
 //		sendTCPMessage(new ItemsChangedHandler(tcpServer, new byte[0x40]).getResponse());
 	}
@@ -72,6 +74,11 @@ public class CreateRoomHandler extends GenericHandler {
 	@Override
 	public byte[] getResponse() {
 		cardsLimit = -1;
+		tcpServer.getUser().isInRoom = true;
+		
+		int[] characters = new int[10];
+		characters[0] = 10;
+		lobby.setRoom(roomNumber, new Room(roomNumber, roomName, gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger, characters));
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 

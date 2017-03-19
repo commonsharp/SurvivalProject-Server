@@ -2,6 +2,7 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyServer;
 import net.GenericHandler;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
@@ -59,13 +60,17 @@ public class RoomPlayersChangedHandler extends GenericHandler {
     int pet;
     
     int unknown01, unknown04, unknown06;
+    
+    protected LobbyServer lobby;
 	
-    public RoomPlayersChangedHandler(UserTCPSession tcpServer) {
+    public RoomPlayersChangedHandler(LobbyServer lobby, UserTCPSession tcpServer) {
     	super(tcpServer);
+    	this.lobby = lobby;
     }
     
-	public RoomPlayersChangedHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+	public RoomPlayersChangedHandler(LobbyServer lobby, UserTCPSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
+		this.lobby = lobby;
 	}
 	
 	@Override
@@ -91,7 +96,7 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		
+		lobby.broadcastMessage(tcpServer, new LobbyRoomsChangedHandler(tcpServer).getResponse(lobby.getRoom(0)));
 	}
 
 	@Override
@@ -101,20 +106,23 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		if (start == 2) {
 			fieldF4 = 0;
 		}
+//		return null;
 		return getResponse(character, team, (byte) ready, start, fieldF4);
 	}
 	
 	public byte[] getResponse(int character, int team, byte ready, int start, int fieldF4) {
+		lobby.getRoom(0).setCharacter(0, character);
+		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
 		output.putInt(0x14, 0); // slot. first player in the room = slot 0. next one = slot 1 and so on.
 		output.putString(0x18, "100.0.0.2");
 		output.putString(0x28, "100.0.0.2");
-		output.putInt(0x38, 30); // user type
-		output.putString(0x3C, "barak");
-		output.putString(0x49, "Obamas");
-		output.putString(0x56, "MasterLOL");
+		output.putInt(0x38, tcpServer.getUser().playerLevel);
+		output.putString(0x3C, tcpServer.getUser().username);
+		output.putString(0x49, tcpServer.getUser().guildName);
+		output.putString(0x56, tcpServer.getUser().guildDuty);
 		output.putByte(0x63, (byte) 0);
 		output.putInt(0x64, 0);
 		output.putInt(0x70, ready);
@@ -125,24 +133,24 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		output.putInt(0x84, 0);
 		output.putInt(0x88, 0);
 		
-		output.putInt(0x8C, 1321);
-		output.putInt(0x90, 1121);
-		output.putInt(0x94, 1224);
+		output.putInt(0x8C, tcpServer.getUser().playerCardItemId[tcpServer.getUser().magicIndex]);
+		output.putInt(0x90, tcpServer.getUser().playerCardItemId[tcpServer.getUser().weaponIndex]);
+		output.putInt(0x94, tcpServer.getUser().playerCardItemId[tcpServer.getUser().accessoryIndex]);
 		output.putInt(0x98, 0);
 		
-		output.putInt(0x9C, 8);
-		output.putInt(0xA0, 8);
-		output.putInt(0xA4, 8);
+		output.putInt(0x9C, tcpServer.getUser().playerCardItemLevelIdx[tcpServer.getUser().magicIndex]);
+		output.putInt(0xA0, tcpServer.getUser().playerCardItemLevelIdx[tcpServer.getUser().weaponIndex]);
+		output.putInt(0xA4, tcpServer.getUser().playerCardItemLevelIdx[tcpServer.getUser().accessoryIndex]);
 		output.putInt(0xA8, 0);
 		
-		output.putInt(0xAC, 0);
-		output.putInt(0xB0, 0);
-		output.putInt(0xB4, 0);
+		output.putInt(0xAC, tcpServer.getUser().playerCardItemDays[tcpServer.getUser().magicIndex]);
+		output.putInt(0xB0, tcpServer.getUser().playerCardItemDays[tcpServer.getUser().weaponIndex]);
+		output.putInt(0xB4, tcpServer.getUser().playerCardItemDays[tcpServer.getUser().accessoryIndex]);
 		output.putInt(0xB8, 0);
 		
-		output.putInt(0xBC, 0);
-		output.putInt(0xC0, 0);
-		output.putInt(0xC4, 0);
+		output.putInt(0xBC, tcpServer.getUser().playerCardItemSkill[tcpServer.getUser().magicIndex]);
+		output.putInt(0xC0, tcpServer.getUser().playerCardItemSkill[tcpServer.getUser().weaponIndex]);
+		output.putInt(0xC4, tcpServer.getUser().playerCardItemSkill[tcpServer.getUser().accessoryIndex]);
 		
 		output.putInts(0xCC, new int[3]);
 		output.putInt(0xD0, -1);

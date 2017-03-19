@@ -12,7 +12,6 @@ public class ItemsChangedHandler extends GenericHandler {
     int Slot; //0
     String netIP; // 16
     String localIP; // 16
-    int level = 30;
     String username;
 	byte gender;
     int Ready;
@@ -52,9 +51,6 @@ public class ItemsChangedHandler extends GenericHandler {
     
     int team; // 10 for blue team. 20 for red team.
     
-    int magic;
-    int weapon;
-    int accessory;
     int pet;
     
     boolean send = true;
@@ -65,9 +61,9 @@ public class ItemsChangedHandler extends GenericHandler {
 	@Override
 	public void interpretBytes() {
 		// these are indexes and not ID's
-		magic = input.getInt(0x14);
-		weapon = input.getInt(0x18);
-		accessory = input.getInt(0x1C);
+		tcpServer.getUser().magicIndex = input.getInt(0x14);
+		tcpServer.getUser().weaponIndex = input.getInt(0x18);
+		tcpServer.getUser().accessoryIndex = input.getInt(0x1C);
 		pet = input.getInt(0x20);
 		foot = input.getInt(0x24);
 		body = input.getInt(0x28);
@@ -77,9 +73,9 @@ public class ItemsChangedHandler extends GenericHandler {
 		hair = input.getInt(0x38);
 		head = input.getInt(0x3C);
 		
-		System.out.println(magic);
-		System.out.println(weapon);
-		System.out.println(accessory);
+		System.out.println(tcpServer.getUser().magicIndex);
+		System.out.println(tcpServer.getUser().weaponIndex);
+		System.out.println(tcpServer.getUser().accessoryIndex);
 	}
 
 	@Override
@@ -94,16 +90,15 @@ public class ItemsChangedHandler extends GenericHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
 		
-		// this might be useless...
-		if (CreateRoomHandler.state == 2) {
+		if (tcpServer.getUser().isInRoom) {
 			output.putInt(0x14, 0);
 			output.putString(0x18, "10.0.0.2");
 			output.putString(0x28, "10.0.0.2");
-			output.putInt(0x38, level);
-			output.putString(0x3C, "barak");
-			output.putString(0x49, "Obamas");
-			output.putString(0x56, "MasterLOL");
-			output.putByte(0x63, gender);
+			output.putInt(0x38, tcpServer.getUser().playerLevel);
+			output.putString(0x3C, tcpServer.getUser().username);
+			output.putString(0x49, tcpServer.getUser().guildName);
+			output.putString(0x56, tcpServer.getUser().guildDuty);
+			output.putByte(0x63, tcpServer.getUser().gender);
 			output.putInt(0x64, 0);
 			output.putInt(0x70, Ready);
 			output.putInt(0x74, Character);

@@ -1,20 +1,36 @@
 package lobby;
 
+import java.io.IOException;
+
 import lobby.handlers.CreateRoomHandler;
 import lobby.handlers.GetTopGuildsHandler;
 import lobby.handlers.GetTopGuildsMarkHandler;
 import lobby.handlers.ItemsChangedHandler;
 import lobby.handlers.JoinLobbyHandler;
 import lobby.handlers.LeaveRoomHandler;
+import lobby.handlers.RoomNameChangedHandler;
 import lobby.handlers.RoomPlayersChangedHandler;
 import net.GenericHandler;
 import net.GenericTCPServer;
+import net.Room;
 import net.UserTCPSession;
 import tools.HexTools;
 
 public class LobbyServer extends GenericTCPServer {
+	protected Room[] rooms;
+	
 	public LobbyServer(int port) {
 		super("Lobby server", port);
+		
+		rooms = new Room[200]; // change....
+	}
+	
+	public Room getRoom(int index) {
+		return rooms[index];
+	}
+	
+	public void setRoom(int index, Room room) {
+		rooms[index] = room;
 	}
 
 	@Override
@@ -26,16 +42,19 @@ public class LobbyServer extends GenericTCPServer {
 			message = new JoinLobbyHandler(tcpServer, messageBytes);
 			break;
 		case CreateRoomHandler.REQUEST_ID:
-			message = new CreateRoomHandler(tcpServer, messageBytes);
+			message = new CreateRoomHandler(this, tcpServer, messageBytes);
 			break;
 		case RoomPlayersChangedHandler.REQUEST_ID:
-			message = new RoomPlayersChangedHandler(tcpServer, messageBytes);
+			message = new RoomPlayersChangedHandler(this, tcpServer, messageBytes);
 			break;
 		case ItemsChangedHandler.REQUEST_ID:
 			message = new ItemsChangedHandler(tcpServer, messageBytes);
 			break;
 		case LeaveRoomHandler.REQUEST_ID:
-			message = new LeaveRoomHandler(tcpServer, messageBytes);
+			message = new LeaveRoomHandler(this, tcpServer, messageBytes);
+			break;
+		case RoomNameChangedHandler.REQUEST_ID:
+			message = new RoomNameChangedHandler(this, tcpServer, messageBytes);
 			break;
 		case GetTopGuildsHandler.REQUEST_ID:
 			message = new GetTopGuildsHandler(tcpServer, messageBytes);
@@ -50,4 +69,12 @@ public class LobbyServer extends GenericTCPServer {
 		return message;
 	}
 
+	public void broadcastMessage(UserTCPSession tcpServer, byte[] message) throws IOException {
+		for (UserTCPSession user : usersSessions) {
+			// Send the message to everyone but yourself
+			if (user.getUser().username != tcpServer.getUser().username) {
+				user.sendMessage(message);
+			}
+		}
+	}
 }

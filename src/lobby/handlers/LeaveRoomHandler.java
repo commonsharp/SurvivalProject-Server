@@ -2,6 +2,7 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyServer;
 import net.GenericHandler;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
@@ -11,17 +12,22 @@ public class LeaveRoomHandler extends GenericHandler {
 	public static final int RESPONSE_ID = 0x4319;
 	public static final int RESPONSE_LENGTH = 0x28;
 	
-	public LeaveRoomHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+	protected LobbyServer lobby;
+	
+	public LeaveRoomHandler(LobbyServer lobby, UserTCPSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
+		this.lobby = lobby;
 	}
 
 	@Override
 	public void interpretBytes() {
+//		roomID = input.
 		
 	}
 
 	@Override
 	public void afterSend() throws IOException {
+//		lobby.broadcastMessage(tcpServer, new LobbyRoomsChangedHandler(tcpServer).getResponse(lobby.getRoom(0)));
 		// this line has weird side effects. do not use.
 //		sendTCPMessage(new RoomPlayersChangedHandler(tcpServer, new byte[3000]).getResponse());
 	}
