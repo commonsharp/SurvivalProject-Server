@@ -2,7 +2,7 @@
 Server files for the game Survival Project, written in Java.
 
 # 19/03/2017
-* Another big change in the game code... Removed 2 function from each handlers. That should be 500 functions total when the server's completed. @TODO - think about those things in advance... :S
+* Another big change in the game code... Removed 2 function from each handler. That should be 500 functions total when the server's completed. @TODO - think about those things in advance... :S
 
 # 18/03/2017
 * We can enter games! A shitload of bugs, but we can get into games! XD
