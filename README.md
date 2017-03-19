@@ -4,7 +4,10 @@ Server files for the game Survival Project, written in Java.
 # 19/03/2017
 * Another big change in the game code... Removed 2 function from each handler. That should be 500 functions total when the server's completed. @TODO - think about those things in advance... :S
 
+* Added broadcast messages (you can send a broadcast to everyone in the game, except for yourself). It is used in messages such as "CreateRoom" (the other players need to see the new room).
+
 * When a new room is created, the lobby of other players is changed (with the new room).
+* We can change room names now.
 
 # 18/03/2017
 * We can enter games! A shitload of bugs, but we can get into games! XD
