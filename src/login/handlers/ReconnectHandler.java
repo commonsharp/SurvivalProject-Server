@@ -9,7 +9,7 @@ public class ReconnectHandler extends GenericHandler {
 	public static final int RESPONSE_LENGTH = 0x1000;
 	
 	public ReconnectHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+		super(tcpServer, messageBytes);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -32,25 +32,13 @@ public class ReconnectHandler extends GenericHandler {
 	}
 
 	@Override
-	public void processFields() {
-		// Add to database and stuff
-	}
-
-	@Override
-	public void changeData() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addPayload() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void afterSend() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public byte[] getResponse() {
+		return null;
 	}
 }

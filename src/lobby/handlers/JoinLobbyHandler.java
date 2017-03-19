@@ -2,6 +2,7 @@ package lobby.handlers;
 
 import net.GenericHandler;
 import net.UserTCPSession;
+import tools.ExtendedByteBuffer;
 
 public class JoinLobbyHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x4301;
@@ -19,12 +20,12 @@ public class JoinLobbyHandler extends GenericHandler {
     final long minPointForLevelQword[] = {3355443200L, 6710886400L, 13421772800L, 26843545600L};
 	
     // if it's 0, this item is not going to be available (must be set to 1...)
-    byte playerCardItemExist[] = {1, 1, 1, 1, 1};
+    byte playerCardItemExist[] = {1, 1, 1, 1, 1, 1, 1, 1};
 	
-	int playerCardItemId[] = {1211, 1321, 1131, 1211, 1212};
-	int playerCardItemDays[] = {10, 1, 1, 1, 10};
-	int playerCardItemLevelIdx[] = {8, 8, 7, 8, 5, 6};
-	int playerCardItemSkill[] = {36100300, 0, 33200000, 0, 0};
+	int playerCardItemId[] = {1211, 1321, 1131, 1211, 1212, 1331, 1311, 1341, 1231};
+	int playerCardItemDays[] = {10, 1, 1, 1, 10, 10, 10, 100, 0};
+	int playerCardItemLevelIdx[] = {8, 8, 7, 8, 5, 6, 7, 4, 8};
+	int playerCardItemSkill[] = {36100300, 0, 33200000, 0, 0, 0, 0, 0};
 	int playerAvatarEquipIdx[] = {-1, -1, -1, -1, -1, -1, -1}; //Idx not ItemId!!!
 	byte playerEventFlags[] = {0, 0, 0, 0, 0, 0, 0, 0}; //see debug mode
 	
@@ -65,7 +66,7 @@ public class JoinLobbyHandler extends GenericHandler {
 	int survivalprojectVersion = 11;
 	
 	public JoinLobbyHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+		super(tcpServer, messageBytes);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -75,18 +76,16 @@ public class JoinLobbyHandler extends GenericHandler {
 	}
 
 	@Override
-	public void processFields() {
-		// Add to database and stuff
-	}
-
-	@Override
-	public void changeData() {
+	public void afterSend() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addPayload() {
+	public byte[] getResponse() {
+		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
+		output.putInt(0x0, RESPONSE_LENGTH);
+		output.putInt(0x4, RESPONSE_ID);
 		output.putInt(0x14, response); // 0x14
 		output.putString(0x18, tcpServer.getUser().guildName); // 0x18
 		output.putString(0x25, tcpServer.getUser().guildDuty); // 0x25
@@ -139,11 +138,7 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putInt(0x970, 11); // 0x970 = field_A0 in Login
 		output.putInt(0x974, playerType); // 0x974
 		output.putByte(0x978, (byte) 0); // 0x978
-	}
-
-	@Override
-	public void afterSend() {
-		// TODO Auto-generated method stub
 		
+		return output.toArray();
 	}
 }

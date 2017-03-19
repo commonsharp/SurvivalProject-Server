@@ -2,6 +2,7 @@ package login.handlers;
 
 import net.GenericHandler;
 import net.UserTCPSession;
+import tools.ExtendedByteBuffer;
 
 public class TutorialCompletedHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x2915;
@@ -42,7 +43,7 @@ public class TutorialCompletedHandler extends GenericHandler {
 	}
 	
 	public TutorialCompletedHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+		super(tcpServer, messageBytes);
 		
 		final int t_items[] = {11204, 11203, 11202, 11201, 11101, 11102, 11103, 11104, 11301, 2910};
 		
@@ -78,29 +79,23 @@ public class TutorialCompletedHandler extends GenericHandler {
 	}
 
 	@Override
-	public void processFields() {
-		// Add to database and stuff
-	}
-
-	@Override
-	public void changeData() {
+	public void afterSend() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void addPayload() {
+	public byte[] getResponse() {
+		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
+		output.putInt(0x0, RESPONSE_LENGTH);
+		output.putInt(0x4, RESPONSE_ID);
 		output.putInts(0x14, itemTypes);
 		output.putInts(0x3c, zeros);
 		output.putInts(0x64, itemRemainingForceDays);
 		output.putInt(0x8c, unk2);
 		output.putInt(0x90, unk3);
 		output.putInt(0x94, unk4);
-	}
-
-	@Override
-	public void afterSend() {
-		// TODO Auto-generated method stub
 		
+		return output.toArray();
 	}
 }

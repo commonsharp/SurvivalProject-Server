@@ -2,6 +2,7 @@ package login.handlers;
 
 import net.GenericHandler;
 import net.UserTCPSession;
+import tools.ExtendedByteBuffer;
 
 // request - V
 public class SetActiveCharacterHandler extends GenericHandler {
@@ -14,7 +15,7 @@ public class SetActiveCharacterHandler extends GenericHandler {
 	protected int unknown1;
 	
 	public SetActiveCharacterHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+		super(tcpServer, messageBytes);
 	}
 
 	@Override
@@ -24,24 +25,21 @@ public class SetActiveCharacterHandler extends GenericHandler {
 	}
 
 	@Override
-	public void processFields() {
-		// Add to database and stuff
-	}
-
-	@Override
-	public void changeData() {
-		unknown1 = 0; // ?
-	}
-
-	@Override
-	public void addPayload() {
-		output.putInt(0x14, unknown1);
-		output.putInt(0x18, tcpServer.getUser().activeCharacter);
-	}
-
-	@Override
 	public void afterSend() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public byte[] getResponse() {
+		unknown1 = 0; // ?
+		
+		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
+		output.putInt(0x0, RESPONSE_LENGTH);
+		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x14, unknown1);
+		output.putInt(0x18, tcpServer.getUser().activeCharacter);
+		
+		return output.toArray();
 	}
 }

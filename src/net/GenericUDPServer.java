@@ -93,6 +93,9 @@ public abstract class GenericUDPServer implements Runnable {
 	}
 	
 	public void sendMessage(int state, InetAddress ipAddress, int port, byte[] response) throws IOException {
+		// Change the validator
+		HexTools.putIntegerInByteArray(response, 0x8, 0x2B1C);
+		
 		// Change the state
 		HexTools.putIntegerInByteArray(response, 16, state);
 		

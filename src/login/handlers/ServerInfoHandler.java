@@ -2,6 +2,7 @@ package login.handlers;
 
 import net.GenericHandler;
 import net.UserTCPSession;
+import tools.ExtendedByteBuffer;
 
 public class ServerInfoHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x2907;
@@ -22,7 +23,7 @@ public class ServerInfoHandler extends GenericHandler {
 	protected int unknown2;
 	
 	public ServerInfoHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+		super(tcpServer, messageBytes);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -38,12 +39,13 @@ public class ServerInfoHandler extends GenericHandler {
 	}
 
 	@Override
-	public void processFields() {
-		// Add to database and stuff
+	public void afterSend() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void changeData() {
+	public byte[] getResponse() {
 		ip = new String("10.0.0.2");
 		channelID = 0;
 		port = 21001;
@@ -55,10 +57,10 @@ public class ServerInfoHandler extends GenericHandler {
 //		guildSomething = 100;
 		unknown1 = 1;
 		unknown2 = -1;
-	}
-
-	@Override
-	public void addPayload() {
+		
+		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
+		output.putInt(0x0, RESPONSE_LENGTH);
+		output.putInt(0x4, RESPONSE_ID);
 		output.putShort(0x14, channelType);
 		output.putShort(0x16, channelID);
 		output.putString(0x18, ip);
@@ -70,11 +72,7 @@ public class ServerInfoHandler extends GenericHandler {
 		output.putInt(0x5C, maxPopulation);
 		output.putByte(0x60, guildSomething);
 		output.putInt(0x64, unknown2);
-	}
-
-	@Override
-	public void afterSend() {
-		// TODO Auto-generated method stub
 		
+		return output.toArray();
 	}
 }

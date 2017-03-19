@@ -2,6 +2,7 @@ package login.handlers;
 
 import net.GenericHandler;
 import net.UserTCPSession;
+import tools.ExtendedByteBuffer;
 
 public class LoginHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x2707;
@@ -17,7 +18,7 @@ public class LoginHandler extends GenericHandler {
     int unknown7;
 	
 	public LoginHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+		super(tcpServer, messageBytes);
 	}
 	
 	@Override
@@ -39,11 +40,13 @@ public class LoginHandler extends GenericHandler {
 	}
 
 	@Override
-	public void processFields() {
+	public void afterSend() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void changeData() {
+	public byte[] getResponse() {
 		response = 1;
 		unknown1 = 1234;
 		unknown3 = "what3";
@@ -51,10 +54,10 @@ public class LoginHandler extends GenericHandler {
 		unknown5 = 560;
 		unknown6 = 10;
 		unknown7 = 10;
-	}
-
-	@Override
-	public void addPayload() {
+		
+		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
+		output.putInt(0x0, RESPONSE_LENGTH);
+		output.putInt(0x4, RESPONSE_ID);
 		output.putInt(0x14, response);
 		output.putInt(0x18, tcpServer.getUser().userType);
 		output.putInt(0x1C, tcpServer.getUser().activeCharacter);
@@ -73,11 +76,7 @@ public class LoginHandler extends GenericHandler {
 		output.putInt(0x9C, unknown5);
 		output.putInt(0xA0, unknown6);
 		output.putInt(0xA4, unknown7);
-	}
-
-	@Override
-	public void afterSend() {
-		// TODO Auto-generated method stub
 		
+		return output.toArray();
 	}
 }

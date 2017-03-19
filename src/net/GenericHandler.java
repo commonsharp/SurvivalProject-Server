@@ -14,28 +14,29 @@ public abstract class GenericHandler {
 	private byte[] messageBytes;
 	
 	protected ExtendedByteBuffer input;
-	protected ExtendedByteBuffer output;
 	
 	protected UserTCPSession tcpServer;
 	protected GenericUDPServer udpServer;
 	
 	public abstract void interpretBytes();
-	public abstract void processFields();
-	
-	public abstract void changeData();
-	public abstract void addPayload();
+	public abstract byte[] getResponse();
 	
 	public abstract void afterSend() throws IOException;
 	
-	public GenericHandler(GenericUDPServer udpServer, byte[] messageBytes, int responseLength, int responseMessageID) {
-		this(null, udpServer, messageBytes, responseLength, responseMessageID);
+	// Will be used in "fake" messages.
+	public GenericHandler(UserTCPSession tcpServer) {
+		this.tcpServer = tcpServer;
 	}
 	
-	public GenericHandler(UserTCPSession tcpServer, byte[] messageBytes, int responseLength, int responseMessageID) {
-		this(tcpServer, null, messageBytes, responseLength, responseMessageID);
+	public GenericHandler(GenericUDPServer udpServer, byte[] messageBytes) {
+		this(null, udpServer, messageBytes);
 	}
 	
-	public GenericHandler(UserTCPSession tcpServer, GenericUDPServer udpServer, byte[] messageBytes, int responseLength, int responseMessageID) {
+	public GenericHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+		this(tcpServer, null, messageBytes);
+	}
+	
+	public GenericHandler(UserTCPSession tcpServer, GenericUDPServer udpServer, byte[] messageBytes) {
 		this.tcpServer = tcpServer;
 		this.udpServer = udpServer;
 		
@@ -49,13 +50,6 @@ public abstract class GenericHandler {
 		state = input.getInt(0x10);
 		
 		interpretBytes();
-		processFields();
-		
-		output = new ExtendedByteBuffer(responseLength);
-		
-		output.putInt(0x0, responseLength);
-		output.putInt(0x4, responseMessageID);
-		output.putInt(0x8, 11036);
 	}
 	
 	public int getLength() {
@@ -76,17 +70,6 @@ public abstract class GenericHandler {
 
 	public int getState() {
 		return state;
-	}
-	
-	public byte[] getResponse() {
-		changeData();
-		addPayload();
-		
-		if (output == null) {
-			return null;
-		}
-		
-		return output.toArray();
 	}
 	
 	public void printMessage() {

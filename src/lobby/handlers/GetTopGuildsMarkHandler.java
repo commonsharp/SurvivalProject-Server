@@ -2,6 +2,7 @@ package lobby.handlers;
 
 import net.GenericHandler;
 import net.UserTCPSession;
+import tools.ExtendedByteBuffer;
 
 public class GetTopGuildsMarkHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x4486;
@@ -12,7 +13,7 @@ public class GetTopGuildsMarkHandler extends GenericHandler {
 	protected int window;
 	
 	public GetTopGuildsMarkHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+		super(tcpServer, messageBytes);
 	}
 
 	@Override
@@ -22,19 +23,16 @@ public class GetTopGuildsMarkHandler extends GenericHandler {
 	}
 
 	@Override
-	public void processFields() {
+	public void afterSend() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void changeData() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addPayload() {
+	public byte[] getResponse() {
+		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
+		output.putInt(0x0, RESPONSE_LENGTH);
+		output.putInt(0x4, RESPONSE_ID);
 		output.putString(0x14, "hello7");
 		byte[] pixels = new byte[12 * 13 * 2];
 		
@@ -45,11 +43,7 @@ public class GetTopGuildsMarkHandler extends GenericHandler {
 		}
 		output.putInt(0x24, 1); // 0 = nothing. other = mark??
 		output.putBytes(0x28, pixels); // the colors. 2 bytes per pixel
-	}
-
-	@Override
-	public void afterSend() {
-		// TODO Auto-generated method stub
 		
+		return output.toArray();
 	}
 }

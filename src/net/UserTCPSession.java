@@ -77,11 +77,15 @@ public class UserTCPSession implements Runnable {
 	}
 	
 	public void sendMessage(byte[] response) throws IOException {
+		// Change the validator
+		HexTools.putIntegerInByteArray(response, 0x8, 0x2B1C);
+				
 		// Change the state
 		HexTools.putIntegerInByteArray(response, 16, clientState);
 		
 		// Change the checksum
 		HexTools.putIntegerInByteArray(response, 12, Cryptography.getDigest(response));
+		
 		// Encrypt and send
 		Cryptography.encryptMessage(response);
 		output.write(response);

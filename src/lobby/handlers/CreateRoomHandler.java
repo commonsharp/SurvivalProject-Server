@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import net.GenericHandler;
 import net.UserTCPSession;
+import tools.ExtendedByteBuffer;
 
 public class CreateRoomHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x4307;
@@ -28,7 +29,7 @@ public class CreateRoomHandler extends GenericHandler {
 	protected byte isLimitAnger; // 0 = limit. other values = no limit.
 	
 	public CreateRoomHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+		super(tcpServer, messageBytes);
 	}
 
 	@Override
@@ -62,18 +63,20 @@ public class CreateRoomHandler extends GenericHandler {
 	}
 
 	@Override
-	public void processFields() {
-		// TODO Auto-generated method stub
-		
+	public void afterSend() throws IOException {
+		sendTCPMessage(new RoomPlayersChangedHandler(tcpServer).getResponse(10, 10, (byte) 0, 0, -1));
+//		sendTCPMessage(new RoomPlayersChangedHandler(tcpServer, new byte[0x1000]).getResponse());
+//		sendTCPMessage(new ItemsChangedHandler(tcpServer, new byte[0x40]).getResponse());
 	}
 
 	@Override
-	public void changeData() {
+	public byte[] getResponse() {
 		cardsLimit = -1;
-	}
+		
+		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 
-	@Override
-	public void addPayload() {
+		output.putInt(0x0, RESPONSE_LENGTH);
+		output.putInt(0x4, RESPONSE_ID);
 		// 0 = "There's no room that can be made"
 		// 1 = "An error occurred. contact support"
 		// 2 = okay.
@@ -93,12 +96,7 @@ public class CreateRoomHandler extends GenericHandler {
 		output.putShort(0x68, (short) 0);
 		output.putByte(0x6A, isLimitAnger);
 		output.putByte(0x6B, (byte) 0);
-	}
-
-	@Override
-	public void afterSend() throws IOException {
-		sendTCPMessage(RoomPlayersChangedHandler.generateFakeMessage(tcpServer, 10, 10, (byte) 0, 0));
-//		sendTCPMessage(new RoomPlayersChangedHandler(tcpServer, new byte[0x1000]).getResponse());
-//		sendTCPMessage(new ItemsChangedHandler(tcpServer, new byte[0x40]).getResponse());
+		
+		return output.toArray();
 	}
 }

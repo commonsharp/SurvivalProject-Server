@@ -2,6 +2,7 @@ package lobby.handlers;
 
 import net.GenericHandler;
 import net.UserTCPSession;
+import tools.ExtendedByteBuffer;
 
 public class ItemsChangedHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x4316;
@@ -58,11 +59,12 @@ public class ItemsChangedHandler extends GenericHandler {
     
     boolean send = true;
 	public ItemsChangedHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes, RESPONSE_LENGTH, RESPONSE_ID);
+		super(tcpServer, messageBytes);
 	}
 
 	@Override
 	public void interpretBytes() {
+		// these are indexes and not ID's
 		magic = input.getInt(0x14);
 		weapon = input.getInt(0x18);
 		accessory = input.getInt(0x1C);
@@ -74,20 +76,25 @@ public class ItemsChangedHandler extends GenericHandler {
 		face = input.getInt(0x34);
 		hair = input.getInt(0x38);
 		head = input.getInt(0x3C);
+		
+		System.out.println(magic);
+		System.out.println(weapon);
+		System.out.println(accessory);
 	}
 
 	@Override
-	public void processFields() {
+	public void afterSend() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void changeData() {
-	}
-
-	@Override
-	public void addPayload() {
+	public byte[] getResponse() {
+		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
+		output.putInt(0x0, RESPONSE_LENGTH);
+		output.putInt(0x4, RESPONSE_ID);
+		
+		// this might be useless...
 		if (CreateRoomHandler.state == 2) {
 			output.putInt(0x14, 0);
 			output.putString(0x18, "10.0.0.2");
@@ -103,7 +110,7 @@ public class ItemsChangedHandler extends GenericHandler {
 			output.putInt(0x78, 0);
 			output.putInt(0x7C, 0);
 			output.putInt(0x80, team); // 20 for the other team
-			output.putInt(0x84, 0);;
+			output.putInt(0x84, 0);
 			output.putInt(0x88, 0);
 			
 			output.putInt(0x8C, magictype);
@@ -150,15 +157,10 @@ public class ItemsChangedHandler extends GenericHandler {
 			output.putInt(0x10C, 30);
 			output.putInt(0x110, 40);
 			output.putInt(0x114, 50);
+			return output.toArray();
 		}
 		else {
-			output = null;
+			return null;
 		}
-	}
-
-	@Override
-	public void afterSend() {
-		// TODO Auto-generated method stub
-		
 	}
 }

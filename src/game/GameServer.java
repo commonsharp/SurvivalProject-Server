@@ -17,6 +17,7 @@ public class GameServer extends GenericUDPServer {
 			message = new JoinServerHandler(udpServer, messageBytes);
 			break;
 		}
+		
 		return message;
 	}
 }

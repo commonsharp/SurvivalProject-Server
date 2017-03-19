@@ -18,4 +18,6 @@ public class User {
 	public String guildName = "Obamas";
 	public String guildDuty = "MasterLOL";
 	public long unknown1; // probably cash (premium money)
+	
+	
 }
