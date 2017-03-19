@@ -8,6 +8,7 @@ Server files for the game Survival Project, written in Java.
 
 * When a new room is created, the lobby of other players is changed (with the new room).
 * We can change room names now.
+* Changing a character in a room broadcasts to the other players in the lobby.
 
 # 18/03/2017
 * We can enter games! A shitload of bugs, but we can get into games! XD
