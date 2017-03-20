@@ -3,6 +3,7 @@ Server files for the game Survival Project, written in Java.
 
 # 20/03/2017
 * Fixed the bug where you had to change items once before entering a room, I think o_O
+* Fixed a bug in ItemsChangedHandler
 
 # 19/03/2017
 * Another big change in the game code... Removed 2 function from each handler. That should be 500 functions total when the server's completed. @TODO - think about those things in advance... :S
