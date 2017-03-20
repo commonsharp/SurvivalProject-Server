@@ -1,8 +1,10 @@
 package lobby.handlers;
 
+import java.io.IOException;
+
+import lobby.LobbyServer;
 import net.GenericHandler;
 import net.UserTCPSession;
-import tools.ExtendedByteBuffer;
 
 public class ItemsChangedHandler extends GenericHandler {
 	public static final int REQUEST_ID = 0x4316;
@@ -54,8 +56,11 @@ public class ItemsChangedHandler extends GenericHandler {
     int pet;
     
     boolean send = true;
-	public ItemsChangedHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+    protected LobbyServer lobby;
+    
+	public ItemsChangedHandler(LobbyServer lobby, UserTCPSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
+		this.lobby = lobby;
 	}
 
 	@Override
@@ -79,83 +84,87 @@ public class ItemsChangedHandler extends GenericHandler {
 	}
 
 	@Override
-	public void afterSend() {
-		// TODO Auto-generated method stub
-		
+	public void afterSend() throws IOException {
+		if (tcpServer.getUser().isInRoom) {
+			sendTCPMessage(new RoomPlayersChangedHandler(lobby, tcpServer).getResponse(
+					tcpServer.getUser().roomSlot, tcpServer.getUser().roomCharacter,
+					tcpServer.getUser().roomTeam, tcpServer.getUser().roomReady, tcpServer.getUser().roomStart, tcpServer.getUser().roomFieldF4));
+		}
 	}
 
 	@Override
 	public byte[] getResponse() {
-		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
-		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
-		
-		if (tcpServer.getUser().isInRoom) {
-			output.putInt(0x14, 0);
-			output.putString(0x18, "10.0.0.2");
-			output.putString(0x28, "10.0.0.2");
-			output.putInt(0x38, tcpServer.getUser().playerLevel);
-			output.putString(0x3C, tcpServer.getUser().username);
-			output.putString(0x49, tcpServer.getUser().guildName);
-			output.putString(0x56, tcpServer.getUser().guildDuty);
-			output.putByte(0x63, tcpServer.getUser().gender);
-			output.putInt(0x64, 0);
-			output.putInt(0x70, Ready);
-			output.putInt(0x74, Character);
-			output.putInt(0x78, 0);
-			output.putInt(0x7C, 0);
-			output.putInt(0x80, team); // 20 for the other team
-			output.putInt(0x84, 0);
-			output.putInt(0x88, 0);
-			
-			output.putInt(0x8C, magictype);
-			output.putInt(0x90, weapontype);
-			output.putInt(0x94, armortype);
-			output.putInt(0x98, pettype);
-			
-			output.putInt(0x9C, magiclevel);
-			output.putInt(0xA0, weaponlevel);
-			output.putInt(0xA4, armorlevel);
-			output.putInt(0xA8, petlevel);
-			
-			output.putInt(0xAC, magicgf);
-			output.putInt(0xB0, weapongf);
-			output.putInt(0xB4, armorgf);
-			output.putInt(0xB8, petgf);
-			
-			output.putInt(0xBC, magicskill);
-			output.putInt(0xC0, weaponskill);
-			output.putInt(0xC4, armorskill);
-			
-			output.putInts(0xCC, scroll);
-			output.putInt(0xD0, -1);
-			output.putInt(0xD4, -1);
-			output.putInt(0xD8, -1);
-			output.putInt(0xDC, -1);
-			output.putInt(0xE0, -1);
-			output.putInt(0xE4, -1);
-			output.putInt(0xE8, Start);
-			output.putInt(0xEC, -1);
-			output.putInt(0xF0, -1);
-			
-			output.putInt(0xF4, 80);
-			output.putInt(0xF8, 70);
-			output.putInt(0xFC, 60);
-			
-			output.putByte(0x100, (byte) 1);
-			output.putByte(0x101, (byte) 1);
-			output.putByte(0x102, (byte) 1);
-			output.putByte(0x103, (byte) 1);
-	
-			output.putInt(0x104, 10);
-			output.putInt(0x108, 20);
-			output.putInt(0x10C, 30);
-			output.putInt(0x110, 40);
-			output.putInt(0x114, 50);
-			return output.toArray();
-		}
-		else {
-			return null;
-		}
+		return null;
+//		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
+//		output.putInt(0x0, RESPONSE_LENGTH);
+//		output.putInt(0x4, RESPONSE_ID);
+//		
+//		if (tcpServer.getUser().isInRoom) {
+//			output.putInt(0x14, 0);
+//			output.putString(0x18, "10.0.0.2");
+//			output.putString(0x28, "10.0.0.2");
+//			output.putInt(0x38, tcpServer.getUser().playerLevel);
+//			output.putString(0x3C, tcpServer.getUser().username);
+//			output.putString(0x49, tcpServer.getUser().guildName);
+//			output.putString(0x56, tcpServer.getUser().guildDuty);
+//			output.putByte(0x63, tcpServer.getUser().gender);
+//			output.putInt(0x64, 0);
+//			output.putInt(0x70, Ready);
+//			output.putInt(0x74, Character);
+//			output.putInt(0x78, 0);
+//			output.putInt(0x7C, 0);
+//			output.putInt(0x80, team); // 20 for the other team
+//			output.putInt(0x84, 0);
+//			output.putInt(0x88, 0);
+//			
+//			output.putInt(0x8C, magictype);
+//			output.putInt(0x90, weapontype);
+//			output.putInt(0x94, armortype);
+//			output.putInt(0x98, pettype);
+//			
+//			output.putInt(0x9C, magiclevel);
+//			output.putInt(0xA0, weaponlevel);
+//			output.putInt(0xA4, armorlevel);
+//			output.putInt(0xA8, petlevel);
+//			
+//			output.putInt(0xAC, magicgf);
+//			output.putInt(0xB0, weapongf);
+//			output.putInt(0xB4, armorgf);
+//			output.putInt(0xB8, petgf);
+//			
+//			output.putInt(0xBC, magicskill);
+//			output.putInt(0xC0, weaponskill);
+//			output.putInt(0xC4, armorskill);
+//			
+//			output.putInts(0xCC, scroll);
+//			output.putInt(0xD0, -1);
+//			output.putInt(0xD4, -1);
+//			output.putInt(0xD8, -1);
+//			output.putInt(0xDC, -1);
+//			output.putInt(0xE0, -1);
+//			output.putInt(0xE4, -1);
+//			output.putInt(0xE8, Start);
+//			output.putInt(0xEC, -1);
+//			output.putInt(0xF0, -1);
+//			
+//			output.putInt(0xF4, 80);
+//			output.putInt(0xF8, 70);
+//			output.putInt(0xFC, 60);
+//			
+//			output.putByte(0x100, (byte) 1);
+//			output.putByte(0x101, (byte) 1);
+//			output.putByte(0x102, (byte) 1);
+//			output.putByte(0x103, (byte) 1);
+//	
+//			output.putInt(0x104, 10);
+//			output.putInt(0x108, 20);
+//			output.putInt(0x10C, 30);
+//			output.putInt(0x110, 40);
+//			output.putInt(0x114, 50);
+//			return output.toArray();
+//		}
+//		else {
+//			return null;
+//		}
 	}
 }

@@ -137,6 +137,12 @@ public class ExtendedByteBuffer {
 		}
 	}
 	
+	public void putStrings(int index, String[] strings, int lengthOfEachString) {
+		for (int i = 0; i < strings.length; i++) {
+			putString(index + lengthOfEachString * i, strings[i]);
+		}
+	}
+	
 	public byte[] toArray() {
 		return buffer.array();
 	}

@@ -13,8 +13,8 @@ public class User {
 	public int isMuted;
 	public int daysToMute;
 	public int ageRestriction = 1;
-	public long playerExperience = 1000;
-	public long playerMoney = 2000;
+	public long playerExperience = 200000000;
+	public long playerMoney = 200000000;
 	public String guildName = "Obamas";
 	public String guildDuty = "MasterLOL";
 	public long unknown1; // probably cash (premium money)
@@ -33,7 +33,7 @@ public class User {
 	
 	public int playerInventorySlots = 24;
 	public int playerType = 70; //set to 7 for GM...
-	public int whiteCards[] = {200, 20, 30, 40};
+	public int whiteCards[] = {200000, 200000, 200000, 200000};
 	public int scrolls[] = {0, 0, 0};
 	public int playerWins = 10;
 	public int playerLoses = 20;
@@ -45,4 +45,11 @@ public class User {
 	public int magicIndex, weaponIndex, accessoryIndex;
 	
 	public boolean isInRoom = false;
+	public int roomIndex;
+	public int roomSlot;
+	public int roomTeam;
+	public int roomCharacter;
+	public byte roomReady;
+	public int roomStart;
+	public int roomFieldF4;
 }

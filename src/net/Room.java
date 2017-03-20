@@ -5,12 +5,14 @@ public class Room {
 	protected String roomName;
 	protected int gameType;
 	protected int gameMap;
-	protected int numberOfPlayers;
+	protected int maxNumberOfPlayers;
 	protected byte isWithScrolls;
 	protected byte isWithTeams;
 	protected int cardsLimit;
 	protected byte isLimitAnger;
 	protected int[] characters;
+	
+	protected User[] users = new User[8];
 	
 	public Room(int roomID, String roomName, int gameType, int gameMap, int numberOfPlayers, byte isWithScrolls,
 			byte isWithTeams, int cardsLimit, byte isLimitAnger, int[] characters) {
@@ -18,7 +20,7 @@ public class Room {
 		this.roomName = roomName;
 		this.gameType = gameType;
 		this.gameMap = gameMap;
-		this.numberOfPlayers = numberOfPlayers;
+		this.maxNumberOfPlayers = numberOfPlayers;
 		this.isWithScrolls = isWithScrolls;
 		this.isWithTeams = isWithTeams;
 		this.cardsLimit = cardsLimit;
@@ -31,6 +33,14 @@ public class Room {
 		else {
 			this.characters = characters;
 		}
+	}
+	
+	public void setUser(int index, User user) {
+		this.users[index] = user;
+	}
+	
+	public User getUser(int index) {
+		return users[index];
 	}
 
 	public int getRoomID() {
@@ -65,12 +75,12 @@ public class Room {
 		this.gameMap = gameMap;
 	}
 
-	public int getNumberOfPlayers() {
-		return numberOfPlayers;
+	public int getMaxNumberOfPlayers() {
+		return maxNumberOfPlayers;
 	}
 
-	public void setNumberOfPlayers(int numberOfPlayers) {
-		this.numberOfPlayers = numberOfPlayers;
+	public void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
+		this.maxNumberOfPlayers = maxNumberOfPlayers;
 	}
 
 	public byte getIsWithScrolls() {

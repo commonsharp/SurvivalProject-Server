@@ -3,6 +3,9 @@ package lobby;
 import java.io.IOException;
 
 import lobby.handlers.CreateRoomHandler;
+import lobby.handlers.EnterExistingRoomHandler;
+import lobby.handlers.FusionHandler;
+import lobby.handlers.GetRoomInfoHandler;
 import lobby.handlers.GetTopGuildsHandler;
 import lobby.handlers.GetTopGuildsMarkHandler;
 import lobby.handlers.ItemsChangedHandler;
@@ -44,14 +47,23 @@ public class LobbyServer extends GenericTCPServer {
 		case CreateRoomHandler.REQUEST_ID:
 			message = new CreateRoomHandler(this, tcpServer, messageBytes);
 			break;
+		case GetRoomInfoHandler.REQUEST_ID:
+			message = new GetRoomInfoHandler(tcpServer, messageBytes);
+			break;
+		case EnterExistingRoomHandler.REQUEST_ID:
+			message = new EnterExistingRoomHandler(this, tcpServer, messageBytes);
+			break;
 		case RoomPlayersChangedHandler.REQUEST_ID:
 			message = new RoomPlayersChangedHandler(this, tcpServer, messageBytes);
 			break;
 		case ItemsChangedHandler.REQUEST_ID:
-			message = new ItemsChangedHandler(tcpServer, messageBytes);
+			message = new ItemsChangedHandler(this, tcpServer, messageBytes);
 			break;
 		case LeaveRoomHandler.REQUEST_ID:
 			message = new LeaveRoomHandler(this, tcpServer, messageBytes);
+			break;
+		case FusionHandler.REQUEST_ID:
+			message = new FusionHandler(tcpServer, messageBytes);
 			break;
 		case RoomNameChangedHandler.REQUEST_ID:
 			message = new RoomNameChangedHandler(this, tcpServer, messageBytes);

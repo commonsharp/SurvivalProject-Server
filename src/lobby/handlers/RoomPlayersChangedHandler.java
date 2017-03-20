@@ -12,13 +12,10 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 	public static final int RESPONSE_ID = 0x4317;
 	public static final int RESPONSE_LENGTH = 0x118;
 	
-	int Slot; //0
     String netIP; // 16
     String localIP; // 16
     int level;
 	byte gender;
-    int ready;
-    int character;
     int magictype = -1;
     int weapontype = -1;
     int armortype = -1;
@@ -43,7 +40,6 @@ public class RoomPlayersChangedHandler extends GenericHandler {
     int face;
     int hair;
     int head;
-    int start; //2
     int unk20 = -1; //-1
     int unk21 = -1; //-1
     int mission;
@@ -51,8 +47,6 @@ public class RoomPlayersChangedHandler extends GenericHandler {
     int unk24;
     int unk25;
     int unk26 = -1; //-1
-    
-    int team; // 10 for blue team. 20 for red team.
     
     int magic;
     int weapon;
@@ -75,17 +69,18 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 	
 	@Override
 	public void interpretBytes() {
-		unknown01 = input.getInt(0x14);
-		character = input.getInt(0x18);
-		team = input.getInt(0x1C);
-		ready = input.getByte(0x20);
-		start = input.getInt(0x24);
+		tcpServer.getUser().roomSlot = input.getInt(0x14);
+		tcpServer.getUser().roomCharacter = input.getInt(0x18);
+		tcpServer.getUser().roomTeam = input.getInt(0x1C);
+		tcpServer.getUser().roomReady = input.getByte(0x20);
+		tcpServer.getUser().roomStart = input.getInt(0x24);
 		unknown04 = input.getInt(0x28);
 		unknown06 = input.getInt(0x2C);
 		
-		System.out.println("Ready: " + ready);
-		System.out.println("Start: " + start);
+		System.out.println("Ready: " + tcpServer.getUser().roomReady);
+		System.out.println("Start: " + tcpServer.getUser().roomStart);
 		
+		System.out.println("Slot " + tcpServer.getUser().roomSlot);
 //		System.out.println("Team : " + team);
 		System.out.println(unknown01);
 //		System.out.println(isReadyMaybe);
@@ -96,27 +91,36 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		lobby.broadcastMessage(tcpServer, new LobbyRoomsChangedHandler(tcpServer).getResponse(lobby.getRoom(0)));
+		int roomID = tcpServer.getUser().roomIndex;
+		lobby.broadcastMessage(tcpServer, new LobbyRoomsChangedHandler(tcpServer).getResponse(lobby.getRoom(roomID)));
+		// this needs to be sent to everyone in the room, but not in the lobby...
+		lobby.broadcastMessage(tcpServer, new RoomPlayersChangedHandler(lobby, tcpServer).getResponse(
+				tcpServer.getUser().roomSlot, tcpServer.getUser().roomCharacter, tcpServer.getUser().roomTeam,
+				tcpServer.getUser().roomReady, tcpServer.getUser().roomStart, tcpServer.getUser().roomFieldF4));
 	}
 
 	@Override
 	public byte[] getResponse() {
-		int fieldF4 = -1;
+		tcpServer.getUser().roomFieldF4 = -1;
 		
-		if (start == 2) {
-			fieldF4 = 0;
+		if (tcpServer.getUser().roomStart == 2) {
+			tcpServer.getUser().roomFieldF4 = 0;
 		}
-//		return null;
-		return getResponse(character, team, (byte) ready, start, fieldF4);
+		
+		return getResponse(tcpServer.getUser().roomSlot, tcpServer.getUser().roomCharacter, tcpServer.getUser().roomTeam,
+				tcpServer.getUser().roomReady, tcpServer.getUser().roomStart, tcpServer.getUser().roomFieldF4);
 	}
 	
-	public byte[] getResponse(int character, int team, byte ready, int start, int fieldF4) {
-		lobby.getRoom(0).setCharacter(0, character);
+	// field f4 must be set according to different rules.
+	// the rules are described in "ItemsChangedResponse"
+	public byte[] getResponse(int slot, int character, int team, byte ready, int start, int fieldF4) {
+		int roomID = tcpServer.getUser().roomIndex;
+		lobby.getRoom(roomID).setCharacter(slot, character);
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
-		output.putInt(0x14, 0); // slot. first player in the room = slot 0. next one = slot 1 and so on.
+		output.putInt(0x14, slot); // slot. first player in the room = slot 0. next one = slot 1 and so on.
 		output.putString(0x18, "100.0.0.2");
 		output.putString(0x28, "100.0.0.2");
 		output.putInt(0x38, tcpServer.getUser().playerLevel);
@@ -133,9 +137,11 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		output.putInt(0x84, 0);
 		output.putInt(0x88, 0);
 		
+		System.out.println("Magic: " + tcpServer.getUser().playerCardItemId[tcpServer.getUser().magicIndex]);
+		
 		output.putInt(0x8C, tcpServer.getUser().playerCardItemId[tcpServer.getUser().magicIndex]);
-		output.putInt(0x90, tcpServer.getUser().playerCardItemId[tcpServer.getUser().weaponIndex]);
-		output.putInt(0x94, tcpServer.getUser().playerCardItemId[tcpServer.getUser().accessoryIndex]);
+		output.putInt(0x90, tcpServer.getUser().playerCardItemLevelIdx[tcpServer.getUser().weaponIndex]); // not sure...
+		output.putInt(0x94, tcpServer.getUser().playerCardItemLevelIdx[tcpServer.getUser().accessoryIndex]); // not sure...
 		output.putInt(0x98, 0);
 		
 		output.putInt(0x9C, tcpServer.getUser().playerCardItemLevelIdx[tcpServer.getUser().magicIndex]);
@@ -152,13 +158,13 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		output.putInt(0xC0, tcpServer.getUser().playerCardItemSkill[tcpServer.getUser().weaponIndex]);
 		output.putInt(0xC4, tcpServer.getUser().playerCardItemSkill[tcpServer.getUser().accessoryIndex]);
 		
-		output.putInts(0xCC, new int[3]);
-		output.putInt(0xD0, -1);
-		output.putInt(0xD4, -1);
-		output.putInt(0xD8, -1);
-		output.putInt(0xDC, -1);
-		output.putInt(0xE0, -1);
-		output.putInt(0xE4, -1);
+		output.putInts(0xCC, new int[] {0, 0, 0});
+		output.putInt(0xD0, 0);
+		output.putInt(0xD4, 0);
+		output.putInt(0xD8, 0);
+		output.putInt(0xDC, 0);
+		output.putInt(0xE0, 0);
+		output.putInt(0xE4, 0);
 		output.putInt(0xE8, start);
 		output.putInt(0xEC, 0);
 		output.putInt(0xF0, 0);
@@ -167,10 +173,10 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		output.putInt(0xF8, 0);
 		output.putInt(0xFC, 0);
 		
-		output.putByte(0x100, (byte) 0);
-		output.putByte(0x101, (byte) 0);
-		output.putByte(0x102, (byte) 0);
-		output.putByte(0x103, (byte) 0);
+		output.putByte(0x100, (byte) 1);
+		output.putByte(0x101, (byte) 1);
+		output.putByte(0x102, (byte) 1);
+		output.putByte(0x103, (byte) 1);
 
 		output.putInt(0x104, 0);
 		output.putInt(0x108, 0);

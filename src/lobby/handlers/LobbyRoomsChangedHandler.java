@@ -29,7 +29,7 @@ public class LobbyRoomsChangedHandler extends GenericHandler {
 	
 	public byte[] getResponse(Room room) {
 		return getResponse(room.getRoomID(), room.getRoomName(), room.getGameType(),
-				room.getGameMap(), room.getNumberOfPlayers(), room.getIsWithScrolls(), room.getIsWithTeams(), room.getCharacters());
+				room.getGameMap(), room.getMaxNumberOfPlayers(), room.getIsWithScrolls(), room.getIsWithTeams(), room.getCharacters());
 	}
 	
 	public byte[] getResponse(int roomID, String roomName, int gameType, int gameMap, int maxNumberOfPlayers, byte isWithScrolls, byte isWithTeams, int[] characters) {
@@ -44,7 +44,7 @@ public class LobbyRoomsChangedHandler extends GenericHandler {
 		output.putInt(0x40, gameMap); // room map
 		output.putInt(0x44, 1); // number of players in the room. if it's equal to the max, the room is full (blacked out)
 		output.putInt(0x48, maxNumberOfPlayers); // max players
-		output.putByte(0x4C, (byte) 1); // is password
+		output.putByte(0x4C, (byte) 0); // is password
 		output.putByte(0x4D, (byte) 1); // is with scrolls
 		output.putByte(0x4E, (byte) 0); // is closed. 0 = not closed. 1 = closed.
 		output.putByte(0x4F, (byte) 1); // is premium
@@ -52,7 +52,7 @@ public class LobbyRoomsChangedHandler extends GenericHandler {
 		output.putInt(0x54, -1); // cards limit.
 		output.putInts(0x58, characters); // characters in the room
 		output.putInt(0x98, 0); // -1 - everyone is random. 0 - normal. 1 - red team random. 2 - blue team random
-		output.putInt(0xA8, 2); // something with field 2E54 in MyInfo
+		output.putInt(0xA8, 88); // this is big mission quest number. something with field 2E54 in MyInfo
 		
 		output.putByte(0xAC, (byte) 0); // isfull. 0 = not full. 1 = full.
 		output.putByte(0xAD, (byte) 0); // boolean. 0 or anything else.
