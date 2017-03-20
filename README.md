@@ -2,7 +2,7 @@
 Server files for the game Survival Project, written in Java.
 
 # 20/03/2017
-* Started working on Big match.
+* Started working on big match.
 * Started working on quests.
 * Added multiple users in a room support. Still buggy as hell.
 * Added room messages support (messages that are being sent to anyone in the room, but not to everyone in the game).
