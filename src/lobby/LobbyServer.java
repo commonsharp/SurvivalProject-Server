@@ -84,8 +84,23 @@ public class LobbyServer extends GenericTCPServer {
 	public void broadcastMessage(UserTCPSession tcpServer, byte[] message) throws IOException {
 		for (UserTCPSession user : usersSessions) {
 			// Send the message to everyone but yourself
+			
 			if (user.getUser().username != tcpServer.getUser().username) {
-				user.sendMessage(message);
+				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
+				user.sendMessage(HexTools.duplicateArray(message));
+			}
+		}
+	}
+
+	public void roomMessage(UserTCPSession tcpServer, int roomID, byte[] message) throws IOException {
+		for (UserTCPSession user : getRoom(roomID).getUsers()) {
+			// If the user is not null
+			if (user != null) {
+				// If the user is someone else
+				if (user.getUser().username != tcpServer.getUser().username) {
+					// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
+					user.sendMessage(HexTools.duplicateArray(message));
+				}
 			}
 		}
 	}

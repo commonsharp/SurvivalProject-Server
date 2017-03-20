@@ -65,29 +65,26 @@ public class CreateRoomHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		lobby.broadcastMessage(tcpServer, new LobbyRoomsChangedHandler(tcpServer).getResponse(lobby.getRoom(roomNumber)));
-		sendTCPMessage(new RoomPlayersChangedHandler(lobby, tcpServer).getResponse(
-				tcpServer.getUser().roomSlot, tcpServer.getUser().roomCharacter, tcpServer.getUser().roomTeam,
-				(byte) tcpServer.getUser().roomReady, tcpServer.getUser().roomStart, tcpServer.getUser().roomFieldF4));
+		lobby.broadcastMessage(userSession, new LobbyRoomsChangedHandler(userSession).getResponse(lobby.getRoom(roomNumber)));
+		sendTCPMessage(new RoomPlayersChangedHandler(lobby, userSession).getResponse(userSession.getUser()));
 	}
 
 	@Override
 	public byte[] getResponse() {
-		cardsLimit = -1;
-		tcpServer.getUser().isInRoom = true;
-		tcpServer.getUser().roomSlot = 0;
-		tcpServer.getUser().roomTeam = 10;
-		tcpServer.getUser().roomCharacter = 10;
-		tcpServer.getUser().roomReady = 0;
-		tcpServer.getUser().roomStart = 0;
-		tcpServer.getUser().roomFieldF4 = -1;
-		
-		
 		int[] characters = new int[10];
 		characters[0] = 10;
-		tcpServer.getUser().roomIndex = roomNumber;
+		cardsLimit = -1;
 		lobby.setRoom(roomNumber, new Room(roomNumber, roomName, gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger, characters));
-		lobby.getRoom(roomNumber).setUser(tcpServer.getUser().roomSlot, tcpServer.getUser());
+		userSession.getUser().isInRoom = true;
+		userSession.getUser().roomSlot = lobby.getRoom(roomNumber).getSlot();
+		userSession.getUser().roomTeam = 10;
+		userSession.getUser().roomCharacter = 10;
+		userSession.getUser().roomReady = 0;
+		userSession.getUser().roomStart = 0;
+		userSession.getUser().roomFieldF4 = -1;
+		
+		userSession.getUser().roomIndex = roomNumber;
+		lobby.getRoom(roomNumber).setUserSession(userSession.getUser().roomSlot, userSession);
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 
@@ -106,7 +103,7 @@ public class CreateRoomHandler extends GenericHandler {
 		output.putInt(0x54, numberOfPlayers);
 		output.putByte(0x58, (byte) isWithScrolls);
 		output.putByte(0x59, (byte) 0);
-		output.putInt(0x5C, tcpServer.getUser().roomTeam); // team
+		output.putInt(0x5C, userSession.getUser().roomTeam); // team
 		output.putByte(0x60, (byte) isWithTeams);
 		output.putInt(0x64, cardsLimit);
 		output.putShort(0x68, (short) 0);

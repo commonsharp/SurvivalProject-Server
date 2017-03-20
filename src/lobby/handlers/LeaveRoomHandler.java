@@ -37,8 +37,9 @@ public class LeaveRoomHandler extends GenericHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
-		output.putInt(0x14, 0); // slot?
-		output.putString(0x18, tcpServer.getUser().username);
+		output.putInt(0x14, userSession.getUser().roomSlot);
+		output.putString(0x18, userSession.getUser().username);
+		lobby.getRoom(userSession.getUser().roomIndex).setUserSession(userSession.getUser().roomSlot, null);
 		
 		return output.toArray();
 	}

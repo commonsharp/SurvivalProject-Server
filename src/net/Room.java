@@ -12,7 +12,7 @@ public class Room {
 	protected byte isLimitAnger;
 	protected int[] characters;
 	
-	protected User[] users = new User[8];
+	protected UserTCPSession[] users = new UserTCPSession[8];
 	
 	public Room(int roomID, String roomName, int gameType, int gameMap, int numberOfPlayers, byte isWithScrolls,
 			byte isWithTeams, int cardsLimit, byte isLimitAnger, int[] characters) {
@@ -35,11 +35,11 @@ public class Room {
 		}
 	}
 	
-	public void setUser(int index, User user) {
+	public void setUserSession(int index, UserTCPSession user) {
 		this.users[index] = user;
 	}
 	
-	public User getUser(int index) {
+	public UserTCPSession getUser(int index) {
 		return users[index];
 	}
 
@@ -125,5 +125,21 @@ public class Room {
 	
 	public void setCharacter(int index, int character) {
 		this.characters[index] = character;
+	}
+
+	public int getSlot() {
+		//TODO check if the room is full
+		for (int i = 0; i < 8; i++) {
+			if (users[i] == null) {
+				return i;
+			}
+		}
+		
+		// room is full or something
+		return -1;
+	}
+
+	public UserTCPSession[] getUsers() {
+		return users;
 	}
 }

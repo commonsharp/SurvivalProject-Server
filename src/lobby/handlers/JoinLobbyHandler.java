@@ -37,7 +37,7 @@ public class JoinLobbyHandler extends GenericHandler {
 	
 	int response = 1;
 	/* calculate channel flag from playerLevel */
-	int channelFlag = (tcpServer.getUser().playerLevel == 0) ? 0 : (tcpServer.getUser().playerLevel >= 17) ? 30 : (tcpServer.getUser().playerLevel >= 13) ? 20 : 10;
+	int channelFlag = (userSession.getUser().playerLevel == 0) ? 0 : (userSession.getUser().playerLevel >= 17) ? 30 : (userSession.getUser().playerLevel >= 13) ? 20 : 10;
 	
 	// Registry/IOSPK/Version
 	int spVersion = 11;
@@ -51,7 +51,7 @@ public class JoinLobbyHandler extends GenericHandler {
 
 	@Override
 	public void interpretBytes() {
-		tcpServer.getUser().username = input.getString(0x14);
+		userSession.getUser().username = input.getString(0x14);
 		System.out.println(input.getString(0x14));
 		System.out.println(input.getString(0x21));
 		System.out.println(input.getString(0x3A));
@@ -73,40 +73,40 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
 		output.putInt(0x14, response); // 0x14
-		output.putString(0x18, tcpServer.getUser().guildName); // 0x18
-		output.putString(0x25, tcpServer.getUser().guildDuty); // 0x25
-		output.putByte(0x32, tcpServer.getUser().gender); // 0x32
-		output.putInt(0x34, tcpServer.getUser().playerWins); // 0x34
-		output.putInt(0x38, tcpServer.getUser().playerLoses); // 0x38
+		output.putString(0x18, userSession.getUser().guildName); // 0x18
+		output.putString(0x25, userSession.getUser().guildDuty); // 0x25
+		output.putByte(0x32, userSession.getUser().gender); // 0x32
+		output.putInt(0x34, userSession.getUser().playerWins); // 0x34
+		output.putInt(0x38, userSession.getUser().playerLoses); // 0x38
 		output.putInt(0x3c, 11); // 0x3c - something with wins maybe...
-		output.putInt(0x40, tcpServer.getUser().playerLevel);
-		output.putInt(0x44, tcpServer.getUser().playerKOs); // 0x44
-		output.putInt(0x48, tcpServer.getUser().playerDowns); // 0x48
+		output.putInt(0x40, userSession.getUser().playerLevel);
+		output.putInt(0x44, userSession.getUser().playerKOs); // 0x44
+		output.putInt(0x48, userSession.getUser().playerDowns); // 0x48
 		output.putInt(0x50, 33); // 0x50
 		output.putInt(0x54, 44); // 0x54
 		output.putInt(0x5c, 55); // 0x5c
-		output.putLong(0x60, tcpServer.getUser().playerExperience); // 0x60
-		output.putLong(0x68, tcpServer.getUser().playerMoney); // 0x68
+		output.putLong(0x60, userSession.getUser().playerExperience); // 0x60
+		output.putLong(0x68, userSession.getUser().playerMoney); // 0x68
 		output.putLong(0x70, avatarMoney); // 0x70
-		output.putInt(0x78, tcpServer.getUser().playerLevel); // 0x78
-		output.putInt(0x7C, tcpServer.getUser().usuableCharacterCount); // 0x7c
-		output.putInt(0x80, tcpServer.getUser().scrolls[0]); // 0x80
-		output.putInt(0x84, tcpServer.getUser().scrolls[1]); // 0x84
-		output.putInt(0x88, tcpServer.getUser().scrolls[2]); // 0x88
-		output.putInt(0x8C, tcpServer.getUser().whiteCards[0]); // 0x8c
-		output.putInt(0x90, tcpServer.getUser().whiteCards[1]); // 0x90
-		output.putInt(0x94, tcpServer.getUser().whiteCards[2]); // 0x94
-		output.putInt(0x98, tcpServer.getUser().whiteCards[3]); // 0x98
+		output.putInt(0x78, userSession.getUser().playerLevel); // 0x78
+		output.putInt(0x7C, userSession.getUser().usuableCharacterCount); // 0x7c
+		output.putInt(0x80, userSession.getUser().scrolls[0]); // 0x80
+		output.putInt(0x84, userSession.getUser().scrolls[1]); // 0x84
+		output.putInt(0x88, userSession.getUser().scrolls[2]); // 0x88
+		output.putInt(0x8C, userSession.getUser().whiteCards[0]); // 0x8c
+		output.putInt(0x90, userSession.getUser().whiteCards[1]); // 0x90
+		output.putInt(0x94, userSession.getUser().whiteCards[2]); // 0x94
+		output.putInt(0x98, userSession.getUser().whiteCards[3]); // 0x98
 		output.putInt(0x9C, channelFlag); // 0x9c
-		output.putBytes(0xA0, tcpServer.getUser().playerCardItemExist); // 0xA0
-		output.putInts(0x280, tcpServer.getUser().playerCardItemId); // 0x280
-		output.putInts(0x400, tcpServer.getUser().playerCardItemDays); // 0x400
-		output.putInts(0x580, tcpServer.getUser().playerCardItemLevelIdx); // 0x580
-		output.putInts(0x700, tcpServer.getUser().playerCardItemSkill); // 0x700
-		output.putInt(0x880, tcpServer.getUser().playerInventorySlots); // 0x880
+		output.putBytes(0xA0, userSession.getUser().playerCardItemExist); // 0xA0
+		output.putInts(0x280, userSession.getUser().playerCardItemId); // 0x280
+		output.putInts(0x400, userSession.getUser().playerCardItemDays); // 0x400
+		output.putInts(0x580, userSession.getUser().playerCardItemLevelIdx); // 0x580
+		output.putInts(0x700, userSession.getUser().playerCardItemSkill); // 0x700
+		output.putInt(0x880, userSession.getUser().playerInventorySlots); // 0x880
 		output.putInts(0x884, minPointForeveDword); // 0x884
 		output.putLongs(0x8F8, minPointForLevelQword); //0x8F8
-		output.putInt(0x918, tcpServer.getUser().playerChannelType); // 0x918
+		output.putInt(0x918, userSession.getUser().playerChannelType); // 0x918
 		output.putInt(0x91C, spVersion); // 0x91c
 		output.putInt(0x920, ioProtectVersion); // 0x920
 		output.putInt(0x924, survivalprojectVersion); // 0x924
@@ -115,14 +115,14 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putInt(0x930, visitBonusElements);
 		output.putInt(0x934, visitBonusElementsMultiplier);
 		output.putInt(0x938, visitBonusAvatarMoney);
-		output.putBytes(0x93C, tcpServer.getUser().playerEventFlags); // 0x93C
+		output.putBytes(0x93C, userSession.getUser().playerEventFlags); // 0x93C
 		output.putInt(0x944, playerRank); // 0x944
 		output.putByte(0x948, (byte) 1);
 		output.putInt(0x94C, lobbyMaxRooms); // 0x94c
-		output.putInts(0x950, tcpServer.getUser().playerAvatarEquipIdx); // 0x950
+		output.putInts(0x950, userSession.getUser().playerAvatarEquipIdx); // 0x950
 		output.putInt(0x96C, 1); // something with guild mark
 		output.putInt(0x970, 11); // 0x970 = field_A0 in Login
-		output.putInt(0x974, tcpServer.getUser().playerType); // 0x974
+		output.putInt(0x974, userSession.getUser().playerType); // 0x974
 		output.putByte(0x978, (byte) 0); // 0x978
 		
 		return output.toArray();

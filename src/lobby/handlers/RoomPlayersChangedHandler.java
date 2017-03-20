@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import lobby.LobbyServer;
 import net.GenericHandler;
+import net.User;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
@@ -16,21 +17,9 @@ public class RoomPlayersChangedHandler extends GenericHandler {
     String localIP; // 16
     int level;
 	byte gender;
-    int magictype = -1;
-    int weapontype = -1;
-    int armortype = -1;
     int pettype; //maybe
-    int magiclevel = -1;
-    int weaponlevel = -1;
-    int armorlevel = -1;
     int petlevel; //maybe
-    int magicgf = -1;
-    int weapongf = -1;
-    int armorgf = -1;
     int petgf; //maybe
-    int magicskill;
-    int weaponskill;
-    int armorskill;
     int petskill; //maybe
     int[] scroll = new int[3];
     int foot;
@@ -69,18 +58,18 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 	
 	@Override
 	public void interpretBytes() {
-		tcpServer.getUser().roomSlot = input.getInt(0x14);
-		tcpServer.getUser().roomCharacter = input.getInt(0x18);
-		tcpServer.getUser().roomTeam = input.getInt(0x1C);
-		tcpServer.getUser().roomReady = input.getByte(0x20);
-		tcpServer.getUser().roomStart = input.getInt(0x24);
+		userSession.getUser().roomSlot = input.getInt(0x14);
+		userSession.getUser().roomCharacter = input.getInt(0x18);
+		userSession.getUser().roomTeam = input.getInt(0x1C);
+		userSession.getUser().roomReady = input.getByte(0x20);
+		userSession.getUser().roomStart = input.getInt(0x24);
 		unknown04 = input.getInt(0x28);
 		unknown06 = input.getInt(0x2C);
 		
-		System.out.println("Ready: " + tcpServer.getUser().roomReady);
-		System.out.println("Start: " + tcpServer.getUser().roomStart);
+		System.out.println("Ready: " + userSession.getUser().roomReady);
+		System.out.println("Start: " + userSession.getUser().roomStart);
 		
-		System.out.println("Slot " + tcpServer.getUser().roomSlot);
+		System.out.println("Slot " + userSession.getUser().roomSlot);
 //		System.out.println("Team : " + team);
 		System.out.println(unknown01);
 //		System.out.println(isReadyMaybe);
@@ -91,72 +80,79 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		int roomID = tcpServer.getUser().roomIndex;
-		lobby.broadcastMessage(tcpServer, new LobbyRoomsChangedHandler(tcpServer).getResponse(lobby.getRoom(roomID)));
+		int roomID = userSession.getUser().roomIndex;
+		lobby.broadcastMessage(userSession, new LobbyRoomsChangedHandler(userSession).getResponse(lobby.getRoom(roomID)));
 		// this needs to be sent to everyone in the room, but not in the lobby...
-		lobby.broadcastMessage(tcpServer, new RoomPlayersChangedHandler(lobby, tcpServer).getResponse(
-				tcpServer.getUser().roomSlot, tcpServer.getUser().roomCharacter, tcpServer.getUser().roomTeam,
-				tcpServer.getUser().roomReady, tcpServer.getUser().roomStart, tcpServer.getUser().roomFieldF4));
+		
+		lobby.roomMessage(userSession, roomID, new RoomPlayersChangedHandler(lobby, userSession).getResponse(userSession.getUser()));
+//		lobby.broadcastMessage(tcpServer, new RoomPlayersChangedHandler(lobby, tcpServer).getResponse(tcpServer.getUser()));
 	}
 
 	@Override
 	public byte[] getResponse() {
-		tcpServer.getUser().roomFieldF4 = -1;
+		userSession.getUser().roomFieldF4 = -1;
 		
-		if (tcpServer.getUser().roomStart == 2) {
-			tcpServer.getUser().roomFieldF4 = 0;
+		boolean isStart = true;
+		for (int i = 0; i < 8; i++) {
+			UserTCPSession currentSession = lobby.getRoom(userSession.getUser().roomIndex).getUser(i);
+			
+			if (currentSession != null) {
+				if (currentSession.getUser().roomReady != 1)
+					isStart = false;
+			}
 		}
 		
-		return getResponse(tcpServer.getUser().roomSlot, tcpServer.getUser().roomCharacter, tcpServer.getUser().roomTeam,
-				tcpServer.getUser().roomReady, tcpServer.getUser().roomStart, tcpServer.getUser().roomFieldF4);
+		if (isStart) {
+			userSession.getUser().roomFieldF4 = 0;
+		}
+		
+		return getResponse(userSession.getUser());
 	}
 	
 	// field f4 must be set according to different rules.
 	// the rules are described in "ItemsChangedResponse"
-	public byte[] getResponse(int slot, int character, int team, byte ready, int start, int fieldF4) {
-		int roomID = tcpServer.getUser().roomIndex;
-		lobby.getRoom(roomID).setCharacter(slot, character);
+	public byte[] getResponse(User user) {
+		int roomID = userSession.getUser().roomIndex;
+		lobby.getRoom(roomID).setCharacter(user.roomSlot, user.roomCharacter);
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
-		output.putInt(0x14, slot); // slot. first player in the room = slot 0. next one = slot 1 and so on.
+		output.putInt(0x14, user.roomSlot); // slot. first player in the room = slot 0. next one = slot 1 and so on.
 		output.putString(0x18, "100.0.0.2");
 		output.putString(0x28, "100.0.0.2");
-		output.putInt(0x38, tcpServer.getUser().playerLevel);
-		output.putString(0x3C, tcpServer.getUser().username);
-		output.putString(0x49, tcpServer.getUser().guildName);
-		output.putString(0x56, tcpServer.getUser().guildDuty);
+		output.putInt(0x38, user.playerLevel);
+		output.putString(0x3C, user.username);
+		output.putString(0x49, user.guildName);
+		output.putString(0x56, user.guildDuty);
 		output.putByte(0x63, (byte) 0);
 		output.putInt(0x64, 0);
-		output.putInt(0x70, ready);
-		output.putInt(0x74, character);
+		output.putInt(0x70, user.roomReady);
+		output.putInt(0x74, user.roomCharacter);
 		output.putInt(0x78, 0);
 		output.putInt(0x7C, 0);
-		output.putInt(0x80, team); // 20 for the other team
+		output.putInt(0x80, user.roomTeam);
 		output.putInt(0x84, 0);
 		output.putInt(0x88, 0);
 		
-		System.out.println("Magic: " + tcpServer.getUser().playerCardItemId[tcpServer.getUser().magicIndex]);
-		
-		output.putInt(0x8C, tcpServer.getUser().playerCardItemId[tcpServer.getUser().magicIndex]);
-		output.putInt(0x90, tcpServer.getUser().playerCardItemLevelIdx[tcpServer.getUser().weaponIndex]); // not sure...
-		output.putInt(0x94, tcpServer.getUser().playerCardItemLevelIdx[tcpServer.getUser().accessoryIndex]); // not sure...
+		output.putInt(0x8C, user.playerCardItemId[user.magicIndex]);
+		output.putInt(0x90, user.playerCardItemId[user.weaponIndex]); // not sure...
+		output.putInt(0x94, user.playerCardItemId[user.accessoryIndex]); // not sure...
 		output.putInt(0x98, 0);
 		
-		output.putInt(0x9C, tcpServer.getUser().playerCardItemLevelIdx[tcpServer.getUser().magicIndex]);
-		output.putInt(0xA0, tcpServer.getUser().playerCardItemLevelIdx[tcpServer.getUser().weaponIndex]);
-		output.putInt(0xA4, tcpServer.getUser().playerCardItemLevelIdx[tcpServer.getUser().accessoryIndex]);
+		output.putInt(0x9C, user.playerCardItemLevelIdx[user.magicIndex]);
+		output.putInt(0xA0, user.playerCardItemLevelIdx[user.weaponIndex]);
+		output.putInt(0xA4, user.playerCardItemLevelIdx[user.accessoryIndex]);
 		output.putInt(0xA8, 0);
 		
-		output.putInt(0xAC, tcpServer.getUser().playerCardItemDays[tcpServer.getUser().magicIndex]);
-		output.putInt(0xB0, tcpServer.getUser().playerCardItemDays[tcpServer.getUser().weaponIndex]);
-		output.putInt(0xB4, tcpServer.getUser().playerCardItemDays[tcpServer.getUser().accessoryIndex]);
+		output.putInt(0xAC, user.playerCardItemDays[user.magicIndex]);
+		output.putInt(0xB0, user.playerCardItemDays[user.weaponIndex]);
+		output.putInt(0xB4, user.playerCardItemDays[user.accessoryIndex]);
 		output.putInt(0xB8, 0);
 		
-		output.putInt(0xBC, tcpServer.getUser().playerCardItemSkill[tcpServer.getUser().magicIndex]);
-		output.putInt(0xC0, tcpServer.getUser().playerCardItemSkill[tcpServer.getUser().weaponIndex]);
-		output.putInt(0xC4, tcpServer.getUser().playerCardItemSkill[tcpServer.getUser().accessoryIndex]);
+		output.putInt(0xBC, user.playerCardItemSkill[user.magicIndex]);
+		output.putInt(0xC0, user.playerCardItemSkill[user.weaponIndex]);
+		output.putInt(0xC4, user.playerCardItemSkill[user.accessoryIndex]);
 		
 		output.putInts(0xCC, new int[] {0, 0, 0});
 		output.putInt(0xD0, 0);
@@ -165,11 +161,11 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		output.putInt(0xDC, 0);
 		output.putInt(0xE0, 0);
 		output.putInt(0xE4, 0);
-		output.putInt(0xE8, start);
+		output.putInt(0xE8, user.roomStart);
 		output.putInt(0xEC, 0);
 		output.putInt(0xF0, 0);
 		
-		output.putInt(0xF4, fieldF4); // this one. set this to 0 and the game starts automatically.
+		output.putInt(0xF4, user.roomFieldF4); // this one. set this to 0 and the game starts automatically.
 		output.putInt(0xF8, 0);
 		output.putInt(0xFC, 0);
 		

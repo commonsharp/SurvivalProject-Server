@@ -37,7 +37,7 @@ public class LobbyRoomsChangedHandler extends GenericHandler {
 		
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
-		output.putByte(0x14, (byte) 1); //create?
+		output.putByte(0x14, (byte) 2); //create?
 		output.putInt(0x18, roomID); // room ID
 		output.putString(0x1C,  roomName); // room title
 		output.putInt(0x3C, gameType); // room type

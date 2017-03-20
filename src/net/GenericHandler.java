@@ -15,7 +15,7 @@ public abstract class GenericHandler {
 	
 	protected ExtendedByteBuffer input;
 	
-	protected UserTCPSession tcpServer;
+	protected UserTCPSession userSession;
 	protected GenericUDPServer udpServer;
 	
 	public abstract void interpretBytes();
@@ -25,7 +25,7 @@ public abstract class GenericHandler {
 	
 	// Will be used in "fake" messages.
 	public GenericHandler(UserTCPSession tcpServer) {
-		this.tcpServer = tcpServer;
+		this.userSession = tcpServer;
 	}
 	
 	public GenericHandler(GenericUDPServer udpServer, byte[] messageBytes) {
@@ -37,7 +37,7 @@ public abstract class GenericHandler {
 	}
 	
 	public GenericHandler(UserTCPSession tcpServer, GenericUDPServer udpServer, byte[] messageBytes) {
-		this.tcpServer = tcpServer;
+		this.userSession = tcpServer;
 		this.udpServer = udpServer;
 		
 		this.messageBytes = messageBytes;
@@ -77,6 +77,6 @@ public abstract class GenericHandler {
 	}
 	
 	public void sendTCPMessage(byte[] messageBytes) throws IOException {
-		tcpServer.sendMessage(messageBytes);
+		userSession.sendMessage(messageBytes);
 	}
 }

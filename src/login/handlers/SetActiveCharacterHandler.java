@@ -21,7 +21,7 @@ public class SetActiveCharacterHandler extends GenericHandler {
 	@Override
 	public void interpretBytes() {
 		username = input.getString(0x14);
-		tcpServer.getUser().activeCharacter = input.getInt(0x24);
+		userSession.getUser().activeCharacter = input.getInt(0x24);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class SetActiveCharacterHandler extends GenericHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
 		output.putInt(0x14, unknown1);
-		output.putInt(0x18, tcpServer.getUser().activeCharacter);
+		output.putInt(0x18, userSession.getUser().activeCharacter);
 		
 		return output.toArray();
 	}

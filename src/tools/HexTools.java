@@ -6,6 +6,16 @@ public class HexTools {
 		printHexArray(arr, 0, isAscii);
 	}
 	
+	public static byte[] duplicateArray(byte[] arr) {
+		byte[] arr2 = new byte[arr.length];
+		
+		for (int i = 0; i < arr.length; i++) {
+			arr2[i] = arr[i];
+		}
+		
+		return arr2;
+	}
+	
 	public static void printHexArray(byte[] arr, int offset, boolean isAscii) {
 		for (int i = offset; i < arr.length; i++) {
 			if ((i - offset) > 0 && (i - offset) % 32 == 0) {

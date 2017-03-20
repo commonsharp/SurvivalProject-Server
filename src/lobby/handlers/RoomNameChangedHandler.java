@@ -32,6 +32,6 @@ public class RoomNameChangedHandler extends GenericHandler {
 	@Override
 	public void afterSend() throws IOException {
 		lobby.getRoom(roomID).setRoomName(roomName);
-		lobby.broadcastMessage(tcpServer, new LobbyRoomsChangedHandler(tcpServer).getResponse(lobby.getRoom(roomID)));
+		lobby.broadcastMessage(userSession, new LobbyRoomsChangedHandler(userSession).getResponse(lobby.getRoom(roomID)));
 	}
 }

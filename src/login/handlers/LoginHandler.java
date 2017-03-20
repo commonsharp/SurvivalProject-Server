@@ -24,11 +24,11 @@ public class LoginHandler extends GenericHandler {
 	@Override
 	public void interpretBytes() {
 		printMessage();
-		tcpServer.getUser().versionHash = input.getBytes(0x14, 36);
-		tcpServer.getUser().versionCode = input.getInt(0x38);
+		userSession.getUser().versionHash = input.getBytes(0x14, 36);
+		userSession.getUser().versionCode = input.getInt(0x38);
 		
-		tcpServer.getUser().username = input.getString(0x3C);
-		tcpServer.getUser().password = input.getString(0x49);
+		userSession.getUser().username = input.getString(0x3C);
+		userSession.getUser().password = input.getString(0x49);
 		
 		System.out.println(input.getInt(0x38));
 		System.out.println("Username: " + input.getString(0x3C));
@@ -59,17 +59,17 @@ public class LoginHandler extends GenericHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
 		output.putInt(0x14, response);
-		output.putInt(0x18, tcpServer.getUser().userType);
-		output.putInt(0x1C, tcpServer.getUser().activeCharacter);
-		output.putInt(0x20, tcpServer.getUser().playerLevel);
-		output.putInt(0x24, tcpServer.getUser().usuableCharacterCount);
-		output.putInt(0x28, tcpServer.getUser().isMuted);
-		output.putInt(0x2C, tcpServer.getUser().daysToMute);
-		output.putInt(0x30, tcpServer.getUser().ageRestriction);
-		output.putLong(0x38, tcpServer.getUser().playerExperience);
-		output.putLong(0x40, tcpServer.getUser().playerMoney);
-		output.putString(0x48, tcpServer.getUser().guildName);
-		output.putString(0x55, tcpServer.getUser().guildDuty);
+		output.putInt(0x18, userSession.getUser().userType);
+		output.putInt(0x1C, userSession.getUser().activeCharacter);
+		output.putInt(0x20, userSession.getUser().playerLevel);
+		output.putInt(0x24, userSession.getUser().usuableCharacterCount);
+		output.putInt(0x28, userSession.getUser().isMuted);
+		output.putInt(0x2C, userSession.getUser().daysToMute);
+		output.putInt(0x30, userSession.getUser().ageRestriction);
+		output.putLong(0x38, userSession.getUser().playerExperience);
+		output.putLong(0x40, userSession.getUser().playerMoney);
+		output.putString(0x48, userSession.getUser().guildName);
+		output.putString(0x55, userSession.getUser().guildDuty);
 		output.putLong(0x70, unknown1);
 		output.putString(0x78, unknown3);
 		output.putString(0x91, unknown4);

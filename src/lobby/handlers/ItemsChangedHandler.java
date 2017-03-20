@@ -66,9 +66,16 @@ public class ItemsChangedHandler extends GenericHandler {
 	@Override
 	public void interpretBytes() {
 		// these are indexes and not ID's
-		tcpServer.getUser().magicIndex = input.getInt(0x14);
-		tcpServer.getUser().weaponIndex = input.getInt(0x18);
-		tcpServer.getUser().accessoryIndex = input.getInt(0x1C);
+		userSession.getUser().magicIndex = input.getInt(0x14);
+		userSession.getUser().weaponIndex = input.getInt(0x18);
+		userSession.getUser().accessoryIndex = input.getInt(0x1C);
+		
+		if (userSession.getUser().magicIndex == -1)
+			userSession.getUser().magicIndex = 0;
+		if (userSession.getUser().weaponIndex == -1)
+			userSession.getUser().weaponIndex = 0;
+		if (userSession.getUser().accessoryIndex == -1)
+			userSession.getUser().accessoryIndex = 0;
 		pet = input.getInt(0x20);
 		foot = input.getInt(0x24);
 		body = input.getInt(0x28);
@@ -78,17 +85,15 @@ public class ItemsChangedHandler extends GenericHandler {
 		hair = input.getInt(0x38);
 		head = input.getInt(0x3C);
 		
-		System.out.println(tcpServer.getUser().magicIndex);
-		System.out.println(tcpServer.getUser().weaponIndex);
-		System.out.println(tcpServer.getUser().accessoryIndex);
+		System.out.println(userSession.getUser().magicIndex);
+		System.out.println(userSession.getUser().weaponIndex);
+		System.out.println(userSession.getUser().accessoryIndex);
 	}
 
 	@Override
 	public void afterSend() throws IOException {
-		if (tcpServer.getUser().isInRoom) {
-			sendTCPMessage(new RoomPlayersChangedHandler(lobby, tcpServer).getResponse(
-					tcpServer.getUser().roomSlot, tcpServer.getUser().roomCharacter,
-					tcpServer.getUser().roomTeam, tcpServer.getUser().roomReady, tcpServer.getUser().roomStart, tcpServer.getUser().roomFieldF4));
+		if (userSession.getUser().isInRoom) {
+			sendTCPMessage(new RoomPlayersChangedHandler(lobby, userSession).getResponse(userSession.getUser()));
 		}
 	}
 
