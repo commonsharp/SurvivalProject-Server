@@ -2,6 +2,7 @@
 Server files for the game Survival Project, written in Java.
 
 # 20/03/2017
+* Added multiple users in a room support. Still buggy as hell.
 * Added room messages support (messages that are being sent to anyone in the room, but not to everyone in the game).
 * Fixed the bug where you had to change items once before entering a room, I think o_O - **Actually I didn't**
 * Fixed a bug in ItemsChangedHandler
