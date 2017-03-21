@@ -2,7 +2,7 @@
 Server files for the game Survival Project, written in Java.
 
 # 21/03/2017
-* Game screen: two players (maybe more, haven't tested yet) can be at the same game. When a player moves, stops moving, attacks, defends? (need to check) and hit another player, the other player will see his actions.  
+* Game screen: two players (maybe more, haven't tested yet) can be at the same game. When a player moves, stops moving, attacks, defends, and hits another player, the other player will see his actions.  
 * Quests: You can start a quest game.
 * Quests: You can finish a quest game.
 * Quests: You can kill monsters/chests/crystals to get elements/code/exp.
