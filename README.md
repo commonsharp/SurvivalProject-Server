@@ -1,6 +1,15 @@
 # SurvivalProject-Server
 Server files for the game Survival Project, written in Java.
 
+# 21/03/2017
+* Quests: You can start a quest game.
+* Quests: You can finish a quest game.
+* Quests: You can kill monsters/chests/crystals to get elements/code/exp.
+* Quests: You can die in a quest.
+* Quests: You can resurrect in a quest.
+
+TODO: Change levels of the monsters in the quest
+
 # 20/03/2017
 * Started working on big match.
 * Started working on quests.
