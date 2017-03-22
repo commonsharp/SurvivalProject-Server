@@ -24,20 +24,25 @@ public abstract class GenericHandler {
 	public abstract void afterSend() throws IOException;
 	
 	// Will be used in "fake" messages.
-	public GenericHandler(UserTCPSession tcpServer) {
-		this.userSession = tcpServer;
+	public GenericHandler(UserTCPSession userSession) {
+		this.userSession = userSession;
+	}
+	
+	// Will be used in "fake" messages.
+	public GenericHandler(GenericUDPServer udpServer) {
+		this.udpServer = udpServer;
 	}
 	
 	public GenericHandler(GenericUDPServer udpServer, byte[] messageBytes) {
 		this(null, udpServer, messageBytes);
 	}
 	
-	public GenericHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		this(tcpServer, null, messageBytes);
+	public GenericHandler(UserTCPSession userSession, byte[] messageBytes) {
+		this(userSession, null, messageBytes);
 	}
 	
-	public GenericHandler(UserTCPSession tcpServer, GenericUDPServer udpServer, byte[] messageBytes) {
-		this.userSession = tcpServer;
+	public GenericHandler(UserTCPSession userSession, GenericUDPServer udpServer, byte[] messageBytes) {
+		this.userSession = userSession;
 		this.udpServer = udpServer;
 		
 		this.messageBytes = messageBytes;

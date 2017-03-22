@@ -1,5 +1,7 @@
 package net;
 
+import log.Log;
+
 public class Room {
 	protected int roomID;
 	protected String roomName;
@@ -12,7 +14,13 @@ public class Room {
 	protected byte isLimitAnger;
 	protected int[] characters;
 	
+	protected int numberOfUsers;
 	protected UserTCPSession[] users = new UserTCPSession[8];
+
+	// soccer
+	public int blueGoals;
+	public int redGoals;
+	public boolean isStart;
 	
 	public Room(int roomID, String roomName, int gameType, int gameMap, int numberOfPlayers, byte isWithScrolls,
 			byte isWithTeams, int cardsLimit, byte isLimitAnger, int[] characters) {
@@ -126,11 +134,69 @@ public class Room {
 	public void setCharacter(int index, int character) {
 		this.characters[index] = character;
 	}
+	
+	public UserTCPSession[] getUsers() {
+		return users;
+	}
+	
+	public boolean shouldStart(int slot) {
+		// If you need to wait for everyone before you start the game
+		if (isWaitForAll()) {
+			boolean isStart = true;
+			
+			// Go through each of the users
+			for (int i = 0; i < 8; i++) {
+				UserTCPSession currentSession = users[i];
+				
+				if (currentSession != null) {
+					// If someone is not ready, don't start
+					if (currentSession.getUser().roomReady != 1)
+						isStart = false;
+				}
+			}
+			
+			return isStart;
+		}
+		
+		// Otherwise, check if the user's ready
+		return users[slot].getUser().roomReady == 1;
+	}
+	
+	private boolean isWaitForAll() {
+		switch (gameType) {
+		case Constants.SURVIVAL_MODE:
+			return false;
+		case Constants.DUNGEON_QUEST_1:
+		case Constants.DUNGEON_QUEST_2:
+		case Constants.DUNGEON_QUEST_3:
+		case Constants.DUNGEON_QUEST_4:
+		case Constants.DUNGEON_QUEST_5:
+		case Constants.FLAME_QUEST_1:
+		case Constants.FLAME_QUEST_2:
+		case Constants.FLAME_QUEST_3:
+		case Constants.FLAME_QUEST_4:
+		case Constants.FLAME_QUEST_5:
+		case Constants.FOREST_QUEST_1:
+		case Constants.FOREST_QUEST_2:
+		case Constants.FOREST_QUEST_3:
+		case Constants.FOREST_QUEST_4:
+		case Constants.FOREST_QUEST_5:
+			return true;
+		case Constants.SOCCER_MODE:
+			return true;
+		case Constants.DODGE_MODE:
+			return true;
+		}
+		
+		Log.error("No wait for all case");
+		return false;
+	}
 
 	public int getSlot() {
 		//TODO check if the room is full
 		for (int i = 0; i < 8; i++) {
 			if (users[i] == null) {
+				numberOfUsers++;
 				return i;
 			}
 		}
@@ -138,8 +204,54 @@ public class Room {
 		// room is full or something
 		return -1;
 	}
-
-	public UserTCPSession[] getUsers() {
-		return users;
+	
+	public int getTeam() {
+		int teamType = getTeamType();
+		
+		if (teamType == 0) {
+			return 0;
+		}
+		else if (getTeamType() == 1) {
+			// need to change. if everybody moves to the red team, this should return blue.
+			return (numberOfUsers % 2 == 0) ? 20 : 10;
+		}
+		else if (getTeamType() == 2) {
+			return 10;
+		}
+		
+		Log.error("Team type is -1.");
+		return -1;
+	}
+	
+	private int getTeamType() {
+		// 0 = all vs all
+		// 1 = red vs blue
+		// 2 = only blue maybe
+		switch (gameType) {
+		case Constants.SURVIVAL_MODE:
+			return 0;
+		case Constants.DUNGEON_QUEST_1:
+		case Constants.DUNGEON_QUEST_2:
+		case Constants.DUNGEON_QUEST_3:
+		case Constants.DUNGEON_QUEST_4:
+		case Constants.DUNGEON_QUEST_5:
+		case Constants.FLAME_QUEST_1:
+		case Constants.FLAME_QUEST_2:
+		case Constants.FLAME_QUEST_3:
+		case Constants.FLAME_QUEST_4:
+		case Constants.FLAME_QUEST_5:
+		case Constants.FOREST_QUEST_1:
+		case Constants.FOREST_QUEST_2:
+		case Constants.FOREST_QUEST_3:
+		case Constants.FOREST_QUEST_4:
+		case Constants.FOREST_QUEST_5:
+			return 0;
+		case Constants.SOCCER_MODE:
+			return 1;
+		case Constants.DODGE_MODE:
+			return 1;
+		}
+		
+		return 0;
 	}
 }

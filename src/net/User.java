@@ -1,5 +1,7 @@
 package net;
 
+import java.net.InetAddress;
+
 public class User {
 	public byte[] versionHash; // 36 bytes
 	public int versionCode;
@@ -8,12 +10,12 @@ public class User {
 	
 	public int userType = 30;
 	public int activeCharacter = 20;
-	public int playerLevel = 10;
+	public int playerLevel = 1;
 	public int usuableCharacterCount = 12;
 	public int isMuted;
 	public int daysToMute;
 	public int ageRestriction = 1;
-	public long playerExperience = 200000000;
+	public long playerExperience = 0;
 	public long playerMoney = 200000000;
 	public String guildName = "Obamas";
 	public String guildDuty = "MasterLOL";
@@ -52,4 +54,8 @@ public class User {
 	public byte roomReady;
 	public int roomStart;
 	public int roomFieldF4;
+	
+	public int udpState;
+	public InetAddress udpIPAddress;
+	public int udpPort;
 }

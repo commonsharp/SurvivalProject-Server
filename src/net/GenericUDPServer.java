@@ -5,7 +5,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import log.Log;
+import lobby.LobbyServer;
+import tools.ExtendedByteBuffer;
 import tools.HexTools;
 
 public abstract class GenericUDPServer implements Runnable {
@@ -16,9 +17,12 @@ public abstract class GenericUDPServer implements Runnable {
 	
 	protected Thread serverThread;
 	
+	protected LobbyServer lobby;
+	
 	public abstract GenericHandler processPacket(GenericUDPServer udpServer, int messageID, byte[] messageBytes);
 	
-	public GenericUDPServer(String name, int port) {
+	public GenericUDPServer(LobbyServer lobby, String name, int port) {
+		this.lobby = lobby;
 		this.name = name;
 		this.port = port;
 	}
@@ -60,13 +64,30 @@ public abstract class GenericUDPServer implements Runnable {
 				int messageID = HexTools.getIntegerInByteArray(messageBytes, 4);
 				int state = HexTools.getIntegerInByteArray(messageBytes, 16);
 				
+				if (messageID == 0x1100) {
+					ExtendedByteBuffer buf = new ExtendedByteBuffer(messageBytes);
+					String username = buf.getString(0x14);
+					
+					User u = lobby.findUser(username);
+					
+					if (u != null) {
+					u.udpIPAddress = ipAddress;
+					u.udpPort = port;
+					u.udpState = state;
+					}
+				}
+				else if (messageID != 0x1101){
+					User u = lobby.findUser(ipAddress, port);
+					u.udpState = state;
+				}
+				
 				GenericHandler message = processPacket(this, messageID, messageBytes);
-				if (message == null) {
-					Log.log(name + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - unimplemented yet");
-				}
-				else {
-					Log.log(name + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - " + message.getClass().getCanonicalName());
-				}
+//				if (message == null) {
+//					Log.log(name + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - unimplemented yet");
+//				}
+//				else {
+//					Log.log(name + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - " + message.getClass().getCanonicalName());
+//				}
 				
 				if (message != null) {
 					byte[] response = message.getResponse();
@@ -90,6 +111,24 @@ public abstract class GenericUDPServer implements Runnable {
 		
 		oldState = (~oldState + 0x14fb) * 0x1f;
 		return Math.abs((oldState >> 16) ^ oldState);
+	}
+	
+	public void sendMessage(User user, byte[] response) throws IOException {
+		// Change the validator
+		HexTools.putIntegerInByteArray(response, 0x8, 0x2B1C);
+		
+		// Change the state
+//		HexTools.putIntegerInByteArray(response, 16, user.udpState);
+		
+		// Change the checksum
+		HexTools.putIntegerInByteArray(response, 12, Cryptography.getDigest(response));
+		
+		// Encrypt and send
+		Cryptography.encryptMessage(response);
+		DatagramPacket packet = new DatagramPacket(response, response.length, user.udpIPAddress, user.udpPort);
+		socket.send(packet);
+		
+		// Change the state
 	}
 	
 	public void sendMessage(int state, InetAddress ipAddress, int port, byte[] response) throws IOException {

@@ -74,14 +74,14 @@ public class CreateRoomHandler extends GenericHandler {
 		int[] characters = new int[10];
 		characters[0] = 10;
 		cardsLimit = -1;
-		lobby.setRoom(roomNumber, new Room(roomNumber, roomName, gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger, characters));
+		Room room = new Room(roomNumber, roomName, gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger, characters);
+		lobby.setRoom(roomNumber, room);
 		userSession.getUser().isInRoom = true;
 		userSession.getUser().roomSlot = lobby.getRoom(roomNumber).getSlot();
-		userSession.getUser().roomTeam = 10;
+		userSession.getUser().roomTeam = room.getTeam();
 		userSession.getUser().roomCharacter = 10;
 		userSession.getUser().roomReady = 0;
-		userSession.getUser().roomStart = 0;
-		userSession.getUser().roomFieldF4 = -1;
+		userSession.getUser().roomFieldF4 = 2;
 		
 		userSession.getUser().roomIndex = roomNumber;
 		lobby.getRoom(roomNumber).setUserSession(userSession.getUser().roomSlot, userSession);
@@ -106,7 +106,7 @@ public class CreateRoomHandler extends GenericHandler {
 		output.putInt(0x5C, userSession.getUser().roomTeam); // team
 		output.putByte(0x60, (byte) isWithTeams);
 		output.putInt(0x64, cardsLimit);
-		output.putShort(0x68, (short) 0);
+		output.putShort(0x68, (short) 10); // guild rank. zero based
 		output.putByte(0x6A, isLimitAnger);
 		output.putByte(0x6B, (byte) 0);
 		

@@ -42,7 +42,7 @@ public class FusionHandler extends GenericHandler {
 		// 9 - "Current event has been exited so there is not enough Codes"
 		// others - something else
 		
-		int result = 7;
+		int result = 5;
 		output.putInt(0x14, 4); // item ID
 		output.putInt(0x1C, result);
 		output.putInt(0x20, 6); // new level

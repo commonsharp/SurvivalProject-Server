@@ -14,7 +14,7 @@ public class Main {
 		LobbyServer lobbyServer = new LobbyServer(21001);
 		lobbyServer.startServer();
 		
-		GameServer gameServer = new GameServer(21001);
+		GameServer gameServer = new GameServer(lobbyServer, 21001);
 		gameServer.startServer();
 	}
 }

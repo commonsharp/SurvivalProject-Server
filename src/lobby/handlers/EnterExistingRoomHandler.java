@@ -34,11 +34,10 @@ public class EnterExistingRoomHandler extends GenericHandler {
 		userSession.getUser().isInRoom = true;
 		userSession.getUser().roomIndex = roomID;
 		userSession.getUser().roomSlot = lobby.getRoom(roomID).getSlot();
-		userSession.getUser().roomTeam = 10;
+		userSession.getUser().roomTeam = lobby.getRoom(roomID).getTeam();
 		userSession.getUser().roomCharacter = 10;
 		userSession.getUser().roomReady = 0;
-		userSession.getUser().roomStart = 0;
-		userSession.getUser().roomFieldF4 = -1;
+		userSession.getUser().roomFieldF4 = 2;
 		lobby.getRoom(roomID).setUserSession(userSession.getUser().roomSlot, userSession);
 		
 		output.putInt(0x0, RESPONSE_LENGTH);
@@ -57,7 +56,7 @@ public class EnterExistingRoomHandler extends GenericHandler {
 		output.putInt(0x68, userSession.getUser().roomTeam); // team
 		output.putByte(0x6C, lobby.getRoom(roomID).getIsWithTeams());
 		output.putInt(0x70, lobby.getRoom(roomID).getCardsLimit());
-		output.putShort(0x74, (short) 0);
+		output.putShort(0x74, (short) 2);
 		output.putByte(0x78, lobby.getRoom(roomID).getIsLimitAnger());
 		output.putByte(0x79, (byte) 0);
 		return output.toArray();
