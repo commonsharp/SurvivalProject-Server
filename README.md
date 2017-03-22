@@ -1,6 +1,10 @@
 # SurvivalProject-Server
 Server files for the game Survival Project, written in Java.
 
+# List of bugs
+* Soccer timer doesn't start.
+* You have to change items at least once before clicking ready in a room.
+
 # 22/03/2017
 * Soccer is semi-working. The timer doesn't start when you start the game, but you can score goals. After 3 goals the game ends, but the results doesn't say "win-lose" but "win-win".
 
