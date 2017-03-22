@@ -11,6 +11,9 @@ Server files for the game Survival Project, written in Java.
 # List of bugs
 * ~~Soccer timer doesn't start.~~
 * You have to change items at least once before clicking ready in a room.
+* The rooms in the lobby aren't being updates properly once a change in a room is made.
+* The guild rank of new players in the room is '?' instead of being the true rank.
+* When changing the room name, the other users in the room don't see the changes.
 
 # 22/03/2017
 * Added an option to send packets right after the game starts. That can be used "Soccer: Send timer" and many more game types.
