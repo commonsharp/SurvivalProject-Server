@@ -1,6 +1,9 @@
 # SurvivalProject-Server
 Server files for the game Survival Project, written in Java.
 
+# 22/03/2017
+* Soccer is semi-working. The timer doesn't start when you start the game, but you can score goals. After 3 goals the game ends, but the results doesn't say "win-lose" but "win-win".
+
 # 21/03/2017
 * Started working on soccer...
 * Game screen: two players (maybe more, haven't tested yet) can be at the same game. When a player moves, stops moving, attacks, defends, and hits another player, the other player will see his actions.  
