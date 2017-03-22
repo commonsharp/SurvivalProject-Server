@@ -1,6 +1,11 @@
 # SurvivalProject-Server
 Server files for the game Survival Project, written in Java.
 
+# TODO
+* Download a list of all available rooms once you log in.
+* Rename "ResultsHandler" and make sure it's sending the right results.
+* Rename "EnterExistingRoom".
+
 # List of bugs
 * ~~Soccer timer doesn't start.~~
 * You have to change items at least once before clicking ready in a room.
