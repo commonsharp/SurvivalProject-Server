@@ -5,6 +5,8 @@ Server files for the game Survival Project, written in Java.
 * Download a list of all available rooms once you log in.
 * Rename "ResultsHandler" and make sure it's sending the right results.
 * Rename "EnterExistingRoom".
+* Make user tcp session and udp server have the same superclass.
+* Clean the code for fucks sake
 
 # List of bugs
 * ~~Soccer timer doesn't start.~~
