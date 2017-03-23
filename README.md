@@ -11,6 +11,7 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 - [ ] Make user tcp session and udp server have the same superclass.
 - [ ] Clean the code for fucks sake
 - [ ] There are more fields in LeaveRoomHandler. Need to change...
+- [ ] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
 * ~~Soccer timer doesn't start.~~
