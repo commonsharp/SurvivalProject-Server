@@ -3,6 +3,8 @@ Server files for the game Survival Project, written in Java.
 
 To install Survival Project on Windows 10, go to the Win10 folder.
 
+** It seems like b6oy's sp2.exe has another layer of encryption. Therefore, the code does not work on Win10, *yet***
+
 # TODO
 - [ ] Download a list of all available rooms once you log in.
 - [ ] Downlad a list of all the users in the server once you log in.
