@@ -4,6 +4,7 @@ Server files for the game Survival Project, written in Java.
 For instructions on how to install Survival Project on Windows 10, go to the Win10 folder.
 
 # TODO
+- [ ] Add timed events (such as a random element flying around).
 - [x] Change the encryption/decryption functions to support b6oy's encryption.
 - [ ] Download a list of all available rooms once you log in.
 - [ ] Downlad a list of all the users in the server once you log in.
