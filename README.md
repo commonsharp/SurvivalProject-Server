@@ -22,16 +22,13 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 
 # 23/03/2017
 * Changed the messages format info file.
-
 * Added a working debug-mode sp.exe. It also disables IOProtect, resulting in a non crashing game. The debug-mode sp.exe shows the size of every frame in the game, the framerate, the experience and code the player has and his event flags. Also, every single log is being printed in PP.log, instead of only a selected few.
-
 * Added the sp2.exe and dinput.dll of B6oy's SPNET.net client. Paste those two files in your SP installation and you can run Survival Project on Windows 10. Simply launch sp2.exe. If you get an error, run it as administrator.
-
 * Added GetUserInfoHandler.
-
 * Added gold items.
 * Added avatar items.
 * Added pets.
+* Premium characters working.
 
 # 22/03/2017
 * Added an option to send packets right after the game starts. That can be used "Soccer: Send timer" and many more game types.
