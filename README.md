@@ -4,21 +4,23 @@ Server files for the game Survival Project, written in Java.
 To install Survival Project on Windows 10, go to the Win10 folder.
 
 # TODO
-* Download a list of all available rooms once you log in.
-* Rename "ResultsHandler" and make sure it's sending the right results.
-* Rename "EnterExistingRoom".
-* Make user tcp session and udp server have the same superclass.
-* Clean the code for fucks sake
-* There are more fields in LeaveRoomHandler. Need to change...
+- [ ] Download a list of all available rooms once you log in.
+- [ ] Rename "ResultsHandler" and make sure it's sending the right results.
+- [ ] Rename "EnterExistingRoom".
+- [ ] Make user tcp session and udp server have the same superclass.
+- [ ] Clean the code for fucks sake
+- [ ] There are more fields in LeaveRoomHandler. Need to change...
 
 # List of bugs
-* ~~Soccer timer doesn't start.~~
-* You have to change items at least once before clicking ready in a room.
-* The rooms in the lobby aren't being updates properly once a change in a room is made.
-* The guild rank of new players in the room is '?' instead of being the true rank.
-* When changing the room name, the other users in the room don't see the changes.
+- [x] Soccer timer doesn't start.
+- [ ] You have to change items at least once before clicking ready in a room.
+- [ ] The rooms in the lobby aren't being updates properly once a change in a room is made.
+- [ ] The guild rank of new players in the room is '?' instead of being the true rank.
+- [ ] When changing the room name, the other users in the room don't see the changes.
 
 # 23/03/2017
+* Changed the messages format info file.
+
 * Added a working debug-mode sp.exe. It also disables IOProtect, resulting in a non crashing game. The debug-mode sp.exe shows the size of every frame in the game, the framerate, the experience and code the player has and his event flags. Also, every single log is being printed in PP.log, instead of only a selected few.
 
 * Added the sp2.exe and dinput.dll of B6oy's SPNET.net client. Paste those two files in your SP installation and you can run Survival Project on Windows 10. Simply launch sp2.exe. If you get an error, run it as administrator.
