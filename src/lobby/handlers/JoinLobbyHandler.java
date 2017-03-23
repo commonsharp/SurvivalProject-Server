@@ -98,11 +98,30 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putInt(0x94, userSession.getUser().whiteCards[2]); // 0x94
 		output.putInt(0x98, userSession.getUser().whiteCards[3]); // 0x98
 		output.putInt(0x9C, channelFlag); // 0x9c
-		output.putBytes(0xA0, userSession.getUser().playerCardItemExist); // 0xA0
-		output.putInts(0x280, userSession.getUser().playerCardItemId); // 0x280
-		output.putInts(0x400, userSession.getUser().playerCardItemDays); // 0x400
-		output.putInts(0x580, userSession.getUser().playerCardItemLevelIdx); // 0x580
-		output.putInts(0x700, userSession.getUser().playerCardItemSkill); // 0x700
+		
+		for (int i = 0; i < 96; i++) {
+			if (userSession.getUser().getItemID(i) != -1) {
+				// If the item exists, put 1 to mark it as "exists"
+				output.putByte(0xA0 + i, (byte) 1);
+			}
+		}
+		
+		for (int i = 0; i < 96; i++) {
+			output.putInt(0x280 + i * 4, userSession.getUser().getItemID(i));
+		}
+		
+		for (int i = 0; i < 96; i++) {
+			output.putInt(0x400 + i * 4, userSession.getUser().getItemPremiumDays(i));
+		}
+		
+		for (int i = 0; i < 96; i++) {
+			output.putInt(0x580 + i * 4, userSession.getUser().getItemLevel(i));
+		}
+		
+		for (int i = 0; i < 96; i++) {
+			output.putInt(0x700 + i * 4, userSession.getUser().getItemSkill(i));
+		}
+		
 		output.putInt(0x880, userSession.getUser().playerInventorySlots); // 0x880
 		output.putInts(0x884, minPointForeveDword); // 0x884
 		output.putLongs(0x8F8, minPointForLevelQword); //0x8F8
@@ -119,7 +138,13 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putInt(0x944, playerRank); // 0x944
 		output.putByte(0x948, (byte) 1);
 		output.putInt(0x94C, lobbyMaxRooms); // 0x94c
-		output.putInts(0x950, userSession.getUser().playerAvatarEquipIdx); // 0x950
+		output.putInt(0x950, userSession.getUser().getAvatarItemID(userSession.getUser().footIndex));
+		output.putInt(0x954, userSession.getUser().getAvatarItemID(userSession.getUser().bodyIndex));
+		output.putInt(0x958, userSession.getUser().getAvatarItemID(userSession.getUser().hand1Index));
+		output.putInt(0x95C, userSession.getUser().getAvatarItemID(userSession.getUser().hand2Index));
+		output.putInt(0x960, userSession.getUser().getAvatarItemID(userSession.getUser().faceIndex));
+		output.putInt(0x964, userSession.getUser().getAvatarItemID(userSession.getUser().hairIndex));
+		output.putInt(0x968, userSession.getUser().getAvatarItemID(userSession.getUser().headIndex));
 		output.putInt(0x96C, 1); // something with guild mark
 		output.putInt(0x970, 11); // 0x970 = field_A0 in Login
 		output.putInt(0x974, userSession.getUser().playerType); // 0x974

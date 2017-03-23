@@ -49,34 +49,34 @@ public class GetUserInfoHandler extends GenericHandler {
 		output.putLong(0x60, user.playerMoney);
 		output.putLong(0x68, user.avatarMoney);
 		
-		output.putInt(0x70, user.playerCardItemId[user.magicIndex]);
-		output.putInt(0x74, user.playerCardItemId[user.weaponIndex]);
-		output.putInt(0x78, user.playerCardItemId[user.accessoryIndex]);
-		output.putInt(0x7C, user.playerCardItemId[user.petIndex]);
+		output.putInt(0x70, user.getItemID(user.magicIndex));
+		output.putInt(0x74, user.getItemID(user.weaponIndex));
+		output.putInt(0x78, user.getItemID(user.accessoryIndex));
+		output.putInt(0x7C, user.getItemID(user.petIndex));
+
+		output.putInt(0x80, user.getItemPremiumDays(user.magicIndex));
+		output.putInt(0x84, user.getItemPremiumDays(user.weaponIndex));
+		output.putInt(0x88, user.getItemPremiumDays(user.accessoryIndex));
+		output.putInt(0x8C, user.getItemPremiumDays(user.petIndex));
 		
-		output.putInt(0x80, user.playerCardItemDays[user.magicIndex]);
-		output.putInt(0x84, user.playerCardItemDays[user.weaponIndex]);
-		output.putInt(0x88, user.playerCardItemDays[user.accessoryIndex]);
-		output.putInt(0x8C, user.playerCardItemDays[user.petIndex]);
+		output.putInt(0x90, user.getItemLevel(user.magicIndex));
+		output.putInt(0x94, user.getItemLevel(user.weaponIndex));
+		output.putInt(0x98, user.getItemLevel(user.accessoryIndex));
+		output.putInt(0x9C, user.getItemLevel(user.petIndex));
 		
-		output.putInt(0x90, user.playerCardItemLevelIdx[user.magicIndex]);
-		output.putInt(0x94, user.playerCardItemLevelIdx[user.weaponIndex]);
-		output.putInt(0x98, user.playerCardItemLevelIdx[user.accessoryIndex]);
-		output.putInt(0x9C, user.playerCardItemLevelIdx[user.petIndex]);
-		
-		output.putInt(0xA0, user.playerCardItemSkill[user.magicIndex]);
-		output.putInt(0xA4, user.playerCardItemSkill[user.weaponIndex]);
-		output.putInt(0xA8, user.playerCardItemSkill[user.accessoryIndex]);
-		output.putInt(0xAC, user.playerCardItemSkill[user.petIndex]);
+		output.putInt(0xA0, user.getItemSkill(user.magicIndex));
+		output.putInt(0xA4, user.getItemSkill(user.weaponIndex));
+		output.putInt(0xA8, user.getItemSkill(user.accessoryIndex));
+		output.putInt(0xAC, user.getItemSkill(user.petIndex));
 		
 		output.putInt(0xB0, user.missionLevel);
-		output.putInt(0xB4, user.playerCardItemId[user.playerAvatarEquipIdx[0]]); // foot
-		output.putInt(0xB8, user.playerCardItemId[user.playerAvatarEquipIdx[1]]); // body
-		output.putInt(0xBC, user.playerCardItemId[user.playerAvatarEquipIdx[2]]); // hand 1
-		output.putInt(0xC0, user.playerCardItemId[user.playerAvatarEquipIdx[3]]); // hand 2
-		output.putInt(0xC4, user.playerCardItemId[user.playerAvatarEquipIdx[4]]); // face
-		output.putInt(0xC8, user.playerCardItemId[user.playerAvatarEquipIdx[5]]); // hair
-		output.putInt(0xCC, user.playerCardItemId[user.playerAvatarEquipIdx[6]]); // head
+		output.putInt(0xB4, user.getAvatarItemID(user.footIndex));
+		output.putInt(0xB8, user.getAvatarItemID(user.bodyIndex));
+		output.putInt(0xBC, user.getAvatarItemID(user.hand1Index));
+		output.putInt(0xC0, user.getAvatarItemID(user.hand2Index));
+		output.putInt(0xC4, user.getAvatarItemID(user.faceIndex));
+		output.putInt(0xC8, user.getAvatarItemID(user.hairIndex));
+		output.putInt(0xCC, user.getAvatarItemID(user.headIndex));
 		output.putString(0xD0, "hellhat"); // ?
 		output.putInt(0xEC, 0); // - mark?
 		

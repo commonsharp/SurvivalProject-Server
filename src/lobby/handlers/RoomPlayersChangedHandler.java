@@ -111,24 +111,33 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		output.putInt(0x84, 0); //ko
 		output.putInt(0x88, 0);
 		
-		output.putInt(0x8C, user.playerCardItemId[user.magicIndex]);
-		output.putInt(0x90, user.playerCardItemId[user.weaponIndex]); // not sure...
-		output.putInt(0x94, user.playerCardItemId[user.accessoryIndex]); // not sure...
-		output.putInt(0x98, 0);
+		// If the item doesn't exist, this needs to be 0, and not -1.
+		if (user.getItemID(user.magicIndex) != -1)
+			output.putInt(0x8C, user.getItemID(user.magicIndex));
 		
-		output.putInt(0x9C, user.playerCardItemLevelIdx[user.magicIndex]);
-		output.putInt(0xA0, user.playerCardItemLevelIdx[user.weaponIndex]);
-		output.putInt(0xA4, user.playerCardItemLevelIdx[user.accessoryIndex]);
-		output.putInt(0xA8, 0);
+		if (user.getItemID(user.weaponIndex) != -1)
+			output.putInt(0x90, user.getItemID(user.weaponIndex));
 		
-		output.putInt(0xAC, user.playerCardItemDays[user.magicIndex]);
-		output.putInt(0xB0, user.playerCardItemDays[user.weaponIndex]);
-		output.putInt(0xB4, user.playerCardItemDays[user.accessoryIndex]);
-		output.putInt(0xB8, 0);
+		if (user.getItemID(user.accessoryIndex) != -1)
+			output.putInt(0x94, user.getItemID(user.accessoryIndex));
 		
-		output.putInt(0xBC, user.playerCardItemSkill[user.magicIndex]);
-		output.putInt(0xC0, user.playerCardItemSkill[user.weaponIndex]);
-		output.putInt(0xC4, user.playerCardItemSkill[user.accessoryIndex]);
+		if (user.getItemID(user.petIndex) != -1)
+			output.putInt(0x98, user.getItemID(user.petIndex));
+
+		output.putInt(0x9C, user.getItemLevel(user.magicIndex));
+		output.putInt(0xA0, user.getItemLevel(user.weaponIndex));
+		output.putInt(0xA4, user.getItemLevel(user.accessoryIndex));
+		output.putInt(0xA8, user.getItemLevel(user.petIndex));
+		
+		output.putInt(0xAC, user.getItemPremiumDays(user.magicIndex));
+		output.putInt(0xB0, user.getItemPremiumDays(user.weaponIndex));
+		output.putInt(0xB4, user.getItemPremiumDays(user.accessoryIndex));
+		output.putInt(0xB8, user.getItemPremiumDays(user.petIndex));
+		
+		output.putInt(0xBC, user.getItemSkill(user.magicIndex));
+		output.putInt(0xC0, user.getItemSkill(user.weaponIndex));
+		output.putInt(0xC4, user.getItemSkill(user.accessoryIndex));
+		output.putInt(0xC8, user.getItemSkill(user.petIndex));
 		
 		output.putInts(0xCC, new int[] {0, 0, 0});
 		output.putInt(0xD0, 0);
