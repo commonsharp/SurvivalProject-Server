@@ -1,5 +1,0 @@
-In survival mode, there's a weird start going. Need to see why it is happening. Maybe it would be able to fix the other errors in different game types?
-
-Also, check for asserts when starting a quest with 2 players
-
-There are more fields in LeaveRoomHandler. Need to change...
