@@ -17,9 +17,9 @@ public abstract class GenericUDPServer implements Runnable {
 	
 	protected Thread serverThread;
 	
-	protected LobbyServer lobby;
+	public LobbyServer lobby;
 	
-	public abstract GenericHandler processPacket(GenericUDPServer udpServer, int messageID, byte[] messageBytes);
+	public abstract GenericHandler processPacket(GenericUDPServer udpServer, int messageID, byte[] messageBytes) throws IOException;
 	
 	public GenericUDPServer(LobbyServer lobby, String name, int port) {
 		this.lobby = lobby;

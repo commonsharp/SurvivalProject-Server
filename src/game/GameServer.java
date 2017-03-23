@@ -2,6 +2,7 @@ package game;
 import java.io.IOException;
 
 import game.handlers.AttackUDP;
+import game.handlers.GameStartedHandler;
 import game.handlers.JoinServerHandler;
 import lobby.LobbyServer;
 import net.GenericHandler;
@@ -15,7 +16,7 @@ public class GameServer extends GenericUDPServer {
 	}
 	
 	@Override
-	public GenericHandler processPacket(GenericUDPServer udpServer, int messageID, byte[] messageBytes) {
+	public GenericHandler processPacket(GenericUDPServer udpServer, int messageID, byte[] messageBytes) throws IOException {
 		GenericHandler message = null;
 		
 		switch (messageID) {
@@ -30,11 +31,11 @@ public class GameServer extends GenericUDPServer {
 		case 0x1107: // attack
 		case 0x1108: // defense
 		case 0x1109: // hit by something
-		case 0x1110: // constant update. it's a must.
+//		case 0x1110: // constant update. it's a must.
 		case 0x1113: // dunno. happens when you move
 		case 0x1114: // picked an item
 		case 0x1119: // soccer ball got hit
-		case 0x1120: // soccer ball status maybe?
+		case 0x1120: // soccer/hockey ball/disk status
 		case 0x1125: // hit monster/npc
 		case 0x1127: // crit bar full
 		case 0x1129: // electrocuted
@@ -45,8 +46,9 @@ public class GameServer extends GenericUDPServer {
 		case 0x1140: // hit by soccer ball and pushed back. maybe hit by anything and pushed back?
 			message = new AttackUDP(this, this, messageBytes);
 			break;
-//		case 0x1110:
-//			break;
+		case 0x1110:
+			message = new GameStartedHandler(this, this, messageBytes);
+			break;
 		default:
 			// print only the first player
 //			if (HexTools.getIntegerInByteArray(messageBytes, 0x18) == 0) {

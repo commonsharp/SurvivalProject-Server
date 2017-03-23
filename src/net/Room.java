@@ -21,6 +21,7 @@ public class Room {
 	public int blueGoals;
 	public int redGoals;
 	public boolean isStart;
+	public boolean isRoomCreatedMessageSent = false;
 	
 	public Room(int roomID, String roomName, int gameType, int gameMap, int numberOfPlayers, byte isWithScrolls,
 			byte isWithTeams, int cardsLimit, byte isLimitAnger, int[] characters) {
@@ -186,6 +187,8 @@ public class Room {
 			return true;
 		case Constants.DODGE_MODE:
 			return true;
+		case Constants.HOKEY_MODE:
+			return true;
 		}
 		
 		Log.error("No wait for all case");
@@ -249,6 +252,8 @@ public class Room {
 		case Constants.SOCCER_MODE:
 			return 1;
 		case Constants.DODGE_MODE:
+			return 1;
+		case Constants.HOKEY_MODE:
 			return 1;
 		}
 		

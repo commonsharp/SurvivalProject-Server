@@ -69,6 +69,17 @@ public class ItemsChangedHandler extends GenericHandler {
 		userSession.getUser().magicIndex = input.getInt(0x14);
 		userSession.getUser().weaponIndex = input.getInt(0x18);
 		userSession.getUser().accessoryIndex = input.getInt(0x1C);
+		userSession.getUser().petIndex = input.getInt(0x20);
+		userSession.getUser().playerAvatarEquipIdx[0] = input.getInt(0x24);
+		userSession.getUser().playerAvatarEquipIdx[1] = input.getInt(0x28);
+		userSession.getUser().playerAvatarEquipIdx[2] = input.getInt(0x2C);
+		userSession.getUser().playerAvatarEquipIdx[3] = input.getInt(0x30);
+		userSession.getUser().playerAvatarEquipIdx[4] = input.getInt(0x34);
+		userSession.getUser().playerAvatarEquipIdx[5] = input.getInt(0x38);
+		userSession.getUser().playerAvatarEquipIdx[6] = input.getInt(0x3C);
+		
+		for (int i = 0; i < 7; i++)
+			System.out.println(userSession.getUser().playerAvatarEquipIdx[i]);
 		
 		if (userSession.getUser().magicIndex == -1)
 			userSession.getUser().magicIndex = 0;
@@ -76,18 +87,8 @@ public class ItemsChangedHandler extends GenericHandler {
 			userSession.getUser().weaponIndex = 0;
 		if (userSession.getUser().accessoryIndex == -1)
 			userSession.getUser().accessoryIndex = 0;
-		pet = input.getInt(0x20);
-		foot = input.getInt(0x24);
-		body = input.getInt(0x28);
-		hand1 = input.getInt(0x2C);
-		hand2 = input.getInt(0x30);
-		face = input.getInt(0x34);
-		hair = input.getInt(0x38);
-		head = input.getInt(0x3C);
-		
-		System.out.println(userSession.getUser().magicIndex);
-		System.out.println(userSession.getUser().weaponIndex);
-		System.out.println(userSession.getUser().accessoryIndex);
+		if (userSession.getUser().petIndex == -1)
+			userSession.getUser().petIndex = 0;
 	}
 
 	@Override

@@ -58,13 +58,19 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		lobby.roomMessage(userSession, roomID, new RoomPlayersChangedHandler(lobby, userSession).getResponse(userSession.getUser()));
 //		lobby.broadcastMessage(tcpServer, new RoomPlayersChangedHandler(lobby, tcpServer).getResponse(tcpServer.getUser()));
 		
-		// soccer
-		if (lobby.getRoom(roomID).getGameType() == 8 && lobby.getRoom(roomID).isStart) {
-			byte[] response = new SoccerGoalHandler(lobby, userSession).getResponse(3);
-			System.out.println("hi soccer");
-			sendTCPMessage(response);
-			lobby.roomMessage(userSession, roomID, response);
-		}
+//		// soccer
+//		if (lobby.getRoom(roomID).getGameType() == 8 && lobby.getRoom(roomID).isStart) {
+////			try {
+////				Thread.sleep(10000);
+////			} catch (InterruptedException e) {
+////				// TODO Auto-generated catch block
+////				e.printStackTrace();
+////			}
+//			byte[] response = new SoccerGoalHandler(lobby, userSession).getResponse(3);
+//			System.out.println("hi soccer");
+//			sendTCPMessage(response);
+//			lobby.roomMessage(userSession, roomID, response);
+//		}
 	}
 
 	@Override

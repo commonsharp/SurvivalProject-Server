@@ -41,8 +41,8 @@ public class SoccerGoalHandler extends GenericHandler {
 	@Override
 	public void afterSend() throws IOException {
 		// test
-		lobby.roomMessage(userSession, userSession.getUser().roomIndex, getResponse(3));
-		sendTCPMessage(getResponse(3));
+//		lobby.roomMessage(userSession, userSession.getUser().roomIndex, getResponse(3));
+//		sendTCPMessage(getResponse(3));
 		
 		lobby.roomMessage(userSession, userSession.getUser().roomIndex, getResponse());
 		
@@ -73,16 +73,16 @@ public class SoccerGoalHandler extends GenericHandler {
 			result = 1;
 		}
 		
-		return getResponse(result);
+		return getResponse(userSession.getUser().roomIndex, result);
 	}
 
-	public byte[] getResponse(int result) {
+	public byte[] getResponse(int roomID, int result) {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
 		output.putInt(0x14, result);
-		output.putInt(0x18, lobby.getRoom(userSession.getUser().roomIndex).blueGoals);
-		output.putInt(0x1C, lobby.getRoom(userSession.getUser().roomIndex).redGoals);
+		output.putInt(0x18, lobby.getRoom(roomID).blueGoals);
+		output.putInt(0x1C, lobby.getRoom(roomID).redGoals);
 		output.putInt(0x20, (int)(System.currentTimeMillis() / 1000));
 		output.putInt(0x24, (int)(System.currentTimeMillis() / 1000));
 		

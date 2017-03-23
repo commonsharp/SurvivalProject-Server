@@ -5,11 +5,12 @@ import java.net.InetAddress;
 
 import lobby.handlers.CreateRoomHandler;
 import lobby.handlers.CrystalDeathHandler;
-import lobby.handlers.EnterExistingRoomHandler;
+import lobby.handlers.JoinRoomHandler;
 import lobby.handlers.FusionHandler;
 import lobby.handlers.GetRoomInfoHandler;
 import lobby.handlers.GetTopGuildsHandler;
 import lobby.handlers.GetTopGuildsMarkHandler;
+import lobby.handlers.GetUserInfoHandler;
 import lobby.handlers.ItemsChangedHandler;
 import lobby.handlers.JoinLobbyHandler;
 import lobby.handlers.LeaveGameHandler;
@@ -57,11 +58,14 @@ public class LobbyServer extends GenericTCPServer {
 		case CreateRoomHandler.REQUEST_ID:
 			message = new CreateRoomHandler(this, userSession, messageBytes);
 			break;
+		case GetUserInfoHandler.REQUEST_ID:
+			message = new GetUserInfoHandler(this, userSession, messageBytes);
+			break;
 		case GetRoomInfoHandler.REQUEST_ID:
 			message = new GetRoomInfoHandler(userSession, messageBytes);
 			break;
-		case EnterExistingRoomHandler.REQUEST_ID:
-			message = new EnterExistingRoomHandler(this, userSession, messageBytes);
+		case JoinRoomHandler.REQUEST_ID:
+			message = new JoinRoomHandler(this, userSession, messageBytes);
 			break;
 		case RoomPlayersChangedHandler.REQUEST_ID:
 			message = new RoomPlayersChangedHandler(this, userSession, messageBytes);
@@ -125,7 +129,19 @@ public class LobbyServer extends GenericTCPServer {
 			}
 		}
 	}
+	
+	// this sends to everyone in the room
+	public void roomMessage(int roomID, byte[] message) throws IOException {
+		for (UserTCPSession currentUserSession : getRoom(roomID).getUsers()) {
+			// If the user is not null
+			if (currentUserSession != null) {
+				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
+				currentUserSession.sendMessage(HexTools.duplicateArray(message));
+			}
+		}
+	}
 
+	// this sends to everyone but yourself
 	public void roomMessage(UserTCPSession userSession, int roomID, byte[] message) throws IOException {
 		for (UserTCPSession currentUserSession : getRoom(roomID).getUsers()) {
 			// If the user is not null
