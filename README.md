@@ -17,6 +17,7 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 * The rooms in the lobby aren't being updates properly once a change in a room is made.
 * The guild rank of new players in the room is '?' instead of being the true rank.
 * When changing the room name, the other users in the room don't see the changes.
+* Can't start a quest with 2+ people.
 
 # 23/03/2017
 * Changed the messages format info file.
@@ -24,6 +25,8 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 * Added a working debug-mode sp.exe. It also disables IOProtect, resulting in a non crashing game. The debug-mode sp.exe shows the size of every frame in the game, the framerate, the experience and code the player has and his event flags. Also, every single log is being printed in PP.log, instead of only a selected few.
 
 * Added the sp2.exe and dinput.dll of B6oy's SPNET.net client. Paste those two files in your SP installation and you can run Survival Project on Windows 10. Simply launch sp2.exe. If you get an error, run it as administrator.
+
+* Added GetUserInfoHandler.
 
 # 22/03/2017
 * Added an option to send packets right after the game starts. That can be used "Soccer: Send timer" and many more game types.
