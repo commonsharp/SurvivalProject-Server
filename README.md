@@ -9,6 +9,7 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 * Rename "EnterExistingRoom".
 * Make user tcp session and udp server have the same superclass.
 * Clean the code for fucks sake
+* There are more fields in LeaveRoomHandler. Need to change...
 
 # List of bugs
 * ~~Soccer timer doesn't start.~~
