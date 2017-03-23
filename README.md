@@ -6,6 +6,7 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 ** It seems like b6oy's sp2.exe has another layer of encryption. Therefore, the code does not work on Win10, *yet***
 
 # TODO
+- [ ] Change the encryption/decryption functions to support b6oy's encryption.
 - [ ] Download a list of all available rooms once you log in.
 - [ ] Downlad a list of all the users in the server once you log in.
 - [ ] Rename "ResultsHandler" and make sure it's sending the right results.
@@ -31,10 +32,10 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 * Added gold items.
 * Added avatar items.
 * Added pets.
-* Premium characters working.
+* Premium characters are working.
 * Fixed a bug where the game would crash after starting a game, leaving, and changing an item.
 * Fixed the bug where there couldn't be 2+ players in a quest.
-* Fixed a bug where game packets were getting sent to everyone in the room, people who aren't even ready yet, resulting in a game crash.
+* Fixed a bug where game packets were getting sent to everyone in the room, players who aren't even ready yet, resulting in a game crash.
 * Fixed a bug where there couldn't be more than 2 players in a room.
 
 # 22/03/2017
