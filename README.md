@@ -1,5 +1,6 @@
 # SurvivalProject-Server
 Server files for the game Survival Project, written in Java.
+
 To install Survival Project on Windows 10, go to the Win10 folder.
 
 # TODO
