@@ -101,7 +101,7 @@ public class LobbyServer extends GenericTCPServer {
 			message = new CrystalDeathHandler(userSession, messageBytes);
 			break;
 		case QuestInfoHandler.REQUEST_ID:
-			message = new QuestInfoHandler(userSession, messageBytes);
+			message = new QuestInfoHandler(this, userSession, messageBytes);
 			break;
 		case GetTopGuildsHandler.REQUEST_ID:
 			message = new GetTopGuildsHandler(userSession, messageBytes);

@@ -41,7 +41,7 @@ public class User {
 	
 	public int magicIndex, weaponIndex, accessoryIndex, petIndex;
 	public int footIndex = -1, bodyIndex = -1, hand1Index = -1, hand2Index = -1, faceIndex = -1, hairIndex = -1, headIndex = -1;
-	public int missionLevel = 256;
+	public int missionLevel = 88;
 	
 	public boolean isInRoom = false;
 	public int roomIndex;

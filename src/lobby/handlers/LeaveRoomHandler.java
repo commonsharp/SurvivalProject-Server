@@ -34,6 +34,7 @@ public class LeaveRoomHandler extends GenericHandler {
 
 	@Override
 	public byte[] getResponse() {
+		userSession.getUser().isInRoom = false;
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);

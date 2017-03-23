@@ -78,13 +78,14 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putByte(0x32, userSession.getUser().gender); // 0x32
 		output.putInt(0x34, userSession.getUser().playerWins); // 0x34
 		output.putInt(0x38, userSession.getUser().playerLoses); // 0x38
-		output.putInt(0x3c, 11); // 0x3c - something with wins maybe...
+		output.putInt(0x3c, 10); // 0x3c - something with wins maybe...
 		output.putInt(0x40, userSession.getUser().playerLevel);
 		output.putInt(0x44, userSession.getUser().playerKOs); // 0x44
 		output.putInt(0x48, userSession.getUser().playerDowns); // 0x48
-		output.putInt(0x50, 33); // 0x50
-		output.putInt(0x54, 44); // 0x54
-		output.putInt(0x5c, 55); // 0x5c
+		output.putInt(0x50, 10); // 0x50
+		output.putInt(0x54, 10); // 0x54
+		output.putInt(0x58, 10); // not sure if this should even be here
+		output.putInt(0x5c, 10); // 0x5c
 		output.putLong(0x60, userSession.getUser().playerExperience); // 0x60
 		output.putLong(0x68, userSession.getUser().playerMoney); // 0x68
 		output.putLong(0x70, avatarMoney); // 0x70
@@ -136,7 +137,7 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putInt(0x938, visitBonusAvatarMoney);
 		output.putBytes(0x93C, userSession.getUser().playerEventFlags); // 0x93C
 		output.putInt(0x944, playerRank); // 0x944
-		output.putByte(0x948, (byte) 1);
+		output.putByte(0x948, (byte) 10);
 		output.putInt(0x94C, lobbyMaxRooms); // 0x94c
 		output.putInt(0x950, userSession.getUser().getAvatarItemID(userSession.getUser().footIndex));
 		output.putInt(0x954, userSession.getUser().getAvatarItemID(userSession.getUser().bodyIndex));
@@ -145,10 +146,10 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putInt(0x960, userSession.getUser().getAvatarItemID(userSession.getUser().faceIndex));
 		output.putInt(0x964, userSession.getUser().getAvatarItemID(userSession.getUser().hairIndex));
 		output.putInt(0x968, userSession.getUser().getAvatarItemID(userSession.getUser().headIndex));
-		output.putInt(0x96C, 1); // something with guild mark
-		output.putInt(0x970, 11); // 0x970 = field_A0 in Login
+		output.putInt(0x96C, 10); // something with guild mark
+		output.putInt(0x970, 10); // 0x970 = field_A0 in Login
 		output.putInt(0x974, userSession.getUser().playerType); // 0x974
-		output.putByte(0x978, (byte) 0); // 0x978
+		output.putByte(0x978, (byte) 0); // boolean. 1 = the account will be deleted after 15 inactive days.
 		
 		return output.toArray();
 	}

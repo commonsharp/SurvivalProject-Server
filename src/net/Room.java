@@ -182,6 +182,7 @@ public class Room {
 		case Constants.FOREST_QUEST_3:
 		case Constants.FOREST_QUEST_4:
 		case Constants.FOREST_QUEST_5:
+		case Constants.MISSION_MODE:
 			return true;
 		case Constants.SOCCER_MODE:
 			return true;
@@ -248,6 +249,7 @@ public class Room {
 		case Constants.FOREST_QUEST_3:
 		case Constants.FOREST_QUEST_4:
 		case Constants.FOREST_QUEST_5:
+		case Constants.MISSION_MODE:
 			return 0;
 		case Constants.SOCCER_MODE:
 			return 1;
