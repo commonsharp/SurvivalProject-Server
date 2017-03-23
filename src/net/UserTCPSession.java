@@ -7,6 +7,7 @@ import java.net.Socket;
 import lobby.handlers.JoinLobbyHandler;
 import log.Log;
 import login.handlers.LoginHandler;
+import login.handlers.ServerInfoHandler;
 import tools.HexTools;
 import tools.input.ExtendedInputStream;
 
@@ -52,7 +53,9 @@ public class UserTCPSession implements Runnable {
 					Cryptography.decryptMessage(1, messageBytes);
 					
 					// If you decrypt it with the normal decryption algorithm and get the right message
-					if (HexTools.getIntegerInByteArray(messageBytes, 4) == LoginHandler.REQUEST_ID || HexTools.getIntegerInByteArray(messageBytes, 4) == JoinLobbyHandler.REQUEST_ID) {
+					if (HexTools.getIntegerInByteArray(messageBytes, 4) == LoginHandler.REQUEST_ID ||
+							HexTools.getIntegerInByteArray(messageBytes, 4) == JoinLobbyHandler.REQUEST_ID ||
+							HexTools.getIntegerInByteArray(messageBytes, 4) == ServerInfoHandler.REQUEST_ID) {
 						// then set the encryption version to 1
 						user.encryptionVersion = 1;
 					}

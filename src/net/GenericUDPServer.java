@@ -101,12 +101,12 @@ public abstract class GenericUDPServer implements Runnable {
 				}
 				
 				GenericHandler message = processPacket(this, messageID, messageBytes);
-				if (message == null) {
-					Log.log(name + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - unimplemented yet");
-				}
-				else {
-					Log.log(name + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - " + message.getClass().getCanonicalName());
-				}
+//				if (message == null) {
+//					Log.log(name + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - unimplemented yet");
+//				}
+//				else {
+//					Log.log(name + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - " + message.getClass().getCanonicalName());
+//				}
 				
 				if (message != null) {
 					byte[] response = message.getResponse();
