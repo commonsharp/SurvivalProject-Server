@@ -6,7 +6,7 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 # TODO
 - [ ] Download a list of all available rooms once you log in.
 - [ ] Rename "ResultsHandler" and make sure it's sending the right results.
-- [ ] Rename "EnterExistingRoom".
+- [x] Rename "EnterExistingRoom".
 - [ ] Make user tcp session and udp server have the same superclass.
 - [ ] Clean the code for fucks sake
 - [ ] There are more fields in LeaveRoomHandler. Need to change...
