@@ -32,6 +32,7 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 * Fixed a bug where the game would crash after starting a game, leaving, and changing an item.
 * Fixed the bug where there couldn't be 2+ players in a quest.
 * Fixed a bug where game packets were getting sent to everyone in the room, people who aren't even ready yet, resulting in a game crash.
+* Fixed a bug where there couldn't be more than 2 players in a room.
 
 # 22/03/2017
 * Added an option to send packets right after the game starts. That can be used "Soccer: Send timer" and many more game types.
