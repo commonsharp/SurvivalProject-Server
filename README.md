@@ -18,7 +18,7 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 * The rooms in the lobby aren't being updates properly once a change in a room is made.
 * The guild rank of new players in the room is '?' instead of being the true rank.
 * When changing the room name, the other users in the room don't see the changes.
-* Can't start a quest with 2+ people.
+* ~~Can't start a quest with 2+ people.~~
 
 # 23/03/2017
 * Changed the messages format info file.
@@ -30,6 +30,7 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 * Added pets.
 * Premium characters working.
 * Fixed a bug where the game would crash after starting a game, leaving, and changing an item.
+* Fixed the bug where there couldn't be 2+ players in a quest.
 
 # 22/03/2017
 * Added an option to send packets right after the game starts. That can be used "Soccer: Send timer" and many more game types.
