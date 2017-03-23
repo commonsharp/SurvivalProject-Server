@@ -1,4 +1,3 @@
 Every packet in the game is in little endian format.
 
 Strings are null terminated.
-The login message is of a constant size of 13, where the rest of the bytes are junk (not necessarily zeroes). Need to check if other messages are the same...
