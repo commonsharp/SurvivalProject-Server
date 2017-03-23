@@ -57,6 +57,8 @@ public class User {
 	public InetAddress udpIPAddress;
 	public int udpPort;
 	
+	public int encryptionVersion;
+	
 	public User() {
 		items = new Item[96];
 		

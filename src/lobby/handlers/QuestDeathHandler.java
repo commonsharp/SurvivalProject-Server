@@ -52,7 +52,7 @@ public class QuestDeathHandler extends GenericHandler {
 		
 		output.putInt(0x14, monsterIndex);
 		output.putInt(0x18, userSession.getUser().roomSlot); // slot
-		output.putInt(0x1C, 0);
+		output.putInt(0x1C, 0); // byte
 		output.putInt(0x20, 0);
 		
 		 // lucky multiplier (exp and code multiplier)

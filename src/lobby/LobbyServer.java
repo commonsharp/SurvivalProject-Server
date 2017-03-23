@@ -167,7 +167,7 @@ public class LobbyServer extends GenericTCPServer {
 
 	public User findUser(InetAddress ipAddress, int port) {
 		for (UserTCPSession userSession : usersSessions) {
-			if (userSession.getUser().udpIPAddress.equals(ipAddress) && userSession.getUser().udpPort == port) {
+			if (userSession.getUser().udpIPAddress != null && userSession.getUser().udpIPAddress.equals(ipAddress) && userSession.getUser().udpPort == port) {
 				return userSession.getUser();
 			}
 		}

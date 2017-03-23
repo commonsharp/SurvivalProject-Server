@@ -35,17 +35,29 @@ public class Cryptography {
 		return 0;
 	}
 	
-	public static void encryptMessage(byte[] buffer) {
+	public static void encryptMessage(int encryptionVersion, byte[] buffer) {
 		int c;
 		
 		for (int i = 4; i < buffer.length; i++) {
-			c = ~(buffer[i] & 0xFF) & 0xFF;
+			c = buffer[i] & 0xFF;
+			
+			if (encryptionVersion == 2) {
+				c = (byte)(c ^ 0x74);
+				c = (byte)(c - (i - 4));
+			}
+			
+			c = (~c) & 0xFF;
 			buffer[i] = (byte) (((c >> 5) & 0xFF) | ((c << 3) & 0xFF));
 		}
 	}
 	
-	public static void decryptMessage(byte[] buffer) {
+	public static void decryptMessage(int encryptionVersion, byte[] buffer) {
 		for (int i = 4; i < buffer.length; i++) {
+			if (encryptionVersion == 2) {
+				buffer[i] = (byte)(buffer[i] ^ 0x3C);
+				buffer[i] = (byte)(buffer[i] - (i - 4));
+			}
+			
 			buffer[i] = (byte) ~(((buffer[i] & 0xFF) >> 3) | ((buffer[i] & 0xFF) << 5));
 		}
 	}

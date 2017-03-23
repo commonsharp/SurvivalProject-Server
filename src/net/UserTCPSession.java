@@ -4,7 +4,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import lobby.handlers.JoinLobbyHandler;
 import log.Log;
+import login.handlers.LoginHandler;
 import tools.HexTools;
 import tools.input.ExtendedInputStream;
 
@@ -44,7 +46,26 @@ public class UserTCPSession implements Runnable {
 				
 				// Read the rest of the message
 				input.readBytes(messageBytes, 4, length - 4);
-				Cryptography.decryptMessage(messageBytes);
+				
+				// Decide which encryption to use based on the login packet
+				if (user.encryptionVersion == 0) {
+					Cryptography.decryptMessage(1, messageBytes);
+					
+					// If you decrypt it with the normal decryption algorithm and get the right message
+					if (HexTools.getIntegerInByteArray(messageBytes, 4) == LoginHandler.REQUEST_ID || HexTools.getIntegerInByteArray(messageBytes, 4) == JoinLobbyHandler.REQUEST_ID) {
+						// then set the encryption version to 1
+						user.encryptionVersion = 1;
+					}
+					else {
+						// otherwise, we're on the second encryption algorithm
+						user.encryptionVersion = 2;
+					}
+					
+					// Encrypt again
+					Cryptography.encryptMessage(1, messageBytes);
+				}
+				
+				Cryptography.decryptMessage(user.encryptionVersion, messageBytes);
 				
 				int messageID = HexTools.getIntegerInByteArray(messageBytes, 4);
 				int stateFromMessage = HexTools.getIntegerInByteArray(messageBytes, 16);
@@ -91,7 +112,7 @@ public class UserTCPSession implements Runnable {
 //		System.out.println();
 		
 		// Encrypt and send
-		Cryptography.encryptMessage(response);
+		Cryptography.encryptMessage(user.encryptionVersion, response);
 		output.write(response);
 		output.flush();
 		

@@ -54,6 +54,11 @@ public class PlayerDeathHandler extends GenericHandler {
 	@Override
 	public void afterSend() throws IOException {
 		lobby.roomMessage(userSession, userSession.getUser().roomIndex, getResponse());
+		
+		sendTCPMessage(new SpawnHandler(userSession).getResponse(userSession.getUser().roomSlot));
+		lobby.roomMessage(userSession.getUser().roomIndex, new SpawnHandler(userSession).getResponse(userSession.getUser().roomSlot));
+//		sendTCPMessage(new ResultsHandler(userSession).getResponse(0));
+//		lobby.roomMessage(userSession.getUser().roomIndex, new ResultsHandler(userSession).getResponse(0));
 //		sendTCPMessage(new PlayerResurrectionHandler(userSession).getResponse(userSession.getUser().roomSlot, 500, 500));
 //		lobby.roomMessage(userSession, userSession.getUser().roomIndex,
 //				new PlayerResurrectionHandler(userSession).getResponse(userSession.getUser().roomSlot, 500, 500));

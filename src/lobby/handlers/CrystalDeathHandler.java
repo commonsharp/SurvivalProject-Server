@@ -60,7 +60,7 @@ public class CrystalDeathHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		lobby.roomMessage(userSession.getUser().roomIndex, getResponse());
+//		lobby.roomMessage(userSession.getUser().roomIndex, getResponse());
 	}
 
 }
