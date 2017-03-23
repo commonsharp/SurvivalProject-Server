@@ -29,6 +29,7 @@ To install Survival Project on Windows 10, go to the Win10 folder.
 * Added avatar items.
 * Added pets.
 * Premium characters working.
+* Fixed a bug where the game would crash after starting a game, leaving, and changing an item.
 
 # 22/03/2017
 * Added an option to send packets right after the game starts. That can be used "Soccer: Send timer" and many more game types.
