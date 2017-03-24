@@ -28,6 +28,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 # 24/03/2017
 * Fixed the bug where you had to change items once before clicking ready in a room.
 * Fixed a bug where avatar items didn't work properly.
+* Fixed a bug where room messages were sent to everyone in the room, including the current player, when it was not necessary.
 
 **Spring cleaning:**
 
