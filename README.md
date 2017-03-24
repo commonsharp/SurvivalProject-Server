@@ -30,6 +30,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * Fixed a bug where avatar items didn't work properly.
 
 **Spring cleaning:**
+
 A big change in the code, resulting in a cleaner and a better code.
 
 * Added LoginHandler, LobbyHandler and GameHandler to extend GenericHandler. 
