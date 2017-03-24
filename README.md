@@ -38,7 +38,7 @@ A big change in the code, resulting in a cleaner and a better code.
 * Moved every message request/response ID into a messages class.
 * Added TCPHandler, UDPHandler, LoginHandler, LobbyHandler and GameHandler to extend GenericHandler.
 * Added a function processPacket that's being called right after interpretBytes.
-* Changed the big constants class into enums.
+* Changed the big constants class into an enum.
 * AttackUDP was renamed to ForwardMessageHandler.
 * LoginHandler was renamed to LoginCredentialsHandler.
 * newState was renamed to getNewState and was also moved to Cryptography class.
