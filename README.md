@@ -18,11 +18,11 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 - [ ] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
-* Leaving a game with 2+ players doesn't work properly.
+* ~~Leaving a game with 2+ players doesn't work properly.~~
 * Starting a tutorial crashes the game.
 * ~~Soccer timer doesn't start.~~
 * ~~You have to change items at least once before clicking ready in a room.~~
-* The rooms in the lobby aren't being updated properly once a change in a room is made.
+* ~~The rooms in the lobby aren't being updated properly once a change in a room was made.~~
 * The guild rank of new players in the room is '?' instead of being the true rank.
 * When changing the room name, the other users in the room don't see the changes.
 * ~~Can't start a quest with 2+ people.~~
@@ -30,9 +30,12 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 # 24/03/2017
 * Added PetKilledHandler (you can kill other player's pets in a game to make them yours).
 * Started working on mission impossible 300.
-* Fixed a bug where the other users in a room couldn't see the items of the other players.
+* Fixed the bug where leaving a game with 2+ players didn't work properly.
+* Fixed the bug where the rooms in the lobby weren't updated properly once a change in a room was made.
 * Fixed the bug where you had to change items once before clicking ready in a room.
+* Fixed a bug where the other users in a room couldn't see the items of the other players.
 * Fixed a bug where avatar items didn't work properly.
+* Fixed a bug where broadcast messages were sent to everyone in the room, including the current player, when it was not necessary.
 * Fixed a bug where room messages were sent to everyone in the room, including the current player, when it was not necessary.
 
 **Spring cleaning:**
