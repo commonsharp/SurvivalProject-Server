@@ -18,6 +18,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 - [ ] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
+* When someone joins a quest that already started, the quest restarts.
 * ~~Leaving a game with 2+ players doesn't work properly.~~
 * Starting a tutorial crashes the game.
 * ~~Soccer timer doesn't start.~~
