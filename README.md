@@ -29,6 +29,11 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * Fixed the bug where you had to change items once before clicking ready in a room.
 * Fixed a bug where avatar items didn't work properly.
 
+**Spring cleaning:**
+A big change in the code, resulting in a cleaner and a better code.
+
+* Added LoginHandler, LobbyHandler and GameHandler to extend GenericHandler. 
+
 # 23/03/2017
 * Added b6oy's encryption/decryption methods. The game now works with his client as well (win10 executable).
 * Changed the messages format info file.
