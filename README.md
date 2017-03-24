@@ -38,7 +38,8 @@ A big change in the code, resulting in a cleaner and a better code.
 * Added TCPHandler, UDPHandler, LoginHandler, LobbyHandler and GameHandler to extend GenericHandler.
 * Added a function processPacket that's being called right after interpretBytes.
 * Changed the big constants class into enums.
-* Renamed AttackUDP to ForwardMessageHandler.
+* AttackUDP was renamed to ForwardMessageHandler.
+* LoginHandler was renamed to LoginCredentialsHandler.
 * newState was renamed to getNewState and was also moved to Cryptography class.
 * Deleted ExtendedInputStream and used a normal InputStream instead.
 * Renamed roomMessage to sendRoomMessage. Also change its signature to UserTCPSession userSession, byte[] message, boolean sendToSelf.
