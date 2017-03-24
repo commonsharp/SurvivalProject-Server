@@ -33,7 +33,8 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 
 A big change in the code, resulting in a cleaner and a better code.
 
-* Added LoginHandler, LobbyHandler and GameHandler to extend GenericHandler. 
+* Added LoginHandler, LobbyHandler and GameHandler to extend GenericHandler.
+* Renamed AttackUDP to ForwardMessageHandler.
 
 # 23/03/2017
 * Added b6oy's encryption/decryption methods. The game now works with his client as well (win10 executable).
