@@ -26,6 +26,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * ~~Can't start a quest with 2+ people.~~
 
 # 24/03/2017
+* Fixed a bug where the other users in a room couldn't see the items of the other players.
 * Fixed the bug where you had to change items once before clicking ready in a room.
 * Fixed a bug where avatar items didn't work properly.
 * Fixed a bug where room messages were sent to everyone in the room, including the current player, when it was not necessary.
@@ -34,7 +35,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 
 A big change in the code, resulting in a cleaner and a better code.
 
-* Added LoginHandler, LobbyHandler and GameHandler to extend GenericHandler.
+* Added TCPHandler, UDPHandler, LoginHandler, LobbyHandler and GameHandler to extend GenericHandler.
 * Renamed AttackUDP to ForwardMessageHandler.
 * newState was renamed to getNewState and was also moved to Cryptography class.
 * Deleted ExtendedInputStream and used a normal InputStream instead.
