@@ -21,7 +21,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * Starting a tutorial crashes the game.
 * ~~Soccer timer doesn't start.~~
 * ~~You have to change items at least once before clicking ready in a room.~~
-* The rooms in the lobby aren't being updates properly once a change in a room is made.
+* The rooms in the lobby aren't being updated properly once a change in a room is made.
 * The guild rank of new players in the room is '?' instead of being the true rank.
 * When changing the room name, the other users in the room don't see the changes.
 * ~~Can't start a quest with 2+ people.~~
