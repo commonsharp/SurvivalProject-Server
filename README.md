@@ -17,6 +17,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 - [ ] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
+* Leaving a game with 2+ players doesn't work properly.
 * Starting a tutorial crashes the game.
 * ~~Soccer timer doesn't start.~~
 * ~~You have to change items at least once before clicking ready in a room.~~
@@ -26,6 +27,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * ~~Can't start a quest with 2+ people.~~
 
 # 24/03/2017
+* Added PetKilledHandler (you can kill other player's pets in a game to make them yours).
 * Started working on mission impossible 300.
 * Fixed a bug where the other users in a room couldn't see the items of the other players.
 * Fixed the bug where you had to change items once before clicking ready in a room.
