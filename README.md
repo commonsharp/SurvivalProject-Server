@@ -27,6 +27,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * ~~Can't start a quest with 2+ people.~~
 
 # 24/03/2017
+* Started working on mission impossible 300.
 * Fixed a bug where the other users in a room couldn't see the items of the other players.
 * Fixed the bug where you had to change items once before clicking ready in a room.
 * Fixed a bug where avatar items didn't work properly.
