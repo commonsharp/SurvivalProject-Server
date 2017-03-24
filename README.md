@@ -4,6 +4,7 @@ Server files for the game Survival Project, written in Java.
 For instructions on how to install Survival Project on Windows 10, go to the Win10 folder.
 
 # TODO
+- [ ] Get a list of all the request messages.
 - [ ] Add putBoolean/getBoolean in ExtendedByteBuffer.
 - [ ] Change the login credentials message format.
 - [ ] Finish the guild mark handler.
@@ -27,6 +28,9 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * The guild rank of new players in the room is '?' instead of being the true rank.
 * When changing the room name, the other users in the room don't see the changes.
 * ~~Can't start a quest with 2+ people.~~
+
+# 25/03/2017
+* Added a placeholder for all the *response* messages available. There are 94 more responses to process Q_Q
 
 # 24/03/2017
 * Added PetKilledHandler (you can kill other player's pets in a game to make them yours).
