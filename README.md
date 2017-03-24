@@ -17,6 +17,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 - [ ] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
+* Starting a tutorial crashes the game.
 * ~~Soccer timer doesn't start.~~
 * ~~You have to change items at least once before clicking ready in a room.~~
 * The rooms in the lobby aren't being updates properly once a change in a room is made.
