@@ -217,7 +217,7 @@ public class Room {
 		}
 		else if (getTeamType() == 1) {
 			// need to change. if everybody moves to the red team, this should return blue.
-			return (numberOfUsers % 2 == 0) ? 20 : 10;
+			return (numberOfUsers % 2 == 0) ? 10 : 10;
 		}
 		else if (getTeamType() == 2) {
 			return 10;
@@ -250,7 +250,7 @@ public class Room {
 		case Constants.FOREST_QUEST_4:
 		case Constants.FOREST_QUEST_5:
 		case Constants.MISSION_MODE:
-			return 0;
+			return 1;
 		case Constants.SOCCER_MODE:
 			return 1;
 		case Constants.DODGE_MODE:

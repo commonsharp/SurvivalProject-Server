@@ -44,6 +44,8 @@ public class GameServer extends GenericUDPServer {
 //		case 0x1133: // maybe
 		case 0x1134: // hokey too? not sure
 		case 0x1135: // something with hokey
+		case 0x1138: // hit by mission monsters? something in mission...
+		case 0x1139: // went through the portal in a mission
 		case 0x1140: // hit by soccer ball and pushed back. maybe hit by anything and pushed back?
 			message = new AttackUDP(this, this, messageBytes);
 			break;

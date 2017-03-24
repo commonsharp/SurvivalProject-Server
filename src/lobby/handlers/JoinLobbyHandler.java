@@ -139,13 +139,13 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putInt(0x944, playerRank); // 0x944
 		output.putByte(0x948, (byte) 10);
 		output.putInt(0x94C, lobbyMaxRooms); // 0x94c
-		output.putInt(0x950, userSession.getUser().getAvatarItemID(userSession.getUser().footIndex));
-		output.putInt(0x954, userSession.getUser().getAvatarItemID(userSession.getUser().bodyIndex));
-		output.putInt(0x958, userSession.getUser().getAvatarItemID(userSession.getUser().hand1Index));
-		output.putInt(0x95C, userSession.getUser().getAvatarItemID(userSession.getUser().hand2Index));
-		output.putInt(0x960, userSession.getUser().getAvatarItemID(userSession.getUser().faceIndex));
-		output.putInt(0x964, userSession.getUser().getAvatarItemID(userSession.getUser().hairIndex));
-		output.putInt(0x968, userSession.getUser().getAvatarItemID(userSession.getUser().headIndex));
+		output.putInt(0x950, userSession.getUser().footIndex);
+		output.putInt(0x954, userSession.getUser().bodyIndex);
+		output.putInt(0x958, userSession.getUser().hand1Index);
+		output.putInt(0x95C, userSession.getUser().hand2Index);
+		output.putInt(0x960, userSession.getUser().faceIndex);
+		output.putInt(0x964, userSession.getUser().hairIndex);
+		output.putInt(0x968, userSession.getUser().headIndex);
 		output.putInt(0x96C, 10); // something with guild mark
 		output.putInt(0x970, 10); // 0x970 = field_A0 in Login
 		output.putInt(0x974, userSession.getUser().playerType); // 0x974

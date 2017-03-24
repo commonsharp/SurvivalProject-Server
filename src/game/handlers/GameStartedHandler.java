@@ -65,6 +65,8 @@ public class GameStartedHandler extends GenericHandler {
 			case Constants.HOKEY_MODE:
 				gameServer.lobby.roomMessage(roomID, new SpawnHandler(null).getResponse());
 				break;
+			case Constants.MISSION_MODE:
+//				gameServer.lobby.roo
 			}
 			
 			gameServer.lobby.getRoom(roomID).isRoomCreatedMessageSent = true;

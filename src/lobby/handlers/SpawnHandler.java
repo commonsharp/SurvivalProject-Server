@@ -22,35 +22,24 @@ public class SpawnHandler extends GenericHandler {
 
 	@Override
 	public byte[] getResponse() {
-		/*
-		 * int slots[8]; //0 = on; -1 = off
-	int slot;
-		 */
-
-		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
-		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
-		
-		int[] slots = new int[8];
-		output.putInts(0x14, slots);
-		output.putInt(0x34, 2);
-		
-		return output.toArray();
+		return null;
 	}
 	
-	public byte[] getResponse(int slot) {
-		/*
-		 * int slots[8]; //0 = on; -1 = off
-	int slot;
-		 */
+	public byte[] getResponse(int unknown) {
 
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
 		
 		int[] slots = new int[8];
+		
+		for (int i = 0; i < slots.length; i++) {
+			slots[i] = i;
+		}
+
+		// each index should have its slot id
 		output.putInts(0x14, slots);
-		output.putInt(0x34, slot);
+		output.putInt(0x34, unknown); // this is not slot.
 		
 		return output.toArray();
 	}

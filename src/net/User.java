@@ -41,7 +41,7 @@ public class User {
 	
 	public int magicIndex, weaponIndex, accessoryIndex, petIndex;
 	public int footIndex = -1, bodyIndex = -1, hand1Index = -1, hand2Index = -1, faceIndex = -1, hairIndex = -1, headIndex = -1;
-	public int missionLevel = 88;
+	public int missionLevel = 1;
 	
 	public boolean isInRoom = false;
 	public boolean isInGame = false;
@@ -116,7 +116,7 @@ public class User {
 		items[38] = new Item(1341, 365, 8, 36100300);
 		items[39] = new Item(1342, 365, 8, 36100300);
 		
-		// avatar boots
+		// avatar feet
 		items[40] = new Item(4101, 0, 0, 0);
 		items[41] = new Item(4102, 0, 0, 0);
 		items[42] = new Item(4103, 0, 0, 0);
@@ -146,7 +146,7 @@ public class User {
 		items[56] = new Item(4602, 0, 0, 0);
 		items[57] = new Item(4603, 0, 0, 0);
 		
-		// avatar helmet
+		// avatar head
 		items[58] = new Item(4701, 0, 0, 0);
 		items[59] = new Item(4702, 0, 0, 0);
 		items[60] = new Item(4703, 0, 0, 0);
@@ -172,6 +172,18 @@ public class User {
 		items[78] = new Item(5014, 0, 0, 0);
 		
 		items[79] = new Item(2900, 365, 0, 0);
+		
+		magicIndex = 32;
+		weaponIndex = 0;
+		accessoryIndex = 19;
+		footIndex = 40;
+		bodyIndex = 43;
+		hand1Index = 46;
+		hand2Index = 49;
+		faceIndex = 52;
+		hairIndex = 55;
+		headIndex = 58;
+		petIndex = 70;
 	}
 	
 	public int getAvatarItemID(int index) {

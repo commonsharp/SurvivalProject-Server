@@ -3,6 +3,7 @@ package lobby.handlers;
 import java.io.IOException;
 
 import lobby.LobbyServer;
+import net.Constants;
 import net.GenericHandler;
 import net.User;
 import net.UserTCPSession;
@@ -57,6 +58,11 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		
 		lobby.roomMessage(userSession, roomID, new RoomPlayersChangedHandler(lobby, userSession).getResponse(userSession.getUser()));
 //		lobby.broadcastMessage(tcpServer, new RoomPlayersChangedHandler(lobby, tcpServer).getResponse(tcpServer.getUser()));
+		
+		if (lobby.getRoom(roomID).getGameType() == Constants.MISSION_MODE) {
+			sendTCPMessage(new SpawnHandler(userSession).getResponse(0));
+			lobby.roomMessage(roomID, new SpawnHandler(userSession).getResponse(0));
+		}
 	}
 
 	@Override
@@ -71,8 +77,7 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		return getResponse(userSession.getUser());
 	}
 	
-	// field f4 must be set according to different rules.
-	// the rules are described in "ItemsChangedResponse"
+
 	public byte[] getResponse(User user) {
 		int roomID = userSession.getUser().roomIndex;
 		lobby.getRoom(roomID).setCharacter(user.roomSlot, user.roomCharacter);
@@ -128,13 +133,13 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		output.putInts(0xCC, new int[] {77, 88, 12});
 		output.putInt(0xD0, -1);
 		output.putInt(0xD4, -1);
-		output.putInt(0xD8, user.getAvatarItemID(user.footIndex));
-		output.putInt(0xDC, user.getAvatarItemID(user.bodyIndex));
-		output.putInt(0xE0, user.getAvatarItemID(user.hand1Index));
-		output.putInt(0xE4, user.getAvatarItemID(user.hand2Index));
-		output.putInt(0xE8, user.getAvatarItemID(user.faceIndex)); // used to be room start but it seems like this is not.
-		output.putInt(0xEC, user.getAvatarItemID(user.hairIndex));
-		output.putInt(0xF0, user.getAvatarItemID(user.headIndex));
+		output.putInt(0xD8, user.getItemID(user.footIndex));
+		output.putInt(0xDC, user.getItemID(user.bodyIndex));
+		output.putInt(0xE0, user.getItemID(user.hand1Index));
+		output.putInt(0xE4, user.getItemID(user.hand2Index));
+		output.putInt(0xE8, user.getItemID(user.faceIndex));
+		output.putInt(0xEC, user.getItemID(user.hairIndex));
+		output.putInt(0xF0, user.getItemID(user.headIndex));
 		
 		
 		// Gamestates:
@@ -166,7 +171,7 @@ public class RoomPlayersChangedHandler extends GenericHandler {
 		output.putByte(0x102, (byte) 0); // 0x59 in create room
 		output.putByte(0x103, (byte) 0);
 
-		output.putInt(0x104, 0); // current mission level (you can play a level 20 mission with someone who's level 20 while you're level 40 for example)
+		output.putInt(0x104, user.missionLevel); // current mission level (you can play a level 20 mission with someone who's level 20 while you're level 40 for example)
 		output.putInt(0x108, user.missionLevel); // my mission level
 		output.putInt(0x10C, 0); // aura. 1 - aura. others - nothing?
 		output.putInt(0x110, 0x7D6); // something with values 0x7D7 or 0x7D6 or 0x7D3? this is trail when the user moves

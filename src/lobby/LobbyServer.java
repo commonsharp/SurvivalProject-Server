@@ -15,6 +15,8 @@ import lobby.handlers.ItemsChangedHandler;
 import lobby.handlers.JoinLobbyHandler;
 import lobby.handlers.LeaveGameHandler;
 import lobby.handlers.LeaveRoomHandler;
+import lobby.handlers.MissionCompletedHandler;
+import lobby.handlers.MissionInfoHandler;
 import lobby.handlers.PlayerDeathHandler;
 import lobby.handlers.PlayerResurrectionHandler;
 import lobby.handlers.QuestDeathHandler;
@@ -23,6 +25,7 @@ import lobby.handlers.BigMatchDeathHandler;
 import lobby.handlers.RoomNameChangedHandler;
 import lobby.handlers.RoomPlayersChangedHandler;
 import lobby.handlers.SoccerGoalHandler;
+import lobby.handlers.StartCountdownHandler;
 import net.GenericHandler;
 import net.GenericTCPServer;
 import net.Room;
@@ -108,6 +111,15 @@ public class LobbyServer extends GenericTCPServer {
 			break;
 		case BigMatchDeathHandler.REQUEST_ID:
 			message = new BigMatchDeathHandler(userSession, messageBytes);
+			break;
+		case StartCountdownHandler.REQUEST_ID:
+			message = new StartCountdownHandler(userSession, messageBytes);
+			break;
+		case MissionCompletedHandler.REQUEST_ID:
+			message = new MissionCompletedHandler(this, userSession, messageBytes);
+			break;
+		case MissionInfoHandler.REQUEST_ID:
+			message = new MissionInfoHandler(this, userSession, messageBytes);
 			break;
 		case GetTopGuildsMarkHandler.REQUEST_ID:
 			message = new GetTopGuildsMarkHandler(userSession, messageBytes);

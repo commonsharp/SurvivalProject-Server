@@ -6,7 +6,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 import lobby.LobbyServer;
-import log.Log;
 import tools.ExtendedByteBuffer;
 import tools.HexTools;
 
