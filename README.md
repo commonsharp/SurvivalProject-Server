@@ -12,8 +12,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 - [ ] Downlad a list of all the users in the server once you log in.
 - [ ] Rename "ResultsHandler" and make sure it's sending the right results.
 - [x] Rename "EnterExistingRoom".
-- [ ] Make user tcp session and udp server have the same superclass.
-- [ ] Clean the code for fucks sake
+- [x] Clean the code for fucks sake
 - [ ] There are more fields in LeaveRoomHandler. Need to change...
 - [ ] Change the teams in quests to 10, instead of 0.
 
