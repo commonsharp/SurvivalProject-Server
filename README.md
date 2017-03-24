@@ -35,6 +35,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 
 A big change in the code, resulting in a cleaner and a better code.
 
+* Moved every message request/response ID into a messages class.
 * Added TCPHandler, UDPHandler, LoginHandler, LobbyHandler and GameHandler to extend GenericHandler.
 * Added a function processPacket that's being called right after interpretBytes.
 * Changed the big constants class into enums.
