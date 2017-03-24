@@ -35,6 +35,7 @@ A big change in the code, resulting in a cleaner and a better code.
 
 * Added LoginHandler, LobbyHandler and GameHandler to extend GenericHandler.
 * Renamed AttackUDP to ForwardMessageHandler.
+* newState was renamed to getNewState and was also moved to Cryptography class.
 
 # 23/03/2017
 * Added b6oy's encryption/decryption methods. The game now works with his client as well (win10 executable).
