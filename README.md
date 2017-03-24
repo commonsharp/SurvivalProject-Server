@@ -4,6 +4,7 @@ Server files for the game Survival Project, written in Java.
 For instructions on how to install Survival Project on Windows 10, go to the Win10 folder.
 
 # TODO
+- [ ] Add putBoolean/getBoolean in ExtendedByteBuffer.
 - [ ] Change the login credentials message format.
 - [ ] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
