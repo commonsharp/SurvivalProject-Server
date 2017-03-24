@@ -17,11 +17,15 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 
 # List of bugs
 * ~~Soccer timer doesn't start.~~
-* You have to change items at least once before clicking ready in a room.
+* ~~You have to change items at least once before clicking ready in a room.~~
 * The rooms in the lobby aren't being updates properly once a change in a room is made.
 * The guild rank of new players in the room is '?' instead of being the true rank.
 * When changing the room name, the other users in the room don't see the changes.
 * ~~Can't start a quest with 2+ people.~~
+
+# 24/03/2017
+* Fixed the bug where you had to change items once before clicking ready in a room.
+* Fixed a bug where avatar items didn't work properly.
 
 # 23/03/2017
 * Added b6oy's encryption/decryption methods. The game now works with his client as well (win10 executable).
