@@ -32,6 +32,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 # 25/03/2017
 * Added a placeholder for all the *response* messages available. There are 94 more responses to process Q_Q
 * Added the GameMasterBan handler.
+* More work on big matches...
 
 # 24/03/2017
 * Added PetKilledHandler (you can kill other player's pets in a game to make them yours).
