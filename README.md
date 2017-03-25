@@ -26,13 +26,14 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * ~~You have to change items at least once before clicking ready in a room.~~
 * ~~The rooms in the lobby aren't being updated properly once a change in a room was made.~~
 * The guild rank of new players in the room is '?' instead of being the true rank.
-* When changing the room name, the other users in the room don't see the changes.
+* ~~When changing the room name, the other users in the room don't see the changes.~~
 * ~~Can't start a quest with 2+ people.~~
 
 # 25/03/2017
 * Added a placeholder for all the *response* messages available. There are 94 more responses to process Q_Q
 * Added the GameMasterBan handler.
 * More work on big matches...
+* Fixed the bug where the players in the room didn't get the room name change update.
 * Fixed a bug where resurrection was not sent to other players in the room.
 * Fixed a bug where the main character was not chosen.
 
