@@ -9,25 +9,16 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 - [ ] Change the login credentials message format.
 - [ ] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
-- [x] Change the encryption/decryption functions to support b6oy's encryption.
 - [ ] Download a list of all available rooms once you log in.
 - [ ] Downlad a list of all the users in the server once you log in.
 - [ ] Rename "ResultsHandler" and make sure it's sending the right results.
-- [x] Rename "EnterExistingRoom".
-- [x] Clean the code for fucks sake
 - [ ] There are more fields in LeaveRoomHandler. Need to change...
 - [ ] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
 * When someone joins a quest that already started, the quest restarts.
-* ~~Leaving a game with 2+ players doesn't work properly.~~
 * Starting a tutorial crashes the game.
-* ~~Soccer timer doesn't start.~~
-* ~~You have to change items at least once before clicking ready in a room.~~
-* ~~The rooms in the lobby aren't being updated properly once a change in a room was made.~~
 * The guild rank of new players in the room is '?' instead of being the true rank.
-* ~~When changing the room name, the other users in the room don't see the changes.~~
-* ~~Can't start a quest with 2+ people.~~
 
 # 25/03/2017
 * Added a placeholder for all the *response* messages available. There are 94 more responses to process Q_Q
