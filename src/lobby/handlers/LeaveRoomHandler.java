@@ -2,21 +2,19 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
+import net.Messages;
 import net.UserTCPSession;
+import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
-public class LeaveRoomHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4318;
-	public static final int RESPONSE_ID = 0x4319;
+public class LeaveRoomHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x28;
 	
-	protected LobbyServer lobby;
 	
-	public LeaveRoomHandler(LobbyServer lobby, UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
-		this.lobby = lobby;
+	public LeaveRoomHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+		super(lobbyServer, tcpServer, messageBytes);
 	}
 
 	@Override
@@ -27,22 +25,28 @@ public class LeaveRoomHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-//		lobby.broadcastMessage(tcpServer, new LobbyRoomsChangedHandler(tcpServer).getResponse(lobby.getRoom(0)));
-		// this line has weird side effects. do not use.
-//		sendTCPMessage(new RoomPlayersChangedHandler(tcpServer, new byte[3000]).getResponse());
+		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
+		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(userSession.getUser().roomIndex)));
 	}
 
 	@Override
 	public byte[] getResponse() {
-		userSession.getUser().isInRoom = false;
-		userSession.getUser().isInGame = false;
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.LEAVE_ROOM_RESPONSE);
 		output.putInt(0x14, userSession.getUser().roomSlot);
 		output.putString(0x18, userSession.getUser().username);
-		lobby.getRoom(userSession.getUser().roomIndex).setUserSession(userSession.getUser().roomSlot, null);
+		lobbyServer.getRoom(userSession.getUser().roomIndex).setUserSession(userSession.getUser().roomSlot, null);
 		
 		return output.toArray();
+	}
+
+	@Override
+	public void processMessage() {
+		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		room.setCharacter(userSession.getUser().roomSlot, 0);
+		room.setNumberOfUsers(room.getNumberOfUsers() - 1);
+		userSession.getUser().isInRoom = false;
+		userSession.getUser().isInGame = false;
 	}
 }

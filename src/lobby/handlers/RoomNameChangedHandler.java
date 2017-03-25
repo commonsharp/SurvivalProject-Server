@@ -2,20 +2,18 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
 import net.UserTCPSession;
 
-public class RoomNameChangedHandler extends GenericHandler {
+public class RoomNameChangedHandler extends LobbyHandler {
 	public static final int REQUEST_ID = 0x4350;
 	
 	int roomID;
 	String roomName;
 	
-	LobbyServer lobby;
-	public RoomNameChangedHandler(LobbyServer lobby, UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
-		this.lobby = lobby;
+	public RoomNameChangedHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+		super(lobbyServer, tcpServer, messageBytes);
 	}
 
 	@Override
@@ -31,7 +29,13 @@ public class RoomNameChangedHandler extends GenericHandler {
 	
 	@Override
 	public void afterSend() throws IOException {
-		lobby.getRoom(roomID).setRoomName(roomName);
-		lobby.broadcastMessage(userSession, new LobbyRoomsChangedHandler(userSession).getResponse(lobby.getRoom(roomID)));
+		lobbyServer.getRoom(roomID).setRoomName(roomName);
+		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(roomID)));
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

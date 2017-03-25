@@ -2,19 +2,19 @@ package lobby.handlers;
 
 import java.io.IOException;
 
-import net.GenericHandler;
+import lobby.LobbyHandler;
+import lobby.LobbyServer;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class GetRoomInfoHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4311;
-	public static final int RESPONSE_ID = 0x4312;
+public class GetRoomInfoHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0xCC;
 	
 	protected int roomID;
 	
-	public GetRoomInfoHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
+	public GetRoomInfoHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+		super(lobbyServer, tcpServer, messageBytes);
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class GetRoomInfoHandler extends GenericHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.GET_ROOM_INFO_RESPONSE);
 		output.putInt(0x14, 0); // result. must NOT be 1. otherwise there's an error. any other value is fine.
 		output.putInts(0x18, new int[] {1, 2, 3, 4, 5, 6, 7, 8}); // level -1 = no player
 		output.putBytes(0x38, new byte[] {1, 1, 0, 0, 1, 1, 0, 0}); // genders
@@ -40,6 +40,12 @@ public class GetRoomInfoHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
+		
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
 		
 	}
 

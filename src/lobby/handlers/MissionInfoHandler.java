@@ -2,22 +2,19 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class MissionInfoHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4458;
-	public static final int RESPONSE_ID = 0x4458;
-	
+// not sure if you need to send the mission info to everyone else
+public class MissionInfoHandler extends LobbyHandler {
 	byte[] requestBytes;
 	
-	LobbyServer lobby;
-	public MissionInfoHandler(LobbyServer lobby, UserTCPSession userSession, byte[] messageBytes) {
-		super(userSession, messageBytes);
+	public MissionInfoHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+		super(lobbyServer, userSession, messageBytes);
 		requestBytes = messageBytes;
-		this.lobby = lobby;
 	}
 
 	@Override
@@ -30,14 +27,20 @@ public class MissionInfoHandler extends GenericHandler {
 	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(requestBytes.length);
 		output.putBytes(0x0, requestBytes);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.MISSION_INFO_REQUEST);
 		
 		return output.toArray();
 	}
 
 	@Override
 	public void afterSend() throws IOException {
-		lobby.roomMessage(userSession.getUser().roomIndex, getResponse());
+		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -2,30 +2,25 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class SoccerGoalHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4344;
-	public static final int RESPONSE_ID = 0x4345;
+public class SoccerGoalHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x28;
-	
-	protected LobbyServer lobby;
 	
 	protected int goal;
 	
 	boolean isUpdateData = true;
 	
-	public SoccerGoalHandler(LobbyServer lobby, UserTCPSession userSession) {
-		super(userSession);
-		this.lobby = lobby;
+	public SoccerGoalHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+		super(lobbyServer, userSession);
 	}
 	
-	public SoccerGoalHandler(LobbyServer lobby, UserTCPSession userSession, byte[] messageBytes) {
-		super(userSession, messageBytes);
-		this.lobby = lobby;
+	public SoccerGoalHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+		super(lobbyServer, userSession, messageBytes);
 	}
 
 	@Override
@@ -44,11 +39,10 @@ public class SoccerGoalHandler extends GenericHandler {
 //		lobby.roomMessage(userSession, userSession.getUser().roomIndex, getResponse(3));
 //		sendTCPMessage(getResponse(3));
 		
-		lobby.roomMessage(userSession, userSession.getUser().roomIndex, getResponse());
+		lobbyServer.sendRoomMessage(userSession, getResponse(), true);
 		
-		if (lobby.getRoom(userSession.getUser().roomIndex).blueGoals == 3 || lobby.getRoom(userSession.getUser().roomIndex).redGoals == 3) {
-			sendTCPMessage(new ResultsHandler(userSession).getResponse());
-			lobby.roomMessage(userSession, userSession.getUser().roomIndex, new ResultsHandler(userSession).getResponse());
+		if (lobbyServer.getRoom(userSession.getUser().roomIndex).blueGoals == 3 || lobbyServer.getRoom(userSession.getUser().roomIndex).redGoals == 3) {
+			lobbyServer.sendRoomMessage(userSession, new ResultsHandler(lobbyServer, userSession).getResponse(), true);
 		}
 	}
 
@@ -56,10 +50,10 @@ public class SoccerGoalHandler extends GenericHandler {
 	public byte[] getResponse() {
 		if (isUpdateData) {
 			if (goal == 0) {
-				lobby.getRoom(userSession.getUser().roomIndex).redGoals++;
+				lobbyServer.getRoom(userSession.getUser().roomIndex).redGoals++;
 			}
 			else if (goal == 1) {
-				lobby.getRoom(userSession.getUser().roomIndex).blueGoals++;
+				lobbyServer.getRoom(userSession.getUser().roomIndex).blueGoals++;
 			}
 			
 			isUpdateData = false;
@@ -79,13 +73,19 @@ public class SoccerGoalHandler extends GenericHandler {
 	public byte[] getResponse(int roomID, int result) {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.SOCCER_GOAL_RESPONSE);
 		output.putInt(0x14, result);
-		output.putInt(0x18, lobby.getRoom(roomID).blueGoals);
-		output.putInt(0x1C, lobby.getRoom(roomID).redGoals);
+		output.putInt(0x18, lobbyServer.getRoom(roomID).blueGoals);
+		output.putInt(0x1C, lobbyServer.getRoom(roomID).redGoals);
 		output.putInt(0x20, (int)(System.currentTimeMillis() / 1000));
 		output.putInt(0x24, (int)(System.currentTimeMillis() / 1000));
 		
 		return output.toArray();
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

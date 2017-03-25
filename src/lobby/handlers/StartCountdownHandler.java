@@ -2,18 +2,17 @@ package lobby.handlers;
 
 import java.io.IOException;
 
-import net.GenericHandler;
+import lobby.LobbyHandler;
+import lobby.LobbyServer;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class StartCountdownHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4454;
-	public static final int RESPONSE_ID = 0x4455;
+public class StartCountdownHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x118;
 	
-	public StartCountdownHandler(UserTCPSession userSession, byte[] messageBytes) {
-		super(userSession, messageBytes);
-		// TODO Auto-generated constructor stub
+	public StartCountdownHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+		super(lobbyServer, userSession, messageBytes);
 	}
 
 	@Override
@@ -27,7 +26,7 @@ public class StartCountdownHandler extends GenericHandler {
 	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.MISSION_START_COUNTDOWN_RESPONSE);
 		
 		output.putInt(0x14, 0);
 		output.putInt(0x18, 0);
@@ -39,6 +38,12 @@ public class StartCountdownHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void processMessage() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -2,16 +2,17 @@ package lobby.handlers;
 
 import java.io.IOException;
 
-import net.GenericHandler;
+import lobby.LobbyHandler;
+import lobby.LobbyServer;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class SpawnHandler extends GenericHandler {
-	public static final int RESPONSE_ID = 0x4370;
+public class SpawnHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x38;
 
-	public SpawnHandler(UserTCPSession userSession) {
-		super(userSession);
+	public SpawnHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+		super(lobbyServer, userSession);
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class SpawnHandler extends GenericHandler {
 
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.SPAWN_RESPONSE);
 		
 		int[] slots = new int[8];
 		
@@ -46,6 +47,12 @@ public class SpawnHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void processMessage() {
 		// TODO Auto-generated method stub
 		
 	}

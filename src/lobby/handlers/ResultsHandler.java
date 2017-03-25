@@ -2,18 +2,18 @@ package lobby.handlers;
 
 import java.io.IOException;
 
-import net.GenericHandler;
+import lobby.LobbyHandler;
+import lobby.LobbyServer;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
 // SAME AS QUEST RESPONSE!!!
-public class ResultsHandler extends GenericHandler {
-	public static final int RESPONSE_ID = 0x4361;
+public class ResultsHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x90;
 	
-	public ResultsHandler(UserTCPSession userSession) {
-		super(userSession);
-		// TODO Auto-generated constructor stub
+	public ResultsHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+		super(lobbyServer, userSession);
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class ResultsHandler extends GenericHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.CRYSTAL_DEATH_RESPONSE);
 		
 		output.putInt(0x14, 1); // 0 = no result
 		output.putInt(0x18, 1); // 1 = win
@@ -42,7 +42,7 @@ public class ResultsHandler extends GenericHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.CRYSTAL_DEATH_RESPONSE);
 		
 		int[] slotResults = new int[8];
 		
@@ -63,6 +63,12 @@ public class ResultsHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void processMessage() {
 		// TODO Auto-generated method stub
 		
 	}

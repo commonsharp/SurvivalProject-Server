@@ -6,7 +6,9 @@ import java.net.InetAddress;
 import lobby.handlers.CreateRoomHandler;
 import lobby.handlers.CrystalDeathHandler;
 import lobby.handlers.JoinRoomHandler;
+import lobby.handlers.PetKilledHandler;
 import lobby.handlers.FusionHandler;
+import lobby.handlers.GameMasterBanHandler;
 import lobby.handlers.GetRoomInfoHandler;
 import lobby.handlers.GetTopGuildsHandler;
 import lobby.handlers.GetTopGuildsMarkHandler;
@@ -23,14 +25,15 @@ import lobby.handlers.QuestDeathHandler;
 import lobby.handlers.QuestInfoHandler;
 import lobby.handlers.BigMatchDeathHandler;
 import lobby.handlers.RoomNameChangedHandler;
-import lobby.handlers.RoomPlayersChangedHandler;
+import lobby.handlers.RoomPlayersUpdateHandler;
 import lobby.handlers.SoccerGoalHandler;
 import lobby.handlers.StartCountdownHandler;
-import net.GenericHandler;
 import net.GenericTCPServer;
-import net.Room;
-import net.User;
+import net.Messages;
 import net.UserTCPSession;
+import net.handlers.GenericHandler;
+import net.objects.Room;
+import net.objects.User;
 import tools.HexTools;
 
 public class LobbyServer extends GenericTCPServer {
@@ -55,74 +58,80 @@ public class LobbyServer extends GenericTCPServer {
 		GenericHandler message = null;
 
 		switch (messageID) {
-		case JoinLobbyHandler.REQUEST_ID:
-			message = new JoinLobbyHandler(userSession, messageBytes);
+		case Messages.JOIN_LOBBY_REQUEST:
+			message = new JoinLobbyHandler(this, userSession, messageBytes);
 			break;
-		case CreateRoomHandler.REQUEST_ID:
+		case Messages.CREATE_ROOM_REQUEST:
 			message = new CreateRoomHandler(this, userSession, messageBytes);
 			break;
-		case GetUserInfoHandler.REQUEST_ID:
+		case Messages.GET_USER_INFO_REQUEST:
 			message = new GetUserInfoHandler(this, userSession, messageBytes);
 			break;
-		case GetRoomInfoHandler.REQUEST_ID:
-			message = new GetRoomInfoHandler(userSession, messageBytes);
+		case Messages.GET_ROOM_INFO_REQUEST:
+			message = new GetRoomInfoHandler(this, userSession, messageBytes);
 			break;
-		case JoinRoomHandler.REQUEST_ID:
+		case Messages.JOIN_ROOM_REQUEST:
 			message = new JoinRoomHandler(this, userSession, messageBytes);
 			break;
-		case RoomPlayersChangedHandler.REQUEST_ID:
-			message = new RoomPlayersChangedHandler(this, userSession, messageBytes);
+		case Messages.ROOM_PLAYERS_UPDATE_REQUEST:
+			message = new RoomPlayersUpdateHandler(this, userSession, messageBytes);
 			break;
-		case ItemsChangedHandler.REQUEST_ID:
+		case Messages.ITEMS_CHANGED_REQUEST:
 			message = new ItemsChangedHandler(this, userSession, messageBytes);
 			break;
-		case LeaveRoomHandler.REQUEST_ID:
+		case Messages.LEAVE_ROOM_REQUEST:
 			message = new LeaveRoomHandler(this, userSession, messageBytes);
 			break;
-		case LeaveGameHandler.REQUEST_ID:
+		case Messages.LEAVE_GAME_REQUEST:
 			message = new LeaveGameHandler(this, userSession, messageBytes);
 			break;
-		case PlayerResurrectionHandler.REQUEST_ID:
-			message = new PlayerResurrectionHandler(userSession, messageBytes);
+		case Messages.PLAYER_RESURRECTION_REQUEST:
+			message = new PlayerResurrectionHandler(this, userSession, messageBytes);
 			break;
-		case FusionHandler.REQUEST_ID:
-			message = new FusionHandler(userSession, messageBytes);
+		case Messages.FUSION_REQUEST:
+			message = new FusionHandler(this, userSession, messageBytes);
 			break;
-		case RoomNameChangedHandler.REQUEST_ID:
+		case Messages.ROOM_NAME_CHANGED_REQUEST:
 			message = new RoomNameChangedHandler(this, userSession, messageBytes);
 			break;
-		case PlayerDeathHandler.REQUEST_ID:
+		case Messages.PLAYER_DEATH_REQUEST:
 			message = new PlayerDeathHandler(this, userSession, messageBytes);
 			break;
-		case SoccerGoalHandler.REQUEST_ID:
+		case Messages.SOCCER_GOAL_REQUEST:
 			message = new SoccerGoalHandler(this, userSession, messageBytes);
 			break;
-		case QuestDeathHandler.REQUEST_ID:
+		case Messages.QUEST_DEATH_REQUEST:
 			message = new QuestDeathHandler(this, userSession, messageBytes);
 			break;
-		case CrystalDeathHandler.REQUEST_ID:
+		case Messages.CRYSTAL_DEATH_REQUEST:
 			message = new CrystalDeathHandler(this, userSession, messageBytes);
 			break;
-		case QuestInfoHandler.REQUEST_ID:
+		case Messages.QUEST_INFO_REQUEST:
 			message = new QuestInfoHandler(this, userSession, messageBytes);
 			break;
-		case GetTopGuildsHandler.REQUEST_ID:
-			message = new GetTopGuildsHandler(userSession, messageBytes);
+		case Messages.GET_TOP_GUILDS_REQUEST:
+			message = new GetTopGuildsHandler(this, userSession, messageBytes);
 			break;
-		case BigMatchDeathHandler.REQUEST_ID:
-			message = new BigMatchDeathHandler(userSession, messageBytes);
+		case Messages.BIG_MATCH_DEATH_REQUEST:
+			message = new BigMatchDeathHandler(this, userSession, messageBytes);
 			break;
-		case StartCountdownHandler.REQUEST_ID:
-			message = new StartCountdownHandler(userSession, messageBytes);
+		case Messages.GAME_MASTER_BAN_REQUEST:
+			message = new GameMasterBanHandler(this, userSession, messageBytes);
 			break;
-		case MissionCompletedHandler.REQUEST_ID:
+		case Messages.PET_KILLED_REQUEST:
+			message = new PetKilledHandler(this, userSession, messageBytes);
+			break;
+		case Messages.MISSION_START_COUNTDOWN_REQUEST:
+			message = new StartCountdownHandler(this, userSession, messageBytes);
+			break;
+		case Messages.MISSION_COMPLETED_REQUEST:
 			message = new MissionCompletedHandler(this, userSession, messageBytes);
 			break;
-		case MissionInfoHandler.REQUEST_ID:
+		case Messages.MISSION_INFO_REQUEST:
 			message = new MissionInfoHandler(this, userSession, messageBytes);
 			break;
-		case GetTopGuildsMarkHandler.REQUEST_ID:
-			message = new GetTopGuildsMarkHandler(userSession, messageBytes);
+		case Messages.GET_TOP_GUILDS_MARK_REQUEST:
+			message = new GetTopGuildsMarkHandler(this, userSession, messageBytes);
 			break;
 		default:
 			HexTools.printHexArray(messageBytes, 0x14, false);
@@ -131,35 +140,25 @@ public class LobbyServer extends GenericTCPServer {
 		return message;
 	}
 
-	public void broadcastMessage(UserTCPSession userSession, byte[] message) throws IOException {
+	public void sendBroadcastMessage(UserTCPSession userSession, byte[] message) throws IOException {
 		for (UserTCPSession currentUserSession : usersSessions) {
 			// Send the message to everyone but yourself
 			
-			if (currentUserSession.getUser().username != userSession.getUser().username) {
+			if (!currentUserSession.getUser().username.equals(userSession.getUser().username)) {
 				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
 				currentUserSession.sendMessage(HexTools.duplicateArray(message));
 			}
 		}
 	}
 	
-	// this sends to everyone in the room
-	public void roomMessage(int roomID, byte[] message) throws IOException {
-		for (UserTCPSession currentUserSession : getRoom(roomID).getUsers()) {
-			// If the user is not null
-			if (currentUserSession != null) {
-				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
-				currentUserSession.sendMessage(HexTools.duplicateArray(message));
-			}
-		}
-	}
-
-	// this sends to everyone but yourself
-	public void roomMessage(UserTCPSession userSession, int roomID, byte[] message) throws IOException {
+	public void sendRoomMessage(UserTCPSession userSession, byte[] message, boolean sendToSelf) throws IOException {
+		int roomID = userSession.getUser().roomIndex;
+		
 		for (UserTCPSession currentUserSession : getRoom(roomID).getUsers()) {
 			// If the user is not null
 			if (currentUserSession != null) {
 				// If the user is someone else
-				if (currentUserSession.getUser().username != userSession.getUser().username) {
+				if (sendToSelf || currentUserSession.getUser().roomSlot != userSession.getUser().roomSlot) {
 					// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
 					currentUserSession.sendMessage(HexTools.duplicateArray(message));
 				}

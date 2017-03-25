@@ -6,6 +6,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 import lobby.LobbyServer;
+import net.handlers.GenericHandler;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 import tools.HexTools;
 
@@ -108,6 +110,8 @@ public abstract class GenericUDPServer implements Runnable {
 //				}
 				
 				if (message != null) {
+					message.interpretBytes();
+					message.processMessage();
 					byte[] response = message.getResponse();
 					
 					// Response can be null if there is no response (not implemented)
@@ -121,14 +125,6 @@ public abstract class GenericUDPServer implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public static int newState(int oldState) {
-		if (oldState == -1)
-			return 0;
-		
-		oldState = (~oldState + 0x14fb) * 0x1f;
-		return Math.abs((oldState >> 16) ^ oldState);
 	}
 	
 	public void sendMessage(User user, byte[] response) throws IOException {

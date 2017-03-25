@@ -2,24 +2,20 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class CrystalDeathHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4360;
-	public static final int RESPONSE_ID = 0x4361;
+public class CrystalDeathHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x90;
 	
 	int questProgression;
 	int unknown;
 	
-	protected LobbyServer lobby;
-	
-	public CrystalDeathHandler(LobbyServer lobby, UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
-		this.lobby = lobby;
+	public CrystalDeathHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+		super(lobbyServer, tcpServer, messageBytes);
 	}
 
 	@Override
@@ -35,7 +31,7 @@ public class CrystalDeathHandler extends GenericHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.CRYSTAL_DEATH_RESPONSE);
 		
 		int result = 3;
 		if (questProgression == 100)
@@ -61,6 +57,12 @@ public class CrystalDeathHandler extends GenericHandler {
 	@Override
 	public void afterSend() throws IOException {
 //		lobby.roomMessage(userSession.getUser().roomIndex, getResponse());
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

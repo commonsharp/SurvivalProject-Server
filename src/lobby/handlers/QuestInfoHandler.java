@@ -2,14 +2,14 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class QuestInfoHandler extends GenericHandler {
+public class QuestInfoHandler extends LobbyHandler {
 	public static final int REQUEST_ID = 0x4362;
-	public static final int RESPONSE_ID = 0x4362;
 //	public static final int RESPONSE_ID = 0x4409; // this is the correct one. not 0x4362
 //	public static final int RESPONSE_LENGTH = 0x6C;
 	
@@ -32,11 +32,9 @@ public class QuestInfoHandler extends GenericHandler {
 	
 	NpcData[] monsters;
 	
-	LobbyServer lobby;
-	public QuestInfoHandler(LobbyServer lobby, UserTCPSession userSession, byte[] messageBytes) {
-		super(userSession, messageBytes);
+	public QuestInfoHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+		super(lobbyServer, userSession, messageBytes);
 		requestBytes = messageBytes;
-		this.lobby = lobby;
 	}
 
 	@Override
@@ -69,7 +67,7 @@ public class QuestInfoHandler extends GenericHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(requestBytes.length);
 		output.putBytes(0x0, requestBytes);
 		
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.QUEST_INFO_REQUEST);
 		
 		for (int i = 0; i < monsters.length; i++) {
 			output.putShort(0x1C + i * 0x18 + 0x0, monsters[i].xPos);
@@ -91,7 +89,13 @@ public class QuestInfoHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		lobby.roomMessage(userSession.getUser().roomIndex, getResponse());
+		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

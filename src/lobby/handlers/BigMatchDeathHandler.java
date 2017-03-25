@@ -2,17 +2,19 @@ package lobby.handlers;
 
 import java.io.IOException;
 
-import net.GenericHandler;
+import lobby.LobbyHandler;
+import lobby.LobbyServer;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class BigMatchDeathHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4396;
-	public static final int RESPONSE_ID = 0x4397;
+public class BigMatchDeathHandler extends LobbyHandler {
+	public static final int REQUEST_ID = Messages.BIG_MATCH_DEATH_REQUEST;
+	public static final int RESPONSE_ID = Messages.BIG_MATCH_DEATH_RESPONSE;
 	public static final int RESPONSE_LENGTH = 0xA4;
 	
-	public BigMatchDeathHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
+	public BigMatchDeathHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+		super(lobbyServer, userSession, messageBytes);
 	}
 
 	@Override
@@ -65,6 +67,12 @@ public class BigMatchDeathHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void processMessage() {
 		// TODO Auto-generated method stub
 		
 	}

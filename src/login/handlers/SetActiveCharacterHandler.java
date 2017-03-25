@@ -1,13 +1,12 @@
 package login.handlers;
 
-import net.GenericHandler;
+import login.LoginHandler;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
 // request - V
-public class SetActiveCharacterHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x2911;
-	public static final int RESPONSE_ID = 0x2912;
+public class SetActiveCharacterHandler extends LoginHandler {
 	public static final int RESPONSE_LENGTH = 0x1C;
 
 	protected String username;
@@ -36,10 +35,16 @@ public class SetActiveCharacterHandler extends GenericHandler {
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.SERVERS_INFO_RESPONSE);
 		output.putInt(0x14, unknown1);
 		output.putInt(0x18, userSession.getUser().activeCharacter);
 		
 		return output.toArray();
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

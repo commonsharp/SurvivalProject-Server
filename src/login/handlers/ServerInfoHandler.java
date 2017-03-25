@@ -1,12 +1,11 @@
 package login.handlers;
 
-import net.GenericHandler;
+import login.LoginHandler;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class ServerInfoHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x2907;
-	public static final int RESPONSE_ID = 0x2908;
+public class ServerInfoHandler extends LoginHandler {
 	public static final int RESPONSE_LENGTH = 0x68;
 	
 	protected short channelType; // between 0 and 3
@@ -60,7 +59,7 @@ public class ServerInfoHandler extends GenericHandler {
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.SERVERS_INFO_RESPONSE);
 		output.putShort(0x14, channelType);
 		output.putShort(0x16, channelID);
 		output.putString(0x18, ip);
@@ -74,5 +73,11 @@ public class ServerInfoHandler extends GenericHandler {
 		output.putInt(0x64, unknown2);
 		
 		return output.toArray();
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

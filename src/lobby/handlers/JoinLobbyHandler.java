@@ -2,13 +2,13 @@ package lobby.handlers;
 
 import java.io.IOException;
 
-import net.GenericHandler;
+import lobby.LobbyHandler;
+import lobby.LobbyServer;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class JoinLobbyHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4301;
-	public static final int RESPONSE_ID = 0x4302;
+public class JoinLobbyHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x979;
 	
 	final int minPointForeveDword[] = {-5, 1, 50, 100,
@@ -44,8 +44,8 @@ public class JoinLobbyHandler extends GenericHandler {
 	int ioProtectVersion = 11;
 	int survivalprojectVersion = 11;
 	
-	public JoinLobbyHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
+	public JoinLobbyHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+		super(lobbyServer, tcpServer, messageBytes);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -71,7 +71,7 @@ public class JoinLobbyHandler extends GenericHandler {
 	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.JOIN_LOBBY_RESPONSE);
 		output.putInt(0x14, response); // 0x14
 		output.putString(0x18, userSession.getUser().guildName); // 0x18
 		output.putString(0x25, userSession.getUser().guildDuty); // 0x25
@@ -152,5 +152,11 @@ public class JoinLobbyHandler extends GenericHandler {
 		output.putByte(0x978, (byte) 0); // boolean. 1 = the account will be deleted after 15 inactive days.
 		
 		return output.toArray();
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

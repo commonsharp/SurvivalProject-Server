@@ -2,24 +2,21 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
-import net.User;
+import net.Messages;
 import net.UserTCPSession;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
-public class GetUserInfoHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4309;
-	public static final int RESPONSE_ID = 0x4310;
+public class GetUserInfoHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0xF0;
 	
 	int unknown1;
 	String username;
-	LobbyServer lobby;
 	
-	public GetUserInfoHandler(LobbyServer lobby, UserTCPSession userSession, byte[] messageBytes) {
-		super(userSession, messageBytes);
-		this.lobby = lobby;
+	public GetUserInfoHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+		super(lobbyServer, userSession, messageBytes);
 	}
 
 	@Override
@@ -31,9 +28,9 @@ public class GetUserInfoHandler extends GenericHandler {
 	@Override
 	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
-		User user = lobby.findUser(username);
+		User user = lobbyServer.findUser(username);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.GET_USER_INFO_RESPONSE);
 		output.putByte(0x14, (byte) 1);
 		output.putString(0x15, username);
 		output.putInt(0x24, user.playerLevel);
@@ -85,6 +82,12 @@ public class GetUserInfoHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void processMessage() {
 		// TODO Auto-generated method stub
 		
 	}

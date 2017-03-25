@@ -2,20 +2,19 @@ package net;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 
-import lobby.handlers.JoinLobbyHandler;
 import log.Log;
-import login.handlers.LoginHandler;
-import login.handlers.ServerInfoHandler;
+import net.handlers.GenericHandler;
+import net.objects.User;
 import tools.HexTools;
-import tools.input.ExtendedInputStream;
 
 public class UserTCPSession implements Runnable {
 	protected GenericTCPServer server;
 	protected Socket socket;
 	protected DataOutputStream output;
-	protected ExtendedInputStream input;
+	protected InputStream input;
 	
 	public int clientState = -1;
 	public int serverState = -1;
@@ -25,7 +24,7 @@ public class UserTCPSession implements Runnable {
 	public UserTCPSession(GenericTCPServer server, Socket socket) throws IOException {
 		this.server = server;
 		this.socket = socket;
-		input = new ExtendedInputStream(socket.getInputStream());
+		input = socket.getInputStream();
 		output = new DataOutputStream(socket.getOutputStream());
 		user = new User();
 	}
@@ -34,8 +33,13 @@ public class UserTCPSession implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				int length = input.readInt();
-				
+				byte[] lengthBytes = new byte[4];
+				lengthBytes[0] = (byte) (input.read() & 0xFF);
+				lengthBytes[1] = (byte) (input.read() & 0xFF);
+				lengthBytes[2] = (byte) (input.read() & 0xFF);
+				lengthBytes[3] = (byte) (input.read() & 0xFF);
+
+				int length = HexTools.getIntegerInByteArray(lengthBytes, 0);
 				
 				if (length == -1) {
 					System.out.println("User disconnected");
@@ -46,16 +50,16 @@ public class UserTCPSession implements Runnable {
 				HexTools.putIntegerInByteArray(messageBytes, 0, length);
 				
 				// Read the rest of the message
-				input.readBytes(messageBytes, 4, length - 4);
+				input.read(messageBytes, 4, length - 4);
 				
 				// Decide which encryption to use based on the login packet
 				if (user.encryptionVersion == 0) {
 					Cryptography.decryptMessage(1, messageBytes);
 					
 					// If you decrypt it with the normal decryption algorithm and get the right message
-					if (HexTools.getIntegerInByteArray(messageBytes, 4) == LoginHandler.REQUEST_ID ||
-							HexTools.getIntegerInByteArray(messageBytes, 4) == JoinLobbyHandler.REQUEST_ID ||
-							HexTools.getIntegerInByteArray(messageBytes, 4) == ServerInfoHandler.REQUEST_ID) {
+					if (HexTools.getIntegerInByteArray(messageBytes, 4) == Messages.LOGIN_CREDENTIALS_REQUEST ||
+							HexTools.getIntegerInByteArray(messageBytes, 4) == Messages.JOIN_LOBBY_REQUEST ||
+							HexTools.getIntegerInByteArray(messageBytes, 4) == Messages.SERVERS_INFO_REQUEST) {
 						// then set the encryption version to 1
 						user.encryptionVersion = 1;
 					}
@@ -79,12 +83,14 @@ public class UserTCPSession implements Runnable {
 				if (message == null) {
 					Log.log(server.getName() + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - unimplemented yet");
 				}
-				else {
-					Log.log(server.getName() + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - " + message.getClass().getCanonicalName());
-				}
+				
 				changeStateWhenRecieve(stateFromMessage);
 				
 				if (message != null) {
+					message.interpretBytes();
+					message.processMessage();
+					Log.log(server.getName() + ": New client packet: 0x" + HexTools.integerToHexString(messageID) + " - " + message.getClass().getCanonicalName());
+					
 					byte[] response = message.getResponse();
 					
 					// Response can be null if there is no response (not implemented)
@@ -120,33 +126,25 @@ public class UserTCPSession implements Runnable {
 		output.flush();
 		
 		// Change the state
-		clientState = newState(clientState);
+		clientState = Cryptography.getNewState(clientState);
 	}
 	
 	public void changeStateWhenRecieve(int stateFromMessage) {
 		if (serverState == -1) {
 			serverState = stateFromMessage;
 			clientState = stateFromMessage;
-			clientState = newState(clientState);
-			serverState = newState(serverState);
+			clientState = Cryptography.getNewState(clientState);
+			serverState = Cryptography.getNewState(serverState);
 			return; // good
 		}
 
 		if (serverState == stateFromMessage) {
-			serverState = newState(serverState);
+			serverState = Cryptography.getNewState(serverState);
 			// good
 		}
 		else {
 			// bad
 		}
-	}
-	
-	public static int newState(int oldState) {
-		if (oldState == -1)
-			return 0;
-		
-		oldState = (~oldState + 0x14fb) * 0x1f;
-		return Math.abs((oldState >> 16) ^ oldState);
 	}
 	
 	public User getUser() {

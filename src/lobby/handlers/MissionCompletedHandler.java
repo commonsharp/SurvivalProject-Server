@@ -2,22 +2,19 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class MissionCompletedHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4456;
-	public static final int RESPONSE_ID = 0x4457;
+public class MissionCompletedHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x118;
 	
 	int progression;
-	LobbyServer lobby;
 	
-	public MissionCompletedHandler(LobbyServer lobby, UserTCPSession userSession, byte[] messageBytes) {
-		super(userSession, messageBytes);
-		this.lobby = lobby;
+	public MissionCompletedHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+		super(lobbyServer, userSession, messageBytes);
 	}
 
 	@Override
@@ -32,7 +29,7 @@ public class MissionCompletedHandler extends GenericHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.MISSION_COMPLETED_RESPONSE);
 		
 		int result;
 		
@@ -56,7 +53,13 @@ public class MissionCompletedHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		lobby.roomMessage(userSession.getUser().roomIndex, getResponse());
+		lobbyServer.sendRoomMessage(userSession, getResponse(), true);
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

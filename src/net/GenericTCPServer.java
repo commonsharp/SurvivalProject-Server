@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 
+import net.handlers.GenericHandler;
+
 public abstract class GenericTCPServer implements Runnable {
 	protected ServerSocket server;
 	protected int port;

@@ -2,16 +2,16 @@ package game.handlers;
 
 import java.io.IOException;
 
+import game.GameHandler;
 import game.GameServer;
 import lobby.handlers.SoccerGoalHandler;
 import lobby.handlers.SpawnHandler;
-import net.Constants;
-import net.GenericHandler;
 import net.GenericUDPServer;
-import net.Room;
+import net.UserTCPSession;
+import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
-public class GameStartedHandler extends GenericHandler {
+public class GameStartedHandler extends GameHandler {
 	byte[] response;
 	
 	GameServer gameServer;
@@ -54,23 +54,30 @@ public class GameStartedHandler extends GenericHandler {
 	public void afterSend() throws IOException {
 		// Send the packet to everyone in the room
 		gameServer.roomMessage(udpServer, roomID, slot, getResponse2());
-		gameServer.lobby.getRoom(roomID).getUser(slot).getUser().isInGame = true;
+		UserTCPSession userSession = gameServer.lobby.getRoom(roomID).getUser(slot);
+		userSession.getUser().isInGame = true;
 		
 		Room currentRoom = gameServer.lobby.getRoom(roomID);
 		// Do game started stuff. Also make sure the message is sent once.
 		if (!currentRoom.isRoomCreatedMessageSent) {
 			switch (currentRoom.getGameType()) {
-			case Constants.SOCCER_MODE:
-				gameServer.lobby.roomMessage(roomID, new SoccerGoalHandler(gameServer.lobby, null).getResponse(roomID, 3));
-			case Constants.HOKEY_MODE:
-				gameServer.lobby.roomMessage(roomID, new SpawnHandler(null).getResponse());
+			case SOCCER:
+				gameServer.lobby.sendRoomMessage(userSession, new SoccerGoalHandler(gameServer.lobby, null).getResponse(roomID, 3), true);
 				break;
-			case Constants.MISSION_MODE:
-//				gameServer.lobby.roo
+			case HOKEY:
+				gameServer.lobby.sendRoomMessage(userSession, new SpawnHandler(gameServer.lobby, null).getResponse(), true);
+				break;
+			default:
 			}
 			
 			gameServer.lobby.getRoom(roomID).isRoomCreatedMessageSent = true;
 		}
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

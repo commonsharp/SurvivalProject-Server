@@ -1,10 +1,10 @@
 package game.handlers;
 
-import net.GenericHandler;
+import game.GameHandler;
 import net.GenericUDPServer;
 import tools.ExtendedByteBuffer;
 
-public class JoinServerHandler extends GenericHandler {
+public class JoinServerHandler extends GameHandler {
 	public static final int REQUEST_ID = 0x1101;
 	public static final int RESPONSE_ID = 0x1101;
 	public static final int RESPONSE_LENGTH = 0x14;
@@ -33,6 +33,12 @@ public class JoinServerHandler extends GenericHandler {
 		output.putInt(0x4, RESPONSE_ID);
 		
 		return output.toArray();
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

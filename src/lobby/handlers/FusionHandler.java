@@ -2,22 +2,22 @@ package lobby.handlers;
 
 import java.io.IOException;
 
-import net.GenericHandler;
+import lobby.LobbyHandler;
+import lobby.LobbyServer;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
 //change to card fusion
-public class FusionHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4342;
-	public static final int RESPONSE_ID = 0x4343;
+public class FusionHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x979;
 	
 	protected int itemID;
 	protected int fusionType; // 1 - level. 2 - skill
 	protected int unknown;
 	
-	public FusionHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
+	public FusionHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+		super(lobbyServer, tcpServer, messageBytes);
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class FusionHandler extends GenericHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.FUSION_RESPONSE);
 		// 0x1C = result.
 		// 1 - level up fusion successful
 		// 4 - korean message. maybe not enough elements or something...
@@ -63,6 +63,12 @@ public class FusionHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void processMessage() {
 		// TODO Auto-generated method stub
 		
 	}

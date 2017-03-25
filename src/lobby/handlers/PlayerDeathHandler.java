@@ -2,22 +2,19 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class PlayerDeathHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4335;
-	public static final int RESPONSE_ID = 0x4336;
+public class PlayerDeathHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x118;
 	
 	protected int killerIndex;
-	protected LobbyServer lobby;
 	
-	public PlayerDeathHandler(LobbyServer lobby, UserTCPSession userSession, byte[] messageBytes) {
-		super(userSession, messageBytes);
-		this.lobby = lobby;
+	public PlayerDeathHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+		super(lobbyServer, userSession, messageBytes);
 	}
 
 	@Override
@@ -29,7 +26,7 @@ public class PlayerDeathHandler extends GenericHandler {
 	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.PLAYER_DEATH_RESPONSE);
 		output.putInt(0x14, userSession.getUser().roomSlot); // killed slot
 		output.putInt(0x18, killerIndex); // killer slot
 		output.putInt(0x1C, 0); // code array possibly
@@ -53,15 +50,20 @@ public class PlayerDeathHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		lobby.roomMessage(userSession, userSession.getUser().roomIndex, getResponse());
+		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
 		
-		sendTCPMessage(new SpawnHandler(userSession).getResponse(userSession.getUser().roomSlot));
-		lobby.roomMessage(userSession.getUser().roomIndex, new SpawnHandler(userSession).getResponse(userSession.getUser().roomSlot));
+		lobbyServer.sendRoomMessage(userSession, new SpawnHandler(lobbyServer, userSession).getResponse(userSession.getUser().roomSlot), true);
 //		sendTCPMessage(new ResultsHandler(userSession).getResponse(0));
 //		lobby.roomMessage(userSession.getUser().roomIndex, new ResultsHandler(userSession).getResponse(0));
 //		sendTCPMessage(new PlayerResurrectionHandler(userSession).getResponse(userSession.getUser().roomSlot, 500, 500));
 //		lobby.roomMessage(userSession, userSession.getUser().roomIndex,
 //				new PlayerResurrectionHandler(userSession).getResponse(userSession.getUser().roomSlot, 500, 500));
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

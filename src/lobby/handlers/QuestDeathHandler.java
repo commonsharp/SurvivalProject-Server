@@ -2,23 +2,19 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class QuestDeathHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4358;
-	public static final int RESPONSE_ID = 0x4359;
+public class QuestDeathHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0xB0;
 	
 	int monsterIndex;
 	
-	protected LobbyServer lobby;
-	
-	public QuestDeathHandler(LobbyServer lobby, UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
-		this.lobby = lobby;
+	public QuestDeathHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+		super(lobbyServer, tcpServer, messageBytes);
 	}
 
 	@Override
@@ -48,7 +44,7 @@ public class QuestDeathHandler extends GenericHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.QUEST_DEATH_RESPONSE);
 		
 		output.putInt(0x14, monsterIndex);
 		output.putInt(0x18, userSession.getUser().roomSlot); // slot
@@ -84,6 +80,12 @@ public class QuestDeathHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		lobby.roomMessage(userSession.getUser().roomIndex, getResponse());
+		lobbyServer.sendRoomMessage(userSession, getResponse(), true);
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

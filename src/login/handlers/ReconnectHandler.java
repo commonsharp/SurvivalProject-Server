@@ -1,10 +1,9 @@
 package login.handlers;
 
-import net.GenericHandler;
+import login.LoginHandler;
 import net.UserTCPSession;
 
-public class ReconnectHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x2913;
+public class ReconnectHandler extends LoginHandler {
 	public static final int RESPONSE_ID = 0; //?
 	public static final int RESPONSE_LENGTH = 0x1000;
 	
@@ -40,5 +39,11 @@ public class ReconnectHandler extends GenericHandler {
 	@Override
 	public byte[] getResponse() {
 		return null;
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

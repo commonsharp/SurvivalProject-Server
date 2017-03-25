@@ -1,12 +1,11 @@
 package login.handlers;
 
-import net.GenericHandler;
+import login.LoginHandler;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class GuildMarkHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x2921;
-	public static final int RESPONSE_ID = 0x2922;
+public class GuildMarkHandler extends LoginHandler {
 	public static final int RESPONSE_LENGTH = 0x1000;
 	
 	public GuildMarkHandler(UserTCPSession tcpServer, byte[] messageBytes) {
@@ -27,7 +26,7 @@ public class GuildMarkHandler extends GenericHandler {
 	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.LOGIN_GUILD_MARK_RESPONSE);
 		
 		output.putString(0x14, "barakguild"); // TODO - change to the player's guild
 		byte[] pixels = new byte[12 * 13 * 2];
@@ -41,5 +40,11 @@ public class GuildMarkHandler extends GenericHandler {
 		output.putBytes(0x28, pixels); // the colors. 2 bytes per pixel
 		
 		return output.toArray();
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

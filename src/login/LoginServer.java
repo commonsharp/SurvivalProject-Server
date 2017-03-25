@@ -1,14 +1,15 @@
 package login;
 import login.handlers.GetChannelUsersPercentageHandler;
 import login.handlers.GuildMarkHandler;
-import login.handlers.LoginHandler;
+import login.handlers.LoginCredentialsHandler;
 import login.handlers.ReconnectHandler;
 import login.handlers.ServerInfoHandler;
 import login.handlers.SetActiveCharacterHandler;
 import login.handlers.TutorialCompletedHandler;
-import net.GenericHandler;
 import net.GenericTCPServer;
+import net.Messages;
 import net.UserTCPSession;
+import net.handlers.GenericHandler;
 
 public class LoginServer extends GenericTCPServer {
 	public LoginServer(int port) {
@@ -20,25 +21,25 @@ public class LoginServer extends GenericTCPServer {
 		GenericHandler message = null;
 		
 		switch (messageID) {
-		case LoginHandler.REQUEST_ID:
-			message = new LoginHandler(tcpServer, messageBytes);
+		case Messages.LOGIN_CREDENTIALS_REQUEST:
+			message = new LoginCredentialsHandler(tcpServer, messageBytes);
 			break;
-		case ServerInfoHandler.REQUEST_ID:
+		case Messages.SERVERS_INFO_REQUEST:
 			message = new ServerInfoHandler(tcpServer, messageBytes);
 			break;
-		case SetActiveCharacterHandler.REQUEST_ID:
+		case Messages.SET_ACTIVE_CHARACTER_REQUEST:
 			message = new SetActiveCharacterHandler(tcpServer, messageBytes);
 			break;
-		case ReconnectHandler.REQUEST_ID:
+		case Messages.RECONNECT_REQUEST:
 			message = new ReconnectHandler(tcpServer, messageBytes);
 			break;
-		case TutorialCompletedHandler.REQUEST_ID:
+		case Messages.TUTORIAL_REQUEST:
 			message = new TutorialCompletedHandler(tcpServer, messageBytes);
 			break;
-		case GetChannelUsersPercentageHandler.REQUEST_ID:
+		case Messages.GET_CHANNEL_USERS_PERCENTAGE_REQUEST:
 			message = new GetChannelUsersPercentageHandler(tcpServer, messageBytes);
 			break;
-		case GuildMarkHandler.REQUEST_ID:
+		case Messages.LOGIN_GUILD_MARK_REQUEST:
 			message = new GuildMarkHandler(tcpServer, messageBytes);
 			break;
 		default:

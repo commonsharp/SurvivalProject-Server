@@ -1,16 +1,16 @@
 package lobby.handlers;
 
-import net.GenericHandler;
+import lobby.LobbyHandler;
+import lobby.LobbyServer;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class GetTopGuildsHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4388;
-	public static final int RESPONSE_ID = 0x4389;
+public class GetTopGuildsHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0xC4;
 	
-	public GetTopGuildsHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
+	public GetTopGuildsHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+		super(lobbyServer, tcpServer, messageBytes);
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class GetTopGuildsHandler extends GenericHandler {
 	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.GET_TOP_GUILDS_RESPONSE);
 		// If your clan is in this list, then 9 0x4486 requests are being sent to the server.
 		// Otherwise, 10 0x4486 requests are being sent to the server...
 		output.putString(0x14, "hello1");
@@ -55,5 +55,11 @@ public class GetTopGuildsHandler extends GenericHandler {
 //				outputBuffer.putInt(0xD0, 5);
 		
 		return output.toArray();
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

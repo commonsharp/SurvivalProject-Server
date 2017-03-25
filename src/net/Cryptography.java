@@ -61,4 +61,12 @@ public class Cryptography {
 			buffer[i] = (byte) ~(((buffer[i] & 0xFF) >> 3) | ((buffer[i] & 0xFF) << 5));
 		}
 	}
+	
+	public static int getNewState(int oldState) {
+		if (oldState == -1)
+			return 0;
+		
+		oldState = (~oldState + 0x14fb) * 0x1f;
+		return Math.abs((oldState >> 16) ^ oldState);
+	}
 }

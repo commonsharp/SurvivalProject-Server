@@ -2,13 +2,11 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
 import net.UserTCPSession;
 
-public class ItemsChangedHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4316;
-	public static final int RESPONSE_ID = 0x4317;
+public class ItemsChangedHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x118;
 	
     int Slot; //0
@@ -56,11 +54,9 @@ public class ItemsChangedHandler extends GenericHandler {
     int pet;
     
     boolean send = true;
-    protected LobbyServer lobby;
     
-	public ItemsChangedHandler(LobbyServer lobby, UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
-		this.lobby = lobby;
+	public ItemsChangedHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+		super(lobbyServer, tcpServer, messageBytes);
 	}
 
 	@Override
@@ -82,7 +78,7 @@ public class ItemsChangedHandler extends GenericHandler {
 	@Override
 	public void afterSend() throws IOException {
 		if (userSession.getUser().isInRoom) {
-			sendTCPMessage(new RoomPlayersChangedHandler(lobby, userSession).getResponse(userSession.getUser()));
+			lobbyServer.sendRoomMessage(userSession, new RoomPlayersUpdateHandler(lobbyServer, userSession).getResponse(userSession.getUser()), true);
 		}
 	}
 
@@ -160,5 +156,11 @@ public class ItemsChangedHandler extends GenericHandler {
 //		else {
 //			return null;
 //		}
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

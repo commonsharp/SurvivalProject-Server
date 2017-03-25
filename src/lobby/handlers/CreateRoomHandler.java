@@ -2,15 +2,14 @@ package lobby.handlers;
 
 import java.io.IOException;
 
+import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.GenericHandler;
-import net.Room;
+import net.Messages;
 import net.UserTCPSession;
+import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
-public class CreateRoomHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4307;
-	public static final int RESPONSE_ID = 0x4308;
+public class CreateRoomHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x6C;
 	
 	protected int roomNumber; // starts with 0. room #1 - 0
@@ -28,10 +27,8 @@ public class CreateRoomHandler extends GenericHandler {
 	protected byte unknown10;
 	protected byte isLimitAnger; // 0 = limit. other values = no limit.
 	
-	protected LobbyServer lobby;
-	public CreateRoomHandler(LobbyServer lobby, UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
-		this.lobby = lobby;
+	public CreateRoomHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+		super(lobbyServer, tcpServer, messageBytes);
 	}
 
 	@Override
@@ -65,8 +62,8 @@ public class CreateRoomHandler extends GenericHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		lobby.broadcastMessage(userSession, new LobbyRoomsChangedHandler(userSession).getResponse(lobby.getRoom(roomNumber)));
-		sendTCPMessage(new RoomPlayersChangedHandler(lobby, userSession).getResponse(userSession.getUser()));
+		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(roomNumber)));
+		sendTCPMessage(new RoomPlayersUpdateHandler(lobbyServer, userSession).getResponse(userSession.getUser()));
 	}
 
 	@Override
@@ -75,21 +72,21 @@ public class CreateRoomHandler extends GenericHandler {
 		characters[0] = 10;
 		cardsLimit = -1;
 		Room room = new Room(roomNumber, roomName, gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger, characters);
-		lobby.setRoom(roomNumber, room);
+		lobbyServer.setRoom(roomNumber, room);
 		userSession.getUser().isInRoom = true;
-		userSession.getUser().roomSlot = lobby.getRoom(roomNumber).getSlot();
+		userSession.getUser().roomSlot = lobbyServer.getRoom(roomNumber).getSlot();
 		userSession.getUser().roomTeam = room.getTeam();
-		userSession.getUser().roomCharacter = 10;
+		userSession.getUser().roomCharacter = userSession.getUser().activeCharacter;
 		userSession.getUser().roomReady = 0;
 		userSession.getUser().roomFieldF4 = 2;
 		
 		userSession.getUser().roomIndex = roomNumber;
-		lobby.getRoom(roomNumber).setUserSession(userSession.getUser().roomSlot, userSession);
+		lobbyServer.getRoom(roomNumber).setUserSession(userSession.getUser().roomSlot, userSession);
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.CREATE_ROOM_RESPONSE);
 		// 0 = "There's no room that can be made"
 		// 1 = "An error occurred. contact support"
 		// 2 = okay.
@@ -106,10 +103,16 @@ public class CreateRoomHandler extends GenericHandler {
 		output.putInt(0x5C, userSession.getUser().roomTeam); // team
 		output.putByte(0x60, (byte) isWithTeams);
 		output.putInt(0x64, cardsLimit);
-		output.putShort(0x68, (short) 10); // guild rank. zero based
+		output.putShort(0x68, (short) userSession.getUser().guildRank); // guild rank. zero based
 		output.putByte(0x6A, isLimitAnger);
 		output.putByte(0x6B, (byte) 0);
 		
 		return output.toArray();
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

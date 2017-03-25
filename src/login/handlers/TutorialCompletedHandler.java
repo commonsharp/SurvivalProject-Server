@@ -1,12 +1,11 @@
 package login.handlers;
 
-import net.GenericHandler;
+import login.LoginHandler;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class TutorialCompletedHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x2915;
-	public static final int RESPONSE_ID = 0x2923;
+public class TutorialCompletedHandler extends LoginHandler {
 	public static final int RESPONSE_LENGTH = 0x98;
 
 	// big...
@@ -88,7 +87,7 @@ public class TutorialCompletedHandler extends GenericHandler {
 	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.TUTORIAL_RESPONSE);
 		output.putInts(0x14, itemTypes);
 		output.putInts(0x3c, zeros);
 		output.putInts(0x64, itemRemainingForceDays);
@@ -97,5 +96,11 @@ public class TutorialCompletedHandler extends GenericHandler {
 		output.putInt(0x94, unk4);
 		
 		return output.toArray();
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }

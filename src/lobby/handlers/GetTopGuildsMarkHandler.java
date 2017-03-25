@@ -1,19 +1,19 @@
 package lobby.handlers;
 
-import net.GenericHandler;
+import lobby.LobbyHandler;
+import lobby.LobbyServer;
+import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class GetTopGuildsMarkHandler extends GenericHandler {
-	public static final int REQUEST_ID = 0x4486;
-	public static final int RESPONSE_ID = 0x4487;
+public class GetTopGuildsMarkHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x1400;
 	
 	protected String guildName;
 	protected int window;
 	
-	public GetTopGuildsMarkHandler(UserTCPSession tcpServer, byte[] messageBytes) {
-		super(tcpServer, messageBytes);
+	public GetTopGuildsMarkHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+		super(lobbyServer, tcpServer, messageBytes);
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class GetTopGuildsMarkHandler extends GenericHandler {
 	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, RESPONSE_ID);
+		output.putInt(0x4, Messages.GET_TOP_GUILDS_MARK_RESPONSE);
 		output.putString(0x14, "hello7");
 		byte[] pixels = new byte[12 * 13 * 2];
 		
@@ -45,5 +45,11 @@ public class GetTopGuildsMarkHandler extends GenericHandler {
 		output.putBytes(0x28, pixels); // the colors. 2 bytes per pixel
 		
 		return output.toArray();
+	}
+
+	@Override
+	public void processMessage() {
+		// TODO Auto-generated method stub
+		
 	}
 }
