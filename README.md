@@ -22,11 +22,13 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * When someone joins a quest that already started, the quest restarts.
 * Starting a tutorial crashes the game.
 * The guild rank of new players in the room is '?' instead of being the true rank.
+* Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).
 
 # 26/03/2017
 * You can now chat in game.
 * You can now chat in lobby. There's still no concept of guilds/friends/whisper so the message just gets sent to everyone in the lobby.
 * Started working on the card shop and user shops.
+* Fixed a bug where the "Quest completed" message was not sent to other people in the room.
 
 # 25/03/2017
 * Added a placeholder for all the *response* messages available. There are 94 more responses to process Q_Q
