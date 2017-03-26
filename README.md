@@ -4,6 +4,7 @@ Server files for the game Survival Project, written in Java.
 For instructions on how to install Survival Project on Windows 10, go to the Win10 folder.
 
 # TODO
+- [ ] Add sendFriendsMessage and sendGuildMessage when the time comes.
 - [ ] Change the tutorial item class to net.objects.Item.
 - [ ] Get a list of all the request messages.
 - [ ] Add putBoolean/getBoolean in ExtendedByteBuffer.
