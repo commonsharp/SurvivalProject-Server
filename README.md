@@ -21,6 +21,9 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * Starting a tutorial crashes the game.
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
+# 26/03/2017
+* Started working on the card shop and user shops.
+
 # 25/03/2017
 * Added a placeholder for all the *response* messages available. There are 94 more responses to process Q_Q
 * Added the GameMasterBan handler.
