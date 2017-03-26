@@ -17,12 +17,14 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 - [ ] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
+* Possible bug - broadcast messages will get sent to other servers as well. So someone sending a chat message would send it to people in other servers as well. Need to check that.
 * When someone joins a quest that already started, the quest restarts.
 * Starting a tutorial crashes the game.
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 26/03/2017
 * You can now chat in game.
+* You can now chat in lobby. There's still no concept of guilds/friends/whisper so the message just gets sent to everyone in the lobby.
 * Started working on the card shop and user shops.
 
 # 25/03/2017
