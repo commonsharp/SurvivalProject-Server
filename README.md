@@ -22,6 +22,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 26/03/2017
+* You can now chat in game.
 * Started working on the card shop and user shops.
 
 # 25/03/2017
