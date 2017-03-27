@@ -35,6 +35,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).
 
 # 27/03/2017
+* Big match - auto team is working, but the death timer isn't working.
 * Big match - death match is working, but the death timer isn't working.
 * Big match - survival is working, but the death timer isn't working.
 * Symbol Gain mode is working with a weird bug - when you kill someone (maybe the master of the room), the symbols disappear.
