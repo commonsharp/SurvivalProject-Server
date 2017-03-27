@@ -3,6 +3,7 @@ Server files for the game Survival Project, written in Java.
 
 For instructions on how to install Survival Project on Windows 10, go to the Win10 folder.
 
+**Not going to work on hokey mode because I can't fucking score a goal -_-" **
 **When I say that a game mode (such as soccer) is working, I mean that you can start a game, the rounds system is working (in this case - goals), you can finish a game and see the results of who won and who lost. The elements/code/experience/guild experience gained is not implemented yet. Also you don't get kills/downs/wins/loses. It just means the game mode is opertional.** 
 
 # TODO
