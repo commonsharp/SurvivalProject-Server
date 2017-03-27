@@ -24,6 +24,13 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * The guild rank of new players in the room is '?' instead of being the true rank.
 * Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).
 
+# 27/03/2017
+* Soccer is working.
+* You can now put items in your automatic user shop (User Shop II), for others to see.
+* You can partially search for items in user shops (by clicking F6 in the lobby). The search simply returns all the user shops at the moment, and I believe it only returns the first 5 shops. There's a lot more progress to be made in that part.
+* Fixed a bug where game packets were sent multiple times instead of once.
+* Fixed a bug people who were disconnected were not removed from the list of users, resulting in multiple errors (when sending broadcast messages for example).
+
 # 26/03/2017
 * You can now chat in game.
 * You can now chat in lobby. There's still no concept of guilds/friends/whisper so the message just gets sent to everyone in the lobby.
