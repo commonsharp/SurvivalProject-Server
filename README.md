@@ -32,6 +32,8 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).
 
 # 27/03/2017
+* Lucky 3 mode is working.
+* Magic Lucky 3 mode is working.
 * Survival mode is working.
 * Teamplay mode is working.
 * Duel mode is working.
