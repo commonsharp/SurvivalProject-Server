@@ -9,7 +9,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 
 # TODO
 - [ ] Clean the big battle death code a bit. Only use one array for everyone's lives instead of 2 (one for slots and one for npc).
-- [ ] Rename GameType to GameMode.
+- [x] Rename GameType to GameMode.
 - [ ] In a team game, when everyone is ready, the game starts. We need to also make sure that the teams are balanced. Right now it can start as a 4vs0, instead of 2vs2.
 - [ ] Add sendFriendsMessage and sendGuildMessage when the time comes.
 - [ ] Change the tutorial item class to net.objects.Item.
