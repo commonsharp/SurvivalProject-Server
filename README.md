@@ -28,6 +28,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).
 
 # 27/03/2017
+* Racing is working.
 * Soccer is working.
 * You can now put items in your automatic user shop (User Shop II), for others to see.
 * You can partially search for items in user shops (by clicking F6 in the lobby). The search simply returns all the user shops at the moment, and I believe it only returns the first 5 shops. There's a lot more progress to be made in that part.
