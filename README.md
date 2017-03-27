@@ -24,6 +24,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 - [ ] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
+* When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
 * When you finish a survival game, it says draw. Not sure if it should say that or win.
 * Possible bug - broadcast messages will get sent to other servers as well. So someone sending a chat message would send it to people in other servers as well. Need to check that.
 * When someone joins a quest that already started, the quest restarts.
@@ -32,6 +33,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).
 
 # 27/03/2017
+* Symbol Gain mode is working with a weird bug - when you kill someone (maybe the master of the room), the symbols disappear.
 * Assault mode is working.
 * Lucky 3 mode is working.
 * Magic Lucky 3 mode is working.
