@@ -8,6 +8,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 **When I say that a game mode (such as soccer) is working, I mean that you can start a game, the rounds system is working (in this case - goals), you can finish a game and see the results of who won and who lost. The elements/code/experience/guild experience gained is not implemented yet. Also you don't get kills/downs/wins/loses. It just means the game mode is opertional.** 
 
 # TODO
+- [ ] Clean the big battle death code a bit. Only use one array for everyone's lives instead of 2 (one for slots and one for npc).
 - [ ] Rename GameType to GameMode.
 - [ ] In a team game, when everyone is ready, the game starts. We need to also make sure that the teams are balanced. Right now it can start as a 4vs0, instead of 2vs2.
 - [ ] Add sendFriendsMessage and sendGuildMessage when the time comes.
@@ -34,7 +35,8 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).
 
 # 27/03/2017
-* Big match survival is working, but death timer isn't working.
+* Big match - death match is working, but the death timer isn't working.
+* Big match - survival is working, but the death timer isn't working.
 * Symbol Gain mode is working with a weird bug - when you kill someone (maybe the master of the room), the symbols disappear.
 * Assault mode is working.
 * Lucky 3 mode is working.
