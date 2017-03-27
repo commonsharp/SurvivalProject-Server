@@ -34,6 +34,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 # 27/03/2017
 * Survival mode is working.
 * Teamplay mode is working.
+* Duel mode is working.
 * Dodge mode is working.
 * Mole catching mode is working.
 * Racing mode is working.
