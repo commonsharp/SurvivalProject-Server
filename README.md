@@ -54,6 +54,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * You can partially search for items in user shops (by clicking F6 in the lobby). The search simply returns all the user shops at the moment, and I believe it only returns the first 5 shops. There's a lot more progress to be made in that part.
 * Fixed a bug where game packets were sent multiple times instead of once.
 * Fixed a bug where people who were disconnected were not removed from the list of users, resulting in multiple errors (when sending broadcast messages for example).
+* Fixed a bug where changing the main character didn't work.
 
 # 26/03/2017
 * You can now chat in game.
