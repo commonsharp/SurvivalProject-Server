@@ -43,7 +43,7 @@ public class LobbyRoomsChangedHandler extends LobbyHandler {
 			output.putByte(0x14, (byte) 1); // boolean
 			output.putInt(0x18, room.getRoomID()); // room ID
 			output.putString(0x1C,  room.getRoomName()); // room title
-			output.putInt(0x3C, room.getGameType().getValue()); // room type
+			output.putInt(0x3C, room.getGameMode().getValue()); // room type
 			output.putInt(0x40, room.getGameMap()); // room map
 			output.putInt(0x44, room.getNumberOfUsers()); // number of players in the room. if it's equal to the max, the room is full (blacked out)
 			output.putInt(0x48, room.getMaxNumberOfPlayers()); // max players

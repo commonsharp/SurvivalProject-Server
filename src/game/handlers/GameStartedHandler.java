@@ -5,7 +5,6 @@ import java.io.IOException;
 import game.GameHandler;
 import game.GameServer;
 import lobby.handlers.SoccerGoalHandler;
-import lobby.handlers.SpawnHandler;
 import net.GenericUDPServer;
 import net.UserTCPSession;
 import net.objects.Room;
@@ -16,7 +15,8 @@ public class GameStartedHandler extends GameHandler {
 	
 	GameServer gameServer;
 	int roomID;
-	int slot;
+	int fromSlot;
+	int toSlot;
 	
 	public GameStartedHandler(GameServer gameServer, GenericUDPServer udpServer, byte[] messageBytes) {
 		super(udpServer, messageBytes);
@@ -32,7 +32,8 @@ public class GameStartedHandler extends GameHandler {
 	@Override
 	public void interpretBytes() {
 		roomID = input.getInt(0x14);
-		slot = input.getInt(0x18);
+		fromSlot = input.getInt(0x18);
+		toSlot = input.getInt(0x1C);
 	}
 
 	@Override
@@ -53,8 +54,9 @@ public class GameStartedHandler extends GameHandler {
 	@Override
 	public void afterSend() throws IOException {
 		// Send the packet to everyone in the room
-		gameServer.roomMessage(udpServer, roomID, slot, getResponse2());
-		UserTCPSession userSession = gameServer.lobby.getRoom(roomID).getUser(slot);
+		gameServer.sendToUser(udpServer, roomID, toSlot, getResponse2());
+
+		UserTCPSession userSession = gameServer.lobby.getRoom(roomID).getUser(fromSlot);
 		
 		if (userSession != null) {
 			userSession.getUser().isInGame = true;
@@ -63,13 +65,13 @@ public class GameStartedHandler extends GameHandler {
 		Room currentRoom = gameServer.lobby.getRoom(roomID);
 		// Do game started stuff. Also make sure the message is sent once.
 		if (!currentRoom.isRoomCreatedMessageSent) {
-			switch (currentRoom.getGameType()) {
+			switch (currentRoom.getGameMode()) {
 			case SOCCER:
-				gameServer.lobby.sendRoomMessage(userSession, new SoccerGoalHandler(gameServer.lobby, null).getResponse(roomID, 3), true);
+				gameServer.lobby.sendRoomMessage(userSession, new SoccerGoalHandler(gameServer.lobby, null).getResponse(currentRoom, 3), true);
 				break;
-			case HOKEY:
-				gameServer.lobby.sendRoomMessage(userSession, new SpawnHandler(gameServer.lobby, null).getResponse(), true);
-				break;
+//			case HOKEY:
+//				gameServer.lobby.sendRoomMessage(userSession, new SpawnHandler(gameServer.lobby, null).getResponse(), true);
+//				break;
 			default:
 			}
 			

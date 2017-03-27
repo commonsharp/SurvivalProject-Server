@@ -56,8 +56,12 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 //		lobby.broadcastMessage(tcpServer, new RoomPlayersChangedHandler(lobby, tcpServer).getResponse(tcpServer.getUser()));
 		
 		if (room.isStart) {
-			if (room.getGameType() == GameMode.MISSION || room.getGameType() == GameMode.BM_DEATH_MATCH) {
+			if (room.getGameMode() == GameMode.MISSION || room.getGameMode() == GameMode.BIG_MATCH_DEATH_MATCH) {
 				lobbyServer.sendRoomMessage(userSession, new SpawnHandler(lobbyServer, userSession).getResponse2(), true);
+			}
+			if (room.getGameMode() == GameMode.HOKEY) {
+				lobbyServer.sendRoomMessage(userSession, new SpawnHandler(lobbyServer, null).getResponse2(), true);
+//				lobbyServer.sendRoomMessage(userSession, new SoccerGoalHandler(lobbyServer, null).getResponse(room, 3), true);
 			}
 		}
 	}
@@ -65,7 +69,11 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 	@Override
 	public byte[] getResponse() {
 		userSession.getUser().roomFieldF4 = 2;
-
+		
+		userSession.getUser().isAlive = true;
+		userSession.getUser().lives = 5;
+		userSession.getUser().gameKO = 0;
+		
 		if (lobbyServer.getRoom(userSession.getUser().roomIndex).shouldStart(userSession.getUser().roomSlot)) {
 			lobbyServer.getRoom(userSession.getUser().roomIndex).isStart = true;
 			userSession.getUser().roomFieldF4 = 0;
@@ -97,7 +105,7 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		output.putInt(0x7C, 0); // is random
 		output.putInt(0x80, user.roomTeam);
 		output.putInt(0x84, 0); //ko
-		output.putInt(0x88, 0);
+		output.putInt(0x88, 0); // round number. starts with 0.
 		
 		// If the item doesn't exist, this needs to be 0, and not -1.
 		if (user.getItemID(user.magicIndex) != -1)
@@ -127,9 +135,9 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		output.putInt(0xC4, user.getItemSkill(user.accessoryIndex));
 		output.putInt(0xC8, user.getItemSkill(user.petIndex));
 		
-		output.putInts(0xCC, new int[] {77, 88, 12});
-		output.putInt(0xD0, -1);
-		output.putInt(0xD4, -1);
+		output.putInts(0xCC, new int[] {0, 0, 0});
+		output.putInt(0xD0, 0);
+		output.putInt(0xD4, 0);
 		output.putInt(0xD8, user.getItemID(user.footIndex));
 		output.putInt(0xDC, user.getItemID(user.bodyIndex));
 		output.putInt(0xE0, user.getItemID(user.hand1Index));

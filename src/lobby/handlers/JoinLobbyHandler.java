@@ -75,7 +75,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 		output.putInt(0x14, response); // 0x14
 		output.putString(0x18, userSession.getUser().guildName); // 0x18
 		output.putString(0x25, userSession.getUser().guildDuty); // 0x25
-		output.putByte(0x32, userSession.getUser().gender); // 0x32
+		output.putBoolean(0x32, userSession.getUser().isMale);
 		output.putInt(0x34, userSession.getUser().playerWins); // 0x34
 		output.putInt(0x38, userSession.getUser().playerLoses); // 0x38
 		output.putInt(0x3c, 10); // 0x3c - something with wins maybe...

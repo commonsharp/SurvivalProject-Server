@@ -6,6 +6,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserTCPSession;
+import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
 public class RoundCompletedHandler extends LobbyHandler {
@@ -26,15 +27,25 @@ public class RoundCompletedHandler extends LobbyHandler {
 		
 	}
 
-	@Override
-	public byte[] getResponse() {
+	public byte[] getResponse(int[] results, int scoringTeam) {
+		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		
+		for (int i = 0; i < 8; i++) {
+			if (room.getUser(i) != null) {
+				room.getUser(i).getUser().isAlive = true;
+			}
+		}
+		
+		for (int i = 0; i < 40; i++) {
+			room.isNpcDead[i] = false;
+		}
+		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.ROUND_COMPLETED_RESPONSE);
 		
-		// result array. -1 = do nothing. 0 = next round. 1 = win. 2 = lose. 3 = draw others = leaves the game with no message
-		output.putInt(0x14, 0);
-		output.putInt(0x18, -1);
+		// result array. -1 = do nothing. 0 = next round. 1 = win. 2 = lose. 3 = draw. others = leaves the game with no message
+		output.putInts(0x14, results);
 		output.putInt(0x34, 13); // ko
 		output.putInt(0x38, 0);
 		output.putInt(0x3C, 0);
@@ -46,7 +57,7 @@ public class RoundCompletedHandler extends LobbyHandler {
 		output.putInt(0x98, 4); // element type array
 		output.putInt(0xB8, 5); // element count array
 		output.putInt(0xD8, 3); // element multiplier array
-		output.putInt(0xF8, 10); // winning team
+		output.putInt(0xF8, scoringTeam); // winning team
 		
 		 // this array cannot have zeroes or there will be a division by 0.
 		int[] unknowns = new int[8];
@@ -70,6 +81,12 @@ public class RoundCompletedHandler extends LobbyHandler {
 	@Override
 	public void afterSend() throws IOException {
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
+	}
+
+	@Override
+	public byte[] getResponse() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

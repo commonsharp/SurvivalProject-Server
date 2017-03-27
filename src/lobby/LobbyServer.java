@@ -3,47 +3,60 @@ package lobby;
 import java.io.IOException;
 import java.net.InetAddress;
 
+import lobby.handlers.BigMatchDeathHandler;
+import lobby.handlers.BigMatchInfo;
+import lobby.handlers.ChatMessageHandler;
 import lobby.handlers.CreateRoomHandler;
 import lobby.handlers.CrystalDeathHandler;
-import lobby.handlers.JoinRoomHandler;
-import lobby.handlers.PetKilledHandler;
+import lobby.handlers.EnterCardShopHandler;
 import lobby.handlers.FusionHandler;
 import lobby.handlers.GameMasterBanHandler;
 import lobby.handlers.GetRoomInfoHandler;
 import lobby.handlers.GetTopGuildsHandler;
 import lobby.handlers.GetTopGuildsMarkHandler;
 import lobby.handlers.GetUserInfoHandler;
+import lobby.handlers.HokeyGoalHandler;
 import lobby.handlers.ItemsChangedHandler;
 import lobby.handlers.JoinLobbyHandler;
+import lobby.handlers.JoinRoomHandler;
 import lobby.handlers.LeaveGameHandler;
 import lobby.handlers.LeaveRoomHandler;
 import lobby.handlers.MissionCompletedHandler;
 import lobby.handlers.MissionInfoHandler;
+import lobby.handlers.PetKilledHandler;
 import lobby.handlers.PlayerDeathHandler;
 import lobby.handlers.PlayerResurrectionHandler;
-import lobby.handlers.QuestDeathHandler;
+import lobby.handlers.MonsterDeathHandler;
 import lobby.handlers.QuestInfoHandler;
-import lobby.handlers.BigMatchDeathHandler;
-import lobby.handlers.BigMatchInfo;
+import lobby.handlers.RaceInfoHandler;
 import lobby.handlers.RoomNameChangedHandler;
 import lobby.handlers.RoomPlayersUpdateHandler;
 import lobby.handlers.SoccerGoalHandler;
 import lobby.handlers.StartCountdownHandler;
+import lobby.handlers.SymbolStateChanged;
+import lobby.handlers.TradeHandler;
+import lobby.handlers.UserShopNewItemHandler;
+import lobby.handlers.AutoUserShopNewItemHandler;
+import lobby.handlers.UserShopSearchHandler;
 import net.GenericTCPServer;
 import net.Messages;
 import net.UserTCPSession;
 import net.handlers.GenericHandler;
+import net.objects.Item;
 import net.objects.Room;
 import net.objects.User;
+import net.objects.UserShop;
 import tools.HexTools;
 
 public class LobbyServer extends GenericTCPServer {
 	protected Room[] rooms;
+	protected UserShop[] userShops;
 	
 	public LobbyServer(int port) {
 		super("Lobby server", port);
 		
 		rooms = new Room[200]; // change....
+		userShops = new UserShop[200]; // change...
 	}
 	
 	public Room getRoom(int index) {
@@ -86,8 +99,14 @@ public class LobbyServer extends GenericTCPServer {
 		case Messages.LEAVE_GAME_REQUEST:
 			message = new LeaveGameHandler(this, userSession, messageBytes);
 			break;
+		case Messages.CHAT_MESSAGE_REQUEST:
+			message = new ChatMessageHandler(this, userSession, messageBytes);
+			break;
 		case Messages.PLAYER_RESURRECTION_REQUEST:
 			message = new PlayerResurrectionHandler(this, userSession, messageBytes);
+			break;
+		case Messages.TRADE_REQUEST:
+			message = new TradeHandler(this, userSession, messageBytes);
 			break;
 		case Messages.FUSION_REQUEST:
 			message = new FusionHandler(this, userSession, messageBytes);
@@ -102,13 +121,25 @@ public class LobbyServer extends GenericTCPServer {
 			message = new SoccerGoalHandler(this, userSession, messageBytes);
 			break;
 		case Messages.QUEST_DEATH_REQUEST:
-			message = new QuestDeathHandler(this, userSession, messageBytes);
+			message = new MonsterDeathHandler(this, userSession, messageBytes);
 			break;
 		case Messages.CRYSTAL_DEATH_REQUEST:
 			message = new CrystalDeathHandler(this, userSession, messageBytes);
 			break;
 		case Messages.QUEST_INFO_REQUEST:
 			message = new QuestInfoHandler(this, userSession, messageBytes);
+			break;
+		case Messages.ENTER_CARD_SHOP_REQUEST:
+			message = new EnterCardShopHandler(this, userSession, messageBytes);
+			break;
+		case Messages.USER_SHOP_NEW_ITEM_REQUEST:
+			message = new UserShopNewItemHandler(this, userSession, messageBytes);
+			break;
+		case Messages.RACE_INFO_RESPONSE:
+			message = new RaceInfoHandler(this, userSession, messageBytes);
+			break;
+		case Messages.SYMBOL_STATE_CHANGED_REQUEST:
+			message = new SymbolStateChanged(this, userSession, messageBytes);
 			break;
 		case Messages.GET_TOP_GUILDS_REQUEST:
 			message = new GetTopGuildsHandler(this, userSession, messageBytes);
@@ -122,8 +153,14 @@ public class LobbyServer extends GenericTCPServer {
 		case Messages.GAME_MASTER_BAN_REQUEST:
 			message = new GameMasterBanHandler(this, userSession, messageBytes);
 			break;
+		case Messages.HOKEY_GOAL_REQUEST:
+			message = new HokeyGoalHandler(this, userSession, messageBytes);
+			break;
 		case Messages.PET_KILLED_REQUEST:
 			message = new PetKilledHandler(this, userSession, messageBytes);
+			break;
+		case Messages.USER_SHOP_SEARCH_REQUEST:
+			message = new UserShopSearchHandler(this, userSession, messageBytes);
 			break;
 		case Messages.MISSION_START_COUNTDOWN_REQUEST:
 			message = new StartCountdownHandler(this, userSession, messageBytes);
@@ -133,6 +170,9 @@ public class LobbyServer extends GenericTCPServer {
 			break;
 		case Messages.MISSION_INFO_REQUEST:
 			message = new MissionInfoHandler(this, userSession, messageBytes);
+			break;
+		case Messages.AUTO_USER_SHOP_NEW_ITEM_REQUEST:
+			message = new AutoUserShopNewItemHandler(this, userSession, messageBytes);
 			break;
 		case Messages.GET_TOP_GUILDS_MARK_REQUEST:
 			message = new GetTopGuildsMarkHandler(this, userSession, messageBytes);
@@ -188,5 +228,42 @@ public class LobbyServer extends GenericTCPServer {
 		}
 		
 		return null;
+	}
+	
+	// need to change to add parameters
+	public UserShop[] findShops() {
+		int to = findEmptyShop();
+		
+		UserShop[] result = new UserShop[to];
+		
+		for (int i = 0; i < to; i++) {
+			result[i] = userShops[i];
+		}
+		
+		return result;
+	}
+	
+	public void addShop(String username, Item item, int elementType, int elementCount, int code) {
+//		UserShop shop = new UserShop(username, itemID, code);
+		UserShop shop;
+		
+		if (item == null) {
+			shop = new UserShop(username, elementType, elementCount, code);
+		}
+		else {
+			shop = new UserShop(username, item, code);
+		}
+		
+		userShops[findEmptyShop()] = shop;
+	}
+	
+	public int findEmptyShop() {
+		for (int i = 0; i < userShops.length; i++) {
+			if (userShops[i] == null) {
+				return i;
+			}
+		}
+		
+		return -1;
 	}
 }

@@ -31,7 +31,7 @@ public class GameServer extends GenericUDPServer {
 		case 0x1107: // attack
 		case 0x1108: // defense
 		case 0x1109: // hit by something
-//		case 0x1110: // constant update. it's a must.
+		case 0x1112: // chatting in game
 		case 0x1113: // dunno. happens when you move
 		case 0x1114: // picked an item
 		case 0x1119: // soccer ball got hit
@@ -50,30 +50,44 @@ public class GameServer extends GenericUDPServer {
 		case 0x1140: // hit by soccer ball and pushed back. maybe hit by anything and pushed back?
 			message = new ForwardMessageHandler(this, this, messageBytes);
 			break;
-		case 0x1110:
+		case 0x1110: // constant update. it's a must.
 			message = new GameStartedHandler(this, this, messageBytes);
 			break;
 		default:
 			// print only the first player
-//			if (HexTools.getIntegerInByteArray(messageBytes, 0x18) == 0) {
+			if (HexTools.getIntegerInByteArray(messageBytes, 0x18) == 0) {
 				System.out.println(HexTools.integerToHexString(messageID) + " received!");
 				HexTools.printHexArray(messageBytes, 0x14, false);
-//			}
+			}
 		}
 		
 		return message;
 	}
 	
-	public void roomMessage(GenericUDPServer udpServer, int roomID, int slot, byte[] message) throws IOException {
+	public void sendToUser(GenericUDPServer udpServer, int roomID, int toSlot, byte[] message) throws IOException {
 		for (UserTCPSession user : lobby.getRoom(roomID).getUsers()) {
 			// If the user is not null
 			if (user != null) {
 				// If the user is someone else
-				if (user.getUser().roomSlot != slot && user.getUser().isInGame) {
+				if (user.getUser().roomSlot == toSlot && user.getUser().isInGame) {
 					// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
 					udpServer.sendMessage(user.getUser(), HexTools.duplicateArray(message));
+					break;
 				}
 			}
 		}
 	}
+	
+//	public void roomMessage(GenericUDPServer udpServer, int roomID, int slot, byte[] message) throws IOException {
+//		for (UserTCPSession user : lobby.getRoom(roomID).getUsers()) {
+//			// If the user is not null
+//			if (user != null) {
+//				// If the user is someone else
+//				if (user.getUser().roomSlot != slot && user.getUser().isInGame) {
+//					// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
+//					udpServer.sendMessage(user.getUser(), HexTools.duplicateArray(message));
+//				}
+//			}
+//		}
+//	}
 }

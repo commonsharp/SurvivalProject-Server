@@ -6,6 +6,8 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserTCPSession;
+import net.objects.GameMode;
+import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
 public class BigMatchDeathHandler extends LobbyHandler {
@@ -24,11 +26,12 @@ public class BigMatchDeathHandler extends LobbyHandler {
 	public void interpretBytes() {
 		killedSlot = input.getInt(0x18); // 0~7 for players. 8+ for npc
 		killerSlot = input.getInt(0x20);
-		System.out.println("14: " + input.getInt(0x14));
-		System.out.println("18: " + input.getInt(0x18));
-		System.out.println("1C: " + input.getInt(0x1C));
-		System.out.println("20: " + input.getInt(0x20));
-		System.out.println("24: " + input.getInt(0x24));
+		System.out.println(killedSlot);
+//		System.out.println("14: " + input.getInt(0x14));
+//		System.out.println("18: " + input.getInt(0x18));
+//		System.out.println("1C: " + input.getInt(0x1C));
+//		System.out.println("20: " + input.getInt(0x20));
+//		System.out.println("24: " + input.getInt(0x24));
 		/*
 		 	14 - 0 for npc
 			18 - slot. 0~7 for players. 8+ for npc.
@@ -51,12 +54,12 @@ public class BigMatchDeathHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, RESPONSE_ID);
 		
-		output.putInt(0x14, killedSlot); // id of death player
+		output.putInt(0x14, killedSlot); // id of killed player
 		output.putInt(0x18, killerSlot); // slot??
 		
 		// Those are the 4 best players/npcs in the game. it's sufficient to just change the first one.
-		output.putInt(0x1C, 2); // lucky multiplier
-		output.putInt(0x2C, 7); // experience and code
+		output.putInt(0x1C, 1); // lucky multiplier
+		output.putInt(0x2C, 600); // experience and code
 		output.putInt(0x3C, killerSlot); // slots. 0~7 for players. 8+ for npcs
 		
 		output.putInt(0x4C, 30); // new level
@@ -82,17 +85,73 @@ public class BigMatchDeathHandler extends LobbyHandler {
 	public void afterSend() throws IOException {
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
 		
-//		if (killedSlot < 8) {
-			System.out.println("Restart");
-			lobbyServer.sendRoomMessage(userSession, new RoundCompletedHandler(lobbyServer, userSession).getResponse(), true);
-//			lobbyServer.sendRoomMessage(userSession, new SpawnHandler(lobbyServer, userSession).getResponse2(), true);
-//		}
+		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		
+		if (room.getGameMode() == GameMode.BIG_MATCH_SURVIVAL || room.getGameMode() == GameMode.BIG_MATCH_AUTO_TEAM) {
+			if (killedSlot < 8) {
+				int[] results = new int[8];
+				
+				for (int i = 0; i < 8; i++) {
+					results[i] = -1;
+				}
+				
+				if (userSession.getUser().lives > 0) {
+					results[userSession.getUser().roomSlot] = 0;
+				}
+				else {
+					results[userSession.getUser().roomSlot] = 3;
+				}
+				
+				lobbyServer.sendRoomMessage(userSession, new RoundCompletedHandler(lobbyServer, userSession).getResponse(results, -1), true);
+			}
+		}
+		
+		else if (room.getGameMode() == GameMode.BIG_MATCH_DEATH_MATCH) {
+			if (room.isAllTeamDeadWithNpc()) {
+				int[] results = new int[8];
+				
+				int j = 0;
+				for (j = 8; j < 40; j++) {
+					if (!room.isNpcDead[j])
+						break;
+				}
+				
+				for (int i = 0; i < 8; i++) {
+					results[i] = -1;
+					
+					if (room.getUser(i) != null) {
+						results[i] = 0;
+						
+						if (room.getUser(i).getUser().isAlive) {
+							j = i;
+						}
+					}
+				}
+				
+				
+				
+				int winningTeam = 0;
+				
+				if (j < 8) {
+					winningTeam = room.getUser(j).getUser().roomTeam;
+				}
+				else {
+					winningTeam = (j >= 25) ? 20 : 10; // need to check...
+				}
+				
+				lobbyServer.sendRoomMessage(userSession, new RoundCompletedHandler(lobbyServer, userSession).getResponse(results, winningTeam), true);
+			}
+		}
 	}
 
 	@Override
 	public void processMessage() {
-		// TODO Auto-generated method stub
+		if (killedSlot < 8) {
+			userSession.getUser().isAlive = false;
+			userSession.getUser().lives--;
+		}
 		
+		lobbyServer.getRoom(userSession.getUser().roomIndex).isNpcDead[killedSlot] = true;
 	}
 
 }

@@ -42,6 +42,7 @@ public class UserTCPSession implements Runnable {
 				int length = HexTools.getIntegerInByteArray(lengthBytes, 0);
 				
 				if (length == -1) {
+					server.usersSessions.remove(this);
 					System.out.println("User disconnected");
 					break;
 				}
@@ -102,7 +103,8 @@ public class UserTCPSession implements Runnable {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("User disconnected");
+			server.usersSessions.remove(this);
 		}
 	}
 	

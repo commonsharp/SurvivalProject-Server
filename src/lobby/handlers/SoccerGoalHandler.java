@@ -6,6 +6,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserTCPSession;
+import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
 public class SoccerGoalHandler extends LobbyHandler {
@@ -35,30 +36,29 @@ public class SoccerGoalHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		// test
-//		lobby.roomMessage(userSession, userSession.getUser().roomIndex, getResponse(3));
-//		sendTCPMessage(getResponse(3));
-		
 		lobbyServer.sendRoomMessage(userSession, getResponse(), true);
 		
-		if (lobbyServer.getRoom(userSession.getUser().roomIndex).blueGoals == 3 || lobbyServer.getRoom(userSession.getUser().roomIndex).redGoals == 3) {
-			lobbyServer.sendRoomMessage(userSession, new ResultsHandler(lobbyServer, userSession).getResponse(), true);
+		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		
+		if (room.blueScore == 3 || room.redScore == 3) {
+			int[] results = new int[8];
+			
+			int winningTeam = (room.blueScore == 3) ? 10 : 20; 
+			
+			for (int i = 0; i < 8; i++) {
+				results[i] = -1;
+				
+				if (room.getUser(i) != null) {
+					results[i] = (room.getUser(i).getUser().roomTeam == winningTeam) ? 1 : 2;
+				}
+			}
+			
+			lobbyServer.sendRoomMessage(userSession, new RoundCompletedHandler(lobbyServer, userSession).getResponse(results, -1), true);
 		}
 	}
 
 	@Override
 	public byte[] getResponse() {
-		if (isUpdateData) {
-			if (goal == 0) {
-				lobbyServer.getRoom(userSession.getUser().roomIndex).redGoals++;
-			}
-			else if (goal == 1) {
-				lobbyServer.getRoom(userSession.getUser().roomIndex).blueGoals++;
-			}
-			
-			isUpdateData = false;
-		}
-		
 		int result = 3; // 3 and 5 = reset timer. 4 = nothing??
 		if (goal == 0) {
 			result = 2;
@@ -67,16 +67,16 @@ public class SoccerGoalHandler extends LobbyHandler {
 			result = 1;
 		}
 		
-		return getResponse(userSession.getUser().roomIndex, result);
+		return getResponse(lobbyServer.getRoom(userSession.getUser().roomIndex), result);
 	}
 
-	public byte[] getResponse(int roomID, int result) {
+	public byte[] getResponse(Room room, int result) {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.SOCCER_GOAL_RESPONSE);
 		output.putInt(0x14, result);
-		output.putInt(0x18, lobbyServer.getRoom(roomID).blueGoals);
-		output.putInt(0x1C, lobbyServer.getRoom(roomID).redGoals);
+		output.putInt(0x18, room.blueScore);
+		output.putInt(0x1C, room.redScore);
 		output.putInt(0x20, (int)(System.currentTimeMillis() / 1000));
 		output.putInt(0x24, (int)(System.currentTimeMillis() / 1000));
 		
@@ -85,7 +85,11 @@ public class SoccerGoalHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() {
-		// TODO Auto-generated method stub
-		
+		if (goal == 0) {
+			lobbyServer.getRoom(userSession.getUser().roomIndex).redScore++;
+		}
+		else if (goal == 1) {
+			lobbyServer.getRoom(userSession.getUser().roomIndex).blueScore++;
+		}
 	}
 }

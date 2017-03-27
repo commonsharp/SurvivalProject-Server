@@ -7,8 +7,8 @@ public class User {
 	public String password;
 	
 	public int userType = 30;
-	public int activeCharacter = 20;
-	public int playerLevel = 1;
+	public int mainCharacter = 20;
+	public int playerLevel = 30;
 	public int usuableCharacterCount = 12;
 	public int isMuted;
 	public int daysToMute;
@@ -28,7 +28,7 @@ public class User {
 	public int playerChannelType = 3; //the channel type player is currently in
 	
 	public int playerInventorySlots = 96;
-	public int playerType = 7; //set to 7 for GM...
+	public int playerType = 0; //set to 7 for GM... otherwise 0?
 	public int whiteCards[] = {200000, 200000, 200000, 200000};
 	public int scrolls[] = {0, 0, 0};
 	public int playerWins = 10;
@@ -36,7 +36,7 @@ public class User {
 	public int playerKOs = 30;
 	public int playerDowns = 40;
 	
-	public byte gender = 0; // 0 - male. 1 - female
+	public boolean isMale = true;
 	
 	public int magicIndex, weaponIndex, accessoryIndex, petIndex;
 	public int footIndex = -1, bodyIndex = -1, hand1Index = -1, hand2Index = -1, faceIndex = -1, hairIndex = -1, headIndex = -1;
@@ -57,6 +57,10 @@ public class User {
 	public int udpPort;
 	
 	public int encryptionVersion;
+	
+	public boolean isAlive = true;
+	public int lives;
+	public int gameKO;
 	
 	public User() {
 		items = new Item[96];
@@ -171,6 +175,8 @@ public class User {
 		items[78] = new Item(5014, 0, 0, 0);
 		
 		items[79] = new Item(2900, 365, 0, 0);
+		items[80] = new Item(2009, 9, 7, 6); // user shop 2 - in lobby only
+		items[81] = new Item(2001, 9, 7, 6); // user shop 1 - in game
 		
 		magicIndex = 32;
 		weaponIndex = 0;

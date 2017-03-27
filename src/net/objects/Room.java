@@ -6,7 +6,7 @@ import net.UserTCPSession;
 public class Room {
 	protected int roomID;
 	protected String roomName;
-	protected GameMode gameType;
+	protected GameMode gameMode;
 	protected int gameMap;
 	protected int maxNumberOfPlayers;
 	protected byte isWithScrolls;
@@ -18,17 +18,19 @@ public class Room {
 	protected int numberOfUsers;
 	protected UserTCPSession[] users = new UserTCPSession[8];
 
-	// soccer
-	public int blueGoals;
-	public int redGoals;
+	public int blueScore;
+	public int redScore;
 	public boolean isStart;
 	public boolean isRoomCreatedMessageSent = false;
 	
-	public Room(int roomID, String roomName, int gameType, int gameMap, int numberOfPlayers, byte isWithScrolls,
+	public int[] symbols;
+	public boolean[] isNpcDead;
+	
+	public Room(int roomID, String roomName, int gameMode, int gameMap, int numberOfPlayers, byte isWithScrolls,
 			byte isWithTeams, int cardsLimit, byte isLimitAnger, int[] characters) {
 		this.roomID = roomID;
 		this.roomName = roomName;
-		this.gameType = GameMode.getMode(gameType);
+		this.gameMode = GameMode.getMode(gameMode);
 		this.gameMap = gameMap;
 		this.maxNumberOfPlayers = numberOfPlayers;
 		this.isWithScrolls = isWithScrolls;
@@ -43,6 +45,9 @@ public class Room {
 		else {
 			this.characters = characters;
 		}
+		
+		symbols = new int[4];
+		isNpcDead= new boolean[40];
 	}
 	
 	public void setUserSession(int index, UserTCPSession user) {
@@ -69,8 +74,8 @@ public class Room {
 		this.roomName = roomName;
 	}
 
-	public GameMode getGameType() {
-		return gameType;
+	public GameMode getGameMode() {
+		return gameMode;
 	}
 
 	public int getGameMap() {
@@ -169,13 +174,28 @@ public class Room {
 	}
 	
 	private boolean isWaitForAll() {
-		switch (gameType) {
+		switch (gameMode) {
+		case HERO:
+			return true;
+		case DUEL:
+			return true;
+		case ASSAULT:
+			return true;
+		case LUCKY_3:
+		case MAGIC_LUCKY_3:
+			return true;
+		case TEAMPLAY:
+			return true;
 		case SURVIVAL:
 			return false;
-		case BM_DEATH_MATCH:
+		case KING_SURVIVAL:
+			return true;
+		case BIG_MATCH_DEATH_MATCH:
 			return false;
-		case BM_AUTO:
+		case BIG_MATCH_AUTO_TEAM:
 			return false;
+		case SYMBOL:
+			return true;
 		case DUNGEON_QUEST_1:
 		case DUNGEON_QUEST_2:
 		case DUNGEON_QUEST_3:
@@ -194,10 +214,10 @@ public class Room {
 		case MISSION:
 			return true;
 		case SOCCER:
-			return true;
+		case RACE:
 		case DODGE:
-			return true;
 		case HOKEY:
+		case MOLE:
 			return true;
 		}
 		
@@ -240,12 +260,27 @@ public class Room {
 		// 0 = all vs all
 		// 1 = red vs blue
 		// 2 = only blue maybe
-		switch (gameType) {
+		switch (gameMode) {
+		case HERO:
+			return 1;
+		case DUEL:
+			return 1;
+		case ASSAULT:
+			return 1;
+		case SYMBOL:
+			return 1;
+		case LUCKY_3:
+		case MAGIC_LUCKY_3:
+			return 0;
+		case TEAMPLAY:
+			return 1;
 		case SURVIVAL:
 			return 0;
-		case BM_DEATH_MATCH:
+		case KING_SURVIVAL:
+			return 0;
+		case BIG_MATCH_DEATH_MATCH:
 			return 1;
-		case BM_AUTO:
+		case BIG_MATCH_AUTO_TEAM:
 			return 1;
 		case DUNGEON_QUEST_1:
 		case DUNGEON_QUEST_2:
@@ -265,13 +300,63 @@ public class Room {
 		case MISSION:
 			return 1;
 		case SOCCER:
-			return 1;
+		case RACE:
 		case DODGE:
-			return 1;
 		case HOKEY:
+		case MOLE:
 			return 1;
 		}
 		
 		return 0;
+	}
+	
+	public boolean isQuestType() {
+		int type = gameMode.getValue();
+		return type >= 11 && type <= 14 || type >= 17 && type <= 27;
+	}
+
+	public boolean isAllTeamDead() {
+		boolean isRedDead = true, isBlueDead = true;
+		
+		for (int i = 0; i < 8; i++) {
+			if (getUser(i) != null && getUser(i).getUser().isAlive) {
+				if (getUser(i).getUser().roomTeam == 10) {
+					isBlueDead = false;
+				}
+				else {
+					isRedDead = false;
+				}
+			}
+		}
+		
+		return isRedDead || isBlueDead;
+	}
+	
+	public boolean isAllTeamDeadWithNpc() {
+		boolean isRedDead = true, isBlueDead = true;
+		
+		for (int i = 0; i < 8; i++) {
+			if (getUser(i) != null && getUser(i).getUser().isAlive) {
+				if (getUser(i).getUser().roomTeam == 10) {
+					isBlueDead = false;
+				}
+				else {
+					isRedDead = false;
+				}
+			}
+		}
+		
+		for (int i = 8; i < 40; i++) {
+			if (!isNpcDead[i]) {
+				if (i >= 24) {
+					isRedDead = false;
+				}
+				else {
+					isBlueDead = false;
+				}
+			}
+		}
+		
+		return isRedDead || isBlueDead;
 	}
 }

@@ -11,11 +11,9 @@ public class Cryptography {
 			byte[] buff;
 			
 			// MUST PUT 0 IN THE CHECKSUM OR ELSE THE MD5 WILL BE COMPLETELY DIFFERENT
-			HexTools.putIntegerInByteArray(messageBytes, 12, 0);
-			
-			MessageDigest md;
+			HexTools.putIntegerInByteArray(messageBytes, 0xC, 0);
 		
-			md = MessageDigest.getInstance("MD5");
+			MessageDigest md = MessageDigest.getInstance("MD5");
 		
 			md.update(messageBytes);
 			buff = md.digest();

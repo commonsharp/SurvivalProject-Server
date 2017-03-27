@@ -59,7 +59,7 @@ public class LoginCredentialsHandler extends LoginHandler {
 		output.putInt(0x4, Messages.LOGIN_CREDENTIALS_RESPONSE);
 		output.putInt(0x14, response);
 		output.putInt(0x18, userSession.getUser().userType);
-		output.putInt(0x1C, userSession.getUser().activeCharacter);
+		output.putInt(0x1C, userSession.getUser().mainCharacter);
 		output.putInt(0x20, userSession.getUser().playerLevel);
 		output.putInt(0x24, userSession.getUser().usuableCharacterCount);
 		output.putInt(0x28, userSession.getUser().isMuted);

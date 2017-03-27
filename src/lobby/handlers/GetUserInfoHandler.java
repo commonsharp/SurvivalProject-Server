@@ -34,10 +34,10 @@ public class GetUserInfoHandler extends LobbyHandler {
 		output.putByte(0x14, (byte) 1);
 		output.putString(0x15, username);
 		output.putInt(0x24, user.playerLevel);
-		output.putByte(0x28, user.gender);
+		output.putBoolean(0x28, user.isMale);
 		output.putString(0x29, user.guildName); // guild?
 		output.putString(0x36, user.guildDuty); // guild duty?
-		output.putInt(0x44, user.activeCharacter);
+		output.putInt(0x44, user.mainCharacter);
 		output.putLong(0x48, user.playerExperience);
 		output.putInt(0x50, user.playerWins);
 		output.putInt(0x54, user.playerLoses);

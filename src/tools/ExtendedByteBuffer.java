@@ -17,6 +17,14 @@ public class ExtendedByteBuffer {
 		buffer.order(ByteOrder.LITTLE_ENDIAN);
 	}
 	
+	public boolean getBoolean(int index) {
+		return buffer.get(index) == 1;
+	}
+	
+	public void putBoolean(int index, boolean value) {
+		buffer.put(index, (value) ? (byte) 1 : (byte) 0);
+	}
+	
 	public byte getByte(int index) {
 		return buffer.get(index);
 	}

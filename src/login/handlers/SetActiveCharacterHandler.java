@@ -11,8 +11,6 @@ public class SetActiveCharacterHandler extends LoginHandler {
 
 	protected String username;
 	
-	protected int unknown1;
-	
 	public SetActiveCharacterHandler(UserTCPSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
 	}
@@ -20,7 +18,7 @@ public class SetActiveCharacterHandler extends LoginHandler {
 	@Override
 	public void interpretBytes() {
 		username = input.getString(0x14);
-		userSession.getUser().activeCharacter = input.getInt(0x24);
+		userSession.getUser().mainCharacter = input.getInt(0x24);
 	}
 
 	@Override
@@ -31,13 +29,11 @@ public class SetActiveCharacterHandler extends LoginHandler {
 
 	@Override
 	public byte[] getResponse() {
-		unknown1 = 0; // ?
-		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, Messages.SERVERS_INFO_RESPONSE);
-		output.putInt(0x14, unknown1);
-		output.putInt(0x18, userSession.getUser().activeCharacter);
+		output.putInt(0x4, Messages.SET_MAIN_CHARACTER_RESPONSE);
+		output.putInt(0x14, 1);
+		output.putInt(0x18, userSession.getUser().mainCharacter);
 		
 		return output.toArray();
 	}

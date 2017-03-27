@@ -17,30 +17,30 @@ public class LoginServer extends GenericTCPServer {
 	}
 	
 	@Override
-	public GenericHandler processPacket(UserTCPSession tcpServer, int messageID, byte[] messageBytes) {
+	public GenericHandler processPacket(UserTCPSession userSession, int messageID, byte[] messageBytes) {
 		GenericHandler message = null;
 		
 		switch (messageID) {
 		case Messages.LOGIN_CREDENTIALS_REQUEST:
-			message = new LoginCredentialsHandler(tcpServer, messageBytes);
+			message = new LoginCredentialsHandler(userSession, messageBytes);
 			break;
 		case Messages.SERVERS_INFO_REQUEST:
-			message = new ServerInfoHandler(tcpServer, messageBytes);
+			message = new ServerInfoHandler(userSession, messageBytes);
 			break;
-		case Messages.SET_ACTIVE_CHARACTER_REQUEST:
-			message = new SetActiveCharacterHandler(tcpServer, messageBytes);
+		case Messages.SET_MAIN_CHARACTER_REQUEST:
+			message = new SetActiveCharacterHandler(userSession, messageBytes);
 			break;
 		case Messages.RECONNECT_REQUEST:
-			message = new ReconnectHandler(tcpServer, messageBytes);
+			message = new ReconnectHandler(userSession, messageBytes);
 			break;
 		case Messages.TUTORIAL_REQUEST:
-			message = new TutorialCompletedHandler(tcpServer, messageBytes);
+			message = new TutorialCompletedHandler(userSession, messageBytes);
 			break;
 		case Messages.GET_CHANNEL_USERS_PERCENTAGE_REQUEST:
-			message = new GetChannelUsersPercentageHandler(tcpServer, messageBytes);
+			message = new GetChannelUsersPercentageHandler(userSession, messageBytes);
 			break;
 		case Messages.LOGIN_GUILD_MARK_REQUEST:
-			message = new GuildMarkHandler(tcpServer, messageBytes);
+			message = new GuildMarkHandler(userSession, messageBytes);
 			break;
 		default:
 //			HexTools.printHexArray(messageBytes, 20, false);

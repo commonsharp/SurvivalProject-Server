@@ -56,7 +56,7 @@ public class CrystalDeathHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-//		lobby.roomMessage(userSession.getUser().roomIndex, getResponse());
+		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
 	}
 
 	@Override

@@ -69,14 +69,14 @@ public class CreateRoomHandler extends LobbyHandler {
 	@Override
 	public byte[] getResponse() {
 		int[] characters = new int[10];
-		characters[0] = userSession.getUser().activeCharacter;
+		characters[0] = userSession.getUser().mainCharacter;
 		cardsLimit = -1;
 		Room room = new Room(roomNumber, roomName, gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger, characters);
 		lobbyServer.setRoom(roomNumber, room);
 		userSession.getUser().isInRoom = true;
 		userSession.getUser().roomSlot = lobbyServer.getRoom(roomNumber).getSlot();
 		userSession.getUser().roomTeam = room.getTeam();
-		userSession.getUser().roomCharacter = userSession.getUser().activeCharacter;
+		userSession.getUser().roomCharacter = userSession.getUser().mainCharacter;
 		userSession.getUser().roomReady = 0;
 		userSession.getUser().roomFieldF4 = 2;
 		
@@ -112,7 +112,5 @@ public class CreateRoomHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() {
-		// TODO Auto-generated method stub
-		
 	}
 }

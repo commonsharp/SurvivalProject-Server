@@ -31,7 +31,7 @@ public class JoinRoomHandler extends LobbyHandler {
 		userSession.getUser().roomIndex = roomID;
 		userSession.getUser().roomSlot = lobbyServer.getRoom(roomID).getSlot();
 		userSession.getUser().roomTeam = lobbyServer.getRoom(roomID).getTeam();
-		userSession.getUser().roomCharacter = userSession.getUser().activeCharacter;
+		userSession.getUser().roomCharacter = userSession.getUser().mainCharacter;
 		userSession.getUser().roomReady = 0;
 		userSession.getUser().roomFieldF4 = 2;
 		lobbyServer.getRoom(roomID).setUserSession(userSession.getUser().roomSlot, userSession);
@@ -41,7 +41,7 @@ public class JoinRoomHandler extends LobbyHandler {
 		output.putInt(0x14, 0); //1,2,3,4,5,6 - errors possibly. others - good.
 		output.putInt(0x18, roomID);
 		output.putString(0x1C, lobbyServer.getRoom(roomID).getRoomName());
-		output.putInt(0x3C, lobbyServer.getRoom(roomID).getGameType().getValue());
+		output.putInt(0x3C, lobbyServer.getRoom(roomID).getGameMode().getValue());
 		output.putInt(0x40, lobbyServer.getRoom(roomID).getGameMap());
 		output.putInt(0x54, lobbyServer.getRoom(roomID).getMaxNumberOfPlayers());
 		output.putByte(0x58, lobbyServer.getRoom(roomID).getIsWithScrolls());
@@ -79,7 +79,5 @@ public class JoinRoomHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() {
-		// TODO Auto-generated method stub
-		
 	}
 }

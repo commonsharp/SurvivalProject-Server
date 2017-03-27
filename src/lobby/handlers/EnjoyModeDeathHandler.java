@@ -8,10 +8,10 @@ import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class QuestDeathHandler extends LobbyHandler {
-	public static final int RESPONSE_LENGTH = 0xB0;
+public class EnjoyModeDeathHandler extends LobbyHandler {
+	public static final int RESPONSE_LENGTH = 0xB4;
 	
-	public QuestDeathHandler(LobbyServer lobbyServer, UserTCPSession tcpServer) {
+	public EnjoyModeDeathHandler(LobbyServer lobbyServer, UserTCPSession tcpServer) {
 		super(lobbyServer, tcpServer);
 	}
 
@@ -19,11 +19,11 @@ public class QuestDeathHandler extends LobbyHandler {
 	public void interpretBytes() {
 	}
 
-	public byte[] getResponse(int monsterIndex) {
+	public byte[] getResponse(int monsterIndex, int molePoints) {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, Messages.QUEST_DEATH_RESPONSE);
+		output.putInt(0x4, Messages.ENJOY_MODE_DEATH_RESPONSE);
 		
 		output.putInt(0x14, monsterIndex);
 		output.putInt(0x18, userSession.getUser().roomSlot); // slot
@@ -53,6 +53,7 @@ public class QuestDeathHandler extends LobbyHandler {
 		output.putInt(0xA4, 2); // element type
 		output.putInt(0xA8, 5); // element count
 		output.putInt(0xAC, 4); // element multiplier
+		output.putInt(0xB0, molePoints); // mole points
 		
 		return output.toArray();
 	}

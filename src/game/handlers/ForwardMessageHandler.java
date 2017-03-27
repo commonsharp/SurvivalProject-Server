@@ -12,7 +12,8 @@ public class ForwardMessageHandler extends GameHandler {
 	
 	GameServer gameServer;
 	int roomID;
-	int slot;
+	int fromSlot;
+	int toSlot;
 	
 	public ForwardMessageHandler(GameServer gameServer, GenericUDPServer udpServer, byte[] messageBytes) {
 		super(udpServer, messageBytes);
@@ -28,7 +29,8 @@ public class ForwardMessageHandler extends GameHandler {
 	@Override
 	public void interpretBytes() {
 		roomID = input.getInt(0x14);
-		slot = input.getInt(0x18);
+		fromSlot = input.getInt(0x18);
+		toSlot = input.getInt(0x1C);
 	}
 
 	@Override
@@ -49,7 +51,8 @@ public class ForwardMessageHandler extends GameHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		gameServer.roomMessage(udpServer, roomID, slot, getResponse2());
+		gameServer.sendToUser(udpServer, roomID, toSlot, getResponse2());
+//		gameServer.roomMessage(udpServer, roomID, slot, getResponse2());
 	}
 
 	@Override
