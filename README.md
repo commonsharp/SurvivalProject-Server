@@ -35,6 +35,9 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * The guild rank of new players in the room is '?' instead of being the true rank.
 * Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).
 
+# 28/03/2017
+* Added a text file containing all of the korean phrases in the game that needs translating - "korean phrases.txt".
+
 # 27/03/2017
 * Big match - auto team is working, but the death timer isn't working.
 * Big match - death match is working, but the death timer isn't working.
