@@ -38,7 +38,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 
 # 28/03/2017
 * Added full instructions on how to install the game.
-* Added a text file containing all of the korean phrases in the game that needs translating - "korean phrases.txt".
+* Added a text file containing all of the korean phrases in the game that need translating - "korean phrases.txt".
 
 # 27/03/2017
 * Big match - auto team is working, but the death timer isn't working.
