@@ -18,7 +18,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Add chat commands.
 - [ ] Clean the big battle death code a bit. Only use one array for everyone's lives instead of 2 (one for slots and one for npc).
 - [x] Rename GameType to GameMode.
-- [ ] In a team game, when everyone is ready, the game starts. We need to also make sure that the teams are balanced. Right now it can start as a 4vs0, instead of 2vs2.
+- [x] In a team game, when everyone is ready, the game starts. We need to also make sure that the teams are balanced. Right now it can start as a 4vs0, instead of 2vs2.
 - [ ] Add sendFriendsMessage and sendGuildMessage when the time comes.
 - [ ] Change the tutorial item class to net.objects.Item.
 - [ ] Get a list of all the request messages.
@@ -46,6 +46,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 # 29/03/2017
 * Better instructions on how to play the game. Still need to add the MySQL installation step.
 * The correct KO count is presented once you finish a game.
+* When playing a 2-teams mode, the game will not start until the 2 teams have an equal number of players.
 * Items are now called cards.
 * Quests: Added experience. The total experience of the monster is the damage that was done to the monster / x where x is a random value between 4 and 6. Each player gets experience proportional to the damage he has dealt.
 * Quests: Added lucky bonuses. You have 50% chance of getting x1 exp/code, 25% chance of getting x2 exp/code, 12.5% of getting x3 exp/code and so on. Seems pretty balanced to me.
