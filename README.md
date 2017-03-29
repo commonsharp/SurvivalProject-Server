@@ -41,6 +41,8 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 # 29/03/2017
 * Added experience. The total experience of the monster is the damage that was done to the monster / x where x is a random value between 4 and 6. Each player gets experience proportional to the damage he has done.
 * Added lucky bonuses. You have 50% chance of getting x1 exp/code, 25% chance of getting x2 exp/code, 12.5% of getting x3 exp/code and so on. Seems pretty balanced to me.
+* You now get elements after you kill a monster. 50% for 0 elements, 25% for 1, 12.5% for 2 and 6.25% for 3 and 4. It seems kind of high compared to the old Survival Project, so it might get changed in the future.
+
 
 # 28/03/2017
 * Added full instructions on how to install the game.
