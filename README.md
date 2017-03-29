@@ -12,6 +12,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 - [ ] Make sure chests only give code and not experience.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [ ] Add GM chat commands.
+- [ ] Add chat commands.
 - [ ] Clean the big battle death code a bit. Only use one array for everyone's lives instead of 2 (one for slots and one for npc).
 - [x] Rename GameType to GameMode.
 - [ ] In a team game, when everyone is ready, the game starts. We need to also make sure that the teams are balanced. Right now it can start as a 4vs0, instead of 2vs2.
@@ -26,7 +27,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 - [ ] Downlad a list of all the users in the server once you log in.
 - [ ] Rename "ResultsHandler" and make sure it's sending the right results.
 - [ ] There are more fields in LeaveRoomHandler. Need to change...
-- [ ] Change the teams in quests to 10, instead of 0.
+- [x] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
 * ~~Sometimes the exp **in the client** shows 0%, but it does go up.~~
@@ -44,6 +45,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * Added experience. The total experience of the monster is the damage that was done to the monster / x where x is a random value between 4 and 6. Each player gets experience proportional to the damage he has done.
 * Added lucky bonuses. You have 50% chance of getting x1 exp/code, 25% chance of getting x2 exp/code, 12.5% of getting x3 exp/code and so on. Seems pretty balanced to me.
 * You now get elements after you kill a monster. 50% for 0 elements, 25% for 1, 12.5% for 2 and 6.25% for 3 and 4. It seems kind of high compared to the old Survival Project, so it might get changed in the future.
+* Fixed a bug where you had a set of cards but when you started a game, you had a different set of cards.
 
 **MySQL database support added:**
 * users table was created.
