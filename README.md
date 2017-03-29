@@ -33,6 +33,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [x] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
+* If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.
 * If you disconnect on the login screen, there will be an SQLException.
 * ~~Sometimes the exp **in the client** shows 0%, but it does go up.~~
 * Death timer in big matches doesn't work.
