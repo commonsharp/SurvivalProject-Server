@@ -1,22 +1,33 @@
-# Running Survival Project on Windows 10
+TODO - add sql instructions
 
-Download alanlei's client from here:
+# Installing the client
+
+* Download alanlei's client from here:
 https://drive.google.com/file/d/0BzjxtOOu36E_ZnVTRVdXMTFuSDg/view?hc_location=ufi
 
-Install Survival Project. The password is "www.spgame.net".
+* Install Survival Project. The password is "www.spgame.net".
 
-The archive also contains a file called gng.ini. Put it in your SP folder in the config directory.
+* The archive also contains a file called gng.ini.
 
-Make sure you change the IP to your own IP and the port to 21000 (in gng.ini).
+Open it and change the IP to the IP of the server you're connecting to (or 127.0.0.1 if you want to play alone) and the port to 21000 (the server doesn't support any port number at the moment).
 
-Put sp2.exe and dinput.dll of B6oy's SPNET.net client in your SP installation directory (This will enable you to play on Windows 10).
+When you're done, put it in your SP folder in the config directory.
 
-After that, change the IP in /src/login/handlers/ServerInfoHandler.java to your own IP, compile the server files using any Java IDE and run /src/main/Main.java.
+**The following step is needed if you want to run the game on Windows 10:**
 
-The server should be running now. You can login with your client and start playing. If you want other people to play with you, tell them to change the IP in gng.ini to your own IP.
+* Put sp2.exe and dinput.dll of B6oy's SPNET.net client in your SP installation directory (This will enable you to play on Windows 10).
 
-To launch the game, run sp2.exe.
+* To run the game, launch sp2.exe in Windows 10 or the normal launcher in any other Windows version.
 
 If you get an error while running sp2.exe, run it as administrator.
 
 **Also, do not rename sp2.exe to anything else, or the game won't launch.**
+
+# Installing the server
+**The server files are not completed yet, therefore you would have to compile them yourself using any Java IDE.**
+
+* Change the IP in /src/login/handlers/ServerInfoHandler.java to your own IP (not the local one), or to 127.0.0.1 if you're playing alone.
+
+* Compile the server files using any Java IDE and run /src/main/Main.java.
+
+* The server should be running now, and you can run the client.
