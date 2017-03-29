@@ -41,6 +41,7 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * ~~Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).~~
 
 # 29/03/2017
+* Better instructions on how to play the game. Still need to add the MySQL installation step.
 * The correct KO count is presented once you finish a game.
 * Items are now called cards.
 * Quests: Added experience. The total experience of the monster is the damage that was done to the monster / x where x is a random value between 4 and 6. Each player gets experience proportional to the damage he has done.
