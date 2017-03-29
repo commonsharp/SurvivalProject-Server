@@ -1,8 +1,4 @@
-**This is actually not true**
-
-**When x is an odd number:** 
-
-When message x is being sent to the server, message x+1 is expected to be received.
+**Usually**, when message x is being sent to the server, message x+1 is expected to be received.
 
 For example, if message 0x4307 is sent to the server, the client expects message 0x4308 to be sent back.
 
@@ -10,9 +6,7 @@ Do notice that the protocol uses decimal-hexdecimal representation.
 
 What I mean by that is that if the client sends message 0x4309 (17161), it won't be expecting message 0x430A but instead 0x4310 (17168).
 
-**When x is an even number:**
-
-Not sure yet. It seems like you need to send a different message (not x+1).
+If x+1 is not the response message, it is **usually** close to request message.
 
 **Message format:**
 
