@@ -40,17 +40,19 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).
 
 # 29/03/2017
+* Items are now called cards.
 * Added experience. The total experience of the monster is the damage that was done to the monster / x where x is a random value between 4 and 6. Each player gets experience proportional to the damage he has done.
 * Added lucky bonuses. You have 50% chance of getting x1 exp/code, 25% chance of getting x2 exp/code, 12.5% of getting x3 exp/code and so on. Seems pretty balanced to me.
 * You now get elements after you kill a monster. 50% for 0 elements, 25% for 1, 12.5% for 2 and 6.25% for 3 and 4. It seems kind of high compared to the old Survival Project, so it might get changed in the future.
 
 **MySQL database support added:**
 * users table was created.
-
+* cards table was created.
 
 * The username and password are now being verified once you login.
 * You get the user information from the database once you login.
-* Changing the main character changes in the database.
+* Changing the main character updates the database.
+* Changing cards in the lobby screen updates the database.
 
 # 28/03/2017
 * Added full instructions on how to install the game.
