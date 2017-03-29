@@ -1,4 +1,4 @@
-TODO - add sql instructions
+**TODO - Add MySQL instructions**
 
 # Installing the client
 
@@ -8,7 +8,6 @@ https://drive.google.com/file/d/0BzjxtOOu36E_ZnVTRVdXMTFuSDg/view?hc_location=uf
 * Install Survival Project. The password is "www.spgame.net".
 
 * The archive also contains a file called gng.ini.
-
 Open it and change the IP to the IP of the server you're connecting to (or 127.0.0.1 if you want to play alone) and the port to 21000 (the server doesn't support any port number at the moment).
 
 When you're done, put it in your SP folder in the config directory.
