@@ -45,7 +45,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * ~~Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).~~
 
 # 29/03/2017
-* Added auto registration. If the username does not exist, a new username will be created with the password the user inserted.
+* Added auto registration. If a username does not exist, a new username will be created with the password the user inserted.
 * When playing a 2-teams mode, the game will now try to put you in the correct team. e.g. if 2 players move to the blue team, and a third one joins, he'll be assigned to the red team, to balance out the teams.
 * Better instructions on how to play the game. Still need to add the MySQL installation step.
 * The correct KO count is presented once you finish a game.
