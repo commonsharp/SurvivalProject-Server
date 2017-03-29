@@ -57,6 +57,8 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * You get the user information from the database once you login.
 * Changing the main character updates the database.
 * Changing cards in the lobby screen updates the database.
+* After killing a quest monster, the database is updated with the user's new experience/code/level (~~might~~ will probably get changed in the future to update after the quest is completed).
+* Once a user disconnects, the database is updated.
 
 # 28/03/2017
 * Added full instructions on how to install the game.
