@@ -15,7 +15,7 @@ When you're done, put it in your SP folder in the config directory.
 
 * Put sp2.exe and dinput.dll of B6oy's SPNET.net client in your SP installation directory (This will enable you to play on Windows 10).
 
-* To run the game, launch sp2.exe in Windows 10 or the normal launcher in any other Windows version.
+To run the game, launch sp2.exe in Windows 10 or the normal launcher in any other Windows version.
 
 If you get an error while running sp2.exe, run it as administrator.
 
