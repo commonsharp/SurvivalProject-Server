@@ -29,3 +29,5 @@ If you get an error while running sp2.exe, run it as administrator.
 * Compile the server files using any Java IDE and run /src/main/Main.java.
 
 * The server should be running now, and you can run the client.
+
+* If you're hosting a server for others to play, you would need to forward port 21000. I can't help you with that as it's router-specific.
