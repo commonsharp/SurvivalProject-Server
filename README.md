@@ -36,6 +36,10 @@ For instructions on how to install Survival Project on Windows 10, go to the Win
 * The guild rank of new players in the room is '?' instead of being the true rank.
 * Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).
 
+# 29/03/2017
+* Added experience. The total experience of the monster is the damage that was done to the monster / x where x is a random value between 4 and 6. Each player gets experience proportional to the damage he has done.
+* Added lucky bonuses. You have 50% chance of getting x1 exp/code, 25% chance of getting x2 exp/code, 12.5% of getting x3 exp/code and so on. Seems pretty balanced to me.
+
 # 28/03/2017
 * Added full instructions on how to install the game.
 * Added a text file containing all of the korean phrases in the game that need translating - "korean phrases.txt".
