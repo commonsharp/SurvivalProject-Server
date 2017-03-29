@@ -6,6 +6,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserTCPSession;
+import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
 public class CrystalDeathHandler extends LobbyHandler {
@@ -42,14 +43,27 @@ public class CrystalDeathHandler extends LobbyHandler {
 		for (int i = 0; i < 8; i++)
 			slotResults[i] = result;
 		
+		int exp = 200;
+		int code = 300;
 		 // result array. 0 = resurrection. 1 = quest success. 2 = quest failed. 4 = player left game? others = nothing.
 		output.putInts(0x14, slotResults); // result (per slot)
 		output.putInt(0x34, 13); //ko
 		output.putInt(0x38, 15); // ? maybe guild exp?
-		output.putInt(0x3C, 200); // exp array (per slot)
-		output.putInt(0x5C, 300); // code array (per slot)
-		output.putLong(0x80, 400); // new exp
-		output.putLong(0x88, 500); // new code
+		
+		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		
+		for (int i = 0; i < 8; i++) {
+			output.putInt(0x3C + i * 4, exp);
+			output.putInt(0x5C + i * 4, code);
+			
+			if (room.getUser(i) != null) {
+				room.getUser(i).getUser().playerExperience += exp;
+				room.getUser(i).getUser().playerCode += code;
+			}
+		}
+		
+		output.putLong(0x80, userSession.getUser().playerExperience); // new experience
+		output.putLong(0x88, userSession.getUser().playerCode); // new code
 		
 		return output.toArray();
 	}

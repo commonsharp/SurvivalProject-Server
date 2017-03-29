@@ -14,6 +14,8 @@ public class MonsterDeathHandler extends LobbyHandler {
 	int monsterIndex;
 	int molePoints;
 	
+	int[] damageDone;
+	
 	public MonsterDeathHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
@@ -40,17 +42,12 @@ public class MonsterDeathHandler extends LobbyHandler {
 			44 - integer
 		 */
 		
+		damageDone = new int[8];
+		damageDone = input.getInts(0x20, damageDone.length);
+		
 		System.out.println(input.getInt(0x18));
 		System.out.println(input.getInt(0x1C));
-		System.out.println(input.getInt(0x20));
-		System.out.println(input.getInt(0x24));
-		System.out.println(input.getInt(0x28));
-		System.out.println(input.getInt(0x2C));
-		System.out.println(input.getInt(0x30));
-		System.out.println(input.getInt(0x34));
-		System.out.println(input.getInt(0x38));
-		System.out.println(input.getInt(0x3C));
-		System.out.println(input.getShort(0x40));
+		System.out.println(input.getShort(0x40)); // type
 		System.out.println(input.getShort(0x42));
 	}
 
@@ -63,11 +60,11 @@ public class MonsterDeathHandler extends LobbyHandler {
 	public void afterSend() throws IOException {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		if (room.isQuestType()) {
-			lobbyServer.sendRoomMessage(userSession, new QuestDeathHandler(lobbyServer, userSession).getResponse(monsterIndex), true);
+			lobbyServer.sendRoomMessage(userSession, new QuestDeathHandler(lobbyServer, userSession).getResponse(monsterIndex, damageDone), true);
 		}
 		// this is enjoy game mode - race/mole
 		else if (room.getGameMode() == GameMode.RACE || room.getGameMode() == GameMode.MOLE) {
-			lobbyServer.sendRoomMessage(userSession, new EnjoyModeDeathHandler(lobbyServer, userSession).getResponse(monsterIndex, molePoints), true);
+			lobbyServer.sendRoomMessage(userSession, new EnjoyModeDeathHandler(lobbyServer, userSession).getResponse(monsterIndex, damageDone, molePoints), true);
 			
 			if (room.getGameMode() == GameMode.RACE && monsterIndex == 33) {
 				int[] results = new int[8];
@@ -120,7 +117,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 			}
 		}
 		else if (room.getGameMode() == GameMode.SYMBOL) {
-			lobbyServer.sendRoomMessage(userSession, new EnjoyModeDeathHandler(lobbyServer, userSession).getResponse(monsterIndex, molePoints), true);
+			lobbyServer.sendRoomMessage(userSession, new EnjoyModeDeathHandler(lobbyServer, userSession).getResponse(monsterIndex, damageDone, molePoints), true);
 			
 			room.symbols[monsterIndex] = userSession.getUser().roomTeam;
 			

@@ -298,7 +298,7 @@ public class Room {
 		case FOREST_QUEST_4:
 		case FOREST_QUEST_5:
 		case MISSION:
-			return 1;
+			return 2;
 		case SOCCER:
 		case RACE:
 		case DODGE:

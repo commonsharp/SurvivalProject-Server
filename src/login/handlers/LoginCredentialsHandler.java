@@ -66,7 +66,7 @@ public class LoginCredentialsHandler extends LoginHandler {
 		output.putInt(0x2C, userSession.getUser().daysToMute);
 		output.putInt(0x30, userSession.getUser().ageRestriction);
 		output.putLong(0x38, userSession.getUser().playerExperience);
-		output.putLong(0x40, userSession.getUser().playerMoney);
+		output.putLong(0x40, userSession.getUser().playerCode);
 		output.putString(0x48, userSession.getUser().guildName);
 		output.putString(0x55, userSession.getUser().guildDuty);
 		output.putLong(0x70, unknown1);

@@ -8,13 +8,13 @@ public class User {
 	
 	public int userType = 30;
 	public int mainCharacter = 20;
-	public int playerLevel = 30;
+	public int playerLevel = 8;
 	public int usuableCharacterCount = 12;
-	public int isMuted;
-	public int daysToMute;
+	public int isMuted = 10;
+	public int daysToMute = 10;
 	public int ageRestriction = 1;
-	public long playerExperience = 0;
-	public long playerMoney = 200000000;
+	public long playerExperience = 2400;
+	public long playerCode = 200000000;
 	public long avatarMoney = 1234;
 	public String guildName = "Obamas";
 	public String guildDuty = "MasterLOL";

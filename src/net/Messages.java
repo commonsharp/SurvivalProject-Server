@@ -67,7 +67,7 @@ public class Messages {
 	public static final int UNKNOWN_LOBBY_RESPONSE_15 = 0x4352;
 	public static final int UNKNOWN_LOBBY_RESPONSE_16 = 0x4354;
 	public static final int UNKNOWN_LOBBY_RESPONSE_17 = 0x4356;
-	public static final int QUEST_DEATH_REQUEST = 0x4358;
+	public static final int MONSTER_DEATH_REQUEST = 0x4358;
 	public static final int QUEST_DEATH_RESPONSE = 0x4359;
 	public static final int CRYSTAL_DEATH_REQUEST = 0x4360;
 	public static final int CRYSTAL_DEATH_RESPONSE = 0x4361;

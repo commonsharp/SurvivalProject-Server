@@ -43,7 +43,7 @@ public class GetUserInfoHandler extends LobbyHandler {
 		output.putInt(0x54, user.playerLoses);
 		output.putInt(0x58, user.playerKOs);
 		output.putInt(0x5C, user.playerDowns);
-		output.putLong(0x60, user.playerMoney);
+		output.putLong(0x60, user.playerCode);
 		output.putLong(0x68, user.avatarMoney);
 		
 		output.putInt(0x70, user.getItemID(user.magicIndex));

@@ -87,7 +87,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 		output.putInt(0x58, 10); // not sure if this should even be here
 		output.putInt(0x5c, 10); // 0x5c
 		output.putLong(0x60, userSession.getUser().playerExperience); // 0x60
-		output.putLong(0x68, userSession.getUser().playerMoney); // 0x68
+		output.putLong(0x68, userSession.getUser().playerCode); // 0x68
 		output.putLong(0x70, avatarMoney); // 0x70
 		output.putInt(0x78, userSession.getUser().playerLevel); // 0x78
 		output.putInt(0x7C, userSession.getUser().usuableCharacterCount); // 0x7c

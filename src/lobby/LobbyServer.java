@@ -120,7 +120,7 @@ public class LobbyServer extends GenericTCPServer {
 		case Messages.SOCCER_GOAL_REQUEST:
 			message = new SoccerGoalHandler(this, userSession, messageBytes);
 			break;
-		case Messages.QUEST_DEATH_REQUEST:
+		case Messages.MONSTER_DEATH_REQUEST:
 			message = new MonsterDeathHandler(this, userSession, messageBytes);
 			break;
 		case Messages.CRYSTAL_DEATH_REQUEST:

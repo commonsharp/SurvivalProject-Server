@@ -4,8 +4,10 @@ import java.io.IOException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
+import net.Experience;
 import net.Messages;
 import net.UserTCPSession;
+import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
 public class QuestDeathHandler extends LobbyHandler {
@@ -19,7 +21,7 @@ public class QuestDeathHandler extends LobbyHandler {
 	public void interpretBytes() {
 	}
 
-	public byte[] getResponse(int monsterIndex) {
+	public byte[] getResponse(int monsterIndex, int[] damageDone) {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 
 		output.putInt(0x0, RESPONSE_LENGTH);
@@ -30,29 +32,42 @@ public class QuestDeathHandler extends LobbyHandler {
 		output.putInt(0x1C, 0); // byte
 		output.putInt(0x20, 0);
 		
-		 // lucky multiplier (exp and code multiplier)
+		int randomLucky = Experience.getLuckyMultiplier();
+		int[] experienceGained = Experience.getExperience(damageDone);
+		
 		int[] luckyMultiplier = new int[8];
 		for (int i = 0; i < 8; i++) {
-			luckyMultiplier[i] = 1;
-		}
-		
-		int[] baseExpAndCode = new int[8];
-		for (int i = 0; i < 8; i++) {
-			baseExpAndCode[i] = 1;
-		}
-		
-		int[] levels = new int[8];
-		for (int i = 0; i < 8; i++) {
-			levels[i] = 10;
+			luckyMultiplier[i] = randomLucky;
 		}
 		
 		output.putInts(0x24, luckyMultiplier);
-		output.putInts(0x44, baseExpAndCode);
-		output.putInts(0x64, levels);
+		output.putInts(0x44, experienceGained);
+		
+		long[] experiences = new long[8];
+		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		
+		for (int i = 0; i < 8; i++) {
+			if (room.getUser(i) != null) {
+				room.getUser(i).getUser().playerExperience += experienceGained[i] * luckyMultiplier[i];
+				room.getUser(i).getUser().playerCode += experienceGained[i] * luckyMultiplier[i];
+				room.getUser(i).getUser().playerLevel = Experience.getLevel(room.getUser(i).getUser().playerExperience);
+				experiences[i] = room.getUser(i).getUser().playerExperience;
+			}
+		}
+		
+		output.putInts(0x64, Experience.getLevels(experiences));
 		output.putInt(0x84, 0); // another array. unknown yet.
-		output.putInt(0xA4, 2); // element type
-		output.putInt(0xA8, 5); // element count
-		output.putInt(0xAC, 4); // element multiplier
+		
+		int elementType = (int)(Math.random() * 4) + 1;
+		int elementAmount = Experience.getElementCount();
+		int elementMultiplier = Experience.getLuckyMultiplier();
+		
+		if (elementAmount != 0) {
+			userSession.getUser().whiteCards[elementType] += elementAmount * elementMultiplier;
+			output.putInt(0xA4, elementType);
+			output.putInt(0xA8, elementAmount);
+			output.putInt(0xAC, elementMultiplier);
+		}
 		
 		return output.toArray();
 	}
