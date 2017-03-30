@@ -129,7 +129,6 @@ public class BigMatchDeathHandler extends LobbyHandler {
 				}
 				
 				
-				
 				int winningTeam = 0;
 				
 				if (j < 8) {
@@ -149,6 +148,7 @@ public class BigMatchDeathHandler extends LobbyHandler {
 		if (killedSlot < 8) {
 			userSession.getUser().isAlive = false;
 			userSession.getUser().lives--;
+			lobbyServer.getRoom(userSession.getUser().roomIndex).getUser(userSession.getUser().roomSlot).getUser().gameKO++;
 		}
 		
 		lobbyServer.getRoom(userSession.getUser().roomIndex).isNpcDead[killedSlot] = true;

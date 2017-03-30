@@ -15,6 +15,7 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x118;
 	
     int unknown01, unknown04, unknown06;
+    int action;
     
     public RoomPlayersUpdateHandler(LobbyServer lobbyServer, UserTCPSession tcpServer) {
     	super(lobbyServer, tcpServer);
@@ -30,12 +31,12 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		userSession.getUser().roomCharacter = input.getInt(0x18);
 		userSession.getUser().roomTeam = input.getInt(0x1C);
 		userSession.getUser().roomReady = input.getByte(0x20);
-		userSession.getUser().roomStart = input.getInt(0x24);
+		action = input.getInt(0x24);
 		unknown04 = input.getInt(0x28);
 		unknown06 = input.getInt(0x2C);
 		
 		System.out.println("Ready: " + userSession.getUser().roomReady);
-		System.out.println("Start: " + userSession.getUser().roomStart);
+		System.out.println("Action: " + action); // 0 - change character. 1 - change team. 2 - pressed ready
 		
 		System.out.println("Slot " + userSession.getUser().roomSlot);
 //		System.out.println("Team : " + team);
@@ -187,7 +188,18 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() {
-		// TODO Auto-generated method stub
-		
+		if (action == 1) {
+			int team = userSession.getUser().roomTeam;
+			Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+			
+			if (team == 10) {
+				room.bluePlayersCount++;
+				room.redPlayersCount--;
+			}
+			else {
+				room.bluePlayersCount--;
+				room.redPlayersCount++;
+			}
+		}
 	}
 }

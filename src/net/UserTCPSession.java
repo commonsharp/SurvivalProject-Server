@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.sql.SQLException;
 
 import log.Log;
 import net.handlers.GenericHandler;
@@ -42,6 +43,7 @@ public class UserTCPSession implements Runnable {
 				int length = HexTools.getIntegerInByteArray(lengthBytes, 0);
 				
 				if (length == -1) {
+					server.onUserDisconnect(this);
 					server.usersSessions.remove(this);
 					System.out.println("User disconnected");
 					break;
@@ -102,7 +104,8 @@ public class UserTCPSession implements Runnable {
 					message.afterSend();
 				}
 			}
-		} catch (IOException e) {
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
 			System.out.println("User disconnected");
 			server.usersSessions.remove(this);
 		}

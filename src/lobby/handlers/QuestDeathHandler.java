@@ -1,6 +1,7 @@
 package lobby.handlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
@@ -21,7 +22,7 @@ public class QuestDeathHandler extends LobbyHandler {
 	public void interpretBytes() {
 	}
 
-	public byte[] getResponse(int monsterIndex, int[] damageDone) {
+	public byte[] getResponse(int monsterIndex, int[] damageDone) throws SQLException {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 
 		output.putInt(0x0, RESPONSE_LENGTH);
@@ -51,6 +52,7 @@ public class QuestDeathHandler extends LobbyHandler {
 				room.getUser(i).getUser().playerExperience += experienceGained[i] * luckyMultiplier[i];
 				room.getUser(i).getUser().playerCode += experienceGained[i] * luckyMultiplier[i];
 				room.getUser(i).getUser().playerLevel = Experience.getLevel(room.getUser(i).getUser().playerExperience);
+				room.getUser(i).getUser().saveUser();
 				experiences[i] = room.getUser(i).getUser().playerExperience;
 			}
 		}
@@ -63,11 +65,13 @@ public class QuestDeathHandler extends LobbyHandler {
 		int elementMultiplier = Experience.getLuckyMultiplier();
 		
 		if (elementAmount != 0) {
-			userSession.getUser().whiteCards[elementType] += elementAmount * elementMultiplier;
+			userSession.getUser().whiteCards[elementType - 1] += elementAmount * elementMultiplier;
 			output.putInt(0xA4, elementType);
 			output.putInt(0xA8, elementAmount);
 			output.putInt(0xAC, elementMultiplier);
 		}
+		
+		userSession.getUser().saveUser();
 		
 		return output.toArray();
 	}

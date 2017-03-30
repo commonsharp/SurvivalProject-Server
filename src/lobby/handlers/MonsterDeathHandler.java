@@ -1,6 +1,7 @@
 package lobby.handlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
@@ -57,7 +58,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 	}
 
 	@Override
-	public void afterSend() throws IOException {
+	public void afterSend() throws IOException, SQLException {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		if (room.isQuestType()) {
 			lobbyServer.sendRoomMessage(userSession, new QuestDeathHandler(lobbyServer, userSession).getResponse(monsterIndex, damageDone), true);
@@ -148,7 +149,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() {
-		// TODO Auto-generated method stub
-		
+		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		room.getUser(userSession.getUser().roomSlot).getUser().gameKO++;
 	}
 }

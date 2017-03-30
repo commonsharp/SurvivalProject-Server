@@ -2,6 +2,7 @@ package net;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import net.handlers.GenericHandler;
@@ -17,6 +18,7 @@ public abstract class GenericTCPServer implements Runnable {
 	protected ArrayList<UserTCPSession> usersSessions;
 	
 	public abstract GenericHandler processPacket(UserTCPSession tcpServer, int messageID, byte[] messageBytes);
+	public abstract void onUserDisconnect(UserTCPSession userTCPSession) throws SQLException;
 	
 	public GenericTCPServer(String name, int port) {
 		this.name = name;

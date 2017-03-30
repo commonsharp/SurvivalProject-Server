@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.sql.SQLException;
 
 import lobby.LobbyServer;
 import net.handlers.GenericHandler;
@@ -122,7 +123,7 @@ public abstract class GenericUDPServer implements Runnable {
 					message.afterSend();
 				}
 			}
-		} catch (IOException e) {
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 	}

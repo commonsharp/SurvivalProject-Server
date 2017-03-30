@@ -2,12 +2,12 @@ package net.objects;
 
 public class UserShop {
 	String username;
-	Item item;
+	Card item;
 	int elementType;
 	int elementAmount;
 	int code;
 	
-	public UserShop(String username, Item item, int code) {
+	public UserShop(String username, Card item, int code) {
 		super();
 		this.username = username;
 		this.item = item;
@@ -29,7 +29,7 @@ public class UserShop {
 		return code;
 	}
 
-	public Item getItem() {
+	public Card getItem() {
 		return item;
 	}
 

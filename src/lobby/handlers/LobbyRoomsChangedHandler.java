@@ -51,7 +51,7 @@ public class LobbyRoomsChangedHandler extends LobbyHandler {
 			output.putByte(0x4D, (byte) 1); // is with scrolls
 			output.putByte(0x4E, (byte) 0); // is closed. 0 = not closed. 1 = closed.
 			output.putByte(0x4F, (byte) 1); // is premium
-			output.putByte(0x50, (byte) 1); // is auto team
+			output.putByte(0x50, (byte) 0); // is auto team
 			output.putInt(0x54, room.getCardsLimit()); // cards limit.
 			output.putInts(0x58, room.getCharacters()); // characters in the room
 			output.putInt(0x98, 0); // -1 - everyone is random. 0 - normal. 1 - red team random. 2 - blue team random

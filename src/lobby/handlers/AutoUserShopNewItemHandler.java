@@ -53,7 +53,7 @@ public class AutoUserShopNewItemHandler extends LobbyHandler {
 	public void processMessage() {
 		User user = userSession.getUser();
 		if (itemType == 1) {
-			lobbyServer.addShop(user.username, user.items[itemIndex], 0, 0, code);
+			lobbyServer.addShop(user.username, user.cards[itemIndex], 0, 0, code);
 		}
 		// itemType = 2. elements
 		else {

@@ -1,6 +1,7 @@
 package lobby.handlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
@@ -159,8 +160,7 @@ public class ItemsChangedHandler extends LobbyHandler {
 	}
 
 	@Override
-	public void processMessage() {
-		// TODO Auto-generated method stub
-		
+	public void processMessage() throws SQLException {
+		userSession.getUser().saveUser();
 	}
 }

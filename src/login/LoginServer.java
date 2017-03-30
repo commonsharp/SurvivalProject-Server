@@ -1,10 +1,12 @@
 package login;
+import java.sql.SQLException;
+
 import login.handlers.GetChannelUsersPercentageHandler;
 import login.handlers.GuildMarkHandler;
 import login.handlers.LoginCredentialsHandler;
 import login.handlers.ReconnectHandler;
 import login.handlers.ServerInfoHandler;
-import login.handlers.SetActiveCharacterHandler;
+import login.handlers.SetMainCharacterHandler;
 import login.handlers.TutorialCompletedHandler;
 import net.GenericTCPServer;
 import net.Messages;
@@ -28,7 +30,7 @@ public class LoginServer extends GenericTCPServer {
 			message = new ServerInfoHandler(userSession, messageBytes);
 			break;
 		case Messages.SET_MAIN_CHARACTER_REQUEST:
-			message = new SetActiveCharacterHandler(userSession, messageBytes);
+			message = new SetMainCharacterHandler(userSession, messageBytes);
 			break;
 		case Messages.RECONNECT_REQUEST:
 			message = new ReconnectHandler(userSession, messageBytes);
@@ -50,26 +52,9 @@ public class LoginServer extends GenericTCPServer {
 		
 		return message;
 	}
-	
-	//					Server responses... X_X
-	//					case 0x2807:
-	//						break;
-	//					case 0x2908:
-	//						break;
-	//					case 0x2912:
-	//						break;
-	//					case 0x2916:
-	//						break;
-	//					case 0x2918:
-	//						break;
-	//					case 0x2919:
-	//						break;
-	//					case 0x2922:
-	//						break;
-	//					case 0x2923:
-	//				        break;
-	//				    case 0x2924:
-	//				    	break;
-	//				    case 0x2925:
-	//				    	break;
+
+	@Override
+	public void onUserDisconnect(UserTCPSession userTCPSession) throws SQLException {
+		userTCPSession.getUser().saveUser();
+	}
 }

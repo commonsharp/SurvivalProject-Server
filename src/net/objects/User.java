@@ -1,27 +1,33 @@
 package net.objects;
 
 import java.net.InetAddress;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import net.DatabaseConnection;
 
 public class User {
 	public String username;
 	public String password;
 	
-	public int userType = 30;
-	public int mainCharacter = 20;
-	public int playerLevel = 8;
-	public int usuableCharacterCount = 12;
+	public int userType;
+	public int mainCharacter;
+	public int playerLevel;
+	public int usuableCharacterCount;
 	public int isMuted = 10;
 	public int daysToMute = 10;
-	public int ageRestriction = 1;
-	public long playerExperience = 2400;
-	public long playerCode = 200000000;
-	public long avatarMoney = 1234;
-	public String guildName = "Obamas";
-	public String guildDuty = "MasterLOL";
+	public int ageRestriction;
+	public long playerExperience;
+	public long playerCode;
+	public long avatarMoney;
+	public String guildName;
+	public String guildDuty;
 	public int guildRank = 10;
 	public long unknown1; // probably cash (premium money)
 	
-	public Item[] items;
+	public Card[] cards;
 	
 	public byte playerEventFlags[] = {0, 0, 0, 0, 0, 0, 0, 0}; //see debug mode
 	
@@ -29,17 +35,17 @@ public class User {
 	
 	public int playerInventorySlots = 96;
 	public int playerType = 0; //set to 7 for GM... otherwise 0?
-	public int whiteCards[] = {200000, 200000, 200000, 200000};
+	public int[] whiteCards;
 	public int scrolls[] = {0, 0, 0};
-	public int playerWins = 10;
-	public int playerLoses = 20;
-	public int playerKOs = 30;
-	public int playerDowns = 40;
+	public int playerWins;
+	public int playerLoses;
+	public int playerKOs;
+	public int playerDowns;
 	
-	public boolean isMale = true;
+	public boolean isMale;
 	
 	public int magicIndex, weaponIndex, accessoryIndex, petIndex;
-	public int footIndex = -1, bodyIndex = -1, hand1Index = -1, hand2Index = -1, faceIndex = -1, hairIndex = -1, headIndex = -1;
+	public int footIndex, bodyIndex, hand1Index, hand2Index, faceIndex, hairIndex, headIndex;
 	public int missionLevel = 1;
 	
 	public boolean isInRoom = false;
@@ -49,7 +55,6 @@ public class User {
 	public int roomTeam;
 	public int roomCharacter;
 	public byte roomReady;
-	public int roomStart;
 	public int roomFieldF4;
 	
 	public int udpState;
@@ -63,171 +68,184 @@ public class User {
 	public int gameKO;
 	
 	public User() {
-		items = new Item[96];
-		
-		/*
-		 * public int playerCardItemId[] = {1211, 1131, 1211, 1212, 1331, 1123, 1321, 1224, 5003, 4101, 4201, 4301, 4401, 4501, 4601, 4701};
-	public int playerCardItemDays[] = {10, 1, 1, 10, 10, 100, 100, 100, 5, 0, 0, 0, 0, 0, 0, 0};
-	public int playerCardItemLevelIdx[] = {8, 8, 7, 8, 5, 8, 8, 8, 5, 0, 0, 0, 0, 0, 0, 0};
-	public int playerCardItemSkill[] = {36100300, 0, 33200000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		 */
-		// 33200000 and 36100300
-		
-		// weapons
-		items[0] = new Item(1111, 365, 8, 36100300);
-		items[1] = new Item(1112, 365, 8, 36100300);
-		items[2] = new Item(1113, 365, 8, 36100300);
-		items[3] = new Item(1114, 365, 8, 36100300);
-		items[4] = new Item(1121, 365, 8, 36100300);
-		items[5] = new Item(1122, 365, 8, 36100300);
-		items[6] = new Item(1123, 365, 8, 36100300);
-		items[7] = new Item(1124, 365, 8, 36100300);
-		items[8] = new Item(1131, 365, 8, 36100300);
-		items[9] = new Item(1132, 365, 8, 36100300);
-		items[10] = new Item(1133, 365, 8, 36100300);
-		items[11] = new Item(1134, 365, 8, 36100300);
-		items[12] = new Item(1141, 365, 8, 36100300);
-		items[13] = new Item(1142, 365, 8, 36100300);
-		items[14] = new Item(1143, 365, 8, 36100300);
-		items[15] = new Item(1144, 365, 8, 36100300);
-		
-		// accessory
-		items[16] = new Item(1211, 365, 8, 36100300);
-		items[17] = new Item(1212, 365, 8, 36100300);
-		items[18] = new Item(1213, 365, 8, 36100300);
-		items[19] = new Item(1214, 365, 8, 36100300);
-		items[20] = new Item(1221, 365, 8, 36100300);
-		items[21] = new Item(1222, 365, 8, 36100300);
-		items[22] = new Item(1223, 365, 8, 36100300);
-		items[23] = new Item(1224, 365, 8, 36100300);
-		items[24] = new Item(1231, 365, 8, 36100300);
-		items[25] = new Item(1232, 365, 8, 36100300);
-		items[26] = new Item(1233, 365, 8, 36100300);
-		items[27] = new Item(1234, 365, 8, 36100300);
-		items[28] = new Item(1241, 365, 8, 36100300);
-		items[29] = new Item(1242, 365, 8, 36100300);
-		items[30] = new Item(1243, 365, 8, 36100300);
-		items[31] = new Item(1244, 365, 8, 36100300);
-		
-		// magic
-		items[32] = new Item(1311, 365, 8, 36100300);
-		items[33] = new Item(1312, 365, 8, 36100300);
-		items[34] = new Item(1321, 365, 8, 36100300);
-		items[35] = new Item(1322, 365, 8, 36100300);
-		items[36] = new Item(1331, 365, 8, 36100300);
-		items[37] = new Item(1332, 365, 8, 36100300);
-		items[38] = new Item(1341, 365, 8, 36100300);
-		items[39] = new Item(1342, 365, 8, 36100300);
-		
-		// avatar feet
-		items[40] = new Item(4101, 0, 0, 0);
-		items[41] = new Item(4102, 0, 0, 0);
-		items[42] = new Item(4103, 0, 0, 0);
-		
-		// avatar body
-		items[43] = new Item(4201, 0, 0, 0);
-		items[44] = new Item(4202, 0, 0, 0);
-		items[45] = new Item(4203, 0, 0, 0);
-		
-		// avatar hand 1
-		items[46] = new Item(4301, 0, 0, 0);
-		items[47] = new Item(4302, 0, 0, 0);
-		items[48] = new Item(4303, 0, 0, 0);
-		
-		// avatar hand 2
-		items[49] = new Item(4401, 0, 0, 0);
-		items[50] = new Item(4402, 0, 0, 0);
-		items[51] = new Item(4403, 0, 0, 0);
-		
-		// avatar face
-		items[52] = new Item(4501, 0, 0, 0);
-		items[53] = new Item(4502, 0, 0, 0);
-		items[54] = new Item(4503, 0, 0, 0);
-		
-		// avatar hair
-		items[55] = new Item(4601, 0, 0, 0);
-		items[56] = new Item(4602, 0, 0, 0);
-		items[57] = new Item(4603, 0, 0, 0);
-		
-		// avatar head
-		items[58] = new Item(4701, 0, 0, 0);
-		items[59] = new Item(4702, 0, 0, 0);
-		items[60] = new Item(4703, 0, 0, 0);
-		items[61] = new Item(4704, 0, 0, 0);
-		items[62] = new Item(4705, 0, 0, 0);
-		items[63] = new Item(4706, 0, 0, 0);
-		
-		// pet
-		items[64] = new Item(5000, 0, 0, 0);
-		items[65] = new Item(5001, 0, 0, 0);
-		items[66] = new Item(5002, 0, 0, 0);
-		items[67] = new Item(5003, 0, 0, 0);
-		items[68] = new Item(5004, 0, 0, 0);
-		items[69] = new Item(5005, 0, 0, 0);
-		items[70] = new Item(5006, 0, 0, 0);
-		items[71] = new Item(5007, 0, 0, 0);
-		items[72] = new Item(5008, 0, 0, 0);
-		items[73] = new Item(5009, 0, 0, 0);
-		items[74] = new Item(5010, 0, 0, 0);
-		items[75] = new Item(5011, 0, 0, 0);
-		items[76] = new Item(5012, 0, 0, 0);
-		items[77] = new Item(5013, 0, 0, 0);
-		items[78] = new Item(5014, 0, 0, 0);
-		
-		items[79] = new Item(2900, 365, 0, 0);
-		items[80] = new Item(2009, 9, 7, 6); // user shop 2 - in lobby only
-		items[81] = new Item(2001, 9, 7, 6); // user shop 1 - in game
-		
-		magicIndex = 32;
-		weaponIndex = 0;
-		accessoryIndex = 19;
-		footIndex = 40;
-		bodyIndex = 43;
-		hand1Index = 46;
-		hand2Index = 49;
-		faceIndex = 52;
-		hairIndex = 55;
-		headIndex = 58;
-		petIndex = 70;
+		cards = new Card[96];
+		whiteCards = new int[4];
 	}
 	
 	public int getAvatarItemID(int index) {
-		if (index == -1 || items[index] == null) {
+		if (index == -1 || cards[index] == null) {
 			return -1;
 		}
 		
-		return items[index].getId();
+		return cards[index].getId();
 	}
 	
 	public int getItemID(int index) {
-		if (index == -1 || items[index] == null) {
+		if (index == -1 || cards[index] == null) {
 			return -1;
 		}
 		
-		return items[index].getId();
+		return cards[index].getId();
 	}
 	
 	public int getItemPremiumDays(int index) {
-		if (index == -1 || items[index] == null) {
+		if (index == -1 || cards[index] == null) {
 			return 0;
 		}
 		
-		return items[index].getPremiumDays();
+		return cards[index].getPremiumDays();
 	}
 	
 	public int getItemLevel(int index) {
-		if (index == -1 || items[index] == null) {
+		if (index == -1 || cards[index] == null) {
 			return 0;
 		}
 		
-		return items[index].getLevel();
+		return cards[index].getLevel();
 	}
 	
 	public int getItemSkill(int index) {
-		if (index == -1 || items[index] == null) {
+		if (index == -1 || cards[index] == null) {
 			return 0;
 		}
 		
-		return items[index].getSkill();
+		return cards[index].getSkill();
+	}
+	
+	public void loadUser() throws SQLException {
+		Connection con = DatabaseConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement("Select * FROM users WHERE username = ?");
+		ps.setString(1, username);
+		ResultSet rs = ps.executeQuery();
+		
+		if (rs.next()) {
+			username = rs.getString("username");
+			password = rs.getString("password");
+			userType = rs.getInt("userType");
+	        mainCharacter = rs.getInt("mainCharacter");
+	        playerLevel = rs.getInt("playerLevel");
+	        usuableCharacterCount = rs.getInt("usuableCharacterCount");
+	        ageRestriction = rs.getInt("ageRestriction");
+	        playerExperience = rs.getLong("experience");
+	        playerCode = rs.getLong("code");
+	        avatarMoney = rs.getLong("avatarMoney");
+	        guildName = rs.getString("guildName");
+	        guildDuty = rs.getString("guildDuty");
+	        whiteCards[0] = rs.getInt("waterElements");
+	        whiteCards[1] = rs.getInt("fireElements");
+	        whiteCards[2] = rs.getInt("earthElements");
+	        whiteCards[3] = rs.getInt("windElements");
+	        isMale = rs.getBoolean("isMale");
+	        magicIndex = rs.getInt("magicIndex");
+	        weaponIndex = rs.getInt("weaponIndex");
+	        accessoryIndex = rs.getInt("accessoryIndex");
+	        petIndex = rs.getInt("petIndex");
+	        footIndex = rs.getInt("footIndex");
+	        bodyIndex = rs.getInt("bodyIndex");
+	        hand1Index = rs.getInt("hand1Index");
+	        hand2Index = rs.getInt("hand2Index");
+	        faceIndex = rs.getInt("faceIndex");
+	        hairIndex = rs.getInt("hairIndex");
+	        headIndex = rs.getInt("headIndex");
+	        playerWins = rs.getInt("winCount");
+	        playerLoses = rs.getInt("loseCount");
+	        playerKOs = rs.getInt("koCount");
+	        playerDowns = rs.getInt("downCount");
+	        
+	        ps.close();
+	        rs.close();
+	        
+	        // load cards
+	        ps = con.prepareStatement("Select * FROM cards WHERE username = ?");
+	        ps.setString(1, username);
+	        rs = ps.executeQuery();
+	        
+	        int i = 0;
+	        while (rs.next()) {
+	        	cards[i++] = new Card(rs.getInt("id"), rs.getInt("premiumDays"), rs.getInt("level"), rs.getInt("skill"));
+	        }
+	        
+	        rs.close();
+	        ps.close();
+		}
+		
+		con.close();
+	}
+	
+	public void saveUser() throws SQLException {
+		Connection con = DatabaseConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement("Update users SET username=?, userType=?, mainCharacter=?, playerLevel=?, usuableCharacterCount=?, "
+				+ "ageRestriction=?, experience=?, code=?, avatarMoney=?, guildName=?, guildDuty=?, waterElements=?, "
+				+ "fireElements=?, earthElements=?, windElements=?, isMale=?, magicIndex=?, weaponIndex=?, accessoryIndex=?, petIndex=?, "
+				+ "footIndex=?, bodyIndex=?, hand1Index=?, hand2Index=?, faceIndex=?, hairIndex=?, headIndex=?, password=?, "
+				+ "winCount=?, loseCount=?, koCount=?, downCount=? WHERE username=?");
+		
+		ps.setString(1, username);
+		ps.setInt(2, userType);
+		ps.setInt(3, mainCharacter);
+		ps.setInt(4, playerLevel);
+		ps.setInt(5, usuableCharacterCount);
+		ps.setInt(6, ageRestriction);
+		ps.setLong(7, playerExperience);
+		ps.setLong(8, playerCode);
+		ps.setLong(9, avatarMoney);
+		ps.setString(10, guildName);
+		ps.setString(11, guildDuty);
+		ps.setInt(12, whiteCards[0]);
+		ps.setInt(13, whiteCards[1]);
+		ps.setInt(14, whiteCards[2]);
+		ps.setInt(15, whiteCards[3]);
+		ps.setBoolean(16, isMale);
+		ps.setInt(17, magicIndex);
+		ps.setInt(18, weaponIndex);
+		ps.setInt(19, accessoryIndex);
+		ps.setInt(20, petIndex);
+		ps.setInt(21, footIndex);
+		ps.setInt(22, bodyIndex);
+		ps.setInt(23, hand1Index);
+		ps.setInt(24, hand2Index);
+		ps.setInt(25, faceIndex);
+		ps.setInt(26, hairIndex);
+		ps.setInt(27, headIndex);
+		ps.setString(28, password);
+		ps.setInt(29, playerWins);
+		ps.setInt(30, playerLoses);
+		ps.setInt(31, playerKOs);
+		ps.setInt(32, playerDowns);
+		
+		ps.setString(33, username);
+		ps.executeUpdate();
+		ps.close();
+		
+		for (int i = 0; i < cards.length; i++) {
+			ps = con.prepareStatement("INSERT INTO cards VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = ?, premiumDays = ?, level = ?, skill = ?");
+			ps.setString(1, username);
+			ps.setInt(2, i);
+			
+			if (cards[i] != null) {
+				ps.setInt(3, cards[i].getId());
+				ps.setInt(4, cards[i].getPremiumDays());
+				ps.setInt(5, cards[i].getLevel());
+				ps.setInt(6, cards[i].getSkill());
+				ps.setInt(7, cards[i].getId());
+				ps.setInt(8, cards[i].getPremiumDays());
+				ps.setInt(9, cards[i].getLevel());
+				ps.setInt(10, cards[i].getSkill());
+			}
+			else {
+				ps.setInt(3, 0);
+				ps.setInt(4, 0);
+				ps.setInt(5, 0);
+				ps.setInt(6, 0);
+				ps.setInt(7, 0);
+				ps.setInt(8, 0);
+				ps.setInt(9, 0);
+				ps.setInt(10, 0);
+			}
+			ps.executeUpdate();
+			ps.close();
+		}
+		
+		con.close();
 	}
 }

@@ -26,6 +26,9 @@ public class Room {
 	public int[] symbols;
 	public boolean[] isNpcDead;
 	
+	public int bluePlayersCount;
+	public int redPlayersCount;
+	
 	public Room(int roomID, String roomName, int gameMode, int gameMap, int numberOfPlayers, byte isWithScrolls,
 			byte isWithTeams, int cardsLimit, byte isLimitAnger, int[] characters) {
 		this.roomID = roomID;
@@ -166,6 +169,10 @@ public class Room {
 				}
 			}
 			
+			if (bluePlayersCount != redPlayersCount) {
+				isStart = false;
+			}
+			
 			return isStart;
 		}
 		
@@ -245,8 +252,14 @@ public class Room {
 			return 0;
 		}
 		else if (getTeamType() == 1) {
-			// need to change. if everybody moves to the red team, this should return blue.
-			return (numberOfUsers % 2 == 0) ? 20 : 10;
+			if (bluePlayersCount >= redPlayersCount) {
+				redPlayersCount++;
+				return 20;
+			}
+			else {
+				bluePlayersCount++;
+				return 10;
+			}
 		}
 		else if (getTeamType() == 2) {
 			return 10;

@@ -1,6 +1,7 @@
 package net.handlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import tools.ExtendedByteBuffer;
 import tools.HexTools;
@@ -16,9 +17,9 @@ public abstract class GenericHandler {
 	protected ExtendedByteBuffer input;
 	
 	public abstract void interpretBytes();
-	public abstract void processMessage();
+	public abstract void processMessage() throws SQLException;
 	public abstract byte[] getResponse();
-	public abstract void afterSend() throws IOException;
+	public abstract void afterSend() throws IOException, SQLException;
 	
 	public GenericHandler() {
 		

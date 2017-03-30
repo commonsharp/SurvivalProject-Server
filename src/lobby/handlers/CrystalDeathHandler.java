@@ -15,6 +15,10 @@ public class CrystalDeathHandler extends LobbyHandler {
 	int questProgression;
 	int unknown;
 	
+	public CrystalDeathHandler(LobbyServer lobbyServer, UserTCPSession tcpServer) {
+		super(lobbyServer, tcpServer);
+	}
+	
 	public CrystalDeathHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
@@ -43,11 +47,20 @@ public class CrystalDeathHandler extends LobbyHandler {
 		for (int i = 0; i < 8; i++)
 			slotResults[i] = result;
 		
+		return getResponse(slotResults);
+	}
+	
+	public byte[] getResponse(int[] results) {
+		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
+
+		output.putInt(0x0, RESPONSE_LENGTH);
+		output.putInt(0x4, Messages.CRYSTAL_DEATH_RESPONSE);
+		
 		int exp = 200;
 		int code = 300;
 		 // result array. 0 = resurrection. 1 = quest success. 2 = quest failed. 4 = player left game? others = nothing.
-		output.putInts(0x14, slotResults); // result (per slot)
-		output.putInt(0x34, 13); //ko
+		output.putInts(0x14, results); // result (per slot)
+		output.putInt(0x34, userSession.getUser().gameKO); //ko
 		output.putInt(0x38, 15); // ? maybe guild exp?
 		
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);

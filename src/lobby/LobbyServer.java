@@ -2,6 +2,7 @@ package lobby;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.sql.SQLException;
 
 import lobby.handlers.BigMatchDeathHandler;
 import lobby.handlers.BigMatchInfo;
@@ -11,6 +12,7 @@ import lobby.handlers.CrystalDeathHandler;
 import lobby.handlers.EnterCardShopHandler;
 import lobby.handlers.FusionHandler;
 import lobby.handlers.GameMasterBanHandler;
+import lobby.handlers.GetListOfUsersHandler;
 import lobby.handlers.GetRoomInfoHandler;
 import lobby.handlers.GetTopGuildsHandler;
 import lobby.handlers.GetTopGuildsMarkHandler;
@@ -42,7 +44,7 @@ import net.GenericTCPServer;
 import net.Messages;
 import net.UserTCPSession;
 import net.handlers.GenericHandler;
-import net.objects.Item;
+import net.objects.Card;
 import net.objects.Room;
 import net.objects.User;
 import net.objects.UserShop;
@@ -119,6 +121,9 @@ public class LobbyServer extends GenericTCPServer {
 			break;
 		case Messages.SOCCER_GOAL_REQUEST:
 			message = new SoccerGoalHandler(this, userSession, messageBytes);
+			break;
+		case Messages.GET_LIST_OF_USERS_REQUEST:
+			message = new GetListOfUsersHandler(this, userSession, messageBytes);
 			break;
 		case Messages.MONSTER_DEATH_REQUEST:
 			message = new MonsterDeathHandler(this, userSession, messageBytes);
@@ -243,7 +248,7 @@ public class LobbyServer extends GenericTCPServer {
 		return result;
 	}
 	
-	public void addShop(String username, Item item, int elementType, int elementCount, int code) {
+	public void addShop(String username, Card item, int elementType, int elementCount, int code) {
 //		UserShop shop = new UserShop(username, itemID, code);
 		UserShop shop;
 		
@@ -265,5 +270,10 @@ public class LobbyServer extends GenericTCPServer {
 		}
 		
 		return -1;
+	}
+
+	@Override
+	public void onUserDisconnect(UserTCPSession userTCPSession) throws SQLException {
+		userTCPSession.getUser().saveUser();
 	}
 }

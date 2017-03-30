@@ -135,6 +135,21 @@ public class PlayerDeathHandler extends LobbyHandler {
 			
 			lobbyServer.sendRoomMessage(userSession, new RoundCompletedHandler(lobbyServer, userSession).getResponse(results, -1), true);
 		}
+		else if (room.isQuestType()) {
+			if (room.isAllTeamDead()) {
+				int[] results = new int[8];
+				
+				for (int i = 0; i < 8; i++) {
+					results[i] = -1;
+					
+					if (room.getUser(i) != null) {
+						results[i] = 2;
+					}
+				}
+				
+				lobbyServer.sendRoomMessage(userSession, new CrystalDeathHandler(lobbyServer, userSession).getResponse(results), true);
+			}
+		}
 	}
 
 	@Override
