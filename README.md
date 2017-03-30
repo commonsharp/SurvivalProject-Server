@@ -11,6 +11,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **When I say that a game mode (such as soccer) is working, I mean that you can start a game, the rounds system is working (in this case - goals), you can finish a game and see the results of who won and who lost. The elements/code/experience/guild experience gained is not implemented yet. Also you don't get kills/downs/wins/loses. It just means the game mode is opertional.** 
 
 # TODO
+- [ ] Lose code/cash/coins when you make a purchase.
 - [x] Auto register if the username does not exist.
 - [ ] Make sure chests only give code and not experience.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
@@ -47,7 +48,8 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 # 30/03/2017
 * You can now enter the cards shop.
-* You can buy cards in the cards shop. You don't lose any money yet, and you can't buy elements.
+* You can buy cards in the cards shop. You don't lose any money yet.
+* You can buy elements in the cards shop. You don't lose any money yet.
 * You can gold charge/silver charge cards now to make last longer (or become gold charged if they weren't charged to begin with).
 * In every gamemode other than big matches - when you kill a player, you get 1 KO. When you die, you get 1 down.
 * When you join the lobby (through login, leaving a room or leaving a game) you get a list of all the rooms in the lobby.
