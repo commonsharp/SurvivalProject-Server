@@ -46,7 +46,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * ~~Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).~~
 
 # 30/03/2017
-* When you kill a player, you get 1 KO. When you die, you get 1 down.
+* In every gamemode other than big matches - when you kill a player, you get 1 KO. When you die, you get 1 down.
 
 # 29/03/2017
 * Added auto registration. If a username does not exist, a new username will be created with the password the user inserted.
