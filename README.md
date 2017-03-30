@@ -55,6 +55,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * When you join the lobby (through login, leaving a room or leaving a game) you get a list of all the rooms in the lobby.
 * Fixed a bug where it said you had a card while you didn't.
 * Fixed a bug where the avatar money (coin) wasn't loaded properly from the database.
+* Fixed a bug where if there were at least 2 people in a quest, and the entire team died, the game would not finish (with a quest failed message).
 * The default number of card slots changed from 0 to 12.
 
 # 29/03/2017
