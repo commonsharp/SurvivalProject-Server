@@ -23,7 +23,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Change the tutorial item class to net.objects.Item.
 - [ ] Get a list of all the request messages.
 - [x] Add putBoolean/getBoolean in ExtendedByteBuffer.
-- [ ] Change the login credentials message format.
+- [x] Change the login credentials message format.
 - [ ] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
 - [x] Download a list of all available rooms once you log in.
