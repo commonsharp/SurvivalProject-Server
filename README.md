@@ -52,6 +52,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * In every gamemode other than big matches - when you kill a player, you get 1 KO. When you die, you get 1 down.
 * When you join the lobby (through login, leaving a room or leaving a game) you get a list of all the rooms in the lobby.
 * Fixed a bug where it said you had a card while you didn't.
+* Fixed a bug where the avatar money (coin) wasn't loaded properly from the database.
 * The default number of card slots changed from 0 to 12.
 
 # 29/03/2017
