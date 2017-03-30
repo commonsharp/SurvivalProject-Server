@@ -26,7 +26,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Change the login credentials message format.
 - [ ] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
-- [ ] Download a list of all available rooms once you log in.
+- [x] Download a list of all available rooms once you log in.
 - [ ] Downlad a list of all the users in the server once you log in.
 - [ ] Rename "ResultsHandler" and make sure it's sending the right results.
 - [ ] There are more fields in LeaveRoomHandler. Need to change...
@@ -47,6 +47,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 # 30/03/2017
 * In every gamemode other than big matches - when you kill a player, you get 1 KO. When you die, you get 1 down.
+* When you join the lobby (through login, leaving a room or leaving a game) you get a list of all the rooms in the lobby.
 
 # 29/03/2017
 * Added auto registration. If a username does not exist, a new username will be created with the password the user inserted.
