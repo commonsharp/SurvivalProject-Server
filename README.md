@@ -35,6 +35,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [x] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
+* Changing room type message crashes the game.
 * When someone's in a game and it crashes, the leave function is not getting called.
 * If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.
 * If you disconnect on the login screen, there will be an SQLException.
@@ -44,11 +45,12 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * When you finish a survival game, it says draw. Not sure if it should say that or win.
 * Possible bug - broadcast messages will get sent to other servers as well. So someone sending a chat message would send it to people in other servers as well. Need to check that.
 * When someone joins a quest that already started, the quest restarts.
-* Starting a tutorial crashes the game.
+* ~~Starting a tutorial crashes the game.~~
 * The guild rank of new players in the room is '?' instead of being the true rank.
 * ~~Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).~~
 
 # 31/03/2017
+* Training modes are now working, but after you finish a training, there's an option to change to another training mode, and that doesn't work yet.
 * King survival mode is working.
 * Fixed a bug where if the two teams had an equal number of players and a new player joined the room, he would be assigned to the red team, instead of the blue team.
 
