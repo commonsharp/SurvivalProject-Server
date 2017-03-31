@@ -57,6 +57,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * King survival mode is working.
 * You can now buy, sell and use scrolls. You don't lose/gain money when you buy/sell a scroll yet.
 * Fixed a bug where if the two teams had an equal number of players and a new player joined the room, he would be assigned to the red team, instead of the blue team.
+* Fixed a bug where if you clicked on a player, and he had no items, it would display that he has no items (as it should) but once you click on the user's items you would get an error.
 
 # 30/03/2017
 * You can now enter the cards shop.
