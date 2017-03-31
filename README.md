@@ -44,7 +44,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
 * When you finish a survival game, it says draw. Not sure if it should say that or win.
 * Possible bug - broadcast messages will get sent to other servers as well. So someone sending a chat message would send it to people in other servers as well. Need to check that.
-* When someone joins a quest that already started, the quest restarts.
+* ~~When someone joins a quest that already started, the quest restarts.~~
 * ~~Starting a tutorial crashes the game.~~
 * The guild rank of new players in the room is '?' instead of being the true rank.
 * ~~Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).~~
