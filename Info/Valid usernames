@@ -1,0 +1,47 @@
+char __stdcall sub_482DD0(const char *str)
+{
+  signed int length; // eax@1 MAPDST
+  int i; // edx@3
+  char currentChar; // al@4
+  char v5; // cl@13
+  char v6; // al@17
+  char result; // al@21
+
+  length = strlen(str);
+  if ( length > 12 || length < 1 )
+  {
+LABEL_22:
+    result = 0;
+  }
+  else
+  {
+    for ( i = 0; i < length; ++i )
+    {
+      currentChar = str[i];
+      if ( (currentChar < 'A' || currentChar >= '[')
+        && (currentChar < 'a' || currentChar >= '{')
+        && (currentChar < '0' || currentChar >= ':')
+        && currentChar != '-' )
+      {
+        if ( i >= length - 1 )
+          goto LABEL_22;
+        if ( currentChar == 164 )
+        {
+          v5 = str[i + 1];
+          if ( v5 >= 161u && v5 <= 211u )
+            goto LABEL_22;
+        }
+        if ( currentChar < 176u )
+          goto LABEL_22;
+        if ( currentChar > 200u )
+          goto LABEL_22;
+        v6 = str[i + 1];
+        if ( v6 < 161u || v6 > 254u )
+          goto LABEL_22;
+        ++i;
+      }
+    }
+    result = 1;
+  }
+  return result;
+}
