@@ -11,6 +11,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **When I say that a game mode (such as soccer) is working, I mean that you can start a game, the rounds system is working (in this case - goals), you can finish a game and see the results of who won and who lost. The elements/code/experience/guild experience gained is not implemented yet. Also you don't get kills/downs/wins/loses. It just means the game mode is opertional.** 
 
 # TODO
+- [ ] Lose/gain money when you buy/sell scrolls.
 - [ ] Add experience/elements after a kill in big matches.
 - [ ] Add experience/elements after a kill in other modes (not big matches/quests).
 - [ ] When the master of the room leaves a quest, he may no longer join, as it restarts everyone else's quest. Therefore, it must be locked **ONLY FOR HIM**.
@@ -54,7 +55,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 # 31/03/2017
 * Training modes are now working, but after you finish a training, there's an option to change to another training mode, and that doesn't work yet.
 * King survival mode is working.
-* You can now buy, sell and use scrolls.
+* You can now buy, sell and use scrolls. You don't lose/gain money when you buy/sell a scroll yet.
 * Fixed a bug where if the two teams had an equal number of players and a new player joined the room, he would be assigned to the red team, instead of the blue team.
 
 # 30/03/2017
