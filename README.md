@@ -52,6 +52,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 # 31/03/2017
 * Training modes are now working, but after you finish a training, there's an option to change to another training mode, and that doesn't work yet.
 * King survival mode is working.
+* You can now buy, sell and use scrolls.
 * Fixed a bug where if the two teams had an equal number of players and a new player joined the room, he would be assigned to the red team, instead of the blue team.
 
 # 30/03/2017
