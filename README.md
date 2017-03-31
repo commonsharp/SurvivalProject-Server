@@ -49,6 +49,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * ~~Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).~~
 
 # 31/03/2017
+* King survival mode is working.
 * Fixed a bug where if the two teams had an equal number of players and a new player joined the room, he would be assigned to the red team, instead of the blue team.
 
 # 30/03/2017
