@@ -11,6 +11,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **When I say that a game mode (such as soccer) is working, I mean that you can start a game, the rounds system is working (in this case - goals), you can finish a game and see the results of who won and who lost. The elements/code/experience/guild experience gained is not implemented yet. Also you don't get kills/downs/wins/loses. It just means the game mode is opertional.** 
 
 # TODO
+- [ ] Sort the userSessions by username, and when you search for a user, use binary search.
 - [ ] Lose/gain money when you buy/sell scrolls.
 - [ ] Add experience/elements after a kill in big matches.
 - [ ] Add experience/elements after a kill in other modes (not big matches/quests).
