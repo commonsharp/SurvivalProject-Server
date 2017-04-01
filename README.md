@@ -23,35 +23,25 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Add GM chat commands.
 - [ ] Add chat commands.
 - [ ] Clean the big battle death code a bit. Only use one array for everyone's lives instead of 2 (one for slots and one for npc).
-- [x] Rename GameType to GameMode.
-- [x] In a team game, when everyone is ready, the game starts. We need to also make sure that the teams are balanced. Right now it can start as a 4vs0, instead of 2vs2.
 - [ ] Add sendFriendsMessage and sendGuildMessage when the time comes.
 - [ ] Change the tutorial item class to net.objects.Item.
 - [ ] Get a list of all the request messages.
-- [x] Add putBoolean/getBoolean in ExtendedByteBuffer.
-- [x] Change the login credentials message format.
 - [ ] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
-- [x] Download a list of all available rooms once you log in.
 - [ ] Downlad a list of all the users in the server once you log in.
 - [ ] Rename "ResultsHandler" and make sure it's sending the right results.
 - [ ] There are more fields in LeaveRoomHandler. Need to change...
-- [x] Change the teams in quests to 10, instead of 0.
 
 # List of bugs
 * Changing room type message crashes the game.
 * When someone's in a game and it crashes, the leave function is not getting called.
 * If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.
 * If you disconnect on the login screen, there will be an SQLException.
-* ~~Sometimes the exp **in the client** shows 0%, but it does go up.~~
 * Death timer in big matches doesn't work.
 * When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
 * When you finish a survival game, it says draw. Not sure if it should say that or win.
 * Possible bug - broadcast messages will get sent to other servers as well. So someone sending a chat message would send it to people in other servers as well. Need to check that.
-* ~~When someone joins a quest that already started, the quest restarts.~~
-* ~~Starting a tutorial crashes the game.~~
 * The guild rank of new players in the room is '?' instead of being the true rank.
-* ~~Quests - if player 1 kills everyone, player 2 gets ko too (in the winning screen).~~
 
 # 01/04/2017
 * You can now find users (F4). It currently only works for players in the same server.
