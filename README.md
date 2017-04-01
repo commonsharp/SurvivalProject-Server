@@ -47,6 +47,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * The quest of understanding every single packet continues...
 * You can now add friends, remove friends and get a list of who's connected or not when you click on the refresh button in the friends tab. Do notice that the refresh button has a cooldown of 30 seconds, therefore you have to wait 30 seconds before clicking again.
 * Friends chat is working.
+* Whisper chat is working.
 * You can now find users (F4). It currently only works for players in the same server.
 * You can now kick players from the room.
 * Fixed a bug where chat messages and emojis were not sent while you were in a room.
