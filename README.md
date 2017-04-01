@@ -55,6 +55,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 # 01/04/2017
 * You can now find users (F4). It currently only works for players in the same server.
+* You can now kick players.
 
 # 31/03/2017
 * Training modes are now working, but after you finish a training, there's an option to change to another training mode, and that doesn't work yet.
