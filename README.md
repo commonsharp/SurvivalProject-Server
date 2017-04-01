@@ -29,7 +29,6 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
 - [ ] Downlad a list of all the users in the server once you log in.
-- [ ] Rename "ResultsHandler" and make sure it's sending the right results.
 - [ ] There are more fields in LeaveRoomHandler. Need to change...
 
 # List of bugs
