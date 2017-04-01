@@ -43,6 +43,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 01/04/2017
+* The quest of understanding every single packet continues...
 * You can now find users (F4). It currently only works for players in the same server.
 * You can now kick players from the room.
 * Fixed a bug where chat messages and emojis were not sent while you were in a room.
