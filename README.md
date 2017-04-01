@@ -23,7 +23,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Add GM chat commands.
 - [ ] Add chat commands.
 - [ ] Clean the big battle death code a bit. Only use one array for everyone's lives instead of 2 (one for slots and one for npc).
-- [ ] Add ~~sendFriendsMessage~~ and sendGuildMessage when the time comes.
+- [ ] Add ~~sendFriendsMessage and~~ sendGuildMessage when the time comes.
 - [ ] Change the tutorial item class to net.objects.Item.
 - [ ] Get a list of all the request messages.
 - [ ] Finish the guild mark handler.
