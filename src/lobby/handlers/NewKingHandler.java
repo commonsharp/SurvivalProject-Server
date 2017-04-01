@@ -1,6 +1,7 @@
 package lobby.handlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
@@ -8,22 +9,20 @@ import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
-public class EnterCardShopHandler extends LobbyHandler {
-	public static final int RESPONSE_LENGTH = 0x1C;
+public class NewKingHandler extends LobbyHandler {
+	public static final int RESPONSE_LENGTH = 0x18;
 	
-	public EnterCardShopHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
-		super(lobbyServer, userSession, messageBytes);
-		// TODO Auto-generated constructor stub
+	public NewKingHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+		super(lobbyServer, userSession);
 	}
 
 	@Override
 	public void interpretBytes() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void processMessage() {
+	public void processMessage() throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -31,16 +30,15 @@ public class EnterCardShopHandler extends LobbyHandler {
 	@Override
 	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
-		
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, Messages.ENTER_CARD_SHOP_RESPONSE);
-		output.putLong(0x14, userSession.getUser().cash); // cash
-		
+		output.putInt(0x4, Messages.NEW_KING_RESPONSE);
+		output.putInt(0x14, lobbyServer.getRoom(userSession.getUser().roomIndex).kingSlot);
+
 		return output.toArray();
 	}
 
 	@Override
-	public void afterSend() throws IOException {
+	public void afterSend() throws IOException, SQLException {
 		// TODO Auto-generated method stub
 		
 	}

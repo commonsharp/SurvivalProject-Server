@@ -18,7 +18,7 @@ public abstract class GenericHandler {
 	
 	public abstract void interpretBytes();
 	public abstract void processMessage() throws SQLException;
-	public abstract byte[] getResponse();
+	public abstract byte[] getResponse() throws SQLException;
 	public abstract void afterSend() throws IOException, SQLException;
 	
 	public GenericHandler() {

@@ -64,12 +64,12 @@ public class GameServer extends GenericUDPServer {
 		return message;
 	}
 	
-	public void sendToUser(GenericUDPServer udpServer, int roomID, int toSlot, byte[] message) throws IOException {
+	public void sendToUser(GenericUDPServer udpServer, int roomID, int toSlot, byte[] message, boolean sendInRoom) throws IOException {
 		for (UserTCPSession user : lobby.getRoom(roomID).getUsers()) {
 			// If the user is not null
 			if (user != null) {
 				// If the user is someone else
-				if (user.getUser().roomSlot == toSlot && user.getUser().isInGame) {
+				if (user.getUser().roomSlot == toSlot && (user.getUser().isInGame || sendInRoom)) {
 					// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
 					udpServer.sendMessage(user.getUser(), HexTools.duplicateArray(message));
 					break;

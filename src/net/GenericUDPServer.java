@@ -63,8 +63,8 @@ public abstract class GenericUDPServer implements Runnable {
 				}
 				
 				int encryptionVersion = 1;
-				if (lobby.findUser(ipAddress, port) != null) {
-					encryptionVersion = lobby.findUser(ipAddress, port).encryptionVersion;
+				if (lobby.findUserSession(ipAddress, port) != null) {
+					encryptionVersion = lobby.findUserSession(ipAddress, port).getUser().encryptionVersion;
 					Cryptography.decryptMessage(encryptionVersion, messageBytes);
 				}
 				else {
@@ -86,7 +86,7 @@ public abstract class GenericUDPServer implements Runnable {
 					ExtendedByteBuffer buf = new ExtendedByteBuffer(messageBytes);
 					String username = buf.getString(0x14);
 					
-					u = lobby.findUser(username);
+					u = lobby.findUserSession(username).getUser();
 					
 					if (u != null) {
 						u.udpIPAddress = ipAddress;
@@ -95,7 +95,7 @@ public abstract class GenericUDPServer implements Runnable {
 					}
 				}
 				else if (messageID != 0x1101) {
-					u = lobby.findUser(ipAddress, port);
+					u = lobby.findUserSession(ipAddress, port).getUser();
 					
 					if (u != null) {
 						u.udpState = state;

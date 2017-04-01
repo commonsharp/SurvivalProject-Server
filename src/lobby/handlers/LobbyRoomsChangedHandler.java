@@ -35,7 +35,7 @@ public class LobbyRoomsChangedHandler extends LobbyHandler {
 		output.putInt(0x4, Messages.LOBBY_ROOMS_CHANGED_RESPONSE);
 		
 		// 0x14 field = 0 - no room. other - room. when it's 0, it can still show premium. need to set everything else to 0
-		if (room.getNumberOfUsers() == 0) {
+		if (room.getNumberOfPlayers() == 0) {
 			output.putByte(0x14, (byte) 0);
 			output.putInt(0x18, room.getRoomID());
 		}
@@ -45,7 +45,7 @@ public class LobbyRoomsChangedHandler extends LobbyHandler {
 			output.putString(0x1C,  room.getRoomName()); // room title
 			output.putInt(0x3C, room.getGameMode().getValue()); // room type
 			output.putInt(0x40, room.getGameMap()); // room map
-			output.putInt(0x44, room.getNumberOfUsers()); // number of players in the room. if it's equal to the max, the room is full (blacked out)
+			output.putInt(0x44, room.getNumberOfPlayers()); // number of players in the room. if it's equal to the max, the room is full (blacked out)
 			output.putInt(0x48, room.getMaxNumberOfPlayers()); // max players
 			output.putByte(0x4C, (byte) 0); // is password
 			output.putByte(0x4D, (byte) 1); // is with scrolls

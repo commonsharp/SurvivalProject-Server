@@ -29,10 +29,14 @@ public class Room {
 	public int bluePlayersCount;
 	public int redPlayersCount;
 	
-	public Room(int roomID, String roomName, int gameMode, int gameMap, int numberOfPlayers, byte isWithScrolls,
+	public String roomCreator;
+	public int kingSlot;
+	
+	public Room(int roomID, String roomName, String roomCreator, int gameMode, int gameMap, int numberOfPlayers, byte isWithScrolls,
 			byte isWithTeams, int cardsLimit, byte isLimitAnger, int[] characters) {
 		this.roomID = roomID;
 		this.roomName = roomName;
+		this.roomCreator = roomCreator;
 		this.gameMode = GameMode.getMode(gameMode);
 		this.gameMap = gameMap;
 		this.maxNumberOfPlayers = numberOfPlayers;
@@ -40,6 +44,7 @@ public class Room {
 		this.isWithTeams = isWithTeams;
 		this.cardsLimit = cardsLimit;
 		this.isLimitAnger = isLimitAnger;
+		this.kingSlot = 0;
 		
 		if (characters == null) {
 			characters = new int[10];
@@ -145,7 +150,7 @@ public class Room {
 		return users;
 	}
 	
-	public int getNumberOfUsers() {
+	public int getNumberOfPlayers() {
 		return numberOfUsers;
 	}
 
@@ -154,6 +159,11 @@ public class Room {
 	}
 
 	public boolean shouldStart(int slot) {
+		// If it's a training mode, then the game should instantly start
+		if (isTrainingType()) {
+			return true;
+		}
+		
 		// If you need to wait for everyone before you start the game
 		if (isWaitForAll()) {
 			boolean isStart = true;
@@ -169,7 +179,7 @@ public class Room {
 				}
 			}
 			
-			if (bluePlayersCount != redPlayersCount) {
+			if (getTeamType() == 1 && bluePlayersCount != redPlayersCount) {
 				isStart = false;
 			}
 			
@@ -184,6 +194,8 @@ public class Room {
 		switch (gameMode) {
 		case HERO:
 			return true;
+		case INFINITY_KING:
+			return true;
 		case DUEL:
 			return true;
 		case ASSAULT:
@@ -195,8 +207,10 @@ public class Room {
 			return true;
 		case SURVIVAL:
 			return false;
-		case KING_SURVIVAL:
+		case CRYSTAL:
 			return true;
+		case KING_SURVIVAL:
+			return false;
 		case BIG_MATCH_DEATH_MATCH:
 			return false;
 		case BIG_MATCH_AUTO_TEAM:
@@ -249,10 +263,11 @@ public class Room {
 		int teamType = getTeamType();
 		
 		if (teamType == 0) {
+			bluePlayersCount++;
 			return 0;
 		}
 		else if (getTeamType() == 1) {
-			if (bluePlayersCount >= redPlayersCount) {
+			if (bluePlayersCount > redPlayersCount) {
 				redPlayersCount++;
 				return 20;
 			}
@@ -262,6 +277,7 @@ public class Room {
 			}
 		}
 		else if (getTeamType() == 2) {
+			bluePlayersCount++;
 			return 10;
 		}
 		
@@ -272,9 +288,11 @@ public class Room {
 	private int getTeamType() {
 		// 0 = all vs all
 		// 1 = red vs blue
-		// 2 = only blue maybe
+		// 2 = only blue team (in quests)
 		switch (gameMode) {
 		case HERO:
+			return 1;
+		case INFINITY_KING:
 			return 1;
 		case DUEL:
 			return 1;
@@ -291,6 +309,8 @@ public class Room {
 			return 0;
 		case KING_SURVIVAL:
 			return 0;
+		case CRYSTAL:
+			return 1;
 		case BIG_MATCH_DEATH_MATCH:
 			return 1;
 		case BIG_MATCH_AUTO_TEAM:
@@ -327,9 +347,22 @@ public class Room {
 		int type = gameMode.getValue();
 		return type >= 11 && type <= 14 || type >= 17 && type <= 27;
 	}
+	
+	public boolean isTrainingType() {
+		int type = gameMode.getValue();
+		
+		return type >= 42 && type <= 46;
+	}
 
 	public boolean isAllTeamDead() {
 		boolean isRedDead = true, isBlueDead = true;
+		
+		if (redPlayersCount == 0) {
+			isRedDead = false;
+		}
+		if (bluePlayersCount == 0) {
+			isBlueDead = false;
+		}
 		
 		for (int i = 0; i < 8; i++) {
 			if (getUser(i) != null && getUser(i).getUser().isAlive) {

@@ -1,7 +1,11 @@
 package lobby.handlers;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
+import database.DatabaseConnection;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
@@ -56,7 +60,7 @@ public class PlayerDeathHandler extends LobbyHandler {
 		
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
 		
-		if (room.getGameMode() == GameMode.SURVIVAL) {
+		if (room.getGameMode() == GameMode.SURVIVAL || room.getGameMode() == GameMode.KING_SURVIVAL) {
 			int[] results = new int[8];
 			
 			for (int i = 0; i < 8; i++) {
@@ -71,6 +75,11 @@ public class PlayerDeathHandler extends LobbyHandler {
 			}
 			
 			lobbyServer.sendRoomMessage(userSession, new RoundCompletedHandler(lobbyServer, userSession).getResponse(results, -1), true);
+			
+			if (room.getGameMode() == GameMode.KING_SURVIVAL && userSession.getUser().roomSlot == room.kingSlot) {
+				room.kingSlot = killerIndex;
+				lobbyServer.sendRoomMessage(userSession, new NewKingHandler(lobbyServer, userSession).getResponse(), true);
+			}
 		}
 		else if (room.getGameMode() == GameMode.TEAMPLAY || room.getGameMode() == GameMode.DODGE || room.getGameMode() == GameMode.DUEL ||
 				room.getGameMode() == GameMode.ASSAULT) {
@@ -153,9 +162,32 @@ public class PlayerDeathHandler extends LobbyHandler {
 	}
 
 	@Override
-	public void processMessage() {
+	public void processMessage() throws SQLException {
 		userSession.getUser().isAlive = false;
 		userSession.getUser().lives--;
+		userSession.getUser().playerDowns++;
+		
+		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		
+		if (killerIndex < 8) {
+			room.getUser(killerIndex).getUser().gameKO++;
+			room.getUser(killerIndex).getUser().playerKOs++;
+			
+			Connection con = DatabaseConnection.getConnection();
+			PreparedStatement ps = con.prepareStatement("UPDATE users SET koCount=? WHERE username=?");
+			ps.setInt(1, room.getUser(killerIndex).getUser().playerKOs);
+			ps.setString(2, room.getUser(killerIndex).getUser().username);
+			ps.executeUpdate();
+			ps.close();
+			
+			ps = con.prepareStatement("UPDATE users SET downCount=? WHERE username=?");
+			ps.setInt(1, userSession.getUser().playerDowns);
+			ps.setString(2, userSession.getUser().username);
+			ps.executeUpdate();
+			ps.close();
+			
+			con.close();
+		}
 	}
 
 }

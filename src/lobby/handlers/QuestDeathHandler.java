@@ -58,7 +58,7 @@ public class QuestDeathHandler extends LobbyHandler {
 		}
 		
 		output.putInts(0x64, Experience.getLevels(experiences));
-		output.putInt(0x84, 0); // another array. unknown yet.
+		output.putInt(0x84, 100); // another array. unknown yet. maybe guild points?
 		
 		int elementType = (int)(Math.random() * 4) + 1;
 		int elementAmount = Experience.getElementCount();

@@ -53,7 +53,7 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(room));
 		// this needs to be sent to everyone in the room, but not in the lobby...
 		
-		lobbyServer.sendRoomMessage(userSession, new RoomPlayersUpdateHandler(lobbyServer, userSession).getResponse(userSession.getUser()), false);
+		lobbyServer.sendRoomMessage(userSession, getResponse(userSession.getUser()), false);
 //		lobby.broadcastMessage(tcpServer, new RoomPlayersChangedHandler(lobby, tcpServer).getResponse(tcpServer.getUser()));
 		
 		if (room.isStart) {
@@ -64,9 +64,15 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 				lobbyServer.sendRoomMessage(userSession, new SpawnHandler(lobbyServer, null).getResponse2(), true);
 //				lobbyServer.sendRoomMessage(userSession, new SoccerGoalHandler(lobbyServer, null).getResponse(room, 3), true);
 			}
+			
+			if (room.getGameMode() == GameMode.KING_SURVIVAL) {
+				sendTCPMessage(new NewKingHandler(lobbyServer, userSession).getResponse());
+			}
 		}
 	}
 
+	byte b;
+	
 	@Override
 	public byte[] getResponse() {
 		userSession.getUser().roomFieldF4 = 2;
@@ -74,6 +80,12 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		userSession.getUser().isAlive = true;
 		userSession.getUser().lives = 5;
 		userSession.getUser().gameKO = 0;
+		
+		b = 0;
+		
+		if (lobbyServer.getRoom(userSession.getUser().roomIndex).isStart) {
+			b = 1;
+		}
 		
 		if (lobbyServer.getRoom(userSession.getUser().roomIndex).shouldStart(userSession.getUser().roomSlot)) {
 			lobbyServer.getRoom(userSession.getUser().roomIndex).isStart = true;
@@ -98,11 +110,11 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		output.putString(0x3C, user.username);
 		output.putString(0x49, user.guildName);
 		output.putString(0x56, user.guildDuty);
-		output.putByte(0x63, (byte) 0);
-		output.putInt(0x64, 0);
+		output.putByte(0x63, (byte) 1);
+		output.putInt(0x64, 1);
 		output.putInt(0x70, user.roomReady);
 		output.putInt(0x74, user.roomCharacter);
-		output.putInt(0x78, 0);
+		output.putInt(0x78, 1);
 		output.putInt(0x7C, 0); // is random
 		output.putInt(0x80, user.roomTeam);
 		output.putInt(0x84, 0); //ko
@@ -136,9 +148,9 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		output.putInt(0xC4, user.getItemSkill(user.accessoryIndex));
 		output.putInt(0xC8, user.getItemSkill(user.petIndex));
 		
-		output.putInts(0xCC, new int[] {0, 0, 0});
-		output.putInt(0xD0, 0);
-		output.putInt(0xD4, 0);
+		output.putInts(0xCC, user.scrolls);
+		output.putInt(0xD0, 1);
+		output.putInt(0xD4, 1);
 		output.putInt(0xD8, user.getItemID(user.footIndex));
 		output.putInt(0xDC, user.getItemID(user.bodyIndex));
 		output.putInt(0xE0, user.getItemID(user.hand1Index));
@@ -161,6 +173,7 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		*/
 //		output.putInt(0xF4, 0);
 //		output.putInt(0xF4, user.roomFieldF4); // this one. set this to 0 and the game starts automatically.
+		
 		if (lobbyServer.getRoom(roomID).shouldStart(user.roomSlot))
 			output.putInt(0xF4, 0);
 		else
@@ -169,19 +182,26 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		output.putInt(0xF8, 0);
 		output.putInt(0xFC, 0);
 		
+		if (user.username.equals(lobbyServer.getRoom(roomID).roomCreator)) {
+			b = 0;
+		}
+		else {
+			b = 1;
+		}
+		
 		// this is for quests only. if it's 0, then the "monsters level increased" message can not appear.
 		// that probably means that is something like isSoloQuest. also if it's set to 0, the game automatically start,
 		// where if it's set to 1 the game waits for everyone but still doesn't do much afterwards.
-		output.putByte(0x100, (byte) 0); // this is a boolean... setting it to 1 doesn't start for some reason :S
+		output.putByte(0x100, (byte) b); // this is a boolean... setting it to 1 doesn't start for some reason :S
 		output.putByte(0x101, (byte) 0); // heart near the player. extra life by super silver or so.
-		output.putByte(0x102, (byte) 0); // 0x59 in create room
-		output.putByte(0x103, (byte) 0);
+		output.putByte(0x102, (byte) 1); // 0x59 in create room. this is master card 1.3x exp/code bonus
+		output.putByte(0x103, (byte) 1);
 
 		output.putInt(0x104, user.missionLevel); // current mission level (you can play a level 20 mission with someone who's level 20 while you're level 40 for example)
 		output.putInt(0x108, user.missionLevel); // my mission level
 		output.putInt(0x10C, 0); // aura. 1 - aura. others - nothing?
-		output.putInt(0x110, 0x7D6); // something with values 0x7D7 or 0x7D6 or 0x7D3? this is trail when the user moves
-		output.putInt(0x114, 80); // something to do with guild mark
+		output.putInt(0x110, 0); // something with values 0x7D7 or 0x7D6 or 0x7D3? this is trail when the user moves
+		output.putInt(0x114, 0); // something to do with guild mark
 		
 		return output.toArray();
 	}

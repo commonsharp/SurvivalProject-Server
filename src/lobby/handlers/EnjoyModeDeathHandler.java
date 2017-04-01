@@ -56,14 +56,14 @@ public class EnjoyModeDeathHandler extends LobbyHandler {
 		}
 		
 		output.putInts(0x64, Experience.getLevels(experiences));
-		output.putInt(0x84, 0); // another array. unknown yet.
+		output.putInt(0x84, 100); // another array. unknown yet.
 		
 		int elementType = (int)(Math.random() * 4) + 1;
 		int elementAmount = Experience.getElementCount();
 		int elementMultiplier = Experience.getLuckyMultiplier();
 		
 		if (elementAmount != 0) {
-			userSession.getUser().whiteCards[elementType] += elementAmount * elementMultiplier;
+			userSession.getUser().whiteCards[elementType - 1] += elementAmount * elementMultiplier;
 			output.putInt(0xA4, elementType);
 			output.putInt(0xA8, elementAmount);
 			output.putInt(0xAC, elementMultiplier);

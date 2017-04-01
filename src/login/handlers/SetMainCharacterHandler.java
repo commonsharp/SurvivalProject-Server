@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import database.DatabaseConnection;
 import login.LoginHandler;
 import net.Messages;
-import net.DatabaseConnection;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 

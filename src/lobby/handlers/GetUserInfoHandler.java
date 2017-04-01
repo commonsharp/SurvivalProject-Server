@@ -28,7 +28,7 @@ public class GetUserInfoHandler extends LobbyHandler {
 	@Override
 	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
-		User user = lobbyServer.findUser(username);
+		User user = lobbyServer.findUserSession(username).getUser();
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.GET_USER_INFO_RESPONSE);
 		output.putByte(0x14, (byte) 1);
@@ -46,11 +46,22 @@ public class GetUserInfoHandler extends LobbyHandler {
 		output.putLong(0x60, user.playerCode);
 		output.putLong(0x68, user.avatarMoney);
 		
-		output.putInt(0x70, user.getItemID(user.magicIndex));
-		output.putInt(0x74, user.getItemID(user.weaponIndex));
-		output.putInt(0x78, user.getItemID(user.accessoryIndex));
-		output.putInt(0x7C, user.getItemID(user.petIndex));
-
+		if (user.getItemID(user.magicIndex) != -1) {
+			output.putInt(0x70, user.getItemID(user.magicIndex));
+		}
+		
+		if (user.getItemID(user.weaponIndex) != -1) {
+			output.putInt(0x70, user.getItemID(user.weaponIndex));
+		}
+		
+		if (user.getItemID(user.accessoryIndex) != -1) {
+			output.putInt(0x70, user.getItemID(user.accessoryIndex));
+		}
+		
+		if (user.getItemID(user.petIndex) != -1) {
+			output.putInt(0x70, user.getItemID(user.petIndex));
+		}
+		
 		output.putInt(0x80, user.getItemPremiumDays(user.magicIndex));
 		output.putInt(0x84, user.getItemPremiumDays(user.weaponIndex));
 		output.putInt(0x88, user.getItemPremiumDays(user.accessoryIndex));

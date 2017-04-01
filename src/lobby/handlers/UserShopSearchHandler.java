@@ -49,8 +49,8 @@ public class UserShopSearchHandler extends LobbyHandler {
 		for (int i = 0; i < results.length && i < 5; i++) {
 			output.putInt(0x18 + i * 4, -1);
 			output.putString(0x2C + i * 0xD, results[i].getUsername());
-			output.putInt(0x70 + i * 4, lobbyServer.findUser(results[i].getUsername()).playerLevel);
-			output.putBoolean(0x84 + i, lobbyServer.findUser(results[i].getUsername()).isMale);
+			output.putInt(0x70 + i * 4, lobbyServer.findUserSession(results[i].getUsername()).getUser().playerLevel);
+			output.putBoolean(0x84 + i, lobbyServer.findUserSession(results[i].getUsername()).getUser().isMale);
 			output.putLong(0x90 + i * 8, results[i].getCode());
 			
 			if (results[i].getItem() != null) {

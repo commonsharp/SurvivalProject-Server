@@ -64,6 +64,10 @@ public class CreateRoomHandler extends LobbyHandler {
 	public void afterSend() throws IOException {
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(roomNumber)));
 		sendTCPMessage(new RoomPlayersUpdateHandler(lobbyServer, userSession).getResponse(userSession.getUser()));
+		
+		sendTCPMessage(new NewMasterHandler(lobbyServer, userSession).getResponse());
+
+		sendTCPMessage(new Test4460Handler(lobbyServer, userSession).getResponse());
 	}
 
 	@Override
@@ -71,7 +75,7 @@ public class CreateRoomHandler extends LobbyHandler {
 		int[] characters = new int[10];
 		characters[0] = userSession.getUser().mainCharacter;
 		cardsLimit = -1;
-		Room room = new Room(roomNumber, roomName, gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger, characters);
+		Room room = new Room(roomNumber, roomName, userSession.getUser().username, gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger, characters);
 		lobbyServer.setRoom(roomNumber, room);
 		userSession.getUser().isInRoom = true;
 		userSession.getUser().roomSlot = lobbyServer.getRoom(roomNumber).getSlot();
@@ -79,6 +83,11 @@ public class CreateRoomHandler extends LobbyHandler {
 		userSession.getUser().roomCharacter = userSession.getUser().mainCharacter;
 		userSession.getUser().roomReady = 0;
 		userSession.getUser().roomFieldF4 = 2;
+		
+		if (room.isTrainingType()) {
+			userSession.getUser().roomCharacter = 10; // xyrho
+			userSession.getUser().roomReady = 1;
+		}
 		
 		userSession.getUser().roomIndex = roomNumber;
 		lobbyServer.getRoom(roomNumber).setUserSession(userSession.getUser().roomSlot, userSession);
@@ -95,11 +104,11 @@ public class CreateRoomHandler extends LobbyHandler {
 		output.putInt(0x14, 2); // 0,1,3 or 4
 		output.putInt(0x18, roomNumber);
 		output.putString(0x1C, roomName);
-		output.putInt(0x3C, gameType);
+		output.putInt(0x3C, gameType);	
 		output.putInt(0x40, gameMap);
 		output.putInt(0x54, numberOfPlayers);
 		output.putByte(0x58, (byte) isWithScrolls);
-		output.putByte(0x59, (byte) 0);
+		output.putByte(0x59, (byte) 0); // this is master card bonus
 		output.putInt(0x5C, userSession.getUser().roomTeam); // team
 		output.putByte(0x60, (byte) isWithTeams);
 		output.putInt(0x64, cardsLimit);

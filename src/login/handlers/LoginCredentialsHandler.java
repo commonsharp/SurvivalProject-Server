@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import database.DatabaseConnection;
 import login.LoginHandler;
-import net.DatabaseConnection;
 import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
@@ -104,6 +104,18 @@ public class LoginCredentialsHandler extends LoginHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.LOGIN_CREDENTIALS_RESPONSE);
 		
+		/*
+		 * Response values:
+		 * -6 - error in gibberish
+		 * -5 - ban for x days
+		 * -4 - "ID is already logged in..."
+		 * -3 - "Wrong version"
+		 * -2 - "ID is wrong. &#xA;Please try again."
+		 * -1 - "An error  has occurred. &#xA;Please inquire the support team."
+		 * 0 - "Incorrect password"
+		 * 1 - good
+		 * 2 - can't play after 6pm and before 6am. lol.
+		 */
 		output.putInt(0x14, response);
 		
 		if (response == 1) {
@@ -111,8 +123,8 @@ public class LoginCredentialsHandler extends LoginHandler {
 			output.putInt(0x1C, userSession.getUser().mainCharacter);
 			output.putInt(0x20, userSession.getUser().playerLevel);
 			output.putInt(0x24, userSession.getUser().usuableCharacterCount);
-	//		output.putInt(0x28, userSession.getUser().isMuted);
-	//		output.putInt(0x2C, userSession.getUser().daysToMute);
+			output.putInt(0x28, userSession.getUser().isMuted);
+			output.putInt(0x2C, userSession.getUser().banDays);
 			output.putInt(0x30, userSession.getUser().ageRestriction);
 			output.putLong(0x38, userSession.getUser().playerExperience);
 			output.putLong(0x40, userSession.getUser().playerCode);

@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import net.DatabaseConnection;
+import database.DatabaseConnection;
 
 public class User {
 	public String username;
@@ -16,8 +16,8 @@ public class User {
 	public int mainCharacter;
 	public int playerLevel;
 	public int usuableCharacterCount;
-	public int isMuted = 10;
-	public int daysToMute = 10;
+	public int isMuted = 13;
+	public int banDays = 19;
 	public int ageRestriction;
 	public long playerExperience;
 	public long playerCode;
@@ -25,7 +25,7 @@ public class User {
 	public String guildName;
 	public String guildDuty;
 	public int guildRank = 10;
-	public long unknown1; // probably cash (premium money)
+	public long cash; // probably cash (premium money)
 	
 	public Card[] cards;
 	
@@ -33,7 +33,7 @@ public class User {
 	
 	public int playerChannelType = 3; //the channel type player is currently in
 	
-	public int playerInventorySlots = 96;
+	public int playerInventorySlots;
 	public int playerType = 0; //set to 7 for GM... otherwise 0?
 	public int[] whiteCards;
 	public int scrolls[] = {0, 0, 0};
@@ -67,9 +67,12 @@ public class User {
 	public int lives;
 	public int gameKO;
 	
+	public String[] friends;
+	
 	public User() {
 		cards = new Card[96];
 		whiteCards = new int[4];
+		friends = new String[24];
 	}
 	
 	public int getAvatarItemID(int index) {
@@ -151,6 +154,11 @@ public class User {
 	        playerLoses = rs.getInt("loseCount");
 	        playerKOs = rs.getInt("koCount");
 	        playerDowns = rs.getInt("downCount");
+	        cash = rs.getLong("cash");
+	        playerInventorySlots = rs.getInt("inventorySlots");
+	        scrolls[0] = rs.getInt("scroll0");
+	        scrolls[1] = rs.getInt("scroll1");
+	        scrolls[2] = rs.getInt("scroll2");
 	        
 	        ps.close();
 	        rs.close();
@@ -160,12 +168,39 @@ public class User {
 	        ps.setString(1, username);
 	        rs = ps.executeQuery();
 	        
-	        int i = 0;
+	        int i;
 	        while (rs.next()) {
-	        	cards[i++] = new Card(rs.getInt("id"), rs.getInt("premiumDays"), rs.getInt("level"), rs.getInt("skill"));
+	        	i = rs.getInt("index");
+	        	
+	        	int id = rs.getInt("id");
+	        	
+	        	if (id != -1) { 
+	        		cards[i] = new Card(id, rs.getInt("premiumDays"), rs.getInt("level"), rs.getInt("skill"));
+	        	}
 	        }
 	        
 	        rs.close();
+	        ps.close();
+	        
+	        // load friends
+	        ps = con.prepareStatement("Select * FROM friends WHERE username = ?");
+	        ps.setString(1, username);
+	        rs = ps.executeQuery();
+	        i = 0;
+	        
+	        while (rs.next()) {
+	        	friends[i++] = rs.getString("friend");
+	        }
+	        
+	        rs.close();
+	        ps.close();
+	        
+	        
+	        // Set the user's isConnected status to true
+	        ps = con.prepareStatement("UPDATE users SET isConnected=? WHERE username=?");
+	        ps.setBoolean(1, true);
+	        ps.setString(2, username);
+	        ps.executeUpdate();
 	        ps.close();
 		}
 		
@@ -178,7 +213,7 @@ public class User {
 				+ "ageRestriction=?, experience=?, code=?, avatarMoney=?, guildName=?, guildDuty=?, waterElements=?, "
 				+ "fireElements=?, earthElements=?, windElements=?, isMale=?, magicIndex=?, weaponIndex=?, accessoryIndex=?, petIndex=?, "
 				+ "footIndex=?, bodyIndex=?, hand1Index=?, hand2Index=?, faceIndex=?, hairIndex=?, headIndex=?, password=?, "
-				+ "winCount=?, loseCount=?, koCount=?, downCount=? WHERE username=?");
+				+ "winCount=?, loseCount=?, koCount=?, downCount=?, cash=?, inventorySlots=?, scroll0=?, scroll1=?, scroll2=? WHERE username=?");
 		
 		ps.setString(1, username);
 		ps.setInt(2, userType);
@@ -212,8 +247,13 @@ public class User {
 		ps.setInt(30, playerLoses);
 		ps.setInt(31, playerKOs);
 		ps.setInt(32, playerDowns);
+		ps.setLong(33, cash);
+		ps.setInt(34, playerInventorySlots);
+		ps.setInt(35, scrolls[0]);
+		ps.setInt(36, scrolls[1]);
+		ps.setInt(37, scrolls[2]);
 		
-		ps.setString(33, username);
+		ps.setString(38, username);
 		ps.executeUpdate();
 		ps.close();
 		
@@ -233,19 +273,78 @@ public class User {
 				ps.setInt(10, cards[i].getSkill());
 			}
 			else {
-				ps.setInt(3, 0);
-				ps.setInt(4, 0);
-				ps.setInt(5, 0);
-				ps.setInt(6, 0);
-				ps.setInt(7, 0);
-				ps.setInt(8, 0);
-				ps.setInt(9, 0);
-				ps.setInt(10, 0);
+				ps.setInt(3, -1);
+				ps.setInt(4, -1);
+				ps.setInt(5, -1);
+				ps.setInt(6, -1);
+				ps.setInt(7, -1);
+				ps.setInt(8, -1);
+				ps.setInt(9, -1);
+				ps.setInt(10, -1);
 			}
 			ps.executeUpdate();
 			ps.close();
 		}
 		
 		con.close();
+	}
+	
+	public int getEmptyCardSlot() {
+		for (int i = 0; i < 96; i++) {
+			if (cards[i] == null) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	
+	public int getEmptyScrollSlot() {
+		for (int i = 0; i < 3; i++) {
+			if (scrolls[i] == 0) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	
+	public void addFriend(String friendName) throws SQLException {
+		int i;
+		
+		for (i = 0; i < 24; i++) {
+			if (friends[i] == null) {
+				break;
+			}
+		}
+		
+		friends[i] = friendName;
+		
+		Connection con = DatabaseConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement("INSERT INTO friends VALUES (?, ?)");
+		ps.setString(1, username);
+		ps.setString(2, friendName);
+		ps.executeUpdate();
+		
+		ps.close();
+		con.close();
+	}
+
+	public void removeFriend(String friendName) throws SQLException {
+		for (int i = 0; i < 24; i++) {
+			if (friends[i] != null && friends[i].equals(friendName)) {
+				friends[i] = null;
+				
+				Connection con = DatabaseConnection.getConnection();
+				PreparedStatement ps = con.prepareStatement("DELETE FROM friends WHERE username = ? AND friend = ?");
+				ps.setString(1, username);
+				ps.setString(2, friendName);
+				ps.executeUpdate();
+				
+				ps.close();
+				con.close();
+				return;
+			}
+		}
 	}
 }

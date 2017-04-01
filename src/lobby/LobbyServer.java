@@ -4,15 +4,22 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.sql.SQLException;
 
+import lobby.handlers.AddFriend;
+import lobby.handlers.AutoUserShopNewItemHandler;
 import lobby.handlers.BigMatchDeathHandler;
 import lobby.handlers.BigMatchInfo;
+import lobby.handlers.BuyCardHandler;
+import lobby.handlers.BuyElementHandler;
+import lobby.handlers.BuyScrollHandler;
 import lobby.handlers.ChatMessageHandler;
 import lobby.handlers.CreateRoomHandler;
 import lobby.handlers.CrystalDeathHandler;
 import lobby.handlers.EnterCardShopHandler;
+import lobby.handlers.FindUserHandler;
 import lobby.handlers.FusionHandler;
 import lobby.handlers.GameMasterBanHandler;
-import lobby.handlers.GetListOfUsersHandler;
+import lobby.handlers.GetFriendsHandler;
+import lobby.handlers.GetLobbyUsersHandler;
 import lobby.handlers.GetRoomInfoHandler;
 import lobby.handlers.GetTopGuildsHandler;
 import lobby.handlers.GetTopGuildsMarkHandler;
@@ -21,24 +28,26 @@ import lobby.handlers.HokeyGoalHandler;
 import lobby.handlers.ItemsChangedHandler;
 import lobby.handlers.JoinLobbyHandler;
 import lobby.handlers.JoinRoomHandler;
+import lobby.handlers.KickPlayerHandler;
 import lobby.handlers.LeaveGameHandler;
 import lobby.handlers.LeaveRoomHandler;
 import lobby.handlers.MissionCompletedHandler;
 import lobby.handlers.MissionInfoHandler;
+import lobby.handlers.MonsterDeathHandler;
 import lobby.handlers.PetKilledHandler;
 import lobby.handlers.PlayerDeathHandler;
 import lobby.handlers.PlayerResurrectionHandler;
-import lobby.handlers.MonsterDeathHandler;
 import lobby.handlers.QuestInfoHandler;
 import lobby.handlers.RaceInfoHandler;
 import lobby.handlers.RoomNameChangedHandler;
 import lobby.handlers.RoomPlayersUpdateHandler;
+import lobby.handlers.RoomTypeChangedHandler;
 import lobby.handlers.SoccerGoalHandler;
 import lobby.handlers.StartCountdownHandler;
 import lobby.handlers.SymbolStateChanged;
 import lobby.handlers.TradeHandler;
+import lobby.handlers.UseScrollHandler;
 import lobby.handlers.UserShopNewItemHandler;
-import lobby.handlers.AutoUserShopNewItemHandler;
 import lobby.handlers.UserShopSearchHandler;
 import net.GenericTCPServer;
 import net.Messages;
@@ -46,7 +55,6 @@ import net.UserTCPSession;
 import net.handlers.GenericHandler;
 import net.objects.Card;
 import net.objects.Room;
-import net.objects.User;
 import net.objects.UserShop;
 import tools.HexTools;
 
@@ -98,8 +106,17 @@ public class LobbyServer extends GenericTCPServer {
 		case Messages.LEAVE_ROOM_REQUEST:
 			message = new LeaveRoomHandler(this, userSession, messageBytes);
 			break;
+		case Messages.KICK_PLAYER_REQUEST:
+			message = new KickPlayerHandler(this, userSession, messageBytes);
+			break;
 		case Messages.LEAVE_GAME_REQUEST:
 			message = new LeaveGameHandler(this, userSession, messageBytes);
+			break;
+		case Messages.FIND_USER_REQUEST:
+			message = new FindUserHandler(this, userSession, messageBytes);
+			break;
+		case Messages.BUY_SCROLL_REQUEST:
+			message = new BuyScrollHandler(this, userSession, messageBytes);
 			break;
 		case Messages.CHAT_MESSAGE_REQUEST:
 			message = new ChatMessageHandler(this, userSession, messageBytes);
@@ -116,14 +133,23 @@ public class LobbyServer extends GenericTCPServer {
 		case Messages.ROOM_NAME_CHANGED_REQUEST:
 			message = new RoomNameChangedHandler(this, userSession, messageBytes);
 			break;
+		case Messages.GET_FRIENDS_REQUEST:
+			message = new GetFriendsHandler(this, userSession, messageBytes);
+			break;
+		case Messages.ADD_FRIEND_REQUEST:
+			message = new AddFriend(this, userSession, messageBytes);
+			break;
 		case Messages.PLAYER_DEATH_REQUEST:
 			message = new PlayerDeathHandler(this, userSession, messageBytes);
+			break;
+		case Messages.USE_SCROLL_REQUEST:
+			message = new UseScrollHandler(this, userSession, messageBytes);
 			break;
 		case Messages.SOCCER_GOAL_REQUEST:
 			message = new SoccerGoalHandler(this, userSession, messageBytes);
 			break;
-		case Messages.GET_LIST_OF_USERS_REQUEST:
-			message = new GetListOfUsersHandler(this, userSession, messageBytes);
+		case Messages.GET_LOBBY_USERS_REQUEST:
+			message = new GetLobbyUsersHandler(this, userSession, messageBytes);
 			break;
 		case Messages.MONSTER_DEATH_REQUEST:
 			message = new MonsterDeathHandler(this, userSession, messageBytes);
@@ -136,6 +162,9 @@ public class LobbyServer extends GenericTCPServer {
 			break;
 		case Messages.ENTER_CARD_SHOP_REQUEST:
 			message = new EnterCardShopHandler(this, userSession, messageBytes);
+			break;
+		case Messages.BUY_CARD_OR_CHARGE_REQUEST:
+			message = new BuyCardHandler(this, userSession, messageBytes);
 			break;
 		case Messages.USER_SHOP_NEW_ITEM_REQUEST:
 			message = new UserShopNewItemHandler(this, userSession, messageBytes);
@@ -167,6 +196,12 @@ public class LobbyServer extends GenericTCPServer {
 		case Messages.USER_SHOP_SEARCH_REQUEST:
 			message = new UserShopSearchHandler(this, userSession, messageBytes);
 			break;
+		case Messages.BUY_ELEMENTS_REQUEST:
+			message = new BuyElementHandler(this, userSession, messageBytes);
+			break;
+		case Messages.ROOM_TYPE_CHANGED_REQUEST:
+			message = new RoomTypeChangedHandler(this, userSession, messageBytes);
+			break;
 		case Messages.MISSION_START_COUNTDOWN_REQUEST:
 			message = new StartCountdownHandler(this, userSession, messageBytes);
 			break;
@@ -188,6 +223,14 @@ public class LobbyServer extends GenericTCPServer {
 		
 		return message;
 	}
+	
+	public void sendToUserMessage(String username, byte[] message) throws IOException {
+		UserTCPSession userSession = findUserSession(username);
+		
+		if (userSession != null) {
+			userSession.sendMessage(HexTools.duplicateArray(message));
+		}
+	}
 
 	public void sendBroadcastMessage(UserTCPSession userSession, byte[] message) throws IOException {
 		for (UserTCPSession currentUserSession : usersSessions) {
@@ -196,6 +239,17 @@ public class LobbyServer extends GenericTCPServer {
 			if (!currentUserSession.getUser().username.equals(userSession.getUser().username)) {
 				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
 				currentUserSession.sendMessage(HexTools.duplicateArray(message));
+			}
+		}
+	}
+	
+	public void sendFriendsMessage(UserTCPSession userSession, byte[] message) throws IOException {
+		for (String friend : userSession.getUser().friends) {
+			UserTCPSession friendSession = findUserSession(friend);
+			
+			if (friendSession != null) {
+				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
+				friendSession.sendMessage(HexTools.duplicateArray(message));
 			}
 		}
 	}
@@ -214,21 +268,22 @@ public class LobbyServer extends GenericTCPServer {
 			}
 		}
 	}
+	
 
-	public User findUser(String username) {
+	public UserTCPSession findUserSession(String username) {
 		for (UserTCPSession userSession : usersSessions) {
 			if (userSession.getUser().username.equals(username)) {
-				return userSession.getUser();
+				return userSession;
 			}
 		}
 		
 		return null;
 	}
 
-	public User findUser(InetAddress ipAddress, int port) {
+	public UserTCPSession findUserSession(InetAddress ipAddress, int port) {
 		for (UserTCPSession userSession : usersSessions) {
 			if (userSession.getUser().udpIPAddress != null && userSession.getUser().udpIPAddress.equals(ipAddress) && userSession.getUser().udpPort == port) {
-				return userSession.getUser();
+				return userSession;
 			}
 		}
 		

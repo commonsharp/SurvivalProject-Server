@@ -28,4 +28,16 @@ public class Card {
 	public int getSkill() {
 		return skill;
 	}
+
+	public void setPremiumDays(int premiumDays) {
+		this.premiumDays = premiumDays;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public void setSkill(int skill) {
+		this.skill = skill;
+	}
 }

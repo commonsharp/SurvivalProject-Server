@@ -4,8 +4,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import database.DatabaseConnection;
 import log.Log;
 import net.handlers.GenericHandler;
 import net.objects.User;
@@ -45,6 +48,16 @@ public class UserTCPSession implements Runnable {
 				if (length == -1) {
 					server.onUserDisconnect(this);
 					server.usersSessions.remove(this);
+					
+					if (server.getName().equals("Lobby server")) {
+						Connection con = DatabaseConnection.getConnection();
+						PreparedStatement ps = con.prepareStatement("UPDATE users SET isConnected=? WHERE username=?");
+				        ps.setBoolean(1, false);
+				        ps.setString(2, user.username);
+				        ps.executeUpdate();
+				        ps.close();
+					}
+					
 					System.out.println("User disconnected");
 					break;
 				}

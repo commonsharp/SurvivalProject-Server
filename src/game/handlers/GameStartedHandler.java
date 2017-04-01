@@ -54,7 +54,7 @@ public class GameStartedHandler extends GameHandler {
 	@Override
 	public void afterSend() throws IOException {
 		// Send the packet to everyone in the room
-		gameServer.sendToUser(udpServer, roomID, toSlot, getResponse2());
+		gameServer.sendToUser(udpServer, roomID, toSlot, getResponse2(), false);
 
 		UserTCPSession userSession = gameServer.lobby.getRoom(roomID).getUser(fromSlot);
 		

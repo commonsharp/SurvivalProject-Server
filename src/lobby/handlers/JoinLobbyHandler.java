@@ -22,7 +22,6 @@ public class JoinLobbyHandler extends LobbyHandler {
 			1677721600};
     final long minPointForLevelQword[] = {3355443200L, 6710886400L, 13421772800L, 26843545600L};
 	
-	long avatarMoney = 1234;
 	
 	// when you log in you get a visit bonus
 	int visitBonusMoney = 123456;
@@ -38,7 +37,8 @@ public class JoinLobbyHandler extends LobbyHandler {
 	
 	int response = 1;
 	/* calculate channel flag from playerLevel */
-	int channelFlag = (userSession.getUser().playerLevel == 0) ? 0 : (userSession.getUser().playerLevel >= 17) ? 30 : (userSession.getUser().playerLevel >= 13) ? 20 : 10;
+	int channelFlag = 10;
+//	int channelFlag = (userSession.getUser().playerLevel == 0) ? 0 : (userSession.getUser().playerLevel >= 17) ? 30 : (userSession.getUser().playerLevel >= 13) ? 20 : 10;
 	
 	// Registry/IOSPK/Version
 	int spVersion = 11;
@@ -66,6 +66,10 @@ public class JoinLobbyHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException {
+		sendTCPMessage(new GetListOfRoomsHandler(lobbyServer, userSession).getResponse());
+//		sendTCPMessage(new GetLobbyUsersHandler(lobbyServer, userSession).getResponse());
+		
+		sendTCPMessage(new Test4460Handler(lobbyServer, userSession).getResponse());
 	}
 
 	@Override
@@ -79,17 +83,17 @@ public class JoinLobbyHandler extends LobbyHandler {
 		output.putBoolean(0x32, userSession.getUser().isMale);
 		output.putInt(0x34, userSession.getUser().playerWins); // 0x34
 		output.putInt(0x38, userSession.getUser().playerLoses); // 0x38
-		output.putInt(0x3c, 10); // 0x3c - something with wins maybe...
+		output.putInt(0x3c, 1); // 0x3c - something with wins maybe...
 		output.putInt(0x40, userSession.getUser().playerLevel);
 		output.putInt(0x44, userSession.getUser().playerKOs); // 0x44
 		output.putInt(0x48, userSession.getUser().playerDowns); // 0x48
-		output.putInt(0x50, 10); // 0x50
-		output.putInt(0x54, 10); // 0x54
-		output.putInt(0x58, 10); // not sure if this should even be here
-		output.putInt(0x5c, 10); // 0x5c
+		output.putInt(0x50, 1); // 0x50
+		output.putInt(0x54, 1); // 0x54
+		output.putInt(0x58, 1); // not sure if this should even be here
+		output.putInt(0x5c, 1); // 0x5c
 		output.putLong(0x60, userSession.getUser().playerExperience); // 0x60
 		output.putLong(0x68, userSession.getUser().playerCode); // 0x68
-		output.putLong(0x70, avatarMoney); // 0x70
+		output.putLong(0x70, userSession.getUser().avatarMoney); // 0x70
 		output.putInt(0x78, userSession.getUser().playerLevel); // 0x78
 		output.putInt(0x7C, userSession.getUser().usuableCharacterCount); // 0x7c
 		output.putInt(0x80, userSession.getUser().scrolls[0]); // 0x80
@@ -138,7 +142,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 		output.putInt(0x938, visitBonusAvatarMoney);
 		output.putBytes(0x93C, userSession.getUser().playerEventFlags); // 0x93C
 		output.putInt(0x944, playerRank); // 0x944
-		output.putByte(0x948, (byte) 10);
+		output.putByte(0x948, (byte) 1);
 		output.putInt(0x94C, lobbyMaxRooms); // 0x94c
 		output.putInt(0x950, userSession.getUser().footIndex);
 		output.putInt(0x954, userSession.getUser().bodyIndex);
@@ -147,8 +151,8 @@ public class JoinLobbyHandler extends LobbyHandler {
 		output.putInt(0x960, userSession.getUser().faceIndex);
 		output.putInt(0x964, userSession.getUser().hairIndex);
 		output.putInt(0x968, userSession.getUser().headIndex);
-		output.putInt(0x96C, 10); // something with guild mark
-		output.putInt(0x970, 10); // 0x970 = field_A0 in Login
+		output.putInt(0x96C, 1); // something with guild mark
+		output.putInt(0x970, 1); // 0x970 = field_A0 in Login
 		output.putInt(0x974, userSession.getUser().playerType); // 0x974
 		output.putByte(0x978, (byte) 0); // boolean. 1 = the account will be deleted after 15 inactive days.
 		

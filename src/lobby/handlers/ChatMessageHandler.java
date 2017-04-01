@@ -13,7 +13,7 @@ public class ChatMessageHandler extends LobbyHandler {
 	
 	protected int messageType;
 	protected String username;
-	protected String unknown;
+	protected String whisperUsername;
 	protected String text;
 	
 	public ChatMessageHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
@@ -25,10 +25,10 @@ public class ChatMessageHandler extends LobbyHandler {
 	public void interpretBytes() {
 		messageType = input.getInt(0x14);
 		username = input.getString(0x18);
-		unknown = input.getString(0x25);
+		whisperUsername = input.getString(0x25);
 		text = input.getString(0x32);
 		
-		System.out.println("Unknown in chat message: " + unknown);
+		System.out.println("Messagetype in chat: " + messageType);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class ChatMessageHandler extends LobbyHandler {
 		output.putInt(0x4, Messages.CHAT_MESSAGE_RESPONSE);
 		output.putInt(0x14, messageType);
 		output.putString(0x18, username);
-		output.putString(0x25, unknown);
+		output.putString(0x25, whisperUsername);
 		output.putString(0x32, text);
 		
 		return output.toArray();
@@ -58,6 +58,17 @@ public class ChatMessageHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		lobbyServer.sendBroadcastMessage(userSession, getResponse2());
+		// All chat or trade chat - send to everyone
+		if (messageType == 0 || messageType == 7) {
+			lobbyServer.sendBroadcastMessage(userSession, getResponse2());
+		}
+		// Whisper
+		else if (messageType == 1) {
+			lobbyServer.sendToUserMessage(whisperUsername, getResponse2());
+		}
+		// Friends chat
+		else if (messageType == 2) {
+			lobbyServer.sendFriendsMessage(userSession, getResponse2());
+		}
 	}
 }

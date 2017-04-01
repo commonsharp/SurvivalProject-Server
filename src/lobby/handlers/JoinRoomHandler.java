@@ -45,16 +45,16 @@ public class JoinRoomHandler extends LobbyHandler {
 		output.putInt(0x40, lobbyServer.getRoom(roomID).getGameMap());
 		output.putInt(0x54, lobbyServer.getRoom(roomID).getMaxNumberOfPlayers());
 		output.putByte(0x58, lobbyServer.getRoom(roomID).getIsWithScrolls());
-		output.putInt(0x5C, 10); // character?
+		output.putInt(0x5C, 0); // character?
 		output.putByte(0x60, (byte) 0); //this is like field F4. set to -1 to start automatically...
-		output.putByte(0x61, (byte) 10);
+		output.putByte(0x61, (byte) 0);
 		output.putInt(0x64, userSession.getUser().roomSlot);
 		output.putInt(0x68, userSession.getUser().roomTeam);
 		output.putByte(0x6C, lobbyServer.getRoom(roomID).getIsWithTeams());
 		output.putInt(0x70, lobbyServer.getRoom(roomID).getCardsLimit());
-		output.putShort(0x74, (short) 10);
+		output.putShort(0x74, (short) 2);
 		output.putByte(0x78, lobbyServer.getRoom(roomID).getIsLimitAnger());
-		output.putByte(0x79, (byte) 10);
+		output.putByte(0x79, (byte) 0);
 		return output.toArray();
 	}
 
@@ -75,6 +75,8 @@ public class JoinRoomHandler extends LobbyHandler {
 		
 		lobbyServer.sendRoomMessage(userSession, new RoomPlayersUpdateHandler(lobbyServer, userSession).getResponse(userSession.getUser()), false);
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(roomID)));
+		
+		sendTCPMessage(new NewMasterHandler(lobbyServer, userSession).getResponse());
 	}
 
 	@Override

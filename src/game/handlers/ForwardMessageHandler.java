@@ -51,7 +51,13 @@ public class ForwardMessageHandler extends GameHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		gameServer.sendToUser(udpServer, roomID, toSlot, getResponse2());
+		boolean sendInRoom = false;
+		
+		if (messageID == 0x1124 || messageID == 0x1112) {
+			sendInRoom = true;
+		}
+		
+		gameServer.sendToUser(udpServer, roomID, toSlot, getResponse2(), sendInRoom);
 //		gameServer.roomMessage(udpServer, roomID, slot, getResponse2());
 	}
 
