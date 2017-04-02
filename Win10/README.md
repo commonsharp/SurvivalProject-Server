@@ -1,5 +1,3 @@
-**TODO - Add MySQL instructions**
-
 # Installing the client
 
 * Download alanlei's client from here:
@@ -23,6 +21,8 @@ If you get an error while running sp2.exe, run it as administrator.
 
 # Installing the server
 **The server files are not completed yet, therefore you would have to compile them yourself using any Java IDE.**
+
+* Install MySQL workbench. Create a new database called spgame. Import the tables included in MySQL directory in this git. Make sure your MySQL port is 3306. If you change it to a different port, make sure you change it in DatabaseConnection.java in the server files as well.
 
 * Change the IP in /src/login/handlers/ServerInfoHandler.java to your own IP (not the local one), or to 127.0.0.1 if you're playing alone.
 
