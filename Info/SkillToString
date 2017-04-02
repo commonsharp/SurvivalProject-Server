@@ -1,0 +1,906 @@
+int __cdecl SkillToString(int skillID, signed int chance, int a3, char *a4, signed int a5, _BYTE *a6)
+{
+  signed int v6; // ecx@1
+  double v7; // ST10_8@4
+  unsigned __int8 *v8; // eax@4
+  double v9; // ST10_8@7
+  unsigned __int8 *v10; // eax@7
+  double v11; // ST10_8@14
+  unsigned __int8 *v12; // eax@14
+  double v13; // ST10_8@16
+  unsigned __int8 *v14; // eax@16
+  double v15; // ST10_8@17
+  unsigned __int8 *v16; // eax@17
+  double v17; // ST10_8@19
+  unsigned __int8 *v18; // eax@19
+  double v19; // ST10_8@20
+  unsigned __int8 *v20; // eax@20
+  double v21; // ST10_8@22
+  unsigned __int8 *v22; // eax@22
+  double v23; // ST10_8@23
+  double v24; // ST10_8@24
+  unsigned __int8 *v25; // eax@24
+  double v26; // ST10_8@25
+  unsigned __int8 *v27; // eax@25
+  unsigned __int8 *v28; // eax@15
+  double v29; // ST10_8@28
+  unsigned __int8 *v30; // eax@28
+  double v31; // ST10_8@29
+  unsigned __int8 *v32; // eax@23
+  unsigned __int8 *v33; // eax@6
+  double v34; // ST10_8@33
+  unsigned __int8 *v35; // eax@33
+  double v36; // ST10_8@35
+  unsigned __int8 *v37; // eax@35
+  double v38; // ST10_8@36
+  unsigned __int8 *v39; // eax@36
+  char v40; // ST14_1@37
+  unsigned __int8 *v41; // ST10_4@37
+  char v42; // ST14_1@39
+  unsigned __int8 *v43; // ST10_4@39
+  char v44; // ST14_1@40
+  unsigned __int8 *v45; // ST10_4@40
+  char v46; // ST14_1@42
+  unsigned __int8 *v47; // ST10_4@42
+  char v48; // ST14_1@43
+  unsigned __int8 *v49; // ST10_4@43
+  char v50; // ST14_1@45
+  unsigned __int8 *v51; // ST10_4@45
+  char v52; // ST14_1@46
+  unsigned __int8 *v53; // ST10_4@46
+  int v54; // eax@50
+  char v55; // ST10_1@51
+  unsigned __int8 *v56; // eax@51
+  double v57; // ST0C_8@52
+  unsigned __int8 *v58; // eax@52
+  int v59; // eax@53
+  char v60; // ST10_1@54
+  unsigned __int8 *v61; // eax@54
+  double v62; // ST0C_8@55
+  unsigned __int8 *v63; // eax@55
+  int v64; // eax@59
+  char v65; // ST10_1@60
+  unsigned __int8 *v66; // eax@60
+  double v67; // ST0C_8@61
+  unsigned __int8 *v68; // eax@61
+  int v69; // eax@62
+  char v70; // ST10_1@63
+  unsigned __int8 *v71; // eax@63
+  double v72; // ST0C_8@64
+  unsigned __int8 *v73; // eax@64
+  int v74; // eax@68
+  char v75; // ST10_1@69
+  unsigned __int8 *v76; // eax@69
+  double v77; // ST0C_8@70
+  unsigned __int8 *v78; // eax@70
+  int v79; // eax@71
+  char v80; // ST10_1@72
+  unsigned __int8 *v81; // eax@72
+  double v82; // ST0C_8@73
+  unsigned __int8 *v83; // eax@73
+  int v84; // eax@75
+  char v85; // ST10_1@76
+  unsigned __int8 *v86; // eax@76
+  double v87; // ST0C_8@77
+  unsigned __int8 *v88; // eax@77
+  int v89; // eax@81
+  char v90; // ST10_1@82
+  unsigned __int8 *v91; // eax@82
+  double v92; // ST0C_8@83
+  unsigned __int8 *v93; // eax@83
+  int v94; // eax@84
+  char v95; // ST10_1@85
+  unsigned __int8 *v96; // eax@85
+  double v97; // ST0C_8@86
+  unsigned __int8 *v98; // eax@86
+  int v99; // eax@90
+  char v100; // ST10_1@91
+  unsigned __int8 *v101; // eax@91
+  double v102; // ST0C_8@92
+  unsigned __int8 *v103; // eax@92
+  int v104; // eax@93
+  char v105; // ST10_1@94
+  unsigned __int8 *v106; // eax@94
+  double v107; // ST0C_8@95
+  unsigned __int8 *v108; // eax@95
+  int v109; // eax@99
+  char v110; // ST10_1@100
+  unsigned __int8 *v111; // eax@100
+  double v112; // ST0C_8@101
+  unsigned __int8 *v113; // eax@101
+  int v114; // eax@102
+  char v115; // ST10_1@103
+  unsigned __int8 *v116; // eax@103
+  double v117; // ST0C_8@104
+  unsigned __int8 *v118; // eax@104
+  int v119; // eax@108
+  char v120; // ST10_1@109
+  unsigned __int8 *v121; // eax@109
+  double v122; // ST0C_8@110
+  unsigned __int8 *v123; // eax@110
+  int v124; // eax@111
+  char v125; // ST10_1@112
+  unsigned __int8 *v126; // eax@112
+  double v127; // ST0C_8@113
+  unsigned __int8 *v128; // eax@113
+  int v129; // eax@117
+  char v130; // ST10_1@118
+  unsigned __int8 *v131; // eax@118
+  double v132; // ST0C_8@119
+  unsigned __int8 *v133; // eax@119
+  const char *v134; // eax@121
+  double v135; // ST0C_8@122
+  unsigned __int8 *v136; // eax@122
+  unsigned __int8 *v137; // eax@5
+  unsigned __int8 *v138; // eax@49
+  char v139; // ST14_1@128
+  unsigned __int8 *v140; // ST10_4@128
+  char v141; // ST14_1@130
+  unsigned __int8 *v142; // ST10_4@130
+  char v143; // ST14_1@131
+  unsigned __int8 *v144; // ST10_4@131
+  unsigned __int8 *v145; // eax@38
+  int result; // eax@134
+  double v147; // [sp+0h] [bp-128h]@23
+  double v148; // [sp+4h] [bp-124h]@49
+  double v149; // [sp+8h] [bp-120h]@5
+  double v150; // [sp+8h] [bp-120h]@6
+  double v151; // [sp+8h] [bp-120h]@15
+  char v152; // [sp+Ch] [bp-11Ch]@38
+  signed int v153; // [sp+Ch] [bp-11Ch]@120
+  char v154; // [sp+10h] [bp-118h]@0
+  CHAR v155; // [sp+18h] [bp-110h]@1
+  int v156; // [sp+124h] [bp-4h]@1
+
+  v156 = -1153374642;
+  memset(&v155, 0, 0x104u);
+  v6 = chance;
+  if ( chance < 2 )
+    v6 = 2;
+  *a6 = 0;
+  switch ( skillID )
+  {
+    case 127:
+    case 128:
+    case 129:
+    case 130:
+    case 131:
+      v7 = *a3 * -1.0;
+      v8 = GetString(1740);
+      sub_73F204(&v155, v8, SLOBYTE(v7));
+      goto LABEL_134;
+    case 100:
+    case 118:
+    case 119:
+    case 120:
+    case 121:
+      v149 = *(a3 + 8);
+      v137 = GetString(1741);
+      goto LABEL_125;
+    case 137:
+      v150 = *(a3 + 8);
+      v33 = GetString(1742);
+      goto LABEL_32;
+    case 122:
+    case 123:
+    case 124:
+    case 125:
+    case 126:
+      v9 = *(a3 + 16);
+      v10 = GetString(1743);
+      sub_73F204(&v155, v10, SLOBYTE(v9));
+      goto LABEL_134;
+    case 132:
+    case 133:
+    case 134:
+    case 135:
+    case 136:
+      v149 = *(a3 + 24) * -1.0;
+      v137 = GetString(1746);
+      goto LABEL_125;
+    case 101:
+      sub_73F204(&v155, dword_7A3B5C, v154);
+      goto LABEL_134;
+    case 138:
+      sub_73F204(&v155, dword_7A3B44, v154);
+      goto LABEL_134;
+    case 139:
+      sub_73F204(&v155, dword_7A3B2C, v154);
+      goto LABEL_134;
+    case 140:
+      sub_73F204(&v155, dword_7A3B14, v154);
+      goto LABEL_134;
+    case 141:
+      sub_73F204(&v155, dword_7A3AFC, v154);
+      goto LABEL_134;
+    case 102:
+    case 144:
+    case 145:
+    case 186:
+    case 187:
+      v11 = *(a3 + 16) * -1.0;
+      v12 = GetString(1754);
+      sub_73F204(&v155, v12, SLOBYTE(v11));
+      goto LABEL_134;
+    case 180:
+      v151 = *(a3 + 16);
+      v28 = GetString(1753);
+      goto LABEL_27;
+    case 103:
+    case 142:
+    case 143:
+    case 184:
+    case 185:
+      v13 = *a3;
+      v14 = GetString(1749);
+      sub_73F204(&v155, v14, SLOBYTE(v13));
+      goto LABEL_134;
+    case 104:
+    case 146:
+    case 147:
+    case 188:
+    case 189:
+      v15 = *(a3 + 8) * -1.0;
+      v16 = GetString(1752);
+      sub_73F204(&v155, v16, SLOBYTE(v15));
+      goto LABEL_134;
+    case 105:
+    case 148:
+    case 149:
+    case 190:
+    case 191:
+      v149 = *(a3 + 24) * -1.0;
+      v137 = GetString(1756);
+      goto LABEL_125;
+    case 106:
+      v17 = *(a3 + 8) * -1.0;
+      v18 = GetString(1754);
+      sub_73F204(&v155, v18, SLOBYTE(v17));
+      goto LABEL_134;
+    case 181:
+      v19 = *(a3 + 8);
+      v20 = GetString(1753);
+      sub_73F204(&v155, v20, SLOBYTE(v19));
+      *a6 = 1;
+      goto LABEL_134;
+    case 107:
+    case 150:
+    case 151:
+    case 192:
+    case 193:
+      v149 = *a3 * -1.0;
+      v137 = GetString(1764);
+      goto LABEL_125;
+    case 108:
+    case 152:
+    case 153:
+    case 194:
+    case 195:
+      v21 = *(a3 + 16) * -1.0;
+      v22 = GetString(1756);
+      sub_73F204(&v155, v22, SLOBYTE(v21));
+      goto LABEL_134;
+    case 109:
+    case 154:
+    case 155:
+    case 196:
+    case 197:
+      v23 = *(a3 + 16) * -1.0;
+      v147 = *a3 * -1.0;
+      v32 = GetString(1778);
+      goto LABEL_30;
+    case 110:
+    case 156:
+    case 157:
+    case 158:
+    case 159:
+      v24 = *(a3 + 8);
+      v25 = GetString(1767);
+      sub_73F204(&v155, v25, SLOBYTE(v24));
+      goto LABEL_134;
+    case 111:
+    case 160:
+    case 161:
+    case 162:
+    case 163:
+      v26 = *a3;
+      v27 = GetString(1765);
+      sub_73F204(&v155, v27, SLOBYTE(v26));
+      goto LABEL_134;
+    case 182:
+      v151 = *a3 * -1.0;
+      v28 = GetString(1766);
+LABEL_27:
+      sub_73F204(&v155, v28, SLOBYTE(v151));
+      *a6 = 1;
+      goto LABEL_134;
+    case 112:
+    case 164:
+    case 165:
+    case 166:
+    case 167:
+      v29 = *(a3 + 16) * -1.0;
+      v30 = GetString(1770);
+      sub_73F204(&v155, v30, SLOBYTE(v29));
+      goto LABEL_134;
+    case 113:
+    case 168:
+    case 169:
+    case 170:
+    case 171:
+      v31 = *(a3 + 16) * -1.0;
+      v147 = *(a3 + 8);
+      v32 = GetString(1779);
+LABEL_30:
+      sub_73F204(&v155, v32, SLOBYTE(v147));
+      goto LABEL_134;
+    case 183:
+      v150 = *a3;
+      v33 = GetString(1758);
+LABEL_32:
+      sub_73F204(&v155, v33, SLOBYTE(v150));
+      *a6 = 1;
+      goto LABEL_134;
+    case 114:
+    case 172:
+    case 173:
+      v34 = *a3;
+      v35 = GetString(1757);
+      sub_73F204(&v155, v35, SLOBYTE(v34));
+      goto LABEL_134;
+    case 115:
+    case 174:
+    case 175:
+      v149 = *(a3 + 16);
+      v137 = GetString(1761);
+      goto LABEL_125;
+    case 116:
+    case 176:
+    case 177:
+      v36 = *(a3 + 8);
+      v37 = GetString(1759);
+      sub_73F204(&v155, v37, SLOBYTE(v36));
+      goto LABEL_134;
+    case 117:
+    case 178:
+    case 179:
+      v38 = *a3;
+      v39 = GetString(1780);
+      sub_73F204(&v155, v39, SLOBYTE(v38));
+      goto LABEL_134;
+    case 200:
+      v40 = v6;
+      v41 = GetString(1781);
+      sub_73F204(&v155, v41, v40);
+      goto LABEL_134;
+    case 201:
+      v152 = v6;
+      v145 = GetString(1782);
+      goto LABEL_133;
+    case 202:
+      v42 = v6;
+      v43 = GetString(1783);
+      sub_73F204(&v155, v43, v42);
+      goto LABEL_134;
+    case 203:
+      v44 = v6;
+      v45 = GetString(1784);
+      sub_73F204(&v155, v45, v44);
+      goto LABEL_134;
+    case 204:
+      v152 = v6;
+      v145 = GetString(1935);
+      goto LABEL_133;
+    case 205:
+      v46 = v6;
+      v47 = GetString(1936);
+      sub_73F204(&v155, v47, v46);
+      goto LABEL_134;
+    case 206:
+      v48 = v6;
+      v49 = GetString(1937);
+      sub_73F204(&v155, v49, v48);
+      goto LABEL_134;
+    case 207:
+      v152 = v6;
+      v145 = GetString(1938);
+      goto LABEL_133;
+    case 208:
+      v50 = v6;
+      v51 = GetString(1939);
+      sub_73F204(&v155, v51, v50);
+      goto LABEL_134;
+    case 209:
+      v52 = v6;
+      v53 = GetString(1940);
+      sub_73F204(&v155, v53, v52);
+      goto LABEL_134;
+    case 300:
+    case 321:
+    case 322:
+    case 323:
+    case 324:
+      if ( !(a5 % 1000) )
+      {
+        LODWORD(v149) = a5 / 1000;
+        v137 = GetString(1785);
+        goto LABEL_125;
+      }
+      v148 = a5 * 0.001;
+      v138 = GetString(1786);
+      goto LABEL_127;
+    case 301:
+    case 325:
+    case 326:
+    case 327:
+    case 328:
+      v54 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v57 = a5 * 0.001;
+        v58 = GetString(1788);
+        sub_73F204(&v155, v58, SLOBYTE(v57));
+      }
+      else
+      {
+        v55 = v54;
+        v56 = GetString(1787);
+        sub_73F204(&v155, v56, v55);
+      }
+      goto LABEL_134;
+    case 302:
+    case 329:
+    case 330:
+    case 331:
+    case 332:
+      v59 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v62 = a5 * 0.001;
+        v63 = GetString(1790);
+        sub_73F204(&v155, v63, SLOBYTE(v62));
+      }
+      else
+      {
+        v60 = v59;
+        v61 = GetString(1789);
+        sub_73F204(&v155, v61, v60);
+      }
+      goto LABEL_134;
+    case 303:
+    case 333:
+    case 334:
+    case 335:
+    case 336:
+      if ( !(a5 % 1000) )
+      {
+        LODWORD(v149) = a5 / 1000;
+        v137 = GetString(1791);
+        goto LABEL_125;
+      }
+      v148 = a5 * 0.001;
+      v138 = GetString(1792);
+      goto LABEL_127;
+    case 304:
+    case 337:
+    case 338:
+    case 339:
+    case 340:
+      v64 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v67 = a5 * 0.001;
+        v68 = GetString(1794);
+        sub_73F204(&v155, v68, SLOBYTE(v67));
+      }
+      else
+      {
+        v65 = v64;
+        v66 = GetString(1793);
+        sub_73F204(&v155, v66, v65);
+      }
+      goto LABEL_134;
+    case 305:
+    case 341:
+    case 342:
+    case 343:
+    case 344:
+      v69 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v72 = a5 * 0.001;
+        v73 = GetString(1796);
+        sub_73F204(&v155, v73, SLOBYTE(v72));
+      }
+      else
+      {
+        v70 = v69;
+        v71 = GetString(1795);
+        sub_73F204(&v155, v71, v70);
+      }
+      goto LABEL_134;
+    case 306:
+    case 345:
+    case 346:
+    case 347:
+    case 348:
+      if ( !(a5 % 1000) )
+      {
+        LODWORD(v149) = a5 / 1000;
+        v137 = GetString(1797);
+        goto LABEL_125;
+      }
+      v148 = a5 * 0.001;
+      v138 = GetString(1798);
+      goto LABEL_127;
+    case 307:
+    case 353:
+    case 354:
+    case 355:
+    case 356:
+      v74 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v77 = a5 * 0.001;
+        v78 = GetString(1800);
+        sub_73F204(&v155, v78, SLOBYTE(v77));
+      }
+      else
+      {
+        v75 = v74;
+        v76 = GetString(1799);
+        sub_73F204(&v155, v76, v75);
+      }
+      goto LABEL_134;
+    case 308:
+    case 357:
+    case 358:
+    case 359:
+    case 360:
+      v79 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v82 = a5 * 0.001;
+        v83 = GetString(1802);
+        sub_73F204(&v155, v83, SLOBYTE(v82));
+      }
+      else
+      {
+        v80 = v79;
+        v81 = GetString(1801);
+        sub_73F204(&v155, v81, v80);
+      }
+      goto LABEL_134;
+    case 309:
+      v152 = v6;
+      v145 = GetString(1803);
+      goto LABEL_133;
+    case 310:
+    case 349:
+    case 350:
+    case 351:
+    case 352:
+      v84 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v87 = a5 * 0.001;
+        v88 = GetString(1805);
+        sub_73F204(&v155, v88, SLOBYTE(v87));
+      }
+      else
+      {
+        v85 = v84;
+        v86 = GetString(1804);
+        sub_73F204(&v155, v86, v85);
+      }
+      goto LABEL_134;
+    case 311:
+    case 361:
+    case 362:
+    case 363:
+    case 364:
+      if ( !(a5 % 1000) )
+      {
+        LODWORD(v149) = a5 / 1000;
+        v137 = GetString(1806);
+        goto LABEL_125;
+      }
+      v148 = a5 * 0.001;
+      v138 = GetString(1807);
+      goto LABEL_127;
+    case 312:
+    case 365:
+    case 366:
+    case 367:
+    case 368:
+      v89 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v92 = a5 * 0.001;
+        v93 = GetString(1809);
+        sub_73F204(&v155, v93, SLOBYTE(v92));
+      }
+      else
+      {
+        v90 = v89;
+        v91 = GetString(1808);
+        sub_73F204(&v155, v91, v90);
+      }
+      goto LABEL_134;
+    case 313:
+    case 369:
+    case 370:
+    case 371:
+    case 372:
+      v94 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v97 = a5 * 0.001;
+        v98 = GetString(1811);
+        sub_73F204(&v155, v98, SLOBYTE(v97));
+      }
+      else
+      {
+        v95 = v94;
+        v96 = GetString(1810);
+        sub_73F204(&v155, v96, v95);
+      }
+      goto LABEL_134;
+    case 314:
+    case 373:
+    case 374:
+    case 375:
+    case 376:
+      if ( !(a5 % 1000) )
+      {
+        LODWORD(v149) = a5 / 1000;
+        v137 = GetString(1812);
+        goto LABEL_125;
+      }
+      v148 = a5 * 0.001;
+      v138 = GetString(1813);
+      goto LABEL_127;
+    case 315:
+    case 377:
+    case 378:
+    case 379:
+    case 380:
+      v99 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v102 = a5 * 0.001;
+        v103 = GetString(1815);
+        sub_73F204(&v155, v103, SLOBYTE(v102));
+      }
+      else
+      {
+        v100 = v99;
+        v101 = GetString(1814);
+        sub_73F204(&v155, v101, v100);
+      }
+      goto LABEL_134;
+    case 381:
+    case 382:
+    case 383:
+    case 384:
+    case 385:
+      v104 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v107 = a5 * 0.001;
+        v108 = GetString(1942);
+        sub_73F204(&v155, v108, SLOBYTE(v107));
+      }
+      else
+      {
+        v105 = v104;
+        v106 = GetString(1941);
+        sub_73F204(&v155, v106, v105);
+      }
+      goto LABEL_134;
+    case 386:
+    case 387:
+    case 388:
+    case 389:
+    case 390:
+      if ( !(a5 % 1000) )
+      {
+        LODWORD(v149) = a5 / 1000;
+        v137 = GetString(4010);
+        goto LABEL_125;
+      }
+      v148 = a5 * 0.001;
+      v138 = GetString(4011);
+      goto LABEL_127;
+    case 391:
+    case 392:
+    case 393:
+    case 394:
+    case 395:
+      v109 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v112 = a5 * 0.001;
+        v113 = GetString(4013);
+        sub_73F204(&v155, v113, SLOBYTE(v112));
+      }
+      else
+      {
+        v110 = v109;
+        v111 = GetString(4012);
+        sub_73F204(&v155, v111, v110);
+      }
+      goto LABEL_134;
+    case 396:
+    case 397:
+    case 398:
+    case 399:
+    case 400:
+      v114 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v117 = a5 * 0.001;
+        v118 = GetString(4015);
+        sub_73F204(&v155, v118, SLOBYTE(v117));
+      }
+      else
+      {
+        v115 = v114;
+        v116 = GetString(4014);
+        sub_73F204(&v155, v116, v115);
+      }
+      goto LABEL_134;
+    case 401:
+    case 402:
+    case 403:
+    case 404:
+    case 405:
+      if ( !(a5 % 1000) )
+      {
+        LODWORD(v149) = a5 / 1000;
+        v137 = GetString(4016);
+        goto LABEL_125;
+      }
+      v148 = a5 * 0.001;
+      v138 = GetString(4017);
+      goto LABEL_127;
+    case 406:
+    case 407:
+    case 408:
+    case 409:
+    case 410:
+      v119 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v122 = a5 * 0.001;
+        v123 = GetString(4019);
+        sub_73F204(&v155, v123, SLOBYTE(v122));
+      }
+      else
+      {
+        v120 = v119;
+        v121 = GetString(4018);
+        sub_73F204(&v155, v121, v120);
+      }
+      goto LABEL_134;
+    case 411:
+    case 412:
+    case 413:
+    case 414:
+    case 415:
+      v124 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v127 = a5 * 0.001;
+        v128 = GetString(4021);
+        sub_73F204(&v155, v128, SLOBYTE(v127));
+      }
+      else
+      {
+        v125 = v124;
+        v126 = GetString(4020);
+        sub_73F204(&v155, v126, v125);
+      }
+      goto LABEL_134;
+    case 416:
+    case 417:
+    case 418:
+    case 419:
+    case 420:
+      if ( !(a5 % 1000) )
+      {
+        LODWORD(v149) = a5 / 1000;
+        v137 = GetString(4022);
+        goto LABEL_125;
+      }
+      v148 = a5 * 0.001;
+      v138 = GetString(4023);
+      goto LABEL_127;
+    case 421:
+    case 422:
+    case 423:
+    case 424:
+    case 425:
+      v129 = a5 / 1000;
+      if ( a5 % 1000 )
+      {
+        v132 = a5 * 0.001;
+        v133 = GetString(4025);
+        sub_73F204(&v155, v133, SLOBYTE(v132));
+      }
+      else
+      {
+        v130 = v129;
+        v131 = GetString(4024);
+        sub_73F204(&v155, v131, v130);
+      }
+      goto LABEL_134;
+    case 426:
+    case 427:
+    case 428:
+    case 429:
+    case 430:
+      v153 = v6;
+      if ( a5 % 1000 )
+      {
+        v135 = a5 * 0.001;
+        v136 = GetString(4027);
+        sub_73F204(&v155, v136, SLOBYTE(v135));
+      }
+      else
+      {
+        v134 = GetString(4026);
+        wsprintfA(&v155, v134, a5 / 1000, v153);
+      }
+      goto LABEL_134;
+    case 431:
+    case 432:
+    case 433:
+    case 434:
+    case 435:
+      if ( a5 % 1000 )
+      {
+        v148 = a5 * 0.001;
+        v138 = GetString(4029);
+LABEL_127:
+        sub_73F204(&v155, v138, SLOBYTE(v148));
+      }
+      else
+      {
+        LODWORD(v149) = a5 / 1000;
+        v137 = GetString(4028);
+LABEL_125:
+        sub_73F204(&v155, v137, SLOBYTE(v149));
+      }
+LABEL_134:
+      strcpy(a4, &v155);
+      return result;
+    case 316:
+      v139 = v6;
+      v140 = GetString(1943);
+      sub_73F204(&v155, v140, v139);
+      goto LABEL_134;
+    case 317:
+      v152 = v6;
+      v145 = GetString(1944);
+      goto LABEL_133;
+    case 318:
+      v141 = v6;
+      v142 = GetString(1945);
+      sub_73F204(&v155, v142, v141);
+      goto LABEL_134;
+    case 319:
+      v143 = v6;
+      v144 = GetString(1946);
+      sub_73F204(&v155, v144, v143);
+      goto LABEL_134;
+    case 320:
+      v152 = v6;
+      v145 = GetString(1947);
+LABEL_133:
+      sub_73F204(&v155, v145, v152);
+      goto LABEL_134;
+    default:
+      goto LABEL_134;
+  }
+}
