@@ -1,3 +1,5 @@
+According to the two following functions, every weapon has a similar fusion cost, but magic and different accessories have different costs.
+
 void __thiscall FusionCosts(int this)
 {
   int v1; // ebp@0
