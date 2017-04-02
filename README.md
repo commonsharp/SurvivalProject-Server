@@ -15,7 +15,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [x] Make the Database.isConnected function a bit more efficient by checking if the user exists in userSessions. It should be faster than calling the database. Then we can also remove the isConnected column in the database.
 - [x] Sort the userSessions by username, and when you search for a user, use binary search. Or - every user will have a field indicates its index in userSessions, that would be saved in the database. Then if we want to send a message to that user, we go to the database, search for his index in userSessions and send a message. Would it be faster though?
 - [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
-- [ ] Lose/gain money when you buy/sell scrolls.
+- [x] Lose/gain money when you buy/sell scrolls.
 - [ ] Add experience/elements after a kill in big matches.
 - [ ] Add experience/elements after a kill in other modes (not big matches/quests).
 - [ ] When the master of the room leaves a quest, he may no longer join, as it restarts everyone else's quest. Therefore, it must be locked **ONLY FOR HIM**.
@@ -48,6 +48,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Finished the instructions on how to install the server.
 * Started working on skills. Added a list of skillID to string in the Info directory.
 * You can now fuse cards. Level up fusion is working perfectly (you also lose code/elements). Skill fusion is partially working. You lose the right amount of code/elements but you're not getting any skill at the moment.
+* You now lose/gain code when purchasing/selling scrolls.
 * Got the correct format of LeaveGameHandler/LeaveRoomHandler.
 * UserSessions is now a sorted list, and the FindUser function uses binary search. Haven't tested it much but it should work. It means that finding users should be a lot faster now (less lags).
 * Fixed a bug where FindUser was causing a null pointer exception.
