@@ -44,7 +44,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 02/04/2017
-* Started working on skills.
+* Started working on skills. Added a list of skillID to string in the Info directory.
 * You can now fuse cards. Level up fusion is working perfectly (you also lose code/elements). Skill fusion is partially working. You lose the right amount of code/elements but you're not getting any skill at the moment.
 
 # 01/04/2017
