@@ -1,0 +1,725 @@
+void __cdecl sub_6234A0(int a1, _BYTE *a2, unsigned int a3)
+{
+  signed int v3; // ebx@1
+  unsigned int v4; // esi@13
+  _BYTE *v5; // ebp@13
+  int v6; // eax@13
+  char *v7; // eax@17
+  bool v8; // zf@84
+  int v9; // eax@88
+  int v10; // ebx@124
+  int v11; // ebx@125
+  unsigned int v12; // [sp-4h] [bp-14h]@17
+
+  v3 = a1;
+  if ( a1 >= 7000 )
+  {
+    if ( a1 >= 8000 )
+      goto LABEL_5;
+    v3 = a1 - 6000;
+    a1 -= 6000;
+  }
+  if ( v3 < 8000 )
+    goto LABEL_7;
+LABEL_5:
+  if ( v3 < 9000 )
+  {
+    v3 -= 7000;
+    a1 = v3;
+LABEL_7:
+    if ( v3 < 9000 )
+      goto LABEL_10;
+  }
+  if ( v3 < 10000 )
+  {
+    v3 -= 8000;
+    a1 = v3;
+  }
+LABEL_10:
+  if ( v3 >= 11000 && v3 < 12000 )
+  {
+    v3 -= 10000;
+    a1 = v3;
+  }
+  v4 = a3;
+  v5 = a2;
+  memset(a2, 0, a3);
+  v6 = 0;
+  if ( v3 >= 1000 )
+  {
+    if ( v3 < 2000 )
+    {
+      switch ( v3 % 10 + 4 * (v3 / 100 % 10) )
+      {
+        case 6:
+          goto LABEL_16;
+        case 13:
+        case 14:
+          goto LABEL_19;
+        case 5:
+          goto LABEL_95;
+        case 7:
+          goto LABEL_96;
+        case 8:
+          goto LABEL_97;
+        case 9:
+          goto LABEL_98;
+        case 10:
+          goto LABEL_99;
+        case 11:
+          goto LABEL_100;
+        case 12:
+          goto LABEL_101;
+        default:
+          CLog::DebugLog(LOG, 0, ".\\CardHelp.cpp", 4046, "ASSERT Fail,return");
+          break;
+      }
+      return;
+    }
+LABEL_22:
+    if ( v3 < 3000 )
+    {
+      if ( v3 >= 2201 && v3 < 2213 )
+        v3 -= 100;
+      if ( v3 >= 2911 && v3 < 2915 )
+        v3 -= 10;
+      if ( v3 <= 2101 )
+      {
+        if ( v3 != 2101 )
+        {
+          switch ( v3 )
+          {
+            case 2000:
+              v6 = 1133;
+              goto LABEL_17;
+            case 2001:
+              v6 = 1519;
+              goto LABEL_17;
+            case 2002:
+              v6 = 1520;
+              goto LABEL_17;
+            case 2003:
+              v6 = 1521;
+              goto LABEL_17;
+            case 2004:
+              v6 = 1534;
+              goto LABEL_17;
+            case 2005:
+              v6 = 1535;
+              goto LABEL_17;
+            case 2006:
+              sub_73F0E0(v5, dword_7A56E8, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2007:
+              sub_73F0E0(v5, dword_7A56DC, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2008:
+              sub_73F0E0(v5, dword_7A56D0, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2009:
+            case 2011:
+              sub_73F0E0(v5, dword_7A56C4, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2010:
+              sub_73F0E0(v5, dword_7A56B4, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2012:
+              sub_73F0E0(v5, dword_7A56A8, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2013:
+              sub_73F0E0(v5, dword_7A5694, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2014:
+              sub_73F0E0(v5, dword_7A5680, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2015:
+              sub_73F0E0(v5, dword_7A5670, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2017:
+              sub_73F0E0(v5, dword_7A565C, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2018:
+              sub_73F0E0(v5, dword_7A564C, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2019:
+              sub_73F0E0(v5, dword_7A563C, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2020:
+              sub_73F0E0(v5, dword_7A562C, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2021:
+              sub_73F0E0(v5, dword_7A561C, v4 - 1);
+              v5[v4 - 1] = 0;
+              return;
+            case 2016:
+              goto LABEL_74;
+            default:
+              break;
+          }
+LABEL_82:
+          CLog::DebugLog(LOG, 0, ".\\CardHelp.cpp", 4249, "ASSERT Fail,return");
+          return;
+        }
+        v6 = 1134;
+        goto LABEL_17;
+      }
+      if ( v3 <= 2150 )
+      {
+        if ( v3 != 2150 )
+        {
+          switch ( v3 )
+          {
+            case 2102:
+              v6 = 1135;
+              goto LABEL_17;
+            case 2103:
+              v6 = 1136;
+              goto LABEL_17;
+            case 2104:
+              v6 = 1137;
+              goto LABEL_17;
+            case 2105:
+              v6 = 1138;
+              goto LABEL_17;
+            case 2106:
+              v6 = 1139;
+              goto LABEL_17;
+            case 2107:
+              v6 = 1140;
+              goto LABEL_17;
+            case 2108:
+              v6 = 1141;
+              goto LABEL_17;
+            case 2109:
+              v6 = 3846;
+              goto LABEL_17;
+            case 2110:
+              v6 = 3847;
+              goto LABEL_17;
+            case 2111:
+              v6 = 4112;
+              goto LABEL_17;
+            case 2112:
+              v6 = 4271;
+              goto LABEL_17;
+            default:
+              goto LABEL_82;
+          }
+          goto LABEL_82;
+        }
+        v6 = 1142;
+        goto LABEL_17;
+      }
+      if ( v3 > 2900 )
+      {
+        switch ( v3 )
+        {
+          case 2901:
+          case 2902:
+          case 2903:
+          case 2904:
+            v6 = 3858;
+            goto LABEL_17;
+          default:
+            goto LABEL_82;
+        }
+        goto LABEL_82;
+      }
+      if ( v3 != 2900 )
+      {
+        switch ( v3 )
+        {
+          case 2500:
+            sub_73F0E0(v5, dword_7A5670, v4 - 1);
+            v5[v4 - 1] = 0;
+            break;
+          case 2501:
+            sub_73F0E0(v5, dword_7A5670, v4 - 1);
+            v5[v4 - 1] = 0;
+            break;
+          case 2502:
+            sub_73F0E0(v5, dword_7A560C, v4 - 1);
+            v5[v4 - 1] = 0;
+            break;
+          case 2503:
+LABEL_74:
+            sub_73F0E0(v5, dword_7A560C, v4 - 1);
+            v5[v4 - 1] = 0;
+            break;
+          case 2504:
+            sub_73F0E0(v5, dword_7A56C4, v4 - 1);
+            v5[v4 - 1] = 0;
+            break;
+          case 2505:
+            sub_73F0E0(v5, dword_7A56C4, v4 - 1);
+            v5[v4 - 1] = 0;
+            break;
+          case 2506:
+            sub_73F0E0(v5, dword_7A5600, v4 - 1);
+            v5[v4 - 1] = 0;
+            break;
+          case 2507:
+            sub_73F0E0(v5, dword_7A55F4, v4 - 1);
+            v5[v4 - 1] = 0;
+            break;
+          default:
+            goto LABEL_82;
+        }
+        return;
+      }
+      v6 = 1143;
+LABEL_17:
+      v12 = v4 - 1;
+      v7 = GetString(v6);
+LABEL_18:
+      sub_73F0E0(v5, v7, v12);
+      v5[v4 - 1] = 0;
+      return;
+    }
+    goto LABEL_84;
+  }
+  if ( v3 >= 2000 )
+    goto LABEL_22;
+  if ( v3 < 3000 )
+  {
+    v8 = v3 == 4000;
+    goto LABEL_105;
+  }
+LABEL_84:
+  v8 = v3 == 4000;
+  if ( v3 < 4000 )
+  {
+    if ( v3 >= 3100 && v3 < 3109 )
+      a1 = v3 - 100;
+    sub_61D370(&a1);
+    v9 = a1;
+    if ( a1 >= 3200 && a1 < 3209 )
+      v9 = a1 - 200;
+    if ( v9 >= 3210 && v9 < 3219 )
+      v9 -= 210;
+    switch ( v9 )
+    {
+      case 3001:
+      case 3011:
+      case 3021:
+      case 3031:
+      case 3041:
+      case 3051:
+      case 3061:
+LABEL_16:
+        v6 = 811;
+        goto LABEL_17;
+      case 3008:
+      case 3018:
+      case 3028:
+      case 3038:
+      case 3048:
+      case 3058:
+      case 3068:
+LABEL_19:
+        v6 = 818;
+        goto LABEL_17;
+      case 3000:
+      case 3010:
+      case 3020:
+      case 3030:
+      case 3040:
+      case 3050:
+      case 3060:
+LABEL_95:
+        v6 = 810;
+        goto LABEL_17;
+      case 3002:
+      case 3012:
+      case 3022:
+      case 3032:
+      case 3042:
+      case 3052:
+      case 3062:
+LABEL_96:
+        v6 = 812;
+        goto LABEL_17;
+      case 3003:
+      case 3013:
+      case 3023:
+      case 3033:
+      case 3043:
+      case 3053:
+      case 3063:
+LABEL_97:
+        v6 = 813;
+        goto LABEL_17;
+      case 3004:
+      case 3014:
+      case 3024:
+      case 3034:
+      case 3044:
+      case 3054:
+      case 3064:
+LABEL_98:
+        v6 = 814;
+        goto LABEL_17;
+      case 3005:
+      case 3015:
+      case 3025:
+      case 3035:
+      case 3045:
+      case 3055:
+      case 3065:
+LABEL_99:
+        v6 = 815;
+        goto LABEL_17;
+      case 3006:
+      case 3016:
+      case 3026:
+      case 3036:
+      case 3046:
+      case 3056:
+      case 3066:
+LABEL_100:
+        v6 = 816;
+        goto LABEL_17;
+      case 3007:
+      case 3017:
+      case 3027:
+      case 3037:
+      case 3047:
+      case 3057:
+      case 3067:
+LABEL_101:
+        v6 = 817;
+        goto LABEL_17;
+      case 3109:
+        sub_73F0E0(v5, dword_7A55E4, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      default:
+        CLog::DebugLog(LOG, 0, ".\\CardHelp.cpp", 4356, "ASSERT Fail,return");
+        break;
+    }
+    return;
+  }
+LABEL_105:
+  if ( v8 )
+  {
+    sub_73F0E0(v5, dword_7A55D8, v4 - 1);
+    v5[v4 - 1] = 0;
+    return;
+  }
+  if ( v3 >= 5000 && v3 < 6000 )
+  {
+    if ( v3 <= 5100 )
+    {
+      if ( v3 != 5100 )
+      {
+        switch ( v3 )
+        {
+          case 5007:
+            sub_73F0E0(v5, dword_7A55D0, v4 - 1);
+            v5[v4 - 1] = 0;
+            return;
+          case 5011:
+            sub_73F0E0(v5, dword_7A55C8, v4 - 1);
+            v5[v4 - 1] = 0;
+            return;
+          case 5012:
+            sub_73F0E0(v5, dword_7A55C0, v4 - 1);
+            v5[v4 - 1] = 0;
+            return;
+          case 5013:
+            sub_73F0E0(v5, dword_7A55B4, v4 - 1);
+            v5[v4 - 1] = 0;
+            return;
+          case 5001:
+            goto LABEL_127;
+          case 5000:
+            goto LABEL_128;
+          case 5008:
+            goto LABEL_129;
+          case 5002:
+            goto LABEL_130;
+          case 5003:
+            goto LABEL_132;
+          case 5004:
+            goto LABEL_133;
+          case 5005:
+            goto LABEL_134;
+          case 5006:
+            goto LABEL_135;
+          case 5009:
+            goto LABEL_136;
+          case 5010:
+            goto LABEL_137;
+          case 5014:
+            goto LABEL_138;
+          default:
+            goto LABEL_17;
+        }
+        goto LABEL_17;
+      }
+      goto LABEL_128;
+    }
+    if ( v3 > 5903 )
+    {
+      switch ( v3 )
+      {
+        case 5904:
+LABEL_132:
+          v12 = v4 - 1;
+          v7 = GetString(4687);
+          goto LABEL_18;
+        case 5905:
+LABEL_133:
+          v12 = v4 - 1;
+          v7 = GetString(4688);
+          goto LABEL_18;
+        case 5906:
+LABEL_134:
+          v12 = v4 - 1;
+          v7 = GetString(4689);
+          goto LABEL_18;
+        case 5907:
+LABEL_135:
+          v12 = v4 - 1;
+          v7 = GetString(4690);
+          goto LABEL_18;
+        case 5908:
+LABEL_136:
+          sub_73F0E0(v5, dword_7A5570, v4 - 1);
+          v5[v4 - 1] = 0;
+          return;
+        case 5909:
+LABEL_137:
+          sub_73F0E0(v5, dword_7A5564, v4 - 1);
+          v5[v4 - 1] = 0;
+          return;
+        case 5910:
+LABEL_138:
+          sub_73F0E0(v5, dword_7A555C, v4 - 1);
+          v5[v4 - 1] = 0;
+          return;
+        default:
+          goto LABEL_17;
+      }
+      goto LABEL_17;
+    }
+    if ( v3 != 5903 )
+    {
+      if ( v3 > 5202 )
+      {
+        v10 = v3 - 5900;
+        if ( !v10 )
+        {
+LABEL_129:
+          v12 = v4 - 1;
+          v7 = GetString(4691);
+          goto LABEL_18;
+        }
+        v11 = v10 - 1;
+        if ( v11 )
+        {
+          if ( v11 == 1 )
+          {
+LABEL_127:
+            v12 = v4 - 1;
+            v7 = GetString(4460);
+            goto LABEL_18;
+          }
+          goto LABEL_17;
+        }
+LABEL_128:
+        v12 = v4 - 1;
+        v7 = GetString(4459);
+        goto LABEL_18;
+      }
+      if ( v3 == 5202 )
+      {
+        sub_73F0E0(v5, dword_7A5578, v4 - 1);
+        v5[v4 - 1] = 0;
+        return;
+      }
+      switch ( v3 )
+      {
+        default:
+          goto LABEL_17;
+        case 5200:
+          sub_73F0E0(v5, dword_7A55A0, v4 - 1);
+          v5[v4 - 1] = 0;
+          return;
+        case 5201:
+          sub_73F0E0(v5, dword_7A558C, v4 - 1);
+          v5[v4 - 1] = 0;
+          return;
+        case 5101:
+          goto LABEL_127;
+        case 5102:
+          break;
+      }
+    }
+LABEL_130:
+    v12 = v4 - 1;
+    v7 = GetString(4461);
+    goto LABEL_18;
+  }
+  if ( v3 < 4100 || v3 >= 5000 )
+  {
+    if ( v3 >= 6000 && v3 < 6004 )
+    {
+      switch ( v3 )
+      {
+        case 6000:
+          v12 = v4 - 1;
+          v7 = GetString(4462);
+          break;
+        case 6001:
+          v12 = v4 - 1;
+          v7 = GetString(4463);
+          break;
+        case 6002:
+          v12 = v4 - 1;
+          v7 = GetString(4464);
+          break;
+        case 6003:
+          v12 = v4 - 1;
+          v7 = GetString(4465);
+          break;
+        default:
+          goto LABEL_17;
+      }
+      goto LABEL_18;
+    }
+    goto LABEL_17;
+  }
+  if ( v3 > 4403 )
+  {
+    switch ( v3 )
+    {
+      default:
+        goto LABEL_17;
+      case 4501:
+        sub_73F0E0(v5, dword_7A54CC, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4502:
+        sub_73F0E0(v5, dword_7A54C0, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4503:
+        sub_73F0E0(v5, dword_7A54B4, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4601:
+        sub_73F0E0(v5, dword_7A54A8, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4602:
+        sub_73F0E0(v5, dword_7A549C, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4603:
+        sub_73F0E0(v5, dword_7A5490, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4701:
+        sub_73F0E0(v5, dword_7A5484, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4702:
+        sub_73F0E0(v5, dword_7A5478, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4703:
+        sub_73F0E0(v5, dword_7A546C, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4704:
+        sub_73F0E0(v5, dword_7A5464, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4705:
+      case 4706:
+        sub_73F0E0(v5, dword_7A5454, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+    }
+  }
+  else if ( v3 == 4403 )
+  {
+    sub_73F0E0(v5, dword_7A54D8, v4 - 1);
+    v5[v4 - 1] = 0;
+  }
+  else if ( v3 > 4203 )
+  {
+    switch ( v3 )
+    {
+      default:
+        goto LABEL_17;
+      case 4301:
+        sub_73F0E0(v5, dword_7A5508, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4302:
+        sub_73F0E0(v5, sub_7A5500, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4303:
+        sub_73F0E0(v5, sub_7A54F8, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4401:
+        sub_73F0E0(v5, dword_7A54F0, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4402:
+        sub_73F0E0(v5, dword_7A54E4, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+    }
+  }
+  else if ( v3 == 4203 )
+  {
+    sub_73F0E0(v5, dword_7A5510, v4 - 1);
+    v5[v4 - 1] = 0;
+  }
+  else
+  {
+    switch ( v3 )
+    {
+      default:
+        goto LABEL_17;
+      case 4101:
+        sub_73F0E0(v5, sub_7A5550, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4102:
+        sub_73F0E0(v5, dword_7A5544, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4103:
+        sub_73F0E0(v5, dword_7A5538, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4201:
+        sub_73F0E0(v5, dword_7A552C, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+      case 4202:
+        sub_73F0E0(v5, dword_7A551C, v4 - 1);
+        v5[v4 - 1] = 0;
+        break;
+    }
+  }
+}
