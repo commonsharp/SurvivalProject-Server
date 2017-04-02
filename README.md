@@ -30,7 +30,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
 - [ ] Downlad a list of all the users in the server once you log in.
-- [ ] There are more fields in LeaveRoomHandler. Need to change...
+- [x] There are more fields in LeaveRoomHandler. Need to change...
 
 # List of bugs
 * Changing room type message crashes the game.
@@ -46,6 +46,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 # 02/04/2017
 * Started working on skills. Added a list of skillID to string in the Info directory.
 * You can now fuse cards. Level up fusion is working perfectly (you also lose code/elements). Skill fusion is partially working. You lose the right amount of code/elements but you're not getting any skill at the moment.
+* Got the correct format of LeaveGameHandler/LeaveRoomHandler.
 
 # 01/04/2017
 * The quest of understanding every single packet continues...
