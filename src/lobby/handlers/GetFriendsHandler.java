@@ -3,7 +3,6 @@ package lobby.handlers;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import database.DatabaseHelper;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
@@ -42,7 +41,7 @@ public class GetFriendsHandler extends LobbyHandler {
 		output.putStrings(0x14, friends, 0xD);
 		
 		for (int i = 0; i < friends.length; i++) {
-			if (friends[i] != null && DatabaseHelper.isConnected(friends[i])) {
+			if (friends[i] != null && lobbyServer.findUserSession(friends[i]) != null) {
 				output.putInt(0x14C + 4 * i, 0); // connected
 			}
 			else {

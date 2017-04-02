@@ -14,8 +14,8 @@ import net.UserTCPSession;
 import net.handlers.GenericHandler;
 
 public class LoginServer extends GenericTCPServer {
-	public LoginServer(int port) {
-		super("Login server", port);
+	public LoginServer(int port, int initialCapacity) {
+		super("Login server", port, initialCapacity);
 	}
 	
 	@Override

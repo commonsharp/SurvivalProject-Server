@@ -75,6 +75,10 @@ public class User {
 		friends = new String[24];
 	}
 	
+	public Card getCard(int index) {
+		return cards[index];
+	}
+	
 	public int getAvatarItemID(int index) {
 		if (index == -1 || cards[index] == null) {
 			return -1;
@@ -193,14 +197,6 @@ public class User {
 	        }
 	        
 	        rs.close();
-	        ps.close();
-	        
-	        
-	        // Set the user's isConnected status to true
-	        ps = con.prepareStatement("UPDATE users SET isConnected=? WHERE username=?");
-	        ps.setBoolean(1, true);
-	        ps.setString(2, username);
-	        ps.executeUpdate();
 	        ps.close();
 		}
 		

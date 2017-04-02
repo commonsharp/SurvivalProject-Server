@@ -192,6 +192,8 @@ public class Room {
 	
 	private boolean isWaitForAll() {
 		switch (gameMode) {
+		case COMMUNITY:
+			return false;
 		case HERO:
 			return true;
 		case INFINITY_KING:
@@ -290,6 +292,8 @@ public class Room {
 		// 1 = red vs blue
 		// 2 = only blue team (in quests)
 		switch (gameMode) {
+		case COMMUNITY:
+			return 0;
 		case HERO:
 			return 1;
 		case INFINITY_KING:

@@ -33,7 +33,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 	// 1 - highest level player in the game/server
 	int playerRank = 10;
 	
-	int lobbyMaxRooms = 100;
+	int lobbyMaxRooms = 100; // the maximum number available is 300
 	
 	int response = 1;
 	/* calculate channel flag from playerLevel */

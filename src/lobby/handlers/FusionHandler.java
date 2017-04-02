@@ -1,20 +1,25 @@
 package lobby.handlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
+import net.CurrencyHelper;
 import net.Messages;
 import net.UserTCPSession;
+import net.objects.Card;
 import tools.ExtendedByteBuffer;
 
 //change to card fusion
 public class FusionHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x979;
 	
-	protected int itemID;
+	protected int itemIndex;
 	protected int fusionType; // 1 - level. 2 - skill
 	protected int unknown;
+	
+	protected int result;
 	
 	public FusionHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
@@ -22,9 +27,11 @@ public class FusionHandler extends LobbyHandler {
 
 	@Override
 	public void interpretBytes() {
-		itemID = input.getInt(0x14);
+		itemIndex = input.getInt(0x14);
 		fusionType = input.getInt(0x18);
 		unknown = input.getInt(0x1C);
+		
+		System.out.println("unknown in fusion : " + unknown);
 	}
 
 	@Override
@@ -42,35 +49,61 @@ public class FusionHandler extends LobbyHandler {
 		// 9 - "Current event has been exited so there is not enough Codes"
 		// others - something else
 		
-		int result = 5;
-		output.putInt(0x14, 4); // item ID
+		Card card = userSession.getUser().getCard(itemIndex);
+		
+		output.putInt(0x14, itemIndex); // item index
 		output.putInt(0x1C, result);
-		output.putInt(0x20, 6); // new level
-		output.putInt(0x24, 33200000); // new skill
-		output.putInt(0x28, 40);
-		output.putInt(0x2C, 50);
-		output.putInt(0x30, 60);
-		output.putInt(0x34, 7); // level probably. if you're fusing a skill, this cannot be set to 1.
-		output.putInt(0x38, 80);
-		output.putLong(0x40, 99999999); // new money amount
-		output.putInt(0x48, 20000); // new water elements amount
-		output.putInt(0x4C, 20000); // new fire elements amount
-		output.putInt(0x50, 20000); // new earth elements amount
-		output.putInt(0x54, 20000); // new wind elements amount
+		output.putInt(0x20, card.getLevel()); // new level
+		output.putInt(0x24, card.getSkill()); // new skill
+		output.putInt(0x28, card.getId()); // item ID
+		output.putInt(0x2C, card.getPremiumDays()); // premium days
+		output.putInt(0x30, userSession.getUser().roomSlot); // player slot
+		output.putInt(0x34, card.getLevel()); // ?
+		output.putInt(0x38, card.getLevel()); // ?
+		output.putLong(0x40, userSession.getUser().playerCode); // new money amount
+		output.putInts(0x48, userSession.getUser().whiteCards); // new elements amount
+		
+		
 		
 		return output.toArray();
 	}
 
 	@Override
 	public void afterSend() throws IOException {
-		// TODO Auto-generated method stub
-		
+		if (userSession.getUser().isInRoom || userSession.getUser().isInGame) {
+			lobbyServer.sendRoomMessage(userSession, getResponse(), false);
+		}
 	}
 
 	@Override
-	public void processMessage() {
-		// TODO Auto-generated method stub
+	public void processMessage() throws SQLException {
+		Card card = userSession.getUser().getCard(itemIndex);
 		
+		// level fusion
+		if (fusionType == 1) {
+			userSession.getUser().whiteCards[card.getElement() - 1] -= CurrencyHelper.getLevelFusionSpirits(card);
+			userSession.getUser().playerCode -= CurrencyHelper.getLevelFusionCode(card);
+			
+			int successPercentage = CurrencyHelper.getLevelFusionLevelSuccess(card);
+			
+			if ((int)(Math.random() * 100 + 1) <= successPercentage) {
+				result = 1;
+				card.setLevel(card.getLevel() + 1);
+			}
+			else {
+				result = 2;
+				card.setSkill(card.getRandomSkill());
+			}
+		}
+		// skill fusion
+		else if (fusionType == 2) {
+			userSession.getUser().whiteCards[card.getElement() - 1] -= CurrencyHelper.getSkillFusionSpirits(card);
+			userSession.getUser().playerCode -= CurrencyHelper.getSkillFusionCode(card);
+			
+			result = 5;
+			card.setSkill(card.getRandomSkill());
+		}
+		
+		userSession.getUser().saveUser();
 	}
-
 }

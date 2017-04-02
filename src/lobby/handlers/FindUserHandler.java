@@ -7,7 +7,6 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserTCPSession;
-import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class FindUserHandler extends LobbyHandler {
@@ -37,20 +36,20 @@ public class FindUserHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.FIND_USER_RESPONSE);
 		
-		User user = lobbyServer.findUserSession(username).getUser();
+		UserTCPSession userSession = lobbyServer.findUserSession(username);
 		
 		int isConnected = 0;
 		int channelType = 0;
 		int roomIndex = -1;
 		
-		if (user == null) {
+		if (userSession == null) {
 			isConnected = -1;
 		}
 		else {
-			channelType = user.playerChannelType;
+			channelType = userSession.getUser().playerChannelType;
 			
-			if (user.isInRoom) {
-				roomIndex = user.roomIndex + 1;
+			if (userSession.getUser().isInRoom) {
+				roomIndex = userSession.getUser().roomIndex + 1;
 			}
 			else {
 				roomIndex = 0;

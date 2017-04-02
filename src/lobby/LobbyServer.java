@@ -62,8 +62,8 @@ public class LobbyServer extends GenericTCPServer {
 	protected Room[] rooms;
 	protected UserShop[] userShops;
 	
-	public LobbyServer(int port) {
-		super("Lobby server", port);
+	public LobbyServer(int port, int initialCapacity) {
+		super("Lobby server", port, initialCapacity);
 		
 		rooms = new Room[200]; // change....
 		userShops = new UserShop[200]; // change...

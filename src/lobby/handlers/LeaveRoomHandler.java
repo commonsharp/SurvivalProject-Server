@@ -19,8 +19,7 @@ public class LeaveRoomHandler extends LobbyHandler {
 
 	@Override
 	public void interpretBytes() {
-//		roomID = input.
-		
+		// There are no fields in here
 	}
 
 	@Override
@@ -44,6 +43,7 @@ public class LeaveRoomHandler extends LobbyHandler {
 		output.putInt(0x4, Messages.LEAVE_ROOM_RESPONSE);
 		output.putInt(0x14, userSession.getUser().roomSlot);
 		output.putString(0x18, userSession.getUser().username);
+		output.putByte(0x25, (byte) 0); // master card
 		lobbyServer.getRoom(userSession.getUser().roomIndex).setUserSession(userSession.getUser().roomSlot, null);
 		
 		return output.toArray();

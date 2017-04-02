@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.Experience;
+import net.ExperienceHelper;
 import net.Messages;
 import net.UserTCPSession;
 import net.objects.Room;
@@ -32,8 +32,8 @@ public class EnjoyModeDeathHandler extends LobbyHandler {
 		output.putInt(0x1C, 0); // byte
 		output.putInt(0x20, 0);
 		
-		int randomLucky = Experience.getLuckyMultiplier();
-		int[] experienceGained = Experience.getExperience(damageDone);
+		int randomLucky = ExperienceHelper.getLuckyMultiplier();
+		int[] experienceGained = ExperienceHelper.getExperience(damageDone);
 		
 		int[] luckyMultiplier = new int[8];
 		for (int i = 0; i < 8; i++) {
@@ -50,17 +50,17 @@ public class EnjoyModeDeathHandler extends LobbyHandler {
 			if (room.getUser(i) != null) {
 				room.getUser(i).getUser().playerExperience += experienceGained[i] * luckyMultiplier[i];
 				room.getUser(i).getUser().playerCode += experienceGained[i] * luckyMultiplier[i];
-				room.getUser(i).getUser().playerLevel = Experience.getLevel(room.getUser(i).getUser().playerExperience);
+				room.getUser(i).getUser().playerLevel = ExperienceHelper.getLevel(room.getUser(i).getUser().playerExperience);
 				experiences[i] = room.getUser(i).getUser().playerExperience;
 			}
 		}
 		
-		output.putInts(0x64, Experience.getLevels(experiences));
+		output.putInts(0x64, ExperienceHelper.getLevels(experiences));
 		output.putInt(0x84, 100); // another array. unknown yet.
 		
 		int elementType = (int)(Math.random() * 4) + 1;
-		int elementAmount = Experience.getElementCount();
-		int elementMultiplier = Experience.getLuckyMultiplier();
+		int elementAmount = ExperienceHelper.getElementCount();
+		int elementMultiplier = ExperienceHelper.getLuckyMultiplier();
 		
 		if (elementAmount != 0) {
 			userSession.getUser().whiteCards[elementType - 1] += elementAmount * elementMultiplier;

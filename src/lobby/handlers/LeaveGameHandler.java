@@ -28,9 +28,9 @@ public class LeaveGameHandler extends LobbyHandler {
 		output.putInt(0x4, Messages.LEAVE_GAME_RESPONSE);
 		output.putInt(0x14, userSession.getUser().roomSlot);
 		output.putString(0x18, userSession.getUser().username);
-		output.putInt(0x28, 0);
-		output.putInt(0x2C, 0);
-		output.putByte(0x30, (byte) 0);
+		output.putInt(0x28, 0); // this value is added to MyInfo+3198
+		output.putInt(0x2C, 0); // this value is added to MyInfo+319C
+		output.putByte(0x30, (byte) 0); // master card
 		
 		return output.toArray();
 	}
