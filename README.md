@@ -47,6 +47,8 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Started working on skills. Added a list of skillID to string in the Info directory.
 * You can now fuse cards. Level up fusion is working perfectly (you also lose code/elements). Skill fusion is partially working. You lose the right amount of code/elements but you're not getting any skill at the moment.
 * Got the correct format of LeaveGameHandler/LeaveRoomHandler.
+* Fixed a bug where FindUser was causing a null pointer exception.
+* Fixed a bug where AddFriend was not working properly. Also made it more efficient (no need to go to the database). Also removed a field from the database thanks to this fix.
 
 # 01/04/2017
 * The quest of understanding every single packet continues...
