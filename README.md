@@ -43,6 +43,10 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Possible bug - broadcast messages will get sent to other servers as well. So someone sending a chat message would send it to people in other servers as well. Need to check that.
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
+# 02/04/2017
+* Started working on skills.
+* You can now fuse cards. Level up fusion is working perfectly (you also lose code/elements). Skill fusion is partially working. You lose the right amount of code/elements but you're not getting any skill at the moment.
+
 # 01/04/2017
 * The quest of understanding every single packet continues...
 * You can now add friends, remove friends and get a list of who's connected or not when you click on the refresh button in the friends tab. Do notice that the refresh button has a cooldown of 30 seconds, therefore you have to wait 30 seconds before clicking again.
