@@ -11,7 +11,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **When I say that a game mode (such as soccer) is working, I mean that you can start a game, the rounds system is working (in this case - goals), you can finish a game and see the results of who won and who lost. The elements/code/coins/experience/guild experience gained is not implemented yet. Also you don't get ~~kills/downs~~/wins/loses. It just means the game mode is opertional.** 
 
 # TODO
-- [x] Change userSessions to an array of fixed size, instead of an ArrayList. - Actually used an ArrayList with a different starting capacity. Much better.
+- [x] Change userSessions to an array of fixed size, instead of an ArrayList. - **Actually used an ArrayList with a different starting capacity. Much better.**
 - [ ] Make the Database.isConnected function a bit more efficient by checking if the user exists in userSessions. It should be faster than calling the database. Then we can also remove the isConnected column in the database.
 - [ ] Sort the userSessions by username, and when you search for a user, use binary search. Or - every user will have a field indicates its index in userSessions, that would be saved in the database. Then if we want to send a message to that user, we go to the database, search for his index in userSessions and send a message. Would it be faster though?
 - [ ] Lose/gain money when you buy/sell scrolls.
