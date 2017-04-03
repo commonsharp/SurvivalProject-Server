@@ -44,6 +44,9 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Possible bug - broadcast messages will get sent to other servers as well. So someone sending a chat message would send it to people in other servers as well. Need to check that.
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
+# 03/04/2017
+* Didn't notice that different type cards have different fusion costs. Changed the costs accordingly.
+
 # 02/04/2017
 * Finished the instructions on how to install the server.
 * Started working on skills. Added a list of skillID to string in the Info directory.
