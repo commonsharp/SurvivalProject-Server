@@ -50,6 +50,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Fixed a bug where GetUserInfo didn't show items properly.
 * Cleaned the big match code a bit.
 * Fixed a bug where big matches didn't end properly if a player left in the middle of the game.
+* Fixed a bug where if you had two players in a room, and both of them left the room, the master's lobby will still have that room in the rooms list.
 
 # 02/04/2017
 * Finished the instructions on how to install the server.
