@@ -46,6 +46,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 # 03/04/2017
 * You now get a list of all users in the lobby when you join the lobby, leave a room or leave a game.
+* The correct mission level is now presented when you login. (The game mode is still not working though)
 * Didn't notice that different type cards have different fusion costs. Changed the costs accordingly.
 * Didn't notice that gold charging a card doubles your fusion success rate. Changed the success rate accordingly.
 * Cleaned the big match code a bit.
