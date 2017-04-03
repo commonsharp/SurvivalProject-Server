@@ -28,8 +28,7 @@ public class GetListOfRoomsHandler extends LobbyHandler {
 		
 	}
 
-	@Override
-	public byte[] getResponse() {
+	public byte[] getResponse(int offset) {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.GET_LIST_OF_ROOMS_RESPONSE);
@@ -58,15 +57,15 @@ public class GetListOfRoomsHandler extends LobbyHandler {
 		 */
 		
 		Room room;
-		for (int i = 0; i < 0x16; i++) {
-			room = lobbyServer.getRoom(i);
+		for (int i = 0; i < 0x16 && i < JoinLobbyHandler.lobbyMaxRooms; i++) {
+			room = lobbyServer.getRoom(i + offset);
 			
 			if (room == null) {
 				output.putInt(0x14 + 4 * i, -1);
 			}
 			else {
 				// for more fields, look at LobbyRoomsChangedHandler
-				output.putInt(0x14 + 4 * i, i);
+				output.putInt(0x14 + 4 * i, i + offset);
 				output.putString(0x6C + 0x1D * i, room.getRoomName());
 				output.putInt(0x2EC + 4 * i, room.getGameMode().getValue());
 				output.putInt(0x344 + 4 * i, room.getGameMap());
@@ -92,8 +91,12 @@ public class GetListOfRoomsHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public byte[] getResponse() throws SQLException {
+		return null;
 	}
 
 }

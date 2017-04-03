@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import net.handlers.GenericHandler;
 
@@ -58,5 +59,14 @@ public abstract class GenericTCPServer implements Runnable {
 
 	public String getName() {
 		return name;
+	}
+	public void moveToCorrectPlace() {
+		usersSessions.sort(new Comparator<UserTCPSession>() {
+
+			@Override
+			public int compare(UserTCPSession o1, UserTCPSession o2) {
+				return o1.getUser().username.compareTo(o2.getUser().username);
+			}
+		});
 	}
 }

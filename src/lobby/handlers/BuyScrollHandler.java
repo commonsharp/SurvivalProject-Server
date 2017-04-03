@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
+import net.CurrencyHelper;
 import net.Messages;
 import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
@@ -20,7 +21,6 @@ public class BuyScrollHandler extends LobbyHandler {
 	
 	public BuyScrollHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -34,6 +34,7 @@ public class BuyScrollHandler extends LobbyHandler {
 	public void processMessage() throws SQLException {
 		if (isSell) {
 			userSession.getUser().scrolls[scrollID] = 0;
+			userSession.getUser().playerCode += CurrencyHelper.getScrollCode(scrollID);
 			scrollIndex = scrollID;
 			response = 0;
 		}
@@ -43,6 +44,7 @@ public class BuyScrollHandler extends LobbyHandler {
 			if (emptyScrollIndex != -1) {
 				response = 0;
 				userSession.getUser().scrolls[emptyScrollIndex] = scrollID + 1;
+				userSession.getUser().playerCode -= CurrencyHelper.getScrollCode(scrollID);
 				scrollIndex = emptyScrollIndex;
 			}
 			else {

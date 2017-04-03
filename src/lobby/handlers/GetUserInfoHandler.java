@@ -35,8 +35,8 @@ public class GetUserInfoHandler extends LobbyHandler {
 		output.putString(0x15, username);
 		output.putInt(0x24, user.playerLevel);
 		output.putBoolean(0x28, user.isMale);
-		output.putString(0x29, user.guildName); // guild?
-		output.putString(0x36, user.guildDuty); // guild duty?
+		output.putString(0x29, user.guildName);
+		output.putString(0x36, user.guildDuty);
 		output.putInt(0x44, user.mainCharacter);
 		output.putLong(0x48, user.playerExperience);
 		output.putInt(0x50, user.playerWins);
@@ -51,15 +51,15 @@ public class GetUserInfoHandler extends LobbyHandler {
 		}
 		
 		if (user.getItemID(user.weaponIndex) != -1) {
-			output.putInt(0x70, user.getItemID(user.weaponIndex));
+			output.putInt(0x74, user.getItemID(user.weaponIndex));
 		}
 		
 		if (user.getItemID(user.accessoryIndex) != -1) {
-			output.putInt(0x70, user.getItemID(user.accessoryIndex));
+			output.putInt(0x78, user.getItemID(user.accessoryIndex));
 		}
 		
 		if (user.getItemID(user.petIndex) != -1) {
-			output.putInt(0x70, user.getItemID(user.petIndex));
+			output.putInt(0x7C, user.getItemID(user.petIndex));
 		}
 		
 		output.putInt(0x80, user.getItemPremiumDays(user.magicIndex));

@@ -18,6 +18,34 @@ public class Card {
 	int RangedWpnSkill2[] = {200,201,202,203,300,301,302,303,304,306,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435};
 	int MagicSkill[] = {300,301,302,303,304,306,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435};
 	
+	public static final int WEAPON = 1;
+	public static final int ACCESSORY = 2;
+	public static final int MAGIC = 3;
+	
+	public static final int AXE = 1;
+	public static final int STAFF = 2;
+	public static final int SWORD = 3;
+	public static final int BOW = 4;
+	
+	public static final int SHIELD = 1;
+	public static final int PENDANT = 2;
+	public static final int ARMOR = 3;
+	public static final int BOOTS = 4;
+	
+	public enum CardType {
+		WEAPON(1), ACCESSORY(2), MAGIC(3);
+		
+		private final int id;
+		
+		CardType(int id) {
+			this.id = id;
+		}
+		
+	    public int getValue() {
+	    	return id;
+	    }
+	}
+	
 	public Card(int id, int premiumDays, int level, int skill) {
 		this.id = id;
 		this.premiumDays = premiumDays;
@@ -53,12 +81,16 @@ public class Card {
 		this.skill = skill;
 	}
 	
-	public boolean isMagicCard() {
-		return (id / 100) % 10 == 3;
+	public int getCardType() {
+		return (id / 100) % 10;
 	}
 	
 	public int getElement() {
 		return (id / 10) % 10;
+	}
+	
+	public int getSubType() {
+		return id % 10;
 	}
 
 	public int getRandomSkill() {

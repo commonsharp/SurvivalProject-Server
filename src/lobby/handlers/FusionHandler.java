@@ -58,8 +58,8 @@ public class FusionHandler extends LobbyHandler {
 		output.putInt(0x28, card.getId()); // item ID
 		output.putInt(0x2C, card.getPremiumDays()); // premium days
 		output.putInt(0x30, userSession.getUser().roomSlot); // player slot
-		output.putInt(0x34, card.getLevel()); // ?
-		output.putInt(0x38, card.getLevel()); // ?
+		output.putInt(0x34, 20000); // ?
+		output.putInt(0x38, 20000); // ?
 		output.putLong(0x40, userSession.getUser().playerCode); // new money amount
 		output.putInts(0x48, userSession.getUser().whiteCards); // new elements amount
 		

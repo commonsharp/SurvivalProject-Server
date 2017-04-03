@@ -269,16 +269,35 @@ public class LobbyServer extends GenericTCPServer {
 		}
 	}
 	
-
 	public UserTCPSession findUserSession(String username) {
-		for (UserTCPSession userSession : usersSessions) {
-			if (userSession.getUser().username.equals(username)) {
-				return userSession;
-			}
+		int low = 0;
+		int high = usersSessions.size() - 1;
+		
+		while (low <= high) {
+	        int middle = (low + high) / 2;
+	        if (username.compareTo(usersSessions.get(middle).getUser().username) > 0) {
+	        	low = middle + 1;
+	        }
+	        else if (username.compareTo(usersSessions.get(middle).getUser().username) < 0) {
+	        	high = middle - 1;
+	        }
+	        else {
+	        	return usersSessions.get(middle);
+	        }
 		}
 		
 		return null;
 	}
+
+//	public UserTCPSession findUserSession(String username) {
+//		for (UserTCPSession userSession : usersSessions) {
+//			if (userSession.getUser().username.equals(username)) {
+//				return userSession;
+//			}
+//		}
+//		
+//		return null;
+//	}
 
 	public UserTCPSession findUserSession(InetAddress ipAddress, int port) {
 		for (UserTCPSession userSession : usersSessions) {

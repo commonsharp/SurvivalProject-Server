@@ -104,6 +104,10 @@ public class UserTCPSession implements Runnable {
 					
 					message.afterSend();
 				}
+				
+				if (server.getName().equals("Lobby server")) {
+					server.moveToCorrectPlace();
+				}
 			}
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();

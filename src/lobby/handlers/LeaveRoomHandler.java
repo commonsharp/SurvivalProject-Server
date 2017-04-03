@@ -33,7 +33,9 @@ public class LeaveRoomHandler extends LobbyHandler {
 			lobbyServer.setRoom(room.getRoomID(), null);
 		}
 		
-		sendTCPMessage(new GetListOfRoomsHandler(lobbyServer, userSession).getResponse());
+		for (int i = 0; i < JoinLobbyHandler.lobbyMaxRooms; i += 22) {
+			sendTCPMessage(new GetListOfRoomsHandler(lobbyServer, userSession).getResponse(i));
+		}
 	}
 
 	@Override

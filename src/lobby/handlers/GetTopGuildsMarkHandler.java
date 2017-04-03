@@ -41,7 +41,7 @@ public class GetTopGuildsMarkHandler extends LobbyHandler {
 			pixels[i] = (byte) 0; // color
 			pixels[i + 1] = (byte) 255; // brightness
 		}
-		output.putInt(0x24, 1); // 0 = nothing. other = mark??
+		output.putInt(0x24, 15); // 0 = nothing. other = mark??
 		output.putBytes(0x28, pixels); // the colors. 2 bytes per pixel
 		
 		return output.toArray();

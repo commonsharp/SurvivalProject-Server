@@ -33,7 +33,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 	// 1 - highest level player in the game/server
 	int playerRank = 10;
 	
-	int lobbyMaxRooms = 100; // the maximum number available is 300
+	public static int lobbyMaxRooms = 100; // the maximum number available is 300
 	
 	int response = 1;
 	/* calculate channel flag from playerLevel */
@@ -66,7 +66,9 @@ public class JoinLobbyHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		sendTCPMessage(new GetListOfRoomsHandler(lobbyServer, userSession).getResponse());
+		for (int i = 0; i < lobbyMaxRooms; i += 22) {
+			sendTCPMessage(new GetListOfRoomsHandler(lobbyServer, userSession).getResponse(i));
+		}
 //		sendTCPMessage(new GetLobbyUsersHandler(lobbyServer, userSession).getResponse());
 		
 		sendTCPMessage(new Test4460Handler(lobbyServer, userSession).getResponse());
