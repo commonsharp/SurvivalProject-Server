@@ -46,6 +46,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 # 03/04/2017
 * Didn't notice that different type cards have different fusion costs. Changed the costs accordingly.
+* Fixed a bug where GetUserInfo didn't show items properly.
 
 # 02/04/2017
 * Finished the instructions on how to install the server.
