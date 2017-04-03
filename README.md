@@ -30,7 +30,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Get a list of all the request messages.
 - [ ] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
-- [ ] Downlad a list of all the users in the server once you log in.
+- [x] Downlad a list of all the users in the server once you log in.
 - [x] There are more fields in LeaveRoomHandler. Need to change...
 
 # List of bugs
@@ -45,6 +45,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 03/04/2017
+* You now get a list of all users in the lobby when you join the lobby, leave a room or leave a game.
 * Didn't notice that different type cards have different fusion costs. Changed the costs accordingly.
 * Cleaned the big match code a bit.
 * Fixed a bug where only the first 22 rooms were shown in the lobby.
