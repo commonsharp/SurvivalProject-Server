@@ -45,6 +45,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 03/04/2017
+* Fixed a bug where only the first 22 rooms were shown in the lobby.
 * Didn't notice that different type cards have different fusion costs. Changed the costs accordingly.
 * Fixed a bug where GetUserInfo didn't show items properly.
 
