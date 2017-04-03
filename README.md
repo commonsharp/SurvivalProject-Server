@@ -17,7 +17,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
 - [x] Lose/gain money when you buy/sell scrolls.
 - [ ] Add experience/elements after a kill in big matches.
-- [ ] Add experience/elements after a kill in other modes (not big matches/quests).
+- [x] Add experience/elements after a kill in other modes (not big matches/quests).
 - [ ] When the master of the room leaves a quest, he may no longer join, as it restarts everyone else's quest. Therefore, it must be locked **ONLY FOR HIM**.
 - [ ] Lose code/cash/coins when you make a purchase.
 - [x] Make sure chests only give code and not experience.
@@ -47,6 +47,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 # 03/04/2017
 * You now get a list of all users in the lobby when you join the lobby, leave a room or leave a game.
+* You now get the right amount of code/experience/elements when you kill another player in every normal mode (not quests/big matches).
 * When you finish a survival/big match survival with 0 kills, you get a lose message and when you have at least 1 kill, you get a win message.
 * The correct mission level is now presented when you login. (The game mode is still not working though)
 * Didn't notice that different type cards have different fusion costs. Changed the costs accordingly.
