@@ -53,7 +53,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Fixed a bug where only the first 22 rooms were shown in the lobby.
 * Fixed a bug where GetUserInfo didn't show items properly.
 * Fixed a bug where big matches didn't end properly if a player left in the middle of the game.
-* Fixed a bug where if you had two players in a room, and both of them left the room, the master's lobby will still have that room in the rooms list.
+* Fixed a bug where if you had two players in a room, and both of them left the room, the master's lobby would still have that room in the rooms list.
 * Fixed a bug where friends message would throw a null pointer exception.
 * Fixed a bug where if you left the lobby, the login screen would show a tutorial mode instead of the list of servers.
 * Fixed a bug where you had to click on the "refresh friends" when you first joined the lobby to get a list of friends, instead of being done automatically.
