@@ -34,6 +34,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [x] There are more fields in LeaveRoomHandler. Need to change...
 
 # List of bugs
+- Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
 * Changing room type message crashes the game.
 * When someone's in a game and it crashes, the leave function is not getting called.
 * If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.
