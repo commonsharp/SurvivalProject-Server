@@ -24,7 +24,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [ ] Add GM chat commands.
 - [ ] Add chat commands.
-- [ ] Clean the big battle death code a bit. Only use one array for everyone's lives instead of 2 (one for slots and one for npc).
+- [x] Clean the big battle death code a bit. Only use one array for everyone's lives instead of 2 (one for slots and one for npc).
 - [ ] Add ~~sendFriendsMessage and~~ sendGuildMessage when the time comes.
 - [ ] Change the tutorial item class to net.objects.Item.
 - [ ] Get a list of all the request messages.
@@ -48,6 +48,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Fixed a bug where only the first 22 rooms were shown in the lobby.
 * Didn't notice that different type cards have different fusion costs. Changed the costs accordingly.
 * Fixed a bug where GetUserInfo didn't show items properly.
+* Cleaned the big match code a bit.
 
 # 02/04/2017
 * Finished the instructions on how to install the server.
