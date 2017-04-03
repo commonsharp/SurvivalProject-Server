@@ -20,7 +20,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Add experience/elements after a kill in other modes (not big matches/quests).
 - [ ] When the master of the room leaves a quest, he may no longer join, as it restarts everyone else's quest. Therefore, it must be locked **ONLY FOR HIM**.
 - [ ] Lose code/cash/coins when you make a purchase.
-- [ ] Make sure chests only give code and not experience.
+- [x] Make sure chests only give code and not experience.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [ ] Add GM chat commands.
 - [ ] Add chat commands.
@@ -61,6 +61,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * UserSessions is now a sorted list, and the FindUser function uses binary search. Haven't tested it much but it should work. It means that finding users should be a lot faster now (less lags).
 * Fixed a bug where FindUser was causing a null pointer exception.
 * Fixed a bug where AddFriend was not working properly. Also made it more efficient (no need to go to the database). Also removed a column from the database thanks to this fix.
+* Fixed the bug where chests gave experience and code instead of code only.
 
 # 01/04/2017
 * The quest of understanding every single packet continues...
