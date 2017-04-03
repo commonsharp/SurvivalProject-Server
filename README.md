@@ -40,12 +40,13 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * If you disconnect on the login screen, there will be an SQLException.
 * Death timer in big matches doesn't work.
 * When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
-* When you finish a survival game, it says draw. Not sure if it should say that or win.
+* ~~When you finish a survival game, it says draw. Not sure if it should say that or win.~~
 * Possible bug - broadcast messages will get sent to other servers as well. So someone sending a chat message would send it to people in other servers as well. Need to check that.
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 03/04/2017
 * You now get a list of all users in the lobby when you join the lobby, leave a room or leave a game.
+* When you finish a survival/big match survival with 0 kills, you get a lose message and when you have at least 1 kill, you get a win message.
 * The correct mission level is now presented when you login. (The game mode is still not working though)
 * Didn't notice that different type cards have different fusion costs. Changed the costs accordingly.
 * Didn't notice that gold charging a card doubles your fusion success rate. Changed the success rate accordingly.
