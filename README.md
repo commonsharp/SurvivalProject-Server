@@ -48,7 +48,8 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 # 03/04/2017
 * You now get a list of all users in the lobby when you join the lobby, leave a room or leave a game.
 * You now get the right amount of code/experience/elements when you kill another player in every normal mode (not quests/big matches).
-* When you're in low leveled servers, some of the game modes are locked.
+* When you're in a low leveled server, some of the game modes are locked.
+* When you're in a low leveled server, the quest monsters and big match NPCs are low leveled as well.
 * When you finish a survival/big match survival with 0 kills, you get a lose message and when you have at least 1 kill, you get a win message.
 * The correct mission level is now presented when you login. (The game mode is still not working though)
 * Didn't notice that different type cards have different fusion costs. Changed the costs accordingly.
