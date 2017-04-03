@@ -45,10 +45,10 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 03/04/2017
-* Fixed a bug where only the first 22 rooms were shown in the lobby.
 * Didn't notice that different type cards have different fusion costs. Changed the costs accordingly.
-* Fixed a bug where GetUserInfo didn't show items properly.
 * Cleaned the big match code a bit.
+* Fixed a bug where only the first 22 rooms were shown in the lobby.
+* Fixed a bug where GetUserInfo didn't show items properly.
 * Fixed a bug where big matches didn't end properly if a player left in the middle of the game.
 * Fixed a bug where if you had two players in a room, and both of them left the room, the master's lobby will still have that room in the rooms list.
 
