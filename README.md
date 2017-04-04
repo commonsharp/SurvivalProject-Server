@@ -46,6 +46,9 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Possible bug - broadcast messages will get sent to other servers as well. So someone sending a chat message would send it to people in other servers as well. Need to check that.
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
+# 04/04/2017
+* You can now get scrolls in a game.
+
 # 03/04/2017
 * You now get a list of all users in the lobby when you join the lobby, leave a room or leave a game.
 * You now get the right amount of code/experience/elements when you kill another player in every normal mode (not quests/big matches).
