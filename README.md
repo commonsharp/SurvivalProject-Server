@@ -35,6 +35,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [x] There are more fields in LeaveRoomHandler. Need to change...
 
 # List of bugs
+* When you finish a mission, the mission level on the left of the screen doesn't change.
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
 * Changing room type message crashes the game.
 * When someone's in a game and it crashes, the leave function is not getting called.
@@ -47,6 +48,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 04/04/2017
+* Mission impossible 300 is now working.
 * You can now get scrolls in a game.
 
 # 03/04/2017
