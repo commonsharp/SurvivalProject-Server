@@ -50,6 +50,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * You now get the right amount of code/experience/elements when you kill another player/NPC in a big match.
 * When you kill an NPC in big match survival, there's a small chance it would have an exp multiplier. The chances are: 80% to have no multiplier, 20% (1/5) to have 3x multiplier, 4% (1/25) to have 5x multiplier and 0.16% (1/625) to have a 10x multiplier. ~~You still don't get the right amount of experience for killing the NPC's with a multiplier, but they're still shown in game.~~
 * You get 1 KO and 1 down when you get a kill/die in big matches.
+* You get 1 win/lose when you win/lose any working game mode, except big match death match.
 * Added 1 chat command - @gender. It changes your gender from male to female and vice versa. Need to think about more...
 
 # 04/04/2017
