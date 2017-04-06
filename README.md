@@ -11,7 +11,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **When I say that a game mode (such as soccer) is working, I mean that you can start a game, the rounds system is working (in this case - goals), you can finish a game and see the results of who won and who lost. The elements/code/coins/experience/guild experience gained is not implemented yet. Also you don't get ~~kills/downs~~/wins/loses. It just means the game mode is opertional.** 
 
 # Chat commands
-@gender - changes your gender from male to female and vice versa. Reconnect to see the changes (others will see it instantly).
+**@gender** - changes your gender from male to female and vice versa. Reconnect to see the changes (others will see it instantly).
 
 # TODO
 - [ ] Remove the QuestDeathHandler and use NewVersionQuestDeathHandler instead, for every quest related death.
