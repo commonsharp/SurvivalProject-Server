@@ -56,6 +56,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * You get 1 win/lose when you win/lose any working game mode, except big match death match.
 * Added 1 chat command - @gender. It changes your gender from male to female and vice versa. Need to think about more...
 * Removed QuestDeathHandler and NewVersionQuestDeathHandler, and now there's only MonsterDeathHandler.
+* Fixed a bug where using scrolls was not sent to other players in the room.
 
 # 04/04/2017
 * Mission impossible 300 is now working.
