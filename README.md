@@ -14,7 +14,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **@gender** - changes your gender from male to female and vice versa. Reconnect to see the changes (others will see it instantly).
 
 # TODO
-- [ ] Remove the QuestDeathHandler and use NewVersionQuestDeathHandler instead, for every quest related death.
+- [x] Remove the QuestDeathHandler and use NewVersionQuestDeathHandler instead, for every quest related death.
 - [x] Change userSessions to an array of fixed size, instead of an ArrayList. - **Actually used an ArrayList with a different starting capacity. Much better.**
 - [x] Make the Database.isConnected function a bit more efficient by checking if the user exists in userSessions. It should be faster than calling the database. Then we can also remove the isConnected column in the database.
 - [x] Sort the userSessions by username, and when you search for a user, use binary search. Or - every user will have a field indicates its index in userSessions, that would be saved in the database. Then if we want to send a message to that user, we go to the database, search for his index in userSessions and send a message. Would it be faster though?
@@ -55,6 +55,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * You get 1 KO and 1 down when you get a kill/die in big matches.
 * You get 1 win/lose when you win/lose any working game mode, except big match death match.
 * Added 1 chat command - @gender. It changes your gender from male to female and vice versa. Need to think about more...
+* Removed QuestDeathHandler and NewVersionQuestDeathHandler, and now there's only MonsterDeathHandler.
 
 # 04/04/2017
 * Mission impossible 300 is now working.
