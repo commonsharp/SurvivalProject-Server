@@ -17,7 +17,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [x] Sort the userSessions by username, and when you search for a user, use binary search. Or - every user will have a field indicates its index in userSessions, that would be saved in the database. Then if we want to send a message to that user, we go to the database, search for his index in userSessions and send a message. Would it be faster though?
 - [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
 - [x] Lose/gain money when you buy/sell scrolls.
-- [ ] Add experience/elements after a kill in big matches.
+- [x] Add experience/elements after a kill in big matches.
 - [x] Add experience/elements after a kill in other modes (not big matches/quests).
 - [ ] When the master of the room leaves a quest, he may no longer join, as it restarts everyone else's quest. Therefore, it must be locked **ONLY FOR HIM**.
 - [ ] Lose code/cash/coins when you make a purchase.
@@ -49,6 +49,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 # 06/04/2017
 * You now get the right amount of code/experience/elements when you kill another player/NPC in a big match.
 * When you kill an NPC in big match survival, there's a small chance it would have an exp multiplier. The chances are: 80% to have no multiplier, 20% (1/5) to have 3x multiplier, 4% (1/25) to have 5x multiplier and 0.16% (1/625) to have a 10x multiplier. ~~You still don't get the right amount of experience for killing the NPC's with a multiplier, but they're still shown in game.~~
+* You get 1 KO and 1 down when you get a kill/die in big matches.
 * Added 1 chat command - @gender. It changes your gender from male to female and vice versa. Need to think about more...
 
 # 04/04/2017
