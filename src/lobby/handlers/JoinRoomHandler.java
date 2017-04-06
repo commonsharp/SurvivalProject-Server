@@ -64,7 +64,7 @@ public class JoinRoomHandler extends LobbyHandler {
 		
 		// Go through each of the users in the room
 		for (int i = 0; i < 8; i++) {
-			currentUserSession = lobbyServer.getRoom(roomID).getUser(i);
+			currentUserSession = lobbyServer.getRoom(roomID).getUserSession(i);
 			
 			// If that slot is used
 			if (currentUserSession != null) {

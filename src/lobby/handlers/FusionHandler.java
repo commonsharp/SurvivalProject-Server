@@ -84,7 +84,7 @@ public class FusionHandler extends LobbyHandler {
 			userSession.getUser().whiteCards[card.getElement() - 1] -= CurrencyHelper.getLevelFusionSpirits(card);
 			userSession.getUser().playerCode -= CurrencyHelper.getLevelFusionCode(card);
 			
-			int successPercentage = CurrencyHelper.getLevelFusionLevelSuccess(card);
+			int successPercentage = CurrencyHelper.getLevelFusionLevelSuccessRate(card);
 			
 			if ((int)(Math.random() * 100 + 1) <= successPercentage) {
 				result = 1;

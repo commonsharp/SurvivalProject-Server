@@ -34,6 +34,7 @@ public class GameServer extends GenericUDPServer {
 		case 0x1112: // chatting in game
 		case 0x1113: // dunno. happens when you move
 		case 0x1114: // picked an item
+		case 0x1115: // use a scroll
 		case 0x1119: // soccer ball got hit
 		case 0x1120: // soccer/hockey ball/disk status
 		case 0x1124: // emoji

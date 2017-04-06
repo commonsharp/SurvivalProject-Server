@@ -1,6 +1,7 @@
 package lobby.handlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
@@ -9,7 +10,7 @@ import net.UserTCPSession;
 import tools.ExtendedByteBuffer;
 
 public class MissionCompletedHandler extends LobbyHandler {
-	public static final int RESPONSE_LENGTH = 0x118;
+	public static final int RESPONSE_LENGTH = 0x1C;
 	
 	int progression;
 	
@@ -34,12 +35,10 @@ public class MissionCompletedHandler extends LobbyHandler {
 		int result;
 		
 		if (progression == 1) {
-			result = 2; // wait
+			result = 1; // wait
 		}
 		else if (userSession.getUser().missionLevel < 300) {
 			result = 3; // next mission
-			System.out.println("here");
-			userSession.getUser().missionLevel++;
 		}
 		else {
 			result = 4; // mission level 300 = leave the game
@@ -52,14 +51,17 @@ public class MissionCompletedHandler extends LobbyHandler {
 	}
 
 	@Override
-	public void afterSend() throws IOException {
-		lobbyServer.sendRoomMessage(userSession, getResponse(), true);
+	public void afterSend() throws IOException, SQLException {
+		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
+		sendTCPMessage(new GetMissionLevelHandler(lobbyServer, userSession).getResponse());
 	}
 
 	@Override
-	public void processMessage() {
-		// TODO Auto-generated method stub
-		
+	public void processMessage() throws SQLException {
+		if (progression == 2 && userSession.getUser().missionLevel < 300) {
+			userSession.getUser().missionLevel++;
+			userSession.getUser().saveUser();
+		}
 	}
 
 }

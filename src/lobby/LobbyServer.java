@@ -3,6 +3,7 @@ package lobby;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import lobby.handlers.AddFriend;
 import lobby.handlers.AutoUserShopNewItemHandler;
@@ -21,6 +22,7 @@ import lobby.handlers.GameMasterBanHandler;
 import lobby.handlers.GetFriendsHandler;
 import lobby.handlers.GetLobbyUsersHandler;
 import lobby.handlers.GetRoomInfoHandler;
+import lobby.handlers.GetScrollHandler;
 import lobby.handlers.GetTopGuildsHandler;
 import lobby.handlers.GetTopGuildsMarkHandler;
 import lobby.handlers.GetUserInfoHandler;
@@ -202,6 +204,9 @@ public class LobbyServer extends GenericTCPServer {
 		case Messages.ROOM_TYPE_CHANGED_REQUEST:
 			message = new RoomTypeChangedHandler(this, userSession, messageBytes);
 			break;
+		case Messages.GET_SCROLL_REQUEST:
+			message = new GetScrollHandler(this, userSession, messageBytes);
+			break;
 		case Messages.MISSION_START_COUNTDOWN_REQUEST:
 			message = new StartCountdownHandler(this, userSession, messageBytes);
 			break;
@@ -270,6 +275,10 @@ public class LobbyServer extends GenericTCPServer {
 	}
 	
 	public UserTCPSession findUserSession(String username) {
+		if (username == null) {
+			return null;
+		}
+		
 		int low = 0;
 		int high = usersSessions.size() - 1;
 		
@@ -347,7 +356,12 @@ public class LobbyServer extends GenericTCPServer {
 	}
 
 	@Override
-	public void onUserDisconnect(UserTCPSession userTCPSession) throws SQLException {
+	public void onUserDisconnect(UserTCPSession userTCPSession) throws SQLException, IOException {
 		userTCPSession.getUser().saveUser();
+		sendBroadcastMessage(userTCPSession, new GetLobbyUsersHandler(this, userTCPSession).getResponse(userTCPSession, false));
+	}
+
+	public ArrayList<UserTCPSession> getUserSessions() {
+		return usersSessions;
 	}
 }

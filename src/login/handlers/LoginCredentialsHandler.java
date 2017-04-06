@@ -134,7 +134,7 @@ public class LoginCredentialsHandler extends LoginHandler {
 			output.putString(0x78, unknown3);
 			output.putString(0x91, unknown4);
 			output.putInt(0x9C, unknown5);
-			output.putInt(0xA0, unknown6);
+			output.putInt(0xA0, 580); // 560 and 580 are special values. not sure what happens though.
 			output.putInt(0xA4, unknown7);
 		}
 		

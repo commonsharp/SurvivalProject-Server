@@ -48,8 +48,8 @@ public class SoccerGoalHandler extends LobbyHandler {
 			for (int i = 0; i < 8; i++) {
 				results[i] = -1;
 				
-				if (room.getUser(i) != null) {
-					results[i] = (room.getUser(i).getUser().roomTeam == winningTeam) ? 1 : 2;
+				if (room.getUserSession(i) != null) {
+					results[i] = (room.getUserSession(i).getUser().roomTeam == winningTeam) ? 1 : 2;
 				}
 			}
 			

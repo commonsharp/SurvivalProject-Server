@@ -31,8 +31,6 @@ public class User {
 	
 	public byte playerEventFlags[] = {0, 0, 0, 0, 0, 0, 0, 0}; //see debug mode
 	
-	public int playerChannelType = 3; //the channel type player is currently in
-	
 	public int playerInventorySlots;
 	public int playerType = 0; //set to 7 for GM... otherwise 0?
 	public int[] whiteCards;
@@ -46,7 +44,7 @@ public class User {
 	
 	public int magicIndex, weaponIndex, accessoryIndex, petIndex;
 	public int footIndex, bodyIndex, hand1Index, hand2Index, faceIndex, hairIndex, headIndex;
-	public int missionLevel = 1;
+	public int missionLevel;
 	
 	public boolean isInRoom = false;
 	public boolean isInGame = false;
@@ -63,7 +61,6 @@ public class User {
 	
 	public int encryptionVersion;
 	
-	public boolean isAlive = true;
 	public int lives;
 	public int gameKO;
 	
@@ -128,7 +125,6 @@ public class User {
 		if (rs.next()) {
 			username = rs.getString("username");
 			password = rs.getString("password");
-			userType = rs.getInt("userType");
 	        mainCharacter = rs.getInt("mainCharacter");
 	        playerLevel = rs.getInt("playerLevel");
 	        usuableCharacterCount = rs.getInt("usuableCharacterCount");
@@ -163,6 +159,9 @@ public class User {
 	        scrolls[0] = rs.getInt("scroll0");
 	        scrolls[1] = rs.getInt("scroll1");
 	        scrolls[2] = rs.getInt("scroll2");
+	        missionLevel = rs.getInt("missionLevel");
+	        
+	        userType = (playerLevel == 0) ? 0 : (playerLevel >= 17) ? 30 : (playerLevel >= 13) ? 20 : 10;
 	        
 	        ps.close();
 	        rs.close();
@@ -205,49 +204,49 @@ public class User {
 	
 	public void saveUser() throws SQLException {
 		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("Update users SET username=?, userType=?, mainCharacter=?, playerLevel=?, usuableCharacterCount=?, "
+		PreparedStatement ps = con.prepareStatement("Update users SET username=?, mainCharacter=?, playerLevel=?, usuableCharacterCount=?, "
 				+ "ageRestriction=?, experience=?, code=?, avatarMoney=?, guildName=?, guildDuty=?, waterElements=?, "
 				+ "fireElements=?, earthElements=?, windElements=?, isMale=?, magicIndex=?, weaponIndex=?, accessoryIndex=?, petIndex=?, "
 				+ "footIndex=?, bodyIndex=?, hand1Index=?, hand2Index=?, faceIndex=?, hairIndex=?, headIndex=?, password=?, "
-				+ "winCount=?, loseCount=?, koCount=?, downCount=?, cash=?, inventorySlots=?, scroll0=?, scroll1=?, scroll2=? WHERE username=?");
+				+ "winCount=?, loseCount=?, koCount=?, downCount=?, cash=?, inventorySlots=?, scroll0=?, scroll1=?, scroll2=?, missionLevel=? WHERE username=?");
 		
 		ps.setString(1, username);
-		ps.setInt(2, userType);
-		ps.setInt(3, mainCharacter);
-		ps.setInt(4, playerLevel);
-		ps.setInt(5, usuableCharacterCount);
-		ps.setInt(6, ageRestriction);
-		ps.setLong(7, playerExperience);
-		ps.setLong(8, playerCode);
-		ps.setLong(9, avatarMoney);
-		ps.setString(10, guildName);
-		ps.setString(11, guildDuty);
-		ps.setInt(12, whiteCards[0]);
-		ps.setInt(13, whiteCards[1]);
-		ps.setInt(14, whiteCards[2]);
-		ps.setInt(15, whiteCards[3]);
-		ps.setBoolean(16, isMale);
-		ps.setInt(17, magicIndex);
-		ps.setInt(18, weaponIndex);
-		ps.setInt(19, accessoryIndex);
-		ps.setInt(20, petIndex);
-		ps.setInt(21, footIndex);
-		ps.setInt(22, bodyIndex);
-		ps.setInt(23, hand1Index);
-		ps.setInt(24, hand2Index);
-		ps.setInt(25, faceIndex);
-		ps.setInt(26, hairIndex);
-		ps.setInt(27, headIndex);
-		ps.setString(28, password);
-		ps.setInt(29, playerWins);
-		ps.setInt(30, playerLoses);
-		ps.setInt(31, playerKOs);
-		ps.setInt(32, playerDowns);
-		ps.setLong(33, cash);
-		ps.setInt(34, playerInventorySlots);
-		ps.setInt(35, scrolls[0]);
-		ps.setInt(36, scrolls[1]);
-		ps.setInt(37, scrolls[2]);
+		ps.setInt(2, mainCharacter);
+		ps.setInt(3, playerLevel);
+		ps.setInt(4, usuableCharacterCount);
+		ps.setInt(5, ageRestriction);
+		ps.setLong(6, playerExperience);
+		ps.setLong(7, playerCode);
+		ps.setLong(8, avatarMoney);
+		ps.setString(9, guildName);
+		ps.setString(10, guildDuty);
+		ps.setInt(11, whiteCards[0]);
+		ps.setInt(12, whiteCards[1]);
+		ps.setInt(13, whiteCards[2]);
+		ps.setInt(14, whiteCards[3]);
+		ps.setBoolean(15, isMale);
+		ps.setInt(16, magicIndex);
+		ps.setInt(17, weaponIndex);
+		ps.setInt(18, accessoryIndex);
+		ps.setInt(19, petIndex);
+		ps.setInt(20, footIndex);
+		ps.setInt(21, bodyIndex);
+		ps.setInt(22, hand1Index);
+		ps.setInt(23, hand2Index);
+		ps.setInt(24, faceIndex);
+		ps.setInt(25, hairIndex);
+		ps.setInt(26, headIndex);
+		ps.setString(27, password);
+		ps.setInt(28, playerWins);
+		ps.setInt(29, playerLoses);
+		ps.setInt(30, playerKOs);
+		ps.setInt(31, playerDowns);
+		ps.setLong(32, cash);
+		ps.setInt(33, playerInventorySlots);
+		ps.setInt(34, scrolls[0]);
+		ps.setInt(35, scrolls[1]);
+		ps.setInt(36, scrolls[2]);
+		ps.setInt(37, missionLevel);
 		
 		ps.setString(38, username);
 		ps.executeUpdate();

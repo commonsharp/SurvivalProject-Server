@@ -30,7 +30,7 @@ public class StartCountdownHandler extends LobbyHandler {
 		
 		output.putInt(0x14, 0);
 		output.putInt(0x18, 0);
-		output.putInt(0x1C, 6000);
+		output.putInt(0x1C, 600000);
 		output.putInt(0x20, 0);
 		
 		return output.toArray();

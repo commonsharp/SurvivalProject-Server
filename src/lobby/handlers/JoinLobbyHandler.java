@@ -36,9 +36,6 @@ public class JoinLobbyHandler extends LobbyHandler {
 	public static int lobbyMaxRooms = 100; // the maximum number available is 300
 	
 	int response = 1;
-	/* calculate channel flag from playerLevel */
-	int channelFlag = 10;
-//	int channelFlag = (userSession.getUser().playerLevel == 0) ? 0 : (userSession.getUser().playerLevel >= 17) ? 30 : (userSession.getUser().playerLevel >= 13) ? 20 : 10;
 	
 	// Registry/IOSPK/Version
 	int spVersion = 11;
@@ -65,13 +62,24 @@ public class JoinLobbyHandler extends LobbyHandler {
 	}
 
 	@Override
-	public void afterSend() throws IOException {
+	public void afterSend() throws IOException, SQLException {
 		for (int i = 0; i < lobbyMaxRooms; i += 22) {
 			sendTCPMessage(new GetListOfRoomsHandler(lobbyServer, userSession).getResponse(i));
 		}
-//		sendTCPMessage(new GetLobbyUsersHandler(lobbyServer, userSession).getResponse());
 		
 		sendTCPMessage(new Test4460Handler(lobbyServer, userSession).getResponse());
+		
+		GetLobbyUsersHandler getLobbyUsersHandler = new GetLobbyUsersHandler(lobbyServer, userSession);
+		
+		for (UserTCPSession userSession : lobbyServer.getUserSessions()) {
+			sendTCPMessage(getLobbyUsersHandler.getResponse(userSession, true));
+		}
+		
+		// Send everyone that you got connected
+		lobbyServer.sendBroadcastMessage(userSession, getLobbyUsersHandler.getResponse(userSession, true));
+		
+		sendTCPMessage(new GetFriendsHandler(lobbyServer, userSession).getResponse());
+		sendTCPMessage(new GetMissionLevelHandler(lobbyServer, userSession).getResponse());
 	}
 
 	@Override
@@ -105,7 +113,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 		output.putInt(0x90, userSession.getUser().whiteCards[1]); // 0x90
 		output.putInt(0x94, userSession.getUser().whiteCards[2]); // 0x94
 		output.putInt(0x98, userSession.getUser().whiteCards[3]); // 0x98
-		output.putInt(0x9C, channelFlag); // 0x9c
+		output.putInt(0x9C, userSession.getUser().userType);
 		
 		for (int i = 0; i < 96; i++) {
 			if (userSession.getUser().getItemID(i) != -1) {
@@ -133,7 +141,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 		output.putInt(0x880, userSession.getUser().playerInventorySlots); // 0x880
 		output.putInts(0x884, minPointForeveDword); // 0x884
 		output.putLongs(0x8F8, minPointForLevelQword); //0x8F8
-		output.putInt(0x918, userSession.getUser().playerChannelType); // 0x918
+		output.putInt(0x918, userSession.getUser().userType / 10); // 0x918
 		output.putInt(0x91C, spVersion); // 0x91c
 		output.putInt(0x920, ioProtectVersion); // 0x920
 		output.putInt(0x924, survivalprojectVersion); // 0x924
@@ -144,7 +152,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 		output.putInt(0x938, visitBonusAvatarMoney);
 		output.putBytes(0x93C, userSession.getUser().playerEventFlags); // 0x93C
 		output.putInt(0x944, playerRank); // 0x944
-		output.putByte(0x948, (byte) 1);
+		output.putByte(0x948, (byte) 1); // if it's 1 then the next strings are used somewhere: "Server recapturing battle has ended", "Server recapturing in progress", "Server capturing battle continue next Tuesday". something with packet 0x1132
 		output.putInt(0x94C, lobbyMaxRooms); // 0x94c
 		output.putInt(0x950, userSession.getUser().footIndex);
 		output.putInt(0x954, userSession.getUser().bodyIndex);

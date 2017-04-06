@@ -68,6 +68,19 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 			if (room.getGameMode() == GameMode.KING_SURVIVAL) {
 				sendTCPMessage(new NewKingHandler(lobbyServer, userSession).getResponse());
 			}
+			
+			for (int i = 0; i < 8; i++) {
+				if (room.getUserSession(i) != null) {
+					room.isAlive[i] = true;
+				}
+				else {
+					room.isAlive[i] = false;
+				}
+			}
+			
+			for (int i = 8; i < 40; i++) {
+				room.isAlive[i] = true;
+			}
 		}
 	}
 
@@ -77,7 +90,6 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 	public byte[] getResponse() {
 		userSession.getUser().roomFieldF4 = 2;
 		
-		userSession.getUser().isAlive = true;
 		userSession.getUser().lives = 5;
 		userSession.getUser().gameKO = 0;
 		
@@ -182,17 +194,17 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		output.putInt(0xF8, 0);
 		output.putInt(0xFC, 0);
 		
-		if (user.username.equals(lobbyServer.getRoom(roomID).roomCreator)) {
-			b = 0;
-		}
-		else {
-			b = 1;
-		}
+//		if (user.username.equals(lobbyServer.getRoom(roomID).roomCreator)) {
+//			b = 0;
+//		}
+//		else {
+//			b = 1;
+//		}
 		
 		// this is for quests only. if it's 0, then the "monsters level increased" message can not appear.
 		// that probably means that is something like isSoloQuest. also if it's set to 0, the game automatically start,
 		// where if it's set to 1 the game waits for everyone but still doesn't do much afterwards.
-		output.putByte(0x100, (byte) b); // this is a boolean... setting it to 1 doesn't start for some reason :S
+		output.putByte(0x100, (byte) 0); // this is a boolean... setting it to 1 doesn't start for some reason :S
 		output.putByte(0x101, (byte) 0); // heart near the player. extra life by super silver or so.
 		output.putByte(0x102, (byte) 1); // 0x59 in create room. this is master card 1.3x exp/code bonus
 		output.putByte(0x103, (byte) 1);

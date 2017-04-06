@@ -148,11 +148,12 @@ public class Messages {
 	public static final int NOTHING_4 = 0x4443;
 	public static final int ROOM_TYPE_CHANGED_REQUEST = 0x4444;
 	public static final int ROOM_TYPE_CHANGED_RESPONSE = 0x4445;
-	public static final int UNKNOWN_LOBBY_RESPONSE_67 = 0x4447;
+	public static final int GET_SCROLL_REQUEST = 0x4446;
+	public static final int GET_SCROLL_RESPONSE = 0x4447;
 	public static final int UNKNOWN_LOBBY_RESPONSE_68 = 0x4448;
 	public static final int UNKNOWN_LOBBY_RESPONSE_69 = 0x4450;
 	public static final int UNKNOWN_LOBBY_RESPONSE_70 = 0x4452; // String: "Character not available to change"
-	public static final int UNKNOWN_LOBBY_RESPONSE_71 = 0x4453; // something with missions
+	public static final int GET_MISSION_LEVEL = 0x4453; // something with missions
 	public static final int MISSION_START_COUNTDOWN_REQUEST = 0x4454;
 	public static final int MISSION_START_COUNTDOWN_RESPONSE = 0x4455;
 	public static final int MISSION_COMPLETED_REQUEST = 0x4456;

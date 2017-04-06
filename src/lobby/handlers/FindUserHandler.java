@@ -46,7 +46,7 @@ public class FindUserHandler extends LobbyHandler {
 			isConnected = -1;
 		}
 		else {
-			channelType = userSession.getUser().playerChannelType;
+			channelType = userSession.getUser().userType / 10;
 			
 			if (userSession.getUser().isInRoom) {
 				roomIndex = userSession.getUser().roomIndex + 1;

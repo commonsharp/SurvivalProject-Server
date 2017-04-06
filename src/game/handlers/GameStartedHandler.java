@@ -56,7 +56,7 @@ public class GameStartedHandler extends GameHandler {
 		// Send the packet to everyone in the room
 		gameServer.sendToUser(udpServer, roomID, toSlot, getResponse2(), false);
 
-		UserTCPSession userSession = gameServer.lobby.getRoom(roomID).getUser(fromSlot);
+		UserTCPSession userSession = gameServer.lobby.getRoom(roomID).getUserSession(fromSlot);
 		
 		if (userSession != null) {
 			userSession.getUser().isInGame = true;

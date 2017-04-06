@@ -64,10 +64,7 @@ public class CreateRoomHandler extends LobbyHandler {
 	public void afterSend() throws IOException {
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(roomNumber)));
 		sendTCPMessage(new RoomPlayersUpdateHandler(lobbyServer, userSession).getResponse(userSession.getUser()));
-		
 		sendTCPMessage(new NewMasterHandler(lobbyServer, userSession).getResponse());
-
-		sendTCPMessage(new Test4460Handler(lobbyServer, userSession).getResponse());
 	}
 
 	@Override
@@ -114,7 +111,7 @@ public class CreateRoomHandler extends LobbyHandler {
 		output.putInt(0x64, cardsLimit);
 		output.putShort(0x68, (short) userSession.getUser().guildRank); // guild rank. zero based
 		output.putByte(0x6A, isLimitAnger);
-		output.putByte(0x6B, (byte) 0);
+		output.putByte(0x6B, (byte) 1);
 		
 		return output.toArray();
 	}

@@ -31,26 +31,32 @@ public class GetLobbyUsersHandler extends LobbyHandler {
 		
 	}
 
-	@Override
-	public byte[] getResponse() {
+	public byte[] getResponse(UserTCPSession userSession, boolean isOnline) {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.GET_LOBBY_USERS_RESPONSE);
-		output.putString(0x14, "baraak"); // name
-		output.putInt(0x24, 30); // level
+		output.putString(0x14, userSession.getUser().username); // name
+		output.putInt(0x24, userSession.getUser().playerLevel); // level
 		output.putInt(0x28, 2);
 		output.putInt(0x2C, 2);
-		output.putBoolean(0x30, true); // isMale
-		output.putBoolean(0x31, true); // is online
+		output.putBoolean(0x30, userSession.getUser().isMale); // isMale
+		output.putBoolean(0x31, isOnline); // is online
 		output.putInt(0x34, 2);
-		output.putInt(0x38, 40); // mission level
+		output.putInt(0x38, userSession.getUser().missionLevel); // mission level
 		return output.toArray();
 	}
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		// The friends list is not being sent to the room screen, so we have to send it
-//		sendTCPMessage(new GetFriendsHandler(lobbyServer, userSession).getResponse());
+		for (UserTCPSession userSession : lobbyServer.getUserSessions()) {
+			sendTCPMessage(getResponse(userSession, true));
+		}
+	}
+
+	@Override
+	public byte[] getResponse() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

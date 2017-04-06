@@ -61,7 +61,7 @@ public class CrystalDeathHandler extends LobbyHandler {
 		 // result array. 0 = resurrection. 1 = quest success. 2 = quest failed. 4 = player left game? others = nothing.
 		output.putInts(0x14, results); // result (per slot)
 		output.putInt(0x34, userSession.getUser().gameKO); //ko
-		output.putInt(0x38, 15); // ? maybe guild exp?
+		output.putInt(0x38, 0); // ? maybe guild exp?
 		
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		
@@ -69,9 +69,9 @@ public class CrystalDeathHandler extends LobbyHandler {
 			output.putInt(0x3C + i * 4, exp);
 			output.putInt(0x5C + i * 4, code);
 			
-			if (room.getUser(i) != null) {
-				room.getUser(i).getUser().playerExperience += exp;
-				room.getUser(i).getUser().playerCode += code;
+			if (room.getUserSession(i) != null) {
+				room.getUserSession(i).getUser().playerExperience += exp;
+				room.getUserSession(i).getUser().playerCode += code;
 			}
 		}
 		
@@ -84,6 +84,10 @@ public class CrystalDeathHandler extends LobbyHandler {
 	@Override
 	public void afterSend() throws IOException {
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
+		
+		if (questProgression == 100) {
+			userSession.getUser().playerWins++;
+		}
 	}
 
 	@Override

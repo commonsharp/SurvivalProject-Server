@@ -1,6 +1,7 @@
 package lobby.handlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
@@ -39,7 +40,6 @@ public class ChatMessageHandler extends LobbyHandler {
 
 	@Override
 	public byte[] getResponse() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -57,7 +57,13 @@ public class ChatMessageHandler extends LobbyHandler {
 	}
 
 	@Override
-	public void afterSend() throws IOException {
+	public void afterSend() throws IOException, SQLException {
+		if (text.toLowerCase().startsWith("@gender")) {
+			userSession.getUser().isMale = !userSession.getUser().isMale;
+			userSession.getUser().saveUser();
+			return;
+		}
+		
 		// All chat or trade chat - send to everyone
 		if (messageType == 0 || messageType == 7) {
 			lobbyServer.sendBroadcastMessage(userSession, getResponse2());

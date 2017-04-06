@@ -24,13 +24,16 @@ public class Room {
 	public boolean isRoomCreatedMessageSent = false;
 	
 	public int[] symbols;
-	public boolean[] isNpcDead;
+	public boolean[] isAlive;
 	
 	public int bluePlayersCount;
 	public int redPlayersCount;
 	
 	public String roomCreator;
 	public int kingSlot;
+	
+	// multipliers in big match survival
+	public int[] npcMultipliers;
 	
 	public Room(int roomID, String roomName, String roomCreator, int gameMode, int gameMap, int numberOfPlayers, byte isWithScrolls,
 			byte isWithTeams, int cardsLimit, byte isLimitAnger, int[] characters) {
@@ -55,14 +58,15 @@ public class Room {
 		}
 		
 		symbols = new int[4];
-		isNpcDead= new boolean[40];
+		isAlive= new boolean[40];
+		npcMultipliers = new int[40];
 	}
 	
 	public void setUserSession(int index, UserTCPSession user) {
 		this.users[index] = user;
 	}
 	
-	public UserTCPSession getUser(int index) {
+	public UserTCPSession getUserSession(int index) {
 		return users[index];
 	}
 
@@ -369,8 +373,8 @@ public class Room {
 		}
 		
 		for (int i = 0; i < 8; i++) {
-			if (getUser(i) != null && getUser(i).getUser().isAlive) {
-				if (getUser(i).getUser().roomTeam == 10) {
+			if (getUserSession(i) != null && isAlive[i]) {
+				if (getUserSession(i).getUser().roomTeam == 10) {
 					isBlueDead = false;
 				}
 				else {
@@ -385,20 +389,9 @@ public class Room {
 	public boolean isAllTeamDeadWithNpc() {
 		boolean isRedDead = true, isBlueDead = true;
 		
-		for (int i = 0; i < 8; i++) {
-			if (getUser(i) != null && getUser(i).getUser().isAlive) {
-				if (getUser(i).getUser().roomTeam == 10) {
-					isBlueDead = false;
-				}
-				else {
-					isRedDead = false;
-				}
-			}
-		}
-		
-		for (int i = 8; i < 40; i++) {
-			if (!isNpcDead[i]) {
-				if (i >= 24) {
+		for (int i = 0; i < 40; i++) {
+			if (isAlive[i]) {
+				if (i >= 24 || (i < 8 && getUserSession(i) != null && getUserSession(i).getUser().roomTeam == 20)) {
 					isRedDead = false;
 				}
 				else {

@@ -31,14 +31,18 @@ public class RoundCompletedHandler extends LobbyHandler {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		
 		for (int i = 0; i < 8; i++) {
-			if (room.getUser(i) != null) {
-				room.getUser(i).getUser().isAlive = true;
+			if (room.getUserSession(i) != null) {
+				room.isAlive[i] = true;
+			}
+			else {
+				room.isAlive[i] = false;
 			}
 		}
 		
-		for (int i = 0; i < 40; i++) {
-			room.isNpcDead[i] = false;
+		for (int i = 8; i < 40; i++) {
+			room.isAlive[i] = true;
 		}
+		
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);

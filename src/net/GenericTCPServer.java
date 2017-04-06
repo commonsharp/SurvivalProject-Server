@@ -19,7 +19,7 @@ public abstract class GenericTCPServer implements Runnable {
 	protected ArrayList<UserTCPSession> usersSessions;
 	
 	public abstract GenericHandler processPacket(UserTCPSession tcpServer, int messageID, byte[] messageBytes);
-	public abstract void onUserDisconnect(UserTCPSession userTCPSession) throws SQLException;
+	public abstract void onUserDisconnect(UserTCPSession userTCPSession) throws SQLException, IOException;
 	
 	public GenericTCPServer(String name, int port, int initialCapacity) {
 		this.name = name;

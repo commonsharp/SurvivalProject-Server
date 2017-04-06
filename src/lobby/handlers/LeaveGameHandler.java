@@ -1,6 +1,7 @@
 package lobby.handlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
@@ -36,10 +37,11 @@ public class LeaveGameHandler extends LobbyHandler {
 	}
 
 	@Override
-	public void afterSend() throws IOException {
+	public void afterSend() throws IOException, SQLException {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
+		sendTCPMessage(new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(room));
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(room));
 		
 		if (room.getNumberOfPlayers() == 0) {
@@ -49,6 +51,14 @@ public class LeaveGameHandler extends LobbyHandler {
 		for (int i = 0; i < JoinLobbyHandler.lobbyMaxRooms; i += 22) {
 			sendTCPMessage(new GetListOfRoomsHandler(lobbyServer, userSession).getResponse(i));
 		}
+		
+		GetLobbyUsersHandler getLobbyUsersHandler = new GetLobbyUsersHandler(lobbyServer, userSession);
+		
+		for (UserTCPSession userSession : lobbyServer.getUserSessions()) {
+			sendTCPMessage(getLobbyUsersHandler.getResponse(userSession, true));
+		}
+		
+		sendTCPMessage(new GetFriendsHandler(lobbyServer, userSession).getResponse());
 	}
 
 	@Override
@@ -56,6 +66,7 @@ public class LeaveGameHandler extends LobbyHandler {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		room.setCharacter(userSession.getUser().roomSlot, 0);
 		room.setNumberOfUsers(room.getNumberOfPlayers() - 1);
+		room.isAlive[userSession.getUser().roomSlot] = false;
 		
 		if (userSession.getUser().roomTeam == 10) {
 			room.bluePlayersCount--;
@@ -66,5 +77,6 @@ public class LeaveGameHandler extends LobbyHandler {
 		
 		userSession.getUser().isInRoom = false;
 		userSession.getUser().isInGame = false;
+		userSession.getUser().playerLoses++;
 	}
 }

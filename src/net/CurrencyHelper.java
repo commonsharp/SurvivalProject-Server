@@ -61,19 +61,20 @@ public class CurrencyHelper {
 		return 0;
 	}
 	
-	public static int getLevelFusionLevelSuccess(Card card) {
-		switch (card.getLevel()) {
-		case 0: return 100;
-		case 1: return 100;
-		case 2: return 100;
-		case 3: return 100;
-		case 4: return 100;
-		case 5: return 20;
-		case 6: return 10;
-		case 7: return 5;
+	public static int getLevelFusionLevelSuccessRate(Card card) {
+		int[] successes = {100, 100, 100, 100, 100, 20, 10, 5};
+		
+		int success = successes[card.getLevel()];
+		
+		if (card.getPremiumDays() > 0) {
+			success *= 2;
+			
+			if (success > 100) {
+				success = 100;
+			}
 		}
 		
-		return 5;
+		return success;
 	}
 	
 	public static int getSkillFusionSpirits(Card card) {
