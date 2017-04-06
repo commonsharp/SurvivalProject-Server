@@ -23,8 +23,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Lose code/cash/coins when you make a purchase.
 - [x] Make sure chests only give code and not experience.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
-- [ ] Add GM chat commands.
-- [ ] Add chat commands.
+- [x] Add chat commands.
 - [x] Clean the big battle death code a bit. Only use one array for everyone's lives instead of 2 (one for slots and one for npc).
 - [ ] Add ~~sendFriendsMessage and~~ sendGuildMessage when the time comes.
 - [ ] Change the tutorial item class to net.objects.Item.
@@ -50,6 +49,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 # 06/04/2017
 * You now get the right amount of code/experience/elements when you kill another player/NPC in a big match.
 * When you kill an NPC in big match survival, there's a small chance it would have an exp multiplier. The chances are: 80% to have no multiplier, 20% (1/5) to have 3x multiplier, 4% (1/25) to have 5x multiplier and 0.16% (1/625) to have a 10x multiplier. ~~You still don't get the right amount of experience for killing the NPC's with a multiplier, but they're still shown in game.~~
+* Added 1 chat command - @gender. It changes your gender from male to female and vice versa. Need to think about more...
 
 # 04/04/2017
 * Mission impossible 300 is now working.
