@@ -53,6 +53,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Added multiple servers support - you can now run different servers on different hosts.
 * Each server's population is now being shown correctly (instead of just a random value like it used to be).
 * SQL: Added the table "servers".
+* Fixed a bug where the UDP game server would sometime throw a null pointer exception.
 
 # 06/04/2017
 * You now get the right amount of code/experience/elements when you kill another player/NPC in a big match.
