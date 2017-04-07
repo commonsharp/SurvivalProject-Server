@@ -9,7 +9,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **Not going to work on hokey mode because I can't fucking score a goal -_-"**
 
 # Chat commands
-** After executing most of the commands, a reconnect is required in order to see the changes.
+**After executing most of the commands, a reconnect is required in order to see the changes.**
 
 **@gender** - changes your gender from male to female and vice versa. Reconnect to see the changes (others will see it instantly).
 
