@@ -9,7 +9,10 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **Not going to work on hokey mode because I can't fucking score a goal -_-"**
 
 # Chat commands
+** After executing most of the commands, a reconnect is required in order to see the changes.
+
 **@gender** - changes your gender from male to female and vice versa. Reconnect to see the changes (others will see it instantly).
+**@guild-join [guild-name]** - joins the guild [guild-name].
 
 # TODO
 - [x] Remove the QuestDeathHandler and use NewVersionQuestDeathHandler instead, for every quest related death.
@@ -48,6 +51,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 07/04/2017
+* Guilds: You can join a guild using the guild-join chat command.
 * Guilds: You are notified when someone from your guild joins your server.
 * Guilds: You are notified when someone from your guild leaves your server.
 * Guilds: You can send guild messages now.
