@@ -50,7 +50,8 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 07/04/2017
-* Guilds: You now notified when someone from your guild joins your server.
+* Guilds: You are notified when someone from your guild joins your server.
+* Guilds: You are notified when someone from your guild leaves your server.
 * Added multiple servers support - you can now run different servers on different hosts.
 * Each server's population is now being shown correctly (instead of just a random value like it used to be).
 * SQL: Added the table "servers".
