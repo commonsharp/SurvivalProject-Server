@@ -16,6 +16,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **@guild-join [guild-name]** - joins the guild [guild-name].
 
 # TODO
+- [ ] Rename each SQL table according to the naming convention.
 - [x] Remove the QuestDeathHandler and use NewVersionQuestDeathHandler instead, for every quest related death.
 - [x] Change userSessions to an array of fixed size, instead of an ArrayList. - **Actually used an ArrayList with a different starting capacity. Much better.**
 - [x] Make the Database.isConnected function a bit more efficient by checking if the user exists in userSessions. It should be faster than calling the database. Then we can also remove the isConnected column in the database.
@@ -58,7 +59,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Guilds: You can send guild messages now.
 * Added multiple servers support - you can now run different servers on different hosts.
 * Each server's population is now being shown correctly (instead of just a random value like it used to be).
-* SQL: Added the table "servers".
+* SQL: Added the tables servers, guild and guild_member.
 * Fixed a bug where the userSessions sorting method was called for every message, which would result in a huge amount of calculations, resulting in terrible lags.
 * Fixed a bug where the UDP game server would sometime throw a null pointer exception.
 
