@@ -28,7 +28,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [x] Add chat commands.
 - [x] Clean the big battle death code a bit. Only use one array for everyone's lives instead of 2 (one for slots and one for npc).
-- [ ] Add ~~sendFriendsMessage and~~ sendGuildMessage when the time comes.
+- [x] Add sendFriendsMessage and sendGuildMessage when the time comes.
 - [ ] Change the tutorial item class to net.objects.Item.
 - [ ] Get a list of all the request messages.
 - [ ] Finish the guild mark handler.
@@ -50,9 +50,11 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * The guild rank of new players in the room is '?' instead of being the true rank.
 
 # 07/04/2017
+* Guilds: You now notified when someone from your guild joins your server.
 * Added multiple servers support - you can now run different servers on different hosts.
 * Each server's population is now being shown correctly (instead of just a random value like it used to be).
 * SQL: Added the table "servers".
+* Fixed a bug where the userSessions sorting method was called for every message, which would result in a huge amount of calculations, resulting in terrible lags.
 * Fixed a bug where the UDP game server would sometime throw a null pointer exception.
 
 # 06/04/2017
