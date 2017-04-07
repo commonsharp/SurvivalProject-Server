@@ -12,6 +12,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 ** After executing most of the commands, a reconnect is required in order to see the changes.
 
 **@gender** - changes your gender from male to female and vice versa. Reconnect to see the changes (others will see it instantly).
+
 **@guild-join [guild-name]** - joins the guild [guild-name].
 
 # TODO
