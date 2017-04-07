@@ -27,7 +27,6 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [x] Lose/gain money when you buy/sell scrolls.
 - [x] Add experience/elements after a kill in big matches.
 - [x] Add experience/elements after a kill in other modes (not big matches/quests).
-- [ ] When the master of the room leaves a quest, he may no longer join, as it restarts everyone else's quest. Therefore, it must be locked **ONLY FOR HIM**.
 - [ ] Lose code/cash/coins when you make a purchase.
 - [x] Make sure chests only give code and not experience.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
