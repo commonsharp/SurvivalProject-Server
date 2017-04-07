@@ -15,6 +15,8 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 **@guild-join [guild-name]** - joins the guild [guild-name].
 
+**@guild-leave** - leaves your guild.
+
 # TODO
 - [ ] Rename each SQL table according to the naming convention.
 - [x] Remove the QuestDeathHandler and use NewVersionQuestDeathHandler instead, for every quest related death.
@@ -54,6 +56,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 # 07/04/2017
 * Guilds: You can join a guild using the guild-join chat command.
+* Guilds: You can leave a guild using the guild-leave chat command.
 * Guilds: You are notified when someone from your guild joins your server.
 * Guilds: You are notified when someone from your guild leaves your server.
 * Guilds: You can send guild messages now.
