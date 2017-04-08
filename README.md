@@ -38,6 +38,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
 
 # 08/04/2017
+* Started working on guild points.
 * Finally managed to fix the bug where the guild rank of new players in the room was '?'.
 * Fixed a bug where you didn't get the users list once you logged in.
 
