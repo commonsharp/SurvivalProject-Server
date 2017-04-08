@@ -19,26 +19,13 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 # TODO
 - [ ] Rename each SQL table according to the naming convention.
-- [x] Remove the QuestDeathHandler and use NewVersionQuestDeathHandler instead, for every quest related death.
-- [x] Change userSessions to an array of fixed size, instead of an ArrayList. - **Actually used an ArrayList with a different starting capacity. Much better.**
-- [x] Make the Database.isConnected function a bit more efficient by checking if the user exists in userSessions. It should be faster than calling the database. Then we can also remove the isConnected column in the database.
-- [x] Sort the userSessions by username, and when you search for a user, use binary search. Or - every user will have a field indicates its index in userSessions, that would be saved in the database. Then if we want to send a message to that user, we go to the database, search for his index in userSessions and send a message. Would it be faster though?
 - [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
-- [x] Lose/gain money when you buy/sell scrolls.
-- [x] Add experience/elements after a kill in big matches.
-- [x] Add experience/elements after a kill in other modes (not big matches/quests).
 - [ ] Lose code/cash/coins when you make a purchase.
-- [x] Make sure chests only give code and not experience.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
-- [x] Add chat commands.
-- [x] Clean the big battle death code a bit. Only use one array for everyone's lives instead of 2 (one for slots and one for npc).
-- [x] Add sendFriendsMessage and sendGuildMessage when the time comes.
 - [ ] Change the tutorial item class to net.objects.Item.
 - [ ] Get a list of all the request messages.
 - [ ] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
-- [x] Downlad a list of all the users in the server once you log in.
-- [x] There are more fields in LeaveRoomHandler. Need to change...
 
 # List of bugs
 * When you finish a mission, the mission level on the left of the screen doesn't change.
@@ -49,12 +36,10 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * If you disconnect on the login screen, there will be an SQLException.
 * Death timer in big matches doesn't work.
 * When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
-* ~~When you finish a survival game, it says draw. Not sure if it should say that or win.~~
-* ~~Possible bug - broadcast messages will get sent to other servers as well. So someone sending a chat message would send it to people in other servers as well. Need to check that.~~ - this doesn't happen.
-* ~~The guild rank of new players in the room is '?' instead of being the true rank.~~
 
 # 08/04/2017
 * Finally managed to fix the bug where the guild rank of new players in the room was '?'.
+* Fixed a bug where you didn't get the users list once you logged in.
 
 # 07/04/2017
 * Guilds: You can join a guild using the guild-join chat command.
