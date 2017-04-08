@@ -7,7 +7,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.ExperienceHelper;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.GameMode;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
@@ -31,7 +31,7 @@ public class BigMatchDeathHandler extends LobbyHandler {
 	protected int elementMultiplier;
 	int npcMultiplier;
 	
-	public BigMatchDeathHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public BigMatchDeathHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

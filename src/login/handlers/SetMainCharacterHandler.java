@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import database.DatabaseConnection;
 import login.LoginHandler;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 // request - V
@@ -16,7 +16,7 @@ public class SetMainCharacterHandler extends LoginHandler {
 
 	protected String username;
 	
-	public SetMainCharacterHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+	public SetMainCharacterHandler(UserSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
 	}
 

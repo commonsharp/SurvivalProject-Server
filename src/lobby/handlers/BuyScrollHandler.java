@@ -7,7 +7,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.CurrencyHelper;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class BuyScrollHandler extends LobbyHandler {
@@ -19,7 +19,7 @@ public class BuyScrollHandler extends LobbyHandler {
 	protected int response;
 	protected int scrollIndex;
 	
-	public BuyScrollHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public BuyScrollHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

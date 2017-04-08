@@ -5,7 +5,7 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
@@ -15,11 +15,11 @@ public class CrystalDeathHandler extends LobbyHandler {
 	int questProgression;
 	int unknown;
 	
-	public CrystalDeathHandler(LobbyServer lobbyServer, UserTCPSession tcpServer) {
+	public CrystalDeathHandler(LobbyServer lobbyServer, UserSession tcpServer) {
 		super(lobbyServer, tcpServer);
 	}
 	
-	public CrystalDeathHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public CrystalDeathHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
 

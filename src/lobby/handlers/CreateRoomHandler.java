@@ -1,11 +1,12 @@
 package lobby.handlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
@@ -27,7 +28,7 @@ public class CreateRoomHandler extends LobbyHandler {
 	protected byte unknown10;
 	protected byte isLimitAnger; // 0 = limit. other values = no limit.
 	
-	public CreateRoomHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public CreateRoomHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
 
@@ -61,10 +62,13 @@ public class CreateRoomHandler extends LobbyHandler {
 	}
 
 	@Override
-	public void afterSend() throws IOException {
+	public void afterSend() throws IOException, SQLException {
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(roomNumber)));
 		sendTCPMessage(new RoomPlayersUpdateHandler(lobbyServer, userSession).getResponse(userSession.getUser()));
 		sendTCPMessage(new NewMasterHandler(lobbyServer, userSession).getResponse());
+		
+		// Send your connectivity to anyone else in your guild
+		lobbyServer.sendGuildMessage(userSession, new GuildMemberOnlineStatusHandler(lobbyServer, userSession).getResponse(userSession, true), true);
 	}
 
 	@Override
@@ -109,7 +113,7 @@ public class CreateRoomHandler extends LobbyHandler {
 		output.putInt(0x5C, userSession.getUser().roomTeam); // team
 		output.putByte(0x60, (byte) isWithTeams);
 		output.putInt(0x64, cardsLimit);
-		output.putShort(0x68, (short) userSession.getUser().guildRank); // guild rank. zero based
+		output.putShort(0x68, (short) 0); // guild rank. zero based. you get a bonus for server capture if you're high enough
 		output.putByte(0x6A, isLimitAnger);
 		output.putByte(0x6B, (byte) 1);
 		

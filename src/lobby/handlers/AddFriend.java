@@ -7,7 +7,7 @@ import database.DatabaseHelper;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class AddFriend extends LobbyHandler {
@@ -18,7 +18,7 @@ public class AddFriend extends LobbyHandler {
 	
 	protected int response;
 	
-	public AddFriend(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public AddFriend(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

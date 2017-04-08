@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class RoomTypeChangedHandler extends LobbyHandler {
@@ -16,7 +16,7 @@ public class RoomTypeChangedHandler extends LobbyHandler {
 	protected int newGameType;
 	protected int newGameMap;
 	
-	public RoomTypeChangedHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public RoomTypeChangedHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

@@ -5,13 +5,13 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class BigMatchInfo extends LobbyHandler {
 	byte[] requestBytes;
 	
-	public BigMatchInfo(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public BigMatchInfo(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 		requestBytes = messageBytes;
 	}

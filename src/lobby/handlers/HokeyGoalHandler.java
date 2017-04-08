@@ -5,7 +5,7 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
@@ -14,7 +14,7 @@ public class HokeyGoalHandler extends LobbyHandler {
 
 	protected int goalTeam;
 	
-	public HokeyGoalHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public HokeyGoalHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

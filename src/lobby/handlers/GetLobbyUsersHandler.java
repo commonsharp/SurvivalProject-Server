@@ -6,17 +6,17 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class GetLobbyUsersHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x3C;
 	
-	public GetLobbyUsersHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+	public GetLobbyUsersHandler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 	}
 	
-	public GetLobbyUsersHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public GetLobbyUsersHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 
@@ -31,7 +31,7 @@ public class GetLobbyUsersHandler extends LobbyHandler {
 		
 	}
 
-	public byte[] getResponse(UserTCPSession userSession, boolean isOnline) {
+	public byte[] getResponse(UserSession userSession, boolean isOnline) {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.GET_LOBBY_USERS_RESPONSE);
@@ -48,7 +48,7 @@ public class GetLobbyUsersHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		for (UserTCPSession userSession : lobbyServer.getUserSessions()) {
+		for (UserSession userSession : lobbyServer.getUserSessions()) {
 			sendTCPMessage(getResponse(userSession, true));
 		}
 	}

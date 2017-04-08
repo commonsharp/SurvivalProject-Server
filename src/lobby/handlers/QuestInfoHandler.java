@@ -5,7 +5,7 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class QuestInfoHandler extends LobbyHandler {
@@ -32,7 +32,7 @@ public class QuestInfoHandler extends LobbyHandler {
 	
 	NpcData[] monsters;
 	
-	public QuestInfoHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public QuestInfoHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 		requestBytes = messageBytes;
 	}

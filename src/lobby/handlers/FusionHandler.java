@@ -7,7 +7,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.CurrencyHelper;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.Card;
 import tools.ExtendedByteBuffer;
 
@@ -21,7 +21,7 @@ public class FusionHandler extends LobbyHandler {
 	
 	protected int result;
 	
-	public FusionHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public FusionHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
 

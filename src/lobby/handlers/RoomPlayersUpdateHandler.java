@@ -5,7 +5,7 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.GameMode;
 import net.objects.Room;
 import net.objects.User;
@@ -14,14 +14,14 @@ import tools.ExtendedByteBuffer;
 public class RoomPlayersUpdateHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x118;
 	
-    int unknown01, unknown04, unknown06;
+    int unknown04, unknown06;
     int action;
     
-    public RoomPlayersUpdateHandler(LobbyServer lobbyServer, UserTCPSession tcpServer) {
+    public RoomPlayersUpdateHandler(LobbyServer lobbyServer, UserSession tcpServer) {
     	super(lobbyServer, tcpServer);
     }
     
-	public RoomPlayersUpdateHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public RoomPlayersUpdateHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
 	
@@ -33,14 +33,13 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		userSession.getUser().roomReady = input.getByte(0x20);
 		action = input.getInt(0x24);
 		unknown04 = input.getInt(0x28);
-		unknown06 = input.getInt(0x2C);
+		unknown06 = input.getByte(0x2C);
 		
 		System.out.println("Ready: " + userSession.getUser().roomReady);
 		System.out.println("Action: " + action); // 0 - change character. 1 - change team. 2 - pressed ready
 		
 		System.out.println("Slot " + userSession.getUser().roomSlot);
 //		System.out.println("Team : " + team);
-		System.out.println(unknown01);
 //		System.out.println(isReadyMaybe);
 //		System.out.println(gameStart);
 		System.out.println(unknown04);
@@ -116,17 +115,17 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.ROOM_PLAYERS_UPDATE_RESPONSE);
 		output.putInt(0x14, user.roomSlot); // slot. first player in the room = slot 0. next one = slot 1 and so on.
-//		output.putString(0x18, "100.0.0.2");
-//		output.putString(0x28, "100.0.0.2");
+		output.putString(0x18, "10.0.0.50");
+		output.putString(0x28, "10.0.0.50");
 		output.putInt(0x38, user.playerLevel);
 		output.putString(0x3C, user.username);
 		output.putString(0x49, user.guildName);
 		output.putString(0x56, user.guildDuty);
-		output.putByte(0x63, (byte) 1);
-		output.putInt(0x64, 1);
+		output.putByte(0x63, (byte) 0);
+		output.putInt(0x64, 0);
 		output.putInt(0x70, user.roomReady);
 		output.putInt(0x74, user.roomCharacter);
-		output.putInt(0x78, 1);
+		output.putInt(0x78, 0); // same as unknown04 in the request
 		output.putInt(0x7C, 0); // is random
 		output.putInt(0x80, user.roomTeam);
 		output.putInt(0x84, 0); //ko
@@ -161,8 +160,8 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		output.putInt(0xC8, user.getItemSkill(user.petIndex));
 		
 		output.putInts(0xCC, user.scrolls);
-		output.putInt(0xD0, 1);
-		output.putInt(0xD4, 1);
+		output.putInt(0xD0, 0); // between 1 and 16
+		output.putInt(0xD4, 0); // same ^
 		output.putInt(0xD8, user.getItemID(user.footIndex));
 		output.putInt(0xDC, user.getItemID(user.bodyIndex));
 		output.putInt(0xE0, user.getItemID(user.hand1Index));
@@ -191,8 +190,8 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		else
 			output.putInt(0xF4, 1);
 		
-		output.putInt(0xF8, 0);
-		output.putInt(0xFC, 0);
+		output.putInt(0xF8, 0); // this one is used in mode 40 and mode 51
+		output.putInt(0xFC, 0); // same ^
 		
 //		if (user.username.equals(lobbyServer.getRoom(roomID).roomCreator)) {
 //			b = 0;
@@ -204,10 +203,10 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		// this is for quests only. if it's 0, then the "monsters level increased" message can not appear.
 		// that probably means that is something like isSoloQuest. also if it's set to 0, the game automatically start,
 		// where if it's set to 1 the game waits for everyone but still doesn't do much afterwards.
-		output.putByte(0x100, (byte) 0); // this is a boolean... setting it to 1 doesn't start for some reason :S
+		output.putByte(0x100, (byte) 1); // this is a boolean... setting it to 1 doesn't start for some reason :S
 		output.putByte(0x101, (byte) 0); // heart near the player. extra life by super silver or so.
-		output.putByte(0x102, (byte) 1); // 0x59 in create room. this is master card 1.3x exp/code bonus
-		output.putByte(0x103, (byte) 1);
+		output.putByte(0x102, (byte) 0); // 0x59 in create room. this is master card 1.3x exp/code bonus
+		output.putByte(0x103, (byte) 0);
 
 		output.putInt(0x104, user.missionLevel); // current mission level (you can play a level 20 mission with someone who's level 20 while you're level 40 for example)
 		output.putInt(0x108, user.missionLevel); // my mission level

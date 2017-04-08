@@ -5,7 +5,7 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class PetKilledHandler extends LobbyHandler {
@@ -14,7 +14,7 @@ public class PetKilledHandler extends LobbyHandler {
 	protected int petID;
 	protected int slot;
 	
-	public PetKilledHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public PetKilledHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

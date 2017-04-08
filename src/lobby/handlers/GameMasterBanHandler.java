@@ -5,14 +5,14 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class GameMasterBanHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x25;
 	
 	protected String username;
-	public GameMasterBanHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public GameMasterBanHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

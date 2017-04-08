@@ -5,13 +5,13 @@ import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class Test4460Handler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x48;
 	
-	public Test4460Handler(LobbyServer lobbyServer, UserTCPSession userSession) {
+	public Test4460Handler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 	}
 

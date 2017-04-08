@@ -1,11 +1,12 @@
 package lobby.handlers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class JoinRoomHandler extends LobbyHandler {
@@ -13,7 +14,7 @@ public class JoinRoomHandler extends LobbyHandler {
 	
 	protected int roomID;
 	
-	public JoinRoomHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public JoinRoomHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
 
@@ -38,7 +39,16 @@ public class JoinRoomHandler extends LobbyHandler {
 		
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.JOIN_ROOM_RESPONSE);
-		output.putInt(0x14, 0); //1,2,3,4,5,6 - errors possibly. others - good.
+		/*
+		 * anything else other than the following values - good
+		 * 1 - Can not find corresponding room.
+		 * 2 - Incorrect password.&#xA;Please try again.
+		 * 3 - Reached max number of players
+		 * 4 - you can not spectate the game &#xA;that is in progress in the room yet.
+		 * 5 - Observers can only enter King &#xA;Slayer and Team mode rooms.
+		 * 6 - another error possibly
+		 */
+		output.putInt(0x14, 0);
 		output.putInt(0x18, roomID);
 		output.putString(0x1C, lobbyServer.getRoom(roomID).getRoomName());
 		output.putInt(0x3C, lobbyServer.getRoom(roomID).getGameMode().getValue());
@@ -52,15 +62,15 @@ public class JoinRoomHandler extends LobbyHandler {
 		output.putInt(0x68, userSession.getUser().roomTeam);
 		output.putByte(0x6C, lobbyServer.getRoom(roomID).getIsWithTeams());
 		output.putInt(0x70, lobbyServer.getRoom(roomID).getCardsLimit());
-		output.putShort(0x74, (short) 2);
+		output.putShort(0x74, (short) 0); // same as 0x10C in RoomPlayersUpdate. it's aura.
 		output.putByte(0x78, lobbyServer.getRoom(roomID).getIsLimitAnger());
 		output.putByte(0x79, (byte) 0);
 		return output.toArray();
 	}
 
 	@Override
-	public void afterSend() throws IOException {
-		UserTCPSession currentUserSession;
+	public void afterSend() throws IOException, SQLException {
+		UserSession currentUserSession;
 		
 		// Go through each of the users in the room
 		for (int i = 0; i < 8; i++) {
@@ -77,6 +87,9 @@ public class JoinRoomHandler extends LobbyHandler {
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(roomID)));
 		
 		sendTCPMessage(new NewMasterHandler(lobbyServer, userSession).getResponse());
+		
+		// Send your connectivity to anyone else in your guild
+		lobbyServer.sendGuildMessage(userSession, new GuildMemberOnlineStatusHandler(lobbyServer, userSession).getResponse(userSession, true), false);
 	}
 
 	@Override

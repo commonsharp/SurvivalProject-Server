@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.GameMode;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
@@ -15,7 +15,7 @@ public class LeaveRoomHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x28;
 	
 	
-	public LeaveRoomHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public LeaveRoomHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
 
@@ -36,17 +36,7 @@ public class LeaveRoomHandler extends LobbyHandler {
 			lobbyServer.setRoom(room.getRoomID(), null);
 		}
 		
-		for (int i = 0; i < JoinLobbyHandler.lobbyMaxRooms; i += 22) {
-			sendTCPMessage(new GetListOfRoomsHandler(lobbyServer, userSession).getResponse(i));
-		}
-		
-		GetLobbyUsersHandler getLobbyUsersHandler = new GetLobbyUsersHandler(lobbyServer, userSession);
-		
-		for (UserTCPSession userSession : lobbyServer.getUserSessions()) {
-			sendTCPMessage(getLobbyUsersHandler.getResponse(userSession, true));
-		}
-		
-		sendTCPMessage(new GetFriendsHandler(lobbyServer, userSession).getResponse());
+		lobbyServer.onJoinLobby(userSession);
 	}
 
 	@Override

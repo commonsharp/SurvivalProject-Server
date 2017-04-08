@@ -5,14 +5,14 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
 public class LobbyRoomsChangedHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x118;
 	
-	public LobbyRoomsChangedHandler(LobbyServer lobbyServer, UserTCPSession tcpServer) {
+	public LobbyRoomsChangedHandler(LobbyServer lobbyServer, UserSession tcpServer) {
 		super(lobbyServer, tcpServer);
 		// TODO Auto-generated constructor stub
 	}

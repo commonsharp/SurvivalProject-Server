@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.UserTCPSession;
+import net.UserSession;
 
 public class ItemsChangedHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x118;
@@ -56,7 +56,7 @@ public class ItemsChangedHandler extends LobbyHandler {
     
     boolean send = true;
     
-	public ItemsChangedHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public ItemsChangedHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
 

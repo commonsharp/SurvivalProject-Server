@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class MissionCompletedHandler extends LobbyHandler {
@@ -14,7 +14,7 @@ public class MissionCompletedHandler extends LobbyHandler {
 	
 	int progression;
 	
-	public MissionCompletedHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public MissionCompletedHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

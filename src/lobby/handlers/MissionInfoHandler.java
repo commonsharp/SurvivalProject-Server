@@ -5,14 +5,14 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 // not sure if you need to send the mission info to everyone else
 public class MissionInfoHandler extends LobbyHandler {
 	byte[] requestBytes;
 	
-	public MissionInfoHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public MissionInfoHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 		requestBytes = messageBytes;
 	}

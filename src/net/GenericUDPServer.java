@@ -81,24 +81,24 @@ public abstract class GenericUDPServer implements Runnable {
 				
 				int messageID = HexTools.getIntegerInByteArray(messageBytes, 4);
 				int state = HexTools.getIntegerInByteArray(messageBytes, 16);
-				User u;
+				UserSession u;
 				if (messageID == 0x1100) {
 					ExtendedByteBuffer buf = new ExtendedByteBuffer(messageBytes);
 					String username = buf.getString(0x14);
 					
-					u = lobby.findUserSession(username).getUser();
+					u = lobby.findUserSession(username);
 					
 					if (u != null) {
-						u.udpIPAddress = ipAddress;
-						u.udpPort = port;
-						u.udpState = state;
+						u.getUser().udpIPAddress = ipAddress;
+						u.getUser().udpPort = port;
+						u.getUser().udpState = state;
 					}
 				}
 				else if (messageID != 0x1101) {
-					u = lobby.findUserSession(ipAddress, port).getUser();
+					u = lobby.findUserSession(ipAddress, port);
 					
 					if (u != null) {
-						u.udpState = state;
+						u.getUser().udpState = state;
 					}
 				}
 				

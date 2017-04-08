@@ -5,7 +5,7 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
@@ -16,11 +16,11 @@ public class SoccerGoalHandler extends LobbyHandler {
 	
 	boolean isUpdateData = true;
 	
-	public SoccerGoalHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+	public SoccerGoalHandler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 	}
 	
-	public SoccerGoalHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public SoccerGoalHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

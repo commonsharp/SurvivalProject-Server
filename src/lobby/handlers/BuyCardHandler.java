@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.Card;
 import net.objects.User;
 import tools.ExtendedByteBuffer;
@@ -20,7 +20,7 @@ public class BuyCardHandler extends LobbyHandler {
 	protected boolean isBuy;
 	protected int amount;
 	
-	public BuyCardHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public BuyCardHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 		printMessage();
 	}

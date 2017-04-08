@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
 public class GetListOfRoomsHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0xC8E;
 	
-	public GetListOfRoomsHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+	public GetListOfRoomsHandler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 		// TODO Auto-generated constructor stub
 	}

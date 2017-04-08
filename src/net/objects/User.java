@@ -24,7 +24,7 @@ public class User {
 	public long avatarMoney;
 	public String guildName;
 	public String guildDuty;
-	public int guildRank = 10;
+	public int guildRank = 1;
 	public long cash; // probably cash (premium money)
 	
 	public Card[] cards;
@@ -32,7 +32,7 @@ public class User {
 	public byte playerEventFlags[] = {0, 0, 0, 0, 0, 0, 0, 0}; //see debug mode
 	
 	public int playerInventorySlots;
-	public int playerType = 0; //set to 7 for GM... otherwise 0?
+	public int playerType = 0; //set to 7 for GM... otherwise 0
 	public int[] whiteCards;
 	public int scrolls[] = {0, 0, 0};
 	public int playerWins;

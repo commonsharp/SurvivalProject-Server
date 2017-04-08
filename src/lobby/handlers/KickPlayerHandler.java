@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.Room;
 import net.objects.User;
 import tools.ExtendedByteBuffer;
@@ -16,7 +16,7 @@ public class KickPlayerHandler extends LobbyHandler {
 	
 	protected int playerSlot;
 	
-	public KickPlayerHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public KickPlayerHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

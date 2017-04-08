@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class JoinLobbyHandler extends LobbyHandler {
@@ -42,7 +42,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 	int ioProtectVersion = 11;
 	int survivalprojectVersion = 11;
 	
-	public JoinLobbyHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public JoinLobbyHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 		// TODO Auto-generated constructor stub
 	}
@@ -63,23 +63,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		for (int i = 0; i < lobbyMaxRooms; i += 22) {
-			sendTCPMessage(new GetListOfRoomsHandler(lobbyServer, userSession).getResponse(i));
-		}
-		
-		sendTCPMessage(new Test4460Handler(lobbyServer, userSession).getResponse());
-		
-		GetLobbyUsersHandler getLobbyUsersHandler = new GetLobbyUsersHandler(lobbyServer, userSession);
-		
-		for (UserTCPSession userSession : lobbyServer.getUserSessions()) {
-			sendTCPMessage(getLobbyUsersHandler.getResponse(userSession, true));
-		}
-		
-		// Send everyone that you got connected
-		lobbyServer.sendBroadcastMessage(userSession, getLobbyUsersHandler.getResponse(userSession, true));
-		
-		sendTCPMessage(new GetFriendsHandler(lobbyServer, userSession).getResponse());
-		sendTCPMessage(new GetMissionLevelHandler(lobbyServer, userSession).getResponse());
+		lobbyServer.onJoinLobby(userSession);
 	}
 
 	@Override
@@ -172,5 +156,6 @@ public class JoinLobbyHandler extends LobbyHandler {
 	@Override
 	public void processMessage() throws SQLException {
 		userSession.getUser().loadUser();
+		lobbyServer.moveToCorrectPlace();
 	}
 }

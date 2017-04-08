@@ -5,12 +5,12 @@ import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.UserTCPSession;
+import net.UserSession;
 
 public class UseScrollHandler extends LobbyHandler {
 	protected int scrollIndex;
 	
-	public UseScrollHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public UseScrollHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

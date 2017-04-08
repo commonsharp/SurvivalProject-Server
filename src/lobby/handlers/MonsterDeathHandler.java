@@ -7,7 +7,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.ExperienceHelper;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.GameMode;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
@@ -21,7 +21,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 	
 	int[] damageDone;
 	
-	public MonsterDeathHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public MonsterDeathHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
 
@@ -59,8 +59,8 @@ public class MonsterDeathHandler extends LobbyHandler {
 		
 		output.putInt(0x14, monsterIndex);
 		output.putInt(0x18, userSession.getUser().roomSlot); // slot
-		output.putInt(0x1C, 0); // byte
-		output.putInt(0x20, 0);
+		output.putInt(0x1C, -1); // byte
+		output.putInt(0x20, -1);
 		
 		int randomLucky = ExperienceHelper.getLuckyMultiplier();
 		int[] experienceGained = ExperienceHelper.getExperience(damageDone);
@@ -86,7 +86,11 @@ public class MonsterDeathHandler extends LobbyHandler {
 		}
 		
 		output.putInts(0x64, ExperienceHelper.getLevels(experiences));
-		output.putInt(0x84, 100); // another array. unknown yet.
+		
+		for (int i = 0; i < 8; i++) {
+			output.putInt(0x84 + i * 4, 100);
+		}
+//		output.putInt(0x84, 100); // another array. unknown yet.
 		
 		int elementType = (int)(Math.random() * 4) + 1;
 		int elementAmount = ExperienceHelper.getElementCount();

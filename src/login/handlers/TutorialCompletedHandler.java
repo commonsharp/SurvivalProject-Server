@@ -2,7 +2,7 @@ package login.handlers;
 
 import login.LoginHandler;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class TutorialCompletedHandler extends LoginHandler {
@@ -41,7 +41,7 @@ public class TutorialCompletedHandler extends LoginHandler {
 		}
 	}
 	
-	public TutorialCompletedHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+	public TutorialCompletedHandler(UserSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
 		
 		final int t_items[] = {11204, 11203, 11202, 11201, 11101, 11102, 11103, 11104, 11301, 2910};

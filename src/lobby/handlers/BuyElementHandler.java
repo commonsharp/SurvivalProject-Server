@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class BuyElementHandler extends LobbyHandler {
@@ -15,7 +15,7 @@ public class BuyElementHandler extends LobbyHandler {
 	protected int elementType;
 	protected int amount;
 	
-	public BuyElementHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public BuyElementHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

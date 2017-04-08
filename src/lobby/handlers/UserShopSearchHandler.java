@@ -5,7 +5,7 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.UserShop;
 import tools.ExtendedByteBuffer;
 
@@ -18,7 +18,7 @@ public class UserShopSearchHandler extends LobbyHandler {
 	
 	UserShop[] results;
 	
-	public UserShopSearchHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public UserShopSearchHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 		// TODO Auto-generated constructor stub
 	}

@@ -2,13 +2,13 @@ package login.handlers;
 
 import login.LoginHandler;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class GuildMarkHandler extends LoginHandler {
 	public static final int RESPONSE_LENGTH = 0x1000;
 	
-	public GuildMarkHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+	public GuildMarkHandler(UserSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
 	}
 

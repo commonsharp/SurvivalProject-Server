@@ -5,7 +5,7 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.User;
 import tools.ExtendedByteBuffer;
 
@@ -15,7 +15,7 @@ public class GetUserInfoHandler extends LobbyHandler {
 	int unknown1;
 	String username;
 	
-	public GetUserInfoHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public GetUserInfoHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

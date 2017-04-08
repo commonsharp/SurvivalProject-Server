@@ -6,17 +6,17 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class GetFriendsHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x1AC;
 	
-	public GetFriendsHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+	public GetFriendsHandler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 	}
 	
-	public GetFriendsHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public GetFriendsHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

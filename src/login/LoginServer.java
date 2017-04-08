@@ -5,12 +5,12 @@ import login.handlers.GetChannelUsersPercentageHandler;
 import login.handlers.GuildMarkHandler;
 import login.handlers.LoginCredentialsHandler;
 import login.handlers.ReconnectHandler;
-import login.handlers.ServerInfoHandler;
+import login.handlers.ServersInfoHandler;
 import login.handlers.SetMainCharacterHandler;
 import login.handlers.TutorialCompletedHandler;
 import net.GenericTCPServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.handlers.GenericHandler;
 
 public class LoginServer extends GenericTCPServer {
@@ -19,7 +19,7 @@ public class LoginServer extends GenericTCPServer {
 	}
 	
 	@Override
-	public GenericHandler processPacket(UserTCPSession userSession, int messageID, byte[] messageBytes) {
+	public GenericHandler processPacket(UserSession userSession, int messageID, byte[] messageBytes) {
 		GenericHandler message = null;
 		
 		switch (messageID) {
@@ -27,7 +27,7 @@ public class LoginServer extends GenericTCPServer {
 			message = new LoginCredentialsHandler(userSession, messageBytes);
 			break;
 		case Messages.SERVERS_INFO_REQUEST:
-			message = new ServerInfoHandler(userSession, messageBytes);
+			message = new ServersInfoHandler(userSession, messageBytes);
 			break;
 		case Messages.SET_MAIN_CHARACTER_REQUEST:
 			message = new SetMainCharacterHandler(userSession, messageBytes);
@@ -54,7 +54,7 @@ public class LoginServer extends GenericTCPServer {
 	}
 
 	@Override
-	public void onUserDisconnect(UserTCPSession userTCPSession) throws SQLException {
+	public void onUserDisconnect(UserSession userTCPSession) throws SQLException {
 		userTCPSession.getUser().saveUser();
 	}
 }

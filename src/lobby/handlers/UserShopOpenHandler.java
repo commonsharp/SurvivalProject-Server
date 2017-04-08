@@ -5,14 +5,14 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class UserShopOpenHandler extends LobbyHandler {
 	// THERE ARE MORE FIELDS IN THIS MESSAGE!!!
 	public static final int RESPONSE_LENGTH = 0x2E;
 	
-	public UserShopOpenHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+	public UserShopOpenHandler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 		// TODO Auto-generated constructor stub
 	}

@@ -6,7 +6,7 @@ import game.handlers.GameStartedHandler;
 import game.handlers.JoinServerHandler;
 import lobby.LobbyServer;
 import net.GenericUDPServer;
-import net.UserTCPSession;
+import net.UserSession;
 import net.handlers.GenericHandler;
 import tools.HexTools;
 
@@ -66,7 +66,7 @@ public class GameServer extends GenericUDPServer {
 	}
 	
 	public void sendToUser(GenericUDPServer udpServer, int roomID, int toSlot, byte[] message, boolean sendInRoom) throws IOException {
-		for (UserTCPSession user : lobby.getRoom(roomID).getUsers()) {
+		for (UserSession user : lobby.getRoom(roomID).getUsers()) {
 			// If the user is not null
 			if (user != null) {
 				// If the user is someone else

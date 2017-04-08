@@ -1,10 +1,10 @@
 package login;
 
-import net.UserTCPSession;
+import net.UserSession;
 import net.handlers.TCPHandler;
 
 public abstract class LoginHandler extends TCPHandler {
-	public LoginHandler(UserTCPSession userSession, byte[] messageBytes) {
+	public LoginHandler(UserSession userSession, byte[] messageBytes) {
 		super(userSession, messageBytes);
 	}
 }

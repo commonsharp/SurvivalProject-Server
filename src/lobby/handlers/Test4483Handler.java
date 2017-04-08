@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class Test4483Handler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x18;
 	
-	public Test4483Handler(LobbyServer lobbyServer, UserTCPSession userSession) {
+	public Test4483Handler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 	}
 

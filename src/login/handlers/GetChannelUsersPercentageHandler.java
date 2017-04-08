@@ -2,13 +2,13 @@ package login.handlers;
 
 import login.LoginHandler;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class GetChannelUsersPercentageHandler extends LoginHandler {
 	public static final int RESPONSE_LENGTH = 0x1000;
 	
-	public GetChannelUsersPercentageHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+	public GetChannelUsersPercentageHandler(UserSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
 	}
 

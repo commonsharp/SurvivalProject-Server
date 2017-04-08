@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import database.DatabaseConnection;
 import login.LoginHandler;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class LoginCredentialsHandler extends LoginHandler {
@@ -22,13 +22,12 @@ public class LoginCredentialsHandler extends LoginHandler {
     int unknown6;
     int unknown7;
 	
-	public LoginCredentialsHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+	public LoginCredentialsHandler(UserSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
 	}
 	
 	@Override
 	public void interpretBytes() {
-		printMessage();
 		userSession.getUser().username = input.getString(0x3C);
 		userSession.getUser().password = input.getString(0x49);
 		

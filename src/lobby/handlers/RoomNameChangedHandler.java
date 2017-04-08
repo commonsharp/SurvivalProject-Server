@@ -5,7 +5,7 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class RoomNameChangedHandler extends LobbyHandler {
@@ -14,7 +14,7 @@ public class RoomNameChangedHandler extends LobbyHandler {
 	int roomID;
 	String roomName;
 	
-	public RoomNameChangedHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public RoomNameChangedHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
 

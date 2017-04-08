@@ -1,7 +1,7 @@
 package net.objects;
 
 import log.Log;
-import net.UserTCPSession;
+import net.UserSession;
 
 public class Room {
 	protected int roomID;
@@ -16,7 +16,7 @@ public class Room {
 	protected int[] characters;
 	
 	protected int numberOfUsers;
-	protected UserTCPSession[] users = new UserTCPSession[8];
+	protected UserSession[] users = new UserSession[8];
 
 	public int blueScore;
 	public int redScore;
@@ -62,11 +62,11 @@ public class Room {
 		npcMultipliers = new int[40];
 	}
 	
-	public void setUserSession(int index, UserTCPSession user) {
+	public void setUserSession(int index, UserSession user) {
 		this.users[index] = user;
 	}
 	
-	public UserTCPSession getUserSession(int index) {
+	public UserSession getUserSession(int index) {
 		return users[index];
 	}
 
@@ -150,7 +150,7 @@ public class Room {
 		this.characters[index] = character;
 	}
 	
-	public UserTCPSession[] getUsers() {
+	public UserSession[] getUsers() {
 		return users;
 	}
 	
@@ -174,7 +174,7 @@ public class Room {
 			
 			// Go through each of the users
 			for (int i = 0; i < 8; i++) {
-				UserTCPSession currentSession = users[i];
+				UserSession currentSession = users[i];
 				
 				if (currentSession != null) {
 					// If someone is not ready, don't start

@@ -2,17 +2,17 @@ package net.handlers;
 
 import java.io.IOException;
 
-import net.UserTCPSession;
+import net.UserSession;
 
 public abstract class TCPHandler extends GenericHandler {
-	protected UserTCPSession userSession;
+	protected UserSession userSession;
 	
-	public TCPHandler(UserTCPSession userSession) {
+	public TCPHandler(UserSession userSession) {
 		super();
 		this.userSession = userSession;
 	}
 	
-	public TCPHandler(UserTCPSession userSession, byte[] messageBytes) {
+	public TCPHandler(UserSession userSession, byte[] messageBytes) {
 		super(messageBytes);
 		this.userSession = userSession;
 	}

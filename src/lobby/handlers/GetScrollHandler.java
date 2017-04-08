@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class GetScrollHandler extends LobbyHandler {
@@ -16,7 +16,7 @@ public class GetScrollHandler extends LobbyHandler {
 	protected int scrollID;
 	protected int scrollSlot;
 	
-	public GetScrollHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public GetScrollHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

@@ -5,13 +5,13 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
 public class RoundCompletedHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x1A0;
-	public RoundCompletedHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+	public RoundCompletedHandler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 	}
 

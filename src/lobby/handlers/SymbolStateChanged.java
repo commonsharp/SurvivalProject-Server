@@ -4,12 +4,12 @@ import java.io.IOException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.Room;
 
 public class SymbolStateChanged extends LobbyHandler {
 	int[] symbols;
-	public SymbolStateChanged(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public SymbolStateChanged(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

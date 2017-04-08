@@ -3,7 +3,7 @@ package lobby.handlers;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class GetTopGuildsMarkHandler extends LobbyHandler {
@@ -12,7 +12,7 @@ public class GetTopGuildsMarkHandler extends LobbyHandler {
 	protected String guildName;
 	protected int window;
 	
-	public GetTopGuildsMarkHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public GetTopGuildsMarkHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
 
@@ -33,7 +33,7 @@ public class GetTopGuildsMarkHandler extends LobbyHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.GET_TOP_GUILDS_MARK_RESPONSE);
-		output.putString(0x14, "hello7");
+		output.putString(0x14, "Guild3");
 		byte[] pixels = new byte[12 * 13 * 2];
 		
 		// 16 bits per color. probably High Color.

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class FindUserHandler extends LobbyHandler {
@@ -14,7 +14,7 @@ public class FindUserHandler extends LobbyHandler {
 	
 	protected String username;
 	
-	public FindUserHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public FindUserHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 
@@ -36,7 +36,7 @@ public class FindUserHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.FIND_USER_RESPONSE);
 		
-		UserTCPSession userSession = lobbyServer.findUserSession(username);
+		UserSession userSession = lobbyServer.findUserSession(username);
 		
 		int isConnected = 0;
 		int channelType = 0;

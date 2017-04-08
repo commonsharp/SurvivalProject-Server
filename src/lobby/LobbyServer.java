@@ -2,9 +2,13 @@ package lobby;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import database.DatabaseConnection;
 import lobby.handlers.AddFriend;
 import lobby.handlers.AutoUserShopNewItemHandler;
 import lobby.handlers.BigMatchDeathHandler;
@@ -20,12 +24,15 @@ import lobby.handlers.FindUserHandler;
 import lobby.handlers.FusionHandler;
 import lobby.handlers.GameMasterBanHandler;
 import lobby.handlers.GetFriendsHandler;
+import lobby.handlers.GetListOfRoomsHandler;
 import lobby.handlers.GetLobbyUsersHandler;
+import lobby.handlers.GetMissionLevelHandler;
 import lobby.handlers.GetRoomInfoHandler;
 import lobby.handlers.GetScrollHandler;
 import lobby.handlers.GetTopGuildsHandler;
 import lobby.handlers.GetTopGuildsMarkHandler;
 import lobby.handlers.GetUserInfoHandler;
+import lobby.handlers.GuildMemberOnlineStatusHandler;
 import lobby.handlers.HokeyGoalHandler;
 import lobby.handlers.ItemsChangedHandler;
 import lobby.handlers.JoinLobbyHandler;
@@ -47,13 +54,14 @@ import lobby.handlers.RoomTypeChangedHandler;
 import lobby.handlers.SoccerGoalHandler;
 import lobby.handlers.StartCountdownHandler;
 import lobby.handlers.SymbolStateChanged;
+import lobby.handlers.GetRoomPlayersGuildRankHandler;
 import lobby.handlers.TradeHandler;
 import lobby.handlers.UseScrollHandler;
 import lobby.handlers.UserShopNewItemHandler;
 import lobby.handlers.UserShopSearchHandler;
 import net.GenericTCPServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.handlers.GenericHandler;
 import net.objects.Card;
 import net.objects.Room;
@@ -63,6 +71,9 @@ import tools.HexTools;
 public class LobbyServer extends GenericTCPServer {
 	protected Room[] rooms;
 	protected UserShop[] userShops;
+	
+	public static final String HOSTNAME = "10.0.0.50";
+	public static final int PORT = 21001;
 	
 	public LobbyServer(int port, int initialCapacity) {
 		super("Lobby server", port, initialCapacity);
@@ -80,7 +91,7 @@ public class LobbyServer extends GenericTCPServer {
 	}
 
 	@Override
-	public GenericHandler processPacket(UserTCPSession userSession, int messageID, byte[] messageBytes) {
+	public GenericHandler processPacket(UserSession userSession, int messageID, byte[] messageBytes) {
 		GenericHandler message = null;
 
 		switch (messageID) {
@@ -189,6 +200,9 @@ public class LobbyServer extends GenericTCPServer {
 		case Messages.GAME_MASTER_BAN_REQUEST:
 			message = new GameMasterBanHandler(this, userSession, messageBytes);
 			break;
+		case Messages.GET_ROOM_PLAYERS_GUILD_RANK_REQUEST:
+			message = new GetRoomPlayersGuildRankHandler(this, userSession, messageBytes);
+			break;
 		case Messages.HOKEY_GOAL_REQUEST:
 			message = new HokeyGoalHandler(this, userSession, messageBytes);
 			break;
@@ -230,15 +244,15 @@ public class LobbyServer extends GenericTCPServer {
 	}
 	
 	public void sendToUserMessage(String username, byte[] message) throws IOException {
-		UserTCPSession userSession = findUserSession(username);
+		UserSession userSession = findUserSession(username);
 		
 		if (userSession != null) {
 			userSession.sendMessage(HexTools.duplicateArray(message));
 		}
 	}
 
-	public void sendBroadcastMessage(UserTCPSession userSession, byte[] message) throws IOException {
-		for (UserTCPSession currentUserSession : usersSessions) {
+	public void sendBroadcastMessage(UserSession userSession, byte[] message) throws IOException {
+		for (UserSession currentUserSession : usersSessions) {
 			// Send the message to everyone but yourself
 			
 			if (!currentUserSession.getUser().username.equals(userSession.getUser().username)) {
@@ -248,9 +262,9 @@ public class LobbyServer extends GenericTCPServer {
 		}
 	}
 	
-	public void sendFriendsMessage(UserTCPSession userSession, byte[] message) throws IOException {
+	public void sendFriendsMessage(UserSession userSession, byte[] message) throws IOException {
 		for (String friend : userSession.getUser().friends) {
-			UserTCPSession friendSession = findUserSession(friend);
+			UserSession friendSession = findUserSession(friend);
 			
 			if (friendSession != null) {
 				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
@@ -259,10 +273,30 @@ public class LobbyServer extends GenericTCPServer {
 		}
 	}
 	
-	public void sendRoomMessage(UserTCPSession userSession, byte[] message, boolean sendToSelf) throws IOException {
+	public void sendGuildMessage(UserSession userSession, byte[] message, boolean sendToSelf) throws IOException, SQLException {
+		Connection con = DatabaseConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM guild_member WHERE guildName=?");
+		ps.setString(1, userSession.getUser().guildName);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			UserSession guildMemberSession = findUserSession(rs.getString("username"));
+			
+			if (guildMemberSession != null && (guildMemberSession != userSession || sendToSelf)) {
+				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
+				guildMemberSession.sendMessage(HexTools.duplicateArray(message));
+			}
+		}
+		
+		rs.close();
+		ps.close();
+		con.close();
+	}
+	
+	public void sendRoomMessage(UserSession userSession, byte[] message, boolean sendToSelf) throws IOException {
 		int roomID = userSession.getUser().roomIndex;
 		
-		for (UserTCPSession currentUserSession : getRoom(roomID).getUsers()) {
+		for (UserSession currentUserSession : getRoom(roomID).getUsers()) {
 			// If the user is not null
 			if (currentUserSession != null) {
 				// If the user is someone else
@@ -274,7 +308,7 @@ public class LobbyServer extends GenericTCPServer {
 		}
 	}
 	
-	public UserTCPSession findUserSession(String username) {
+	public UserSession findUserSession(String username) {
 		if (username == null) {
 			return null;
 		}
@@ -308,8 +342,8 @@ public class LobbyServer extends GenericTCPServer {
 //		return null;
 //	}
 
-	public UserTCPSession findUserSession(InetAddress ipAddress, int port) {
-		for (UserTCPSession userSession : usersSessions) {
+	public UserSession findUserSession(InetAddress ipAddress, int port) {
+		for (UserSession userSession : usersSessions) {
 			if (userSession.getUser().udpIPAddress != null && userSession.getUser().udpIPAddress.equals(ipAddress) && userSession.getUser().udpPort == port) {
 				return userSession;
 			}
@@ -356,12 +390,78 @@ public class LobbyServer extends GenericTCPServer {
 	}
 
 	@Override
-	public void onUserDisconnect(UserTCPSession userTCPSession) throws SQLException, IOException {
-		userTCPSession.getUser().saveUser();
-		sendBroadcastMessage(userTCPSession, new GetLobbyUsersHandler(this, userTCPSession).getResponse(userTCPSession, false));
+	public void onUserDisconnect(UserSession userSession) throws SQLException, IOException {
+		userSession.getUser().saveUser();
+		sendBroadcastMessage(userSession, new GetLobbyUsersHandler(this, userSession).getResponse(userSession, false));
+		
+		Connection con = DatabaseConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement("UPDATE servers SET population=? WHERE hostname=? AND port=?");
+		ps.setInt(1, usersSessions.size());
+		ps.setString(2, LobbyServer.HOSTNAME);
+		ps.setInt(3, LobbyServer.PORT);
+		ps.executeUpdate();
+		ps.close();
+		con.close();
+		
+		// Send your connectivity to anyone else in your guild
+		sendGuildMessage(userSession, new GuildMemberOnlineStatusHandler(this, userSession).getResponse(userSession, false), false);
 	}
 
-	public ArrayList<UserTCPSession> getUserSessions() {
+	public ArrayList<UserSession> getUserSessions() {
 		return usersSessions;
+	}
+	
+	public void onJoinLobby(UserSession userSession) throws IOException, SQLException {
+		// Get list of rooms
+		for (int i = 0; i < JoinLobbyHandler.lobbyMaxRooms; i += 22) {
+			userSession.sendMessage(new GetListOfRoomsHandler(this, userSession).getResponse(i));
+		}
+
+		// Get list of users
+		GetLobbyUsersHandler getLobbyUsersHandler = new GetLobbyUsersHandler(this, userSession);
+		
+		for (UserSession currentUserSession : usersSessions) {
+			currentUserSession.sendMessage(getLobbyUsersHandler.getResponse(currentUserSession, true));
+		}
+		
+		// Send everyone that you got connected
+		sendBroadcastMessage(userSession, getLobbyUsersHandler.getResponse(userSession, true));
+		
+		// Get friends
+		userSession.sendMessage(new GetFriendsHandler(this, userSession).getResponse());
+		
+		// Get mission level
+		userSession.sendMessage(new GetMissionLevelHandler(this, userSession).getResponse());
+		
+		// Change the population
+		Connection con = DatabaseConnection.getConnection();
+		PreparedStatement ps = con.prepareStatement("UPDATE servers SET population=? WHERE hostname=? AND port=?");
+		ps.setInt(1, usersSessions.size());
+		ps.setString(2, LobbyServer.HOSTNAME);
+		ps.setInt(3, LobbyServer.PORT);
+		ps.executeUpdate();
+		ps.close();
+		con.close();
+		
+		// Send your connectivity to anyone else in your guild
+		sendGuildMessage(userSession, new GuildMemberOnlineStatusHandler(this, userSession).getResponse(userSession, true), false);
+		
+		// Get connectivities from anyone who's connected in the guild
+		con = DatabaseConnection.getConnection();
+		ps = con.prepareStatement("SELECT * FROM guild_member WHERE guildName=?");
+		ps.setString(1, userSession.getUser().guildName);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			UserSession guildMemberSession = findUserSession(rs.getString("username"));
+
+			if (guildMemberSession != null) {
+				userSession.sendMessage(new GuildMemberOnlineStatusHandler(this, userSession).getResponse(guildMemberSession, true));
+			}
+		}
+		
+		rs.close();
+		ps.close();
+		con.close();
 	}
 }

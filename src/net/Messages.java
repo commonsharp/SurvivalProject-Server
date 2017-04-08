@@ -116,7 +116,8 @@ public class Messages {
 	public static final int BIG_MATCH_DEATH_RESPONSE = 0x4397;
 	public static final int GAME_MASTER_BAN_REQUEST = 0x4398;
 	public static final int GAME_MASTER_BAN_RESPONSE = 0x4399;
-	public static final int UNKNOWN_LOBBY_RESPONSE_41 = 0x4403;
+	public static final int GET_ROOM_PLAYERS_GUILD_RANK_REQUEST = 0x4402;
+	public static final int GET_ROOM_PLAYERS_GUILD_RANK_RESPONSE = 0x4403;
 	public static final int UNKNOWN_LOBBY_RESPONSE_42 = 0x4404;
 	public static final int NOTHING_3 = 0x4405;
 	public static final int UNKNOWN_LOBBY_RESPONSE_44 = 0x4407;

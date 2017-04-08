@@ -3,13 +3,13 @@ package lobby.handlers;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class GetTopGuildsHandler extends LobbyHandler {
-	public static final int RESPONSE_LENGTH = 0xC4;
+	public static final int RESPONSE_LENGTH = 0xF0;
 	
-	public GetTopGuildsHandler(LobbyServer lobbyServer, UserTCPSession tcpServer, byte[] messageBytes) {
+	public GetTopGuildsHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 	}
 
@@ -30,7 +30,7 @@ public class GetTopGuildsHandler extends LobbyHandler {
 		output.putInt(0x4, Messages.GET_TOP_GUILDS_RESPONSE);
 		// If your clan is in this list, then 9 0x4486 requests are being sent to the server.
 		// Otherwise, 10 0x4486 requests are being sent to the server...
-		output.putString(0x14, "hello1");
+		output.putString(0x14, "Guild3");
 		output.putString(0x21, "hello2");
 		output.putString(0x2E, "hello3");
 		output.putString(0x3B, "hello4");
@@ -50,7 +50,10 @@ public class GetTopGuildsHandler extends LobbyHandler {
 		output.putInt(0xB4, 3); // score8
 		output.putInt(0xB8, 2); // score9
 		output.putInt(0xBC, 1); // score10
-		output.putInt(0xC0, 0); // ?
+		output.putInt(0xC0, 0); // another array (10)
+		output.putInt(0xE8, 5); // my rank (0 based)
+		output.putInt(0xEC, 10); // my points
+//		output.putInt(0xC0, 1); // ?
 //				outputBuffer.putString(0xC0, "hello1");
 //				outputBuffer.putInt(0xD0, 5);
 		

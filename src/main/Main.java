@@ -7,6 +7,10 @@ import lobby.LobbyServer;
 import login.LoginServer;
 
 public class Main {
+	public static void loadProperties() {
+		
+	}
+	
 	public static void main(String[] args) throws IOException {
 		LoginServer loginServer = new LoginServer(21000, 100);
 		loginServer.startServer();

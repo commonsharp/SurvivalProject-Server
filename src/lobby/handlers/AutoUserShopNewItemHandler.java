@@ -5,7 +5,7 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import net.objects.User;
 import tools.ExtendedByteBuffer;
 
@@ -16,11 +16,11 @@ public class AutoUserShopNewItemHandler extends LobbyHandler {
 	protected int itemIndex;
 	protected int code;
 	
-	public AutoUserShopNewItemHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+	public AutoUserShopNewItemHandler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 	}
 	
-	public AutoUserShopNewItemHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public AutoUserShopNewItemHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 

@@ -16,16 +16,16 @@ public abstract class GenericTCPServer implements Runnable {
 	
 	protected Thread serverThread;
 	
-	protected ArrayList<UserTCPSession> usersSessions;
+	protected ArrayList<UserSession> usersSessions;
 	
-	public abstract GenericHandler processPacket(UserTCPSession tcpServer, int messageID, byte[] messageBytes);
-	public abstract void onUserDisconnect(UserTCPSession userTCPSession) throws SQLException, IOException;
+	public abstract GenericHandler processPacket(UserSession tcpServer, int messageID, byte[] messageBytes);
+	public abstract void onUserDisconnect(UserSession userTCPSession) throws SQLException, IOException;
 	
 	public GenericTCPServer(String name, int port, int initialCapacity) {
 		this.name = name;
 		this.port = port;
 		
-		usersSessions = new ArrayList<UserTCPSession>(initialCapacity);
+		usersSessions = new ArrayList<UserSession>(initialCapacity);
 	}
 	
 	public void startServer() throws IOException {
@@ -38,10 +38,10 @@ public abstract class GenericTCPServer implements Runnable {
 		try {
 			server = new ServerSocket(port);
 			System.out.println(name + " has started listening.");
-			UserTCPSession currentSession;
+			UserSession currentSession;
 			
 			while (isRunning) {
-				currentSession = new UserTCPSession(this, server.accept());
+				currentSession = new UserSession(this, server.accept());
 				usersSessions.add(currentSession);
 				new Thread(currentSession).start();
 			}
@@ -61,10 +61,9 @@ public abstract class GenericTCPServer implements Runnable {
 		return name;
 	}
 	public void moveToCorrectPlace() {
-		usersSessions.sort(new Comparator<UserTCPSession>() {
-
+		usersSessions.sort(new Comparator<UserSession>() {
 			@Override
-			public int compare(UserTCPSession o1, UserTCPSession o2) {
+			public int compare(UserSession o1, UserSession o2) {
 				return o1.getUser().username.compareTo(o2.getUser().username);
 			}
 		});

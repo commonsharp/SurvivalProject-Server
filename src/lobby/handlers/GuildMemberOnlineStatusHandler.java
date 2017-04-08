@@ -6,12 +6,12 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class GuildMemberOnlineStatusHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x2E;
-	public GuildMemberOnlineStatusHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+	public GuildMemberOnlineStatusHandler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 	}
 
@@ -27,15 +27,23 @@ public class GuildMemberOnlineStatusHandler extends LobbyHandler {
 
 	@Override
 	public byte[] getResponse() {
+		return null;
+	}
+	
+	public byte[] getResponse(UserSession userSession, boolean isConnected) {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.GUILD_MEMBER_ONLINE_STATE_HANDLER);
 		
-		output.putString(0x14, "obama");
-		output.putInt(0x24, 10); // level
-		output.putInt(0x28, 30); // rank in guild
-		output.putByte(0x2C, (byte) 1); // gender
-		output.putByte(0x2D, (byte) 1); // this one is probably "isConnected"
+		output.putString(0x14, userSession.getUser().username);
+		output.putInt(0x24, userSession.getUser().playerLevel);
+		
+		if (userSession.getUser().isInRoom) {
+			output.putInt(0x28, userSession.getUser().roomIndex + 1);
+		}
+		
+		output.putBoolean(0x2C, userSession.getUser().isMale);
+		output.putBoolean(0x2D, isConnected);
 		
 		return output.toArray();
 	}

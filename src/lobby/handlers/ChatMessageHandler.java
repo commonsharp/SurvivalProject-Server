@@ -3,10 +3,11 @@ package lobby.handlers;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import database.GuildsHelper;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class ChatMessageHandler extends LobbyHandler {
@@ -17,7 +18,7 @@ public class ChatMessageHandler extends LobbyHandler {
 	protected String whisperUsername;
 	protected String text;
 	
-	public ChatMessageHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public ChatMessageHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 		// TODO Auto-generated constructor stub
 	}
@@ -63,6 +64,19 @@ public class ChatMessageHandler extends LobbyHandler {
 			userSession.getUser().saveUser();
 			return;
 		}
+		else if (text.toLowerCase().startsWith("@guild-join")) {
+			String guildName = text.substring("@guild-join".length() + 1);
+
+			if (GuildsHelper.isGuildExists(guildName) && !GuildsHelper.isGuildMemberExists(guildName, userSession.getUser().username)) {
+				GuildsHelper.leaveGuild(userSession);
+				GuildsHelper.joinGuild(guildName, userSession);
+			}
+		}
+		else if (text.toLowerCase().startsWith("@guild-leave")) {
+			if (GuildsHelper.isGuildMemberExists(userSession.getUser().guildName, userSession.getUser().username)) {
+				GuildsHelper.leaveGuild(userSession);
+			}
+		}
 		
 		// All chat or trade chat - send to everyone
 		if (messageType == 0 || messageType == 7) {
@@ -75,6 +89,10 @@ public class ChatMessageHandler extends LobbyHandler {
 		// Friends chat
 		else if (messageType == 2) {
 			lobbyServer.sendFriendsMessage(userSession, getResponse2());
+		}
+		// Guild chat
+		else if (messageType == 3) {
+			lobbyServer.sendGuildMessage(userSession, getResponse2(), false);
 		}
 	}
 }

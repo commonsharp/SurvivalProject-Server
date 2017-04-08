@@ -1,13 +1,13 @@
 package login.handlers;
 
 import login.LoginHandler;
-import net.UserTCPSession;
+import net.UserSession;
 
 public class ReconnectHandler extends LoginHandler {
 	public static final int RESPONSE_ID = 0; //?
 	public static final int RESPONSE_LENGTH = 0x1000;
 	
-	public ReconnectHandler(UserTCPSession tcpServer, byte[] messageBytes) {
+	public ReconnectHandler(UserSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
 		// TODO Auto-generated constructor stub
 	}

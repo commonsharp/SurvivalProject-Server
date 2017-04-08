@@ -5,13 +5,13 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class EnterCardShopHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x1C;
 	
-	public EnterCardShopHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public EnterCardShopHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 		// TODO Auto-generated constructor stub
 	}

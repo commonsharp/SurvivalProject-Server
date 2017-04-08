@@ -5,7 +5,7 @@ import java.io.IOException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
-import net.UserTCPSession;
+import net.UserSession;
 import tools.ExtendedByteBuffer;
 
 public class PlayerResurrectionHandler extends LobbyHandler {
@@ -14,11 +14,11 @@ public class PlayerResurrectionHandler extends LobbyHandler {
 	protected int slot;
 	protected int x, y;
 	
-	public PlayerResurrectionHandler(LobbyServer lobbyServer, UserTCPSession userSession) {
+	public PlayerResurrectionHandler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 	}
 	
-	public PlayerResurrectionHandler(LobbyServer lobbyServer, UserTCPSession userSession, byte[] messageBytes) {
+	public PlayerResurrectionHandler(LobbyServer lobbyServer, UserSession userSession, byte[] messageBytes) {
 		super(lobbyServer, userSession, messageBytes);
 	}
 
