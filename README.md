@@ -28,6 +28,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 - [ ] Add timed events (such as a random element flying around).
 
 # List of bugs
+* If two players starts a game and a third one tries to join, his game automatically starts.
 * When you finish a mission, the mission level on the left of the screen doesn't change.
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
 * Changing room type message crashes the game.
