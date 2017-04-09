@@ -39,6 +39,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 # 09/04/2017
 * GetTopGuilds now shows the top guilds.
+* When you login, the correct best guild is shown.
 
 # 08/04/2017
 * Started working on guild points.
