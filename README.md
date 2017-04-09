@@ -37,6 +37,9 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Death timer in big matches doesn't work.
 * When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
 
+# 09/04/2017
+* GetTopGuilds now shows the top guilds.
+
 # 08/04/2017
 * Started working on guild points.
 * Finally managed to fix the bug where the guild rank of new players in the room was '?'.
