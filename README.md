@@ -36,6 +36,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * If you disconnect on the login screen, there will be an SQLException.
 * Death timer in big matches doesn't work.
 * When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
+* Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 
 # 09/04/2017
 * You can now sell cards. You don't gain any code/coins when doing so yet.
