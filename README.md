@@ -38,7 +38,9 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
 
 # 09/04/2017
-* GetTopGuilds now shows the top guilds.
+* Your guild now gains guild points when you get a kill in every working game mode. The amount a guild gains is not the correct one yet. It's simply the experience you gain at the moment.
+* Your correct guild rank is now shown, instead of a random value.
+* Get top guilds now shows the top guilds.
 * When you login, the correct best guild is shown.
 
 # 08/04/2017
