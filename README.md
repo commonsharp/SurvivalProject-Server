@@ -38,10 +38,11 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
 
 # 09/04/2017
-* Your guild now gains guild points when you get a kill in every working game mode. The amount a guild gains is not the correct one yet. It's simply the experience you gain at the moment.
-* Your correct guild rank is now shown, instead of a random value.
-* Get top guilds now shows the top guilds.
-* When you login, the correct best guild is shown.
+* You can now sell cards. You don't gain any code/coins when doing so yet.
+* Guilds: Your guild now gains guild points when you get a kill in every working game mode. The amount a guild gains is not the correct one yet. It's simply the experience you gain at the moment.
+* Guilds: Your correct guild rank is now shown, instead of a random value.
+* Guilds: Get top guilds now shows the top guilds.
+* Guilds: When you login, the correct best guild is shown.
 
 # 08/04/2017
 * Started working on guild points.
