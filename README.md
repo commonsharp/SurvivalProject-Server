@@ -40,6 +40,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 
 # 10/04/2017
+* Mission training mode is working.
 * Changing the room's game mode (such as finishing a training and moving on to a different training) doesn't crash the game now.
 
 # 09/04/2017
