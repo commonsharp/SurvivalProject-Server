@@ -38,6 +38,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Death timer in big matches doesn't work.
 * ~~When a player (I think the master) dies in symbol mode, his symbols disappear. o_o~~
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
+* Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
 # 10/04/2017
 * Mission training mode is working.
