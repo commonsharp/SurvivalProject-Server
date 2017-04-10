@@ -36,12 +36,13 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.
 * If you disconnect on the login screen, there will be an SQLException.
 * Death timer in big matches doesn't work.
-* When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
+* ~~When a player (I think the master) dies in symbol mode, his symbols disappear. o_o~~
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 
 # 10/04/2017
 * Mission training mode is working.
 * Changing the room's game mode (such as finishing a training and moving on to a different training) doesn't crash the game now.
+* Fixed the bug where if a player died in symbol mode, his symbols would disappear.
 
 # 09/04/2017
 * You can now sell cards. You don't gain any code/coins when doing so yet.
