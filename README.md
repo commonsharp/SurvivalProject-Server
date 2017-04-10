@@ -34,7 +34,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * ~~Changing room's game mode message crashes the game.~~
 * When someone's in a game and it crashes, the leave function is not getting called.
 * If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.
-* If you disconnect on the login screen, there will be an SQLException.
+* ~~If you disconnect on the login screen, there will be an SQLException.~~
 * Death timer in big matches doesn't work.
 * ~~When a player (I think the master) dies in symbol mode, his symbols disappear. o_o~~
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
