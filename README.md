@@ -44,6 +44,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Changing the room's game mode (such as finishing a training and moving on to a different training) doesn't crash the game now.
 * Fixed the bug where if a player died in symbol mode, his symbols would disappear.
 * Fixed the bug where there was an SQL exception when disconnecting in the login screen.
+* Fixed a bug where the guild points gain in big matches code would sometimes throw a null pointer exception.
 
 # 09/04/2017
 * You can now sell cards. You don't gain any code/coins when doing so yet.
