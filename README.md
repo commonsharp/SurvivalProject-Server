@@ -31,13 +31,16 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * If two players starts a game and a third one tries to join, his game automatically starts.
 * When you finish a mission, the mission level on the left of the screen doesn't change.
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
-* Changing room type message crashes the game.
+* ~~Changing room's game mode message crashes the game.~~
 * When someone's in a game and it crashes, the leave function is not getting called.
 * If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.
 * If you disconnect on the login screen, there will be an SQLException.
 * Death timer in big matches doesn't work.
 * When a player (I think the master) dies in symbol mode, his symbols disappear. o_o
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
+
+# 10/04/2017
+* Changing the room's game mode (such as finishing a training and moving on to a different training) doesn't crash the game now.
 
 # 09/04/2017
 * You can now sell cards. You don't gain any code/coins when doing so yet.
