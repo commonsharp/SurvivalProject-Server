@@ -43,7 +43,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
 # 11/04/2017
-* Invitation: you can now invite other people to your room.
+* Invitation: You can now invite other people to your room.
 * User shops: The card search feature is now working (by pressing F6 in the lobby).
 * User shops: You can add an automatic user shop using the UserShop II card.
 * User shops: You can buy a card in the card search window.
