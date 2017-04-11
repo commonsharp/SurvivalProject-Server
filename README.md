@@ -52,7 +52,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Premium card: Extra Life is working.
 * Premium cards: Card Slot+6 and Card Slot+12 are working.
 * Performance: The login credentials handler used 2 queries to login. Managed to remove one query.
-* Bug fix: passwords were not case sensitive, e.g. if someone's password was 'test'. 'test' and 'Test' were both a working.
+* Bug fix: passwords were not case sensitive, e.g. if someone's password was 'test'. 'test' and 'Test' were both working.
 
 # 10/04/2017
 * Mission training mode is working.
