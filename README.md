@@ -18,6 +18,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **@guild-leave** - leaves your guild.
 
 # TODO
+- [ ] Some premium cards also give you elements when you purchase them.
 - [ ] Change every saveUser call to a shorter SQL query to reduce database operations.
 - [ ] Rename each SQL table according to the naming convention.
 - [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
