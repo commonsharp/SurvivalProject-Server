@@ -48,6 +48,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * User shops: You can buy a card in the card search window.
 * User shops: You cannot remove a card from the shop due to a bug in the client (I think)... :S
 * Premium card: User Shop II is working (you lose one use every time you use the card and the card disappears when you reach 0 uses).
+* Premium cards: Skull Booster, Moon Booster and Star Booster are working.
 * Performance: The login credentials handler used 2 queries to login. Managed to remove one query.
 * Bug fix: passwords were not case sensitive, e.g. if someone's password was 'test'. 'test' and 'Test' were both a working.
 
