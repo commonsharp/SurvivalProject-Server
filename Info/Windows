@@ -1,0 +1,2422 @@
+int __stdcall sub_626DA0(int a1)
+{
+  char *v1; // esi@1
+  LPVOID v2; // eax@2
+  char *v3; // eax@3
+  LPVOID v4; // eax@5
+  LPVOID v5; // eax@8
+  LPVOID v6; // eax@11
+  LPVOID v7; // eax@14
+  LPVOID v8; // eax@17
+  char *v9; // eax@20
+  LPVOID v10; // eax@23
+  LPVOID v11; // eax@26
+  LPVOID v12; // eax@29
+  LPVOID v13; // eax@32
+  LPVOID v14; // eax@35
+  LPVOID v15; // eax@38
+  LPVOID v16; // eax@41
+  LPVOID v17; // eax@44
+  LPVOID v18; // eax@47
+  LPVOID v19; // eax@50
+  LPVOID v20; // eax@53
+  LPVOID v21; // eax@56
+  LPVOID v22; // eax@59
+  LPVOID v23; // eax@62
+  LPVOID v24; // eax@65
+  LPVOID v25; // eax@68
+  LPVOID v26; // eax@71
+  LPVOID v27; // eax@74
+  LPVOID v28; // eax@77
+  LPVOID v29; // eax@80
+  LPVOID v30; // eax@83
+  LPVOID v31; // eax@86
+  LPVOID v32; // eax@89
+  LPVOID v33; // eax@92
+  LPVOID v34; // eax@95
+  LPVOID v35; // eax@98
+  LPVOID v36; // eax@101
+  LPVOID v37; // eax@106
+  char *v38; // eax@107
+  LPVOID v39; // eax@109
+  LPVOID v40; // eax@112
+  LPVOID v41; // eax@115
+  LPVOID v42; // eax@118
+  LPVOID v43; // eax@121
+  LPVOID v44; // eax@124
+  LPVOID v45; // eax@127
+  LPVOID v46; // eax@130
+  LPVOID v47; // eax@133
+  LPVOID v48; // eax@136
+  LPVOID v49; // eax@139
+  LPVOID v50; // eax@142
+  LPVOID v51; // eax@145
+  LPVOID v52; // eax@148
+  LPVOID v53; // eax@151
+  LPVOID v54; // eax@154
+  LPVOID v55; // eax@157
+  LPVOID v56; // eax@160
+  LPVOID v57; // eax@163
+  LPVOID v58; // eax@166
+  _DWORD *v59; // eax@169
+  LPVOID v60; // eax@172
+  LPVOID v61; // eax@175
+  LPVOID v62; // eax@178
+  LPVOID v63; // eax@181
+  LPVOID v64; // eax@184
+  LPVOID v65; // eax@187
+  LPVOID v66; // eax@190
+  LPVOID v67; // eax@193
+  LPVOID v68; // eax@196
+  LPVOID v69; // eax@199
+  LPVOID v70; // eax@202
+  LPVOID v71; // eax@205
+  LPVOID v72; // eax@208
+  LPVOID v73; // eax@211
+  LPVOID v74; // eax@214
+  LPVOID v75; // eax@217
+  LPVOID v76; // eax@220
+  LPVOID v77; // eax@223
+  LPVOID v78; // eax@226
+  LPVOID v79; // eax@229
+  LPVOID v80; // eax@232
+  LPVOID v81; // eax@235
+  LPVOID v82; // eax@238
+  LPVOID v83; // eax@241
+  LPVOID v84; // eax@244
+  LPVOID v85; // eax@247
+  LPVOID v86; // eax@250
+  LPVOID v87; // eax@253
+  LPVOID v88; // eax@256
+  LPVOID v89; // eax@259
+  LPVOID v90; // eax@262
+  LPVOID v91; // eax@265
+  LPVOID v92; // eax@270
+  char *v93; // eax@271
+  LPVOID v94; // eax@273
+  LPVOID v95; // eax@276
+  LPVOID v96; // eax@279
+  LPVOID v97; // eax@282
+  LPVOID v98; // eax@285
+  LPVOID v99; // eax@288
+  LPVOID v100; // eax@291
+  LPVOID v101; // eax@294
+  LPVOID v102; // eax@297
+  LPVOID v103; // eax@300
+  LPVOID v104; // eax@303
+  LPVOID v105; // eax@306
+  _DWORD *v106; // eax@309
+  LPVOID v107; // eax@312
+  LPVOID v108; // eax@315
+  LPVOID v109; // eax@318
+  LPVOID v110; // eax@321
+  LPVOID v111; // eax@324
+  LPVOID v112; // eax@327
+  LPVOID v113; // eax@330
+  LPVOID v114; // eax@333
+  LPVOID v115; // eax@336
+  LPVOID v116; // eax@339
+  LPVOID v117; // eax@342
+  LPVOID v118; // eax@345
+  LPVOID v119; // eax@348
+  LPVOID v120; // eax@351
+  LPVOID v121; // eax@354
+  LPVOID v122; // eax@357
+  LPVOID v123; // eax@360
+  LPVOID v124; // eax@363
+  LPVOID v125; // eax@366
+  LPVOID v126; // eax@369
+  LPVOID v127; // eax@372
+  LPVOID v128; // eax@375
+  LPVOID v129; // eax@378
+  LPVOID v130; // eax@381
+  LPVOID v131; // eax@384
+  LPVOID v132; // eax@387
+  LPVOID v133; // eax@390
+  LPVOID v134; // eax@393
+  LPVOID v135; // eax@396
+  LPVOID v136; // eax@399
+  LPVOID v137; // eax@402
+  LPVOID v138; // eax@405
+  LPVOID v139; // eax@408
+  LPVOID v140; // eax@411
+  LPVOID v141; // eax@414
+  LPVOID v142; // eax@417
+  LPVOID v143; // eax@420
+  LPVOID v144; // eax@423
+  LPVOID v145; // eax@426
+  LPVOID v146; // eax@429
+  LPVOID v147; // eax@432
+  LPVOID v148; // eax@435
+  LPVOID v149; // eax@438
+  LPVOID v150; // eax@441
+  LPVOID v151; // eax@444
+  LPVOID v152; // eax@447
+  LPVOID v153; // eax@450
+  LPVOID v154; // eax@453
+  LPVOID v155; // eax@456
+  LPVOID v156; // eax@459
+  LPVOID v157; // eax@462
+  LPVOID v158; // eax@467
+  LPVOID v160; // eax@470
+  LPVOID v161; // eax@473
+  LPVOID v162; // eax@476
+  LPVOID v163; // eax@479
+  LPVOID v164; // eax@482
+  LPVOID v165; // eax@485
+  LPVOID v166; // eax@488
+  LPVOID v167; // eax@491
+  LPVOID v168; // eax@494
+  LPVOID v169; // eax@497
+  LPVOID v170; // eax@500
+  LPVOID v171; // eax@503
+  LPVOID v172; // eax@506
+  LPVOID v173; // eax@509
+  LPVOID v174; // eax@512
+  LPVOID v175; // eax@515
+  LPVOID v176; // eax@518
+  LPVOID v177; // eax@521
+  LPVOID v178; // eax@524
+  LPVOID v179; // eax@527
+  LPVOID v180; // eax@530
+  LPVOID v181; // eax@533
+  LPVOID v182; // eax@536
+  LPVOID v183; // eax@539
+  LPVOID v184; // eax@542
+  LPVOID v185; // eax@545
+  LPVOID v186; // eax@548
+  LPVOID v187; // eax@551
+  LPVOID v188; // eax@554
+  LPVOID v189; // eax@557
+  LPVOID v190; // eax@560
+  LPVOID v191; // eax@563
+  LPVOID v192; // eax@566
+  LPVOID v193; // eax@569
+  LPVOID v194; // eax@572
+  LPVOID v195; // eax@575
+  LPVOID v196; // eax@578
+  LPVOID v197; // eax@581
+  LPVOID v198; // eax@584
+  LPVOID v199; // eax@587
+  LPVOID v200; // eax@590
+  LPVOID v201; // eax@593
+  LPVOID v202; // eax@596
+  LPVOID v203; // eax@599
+  LPVOID v204; // eax@602
+  LPVOID v205; // eax@605
+  LPVOID v206; // eax@608
+  LPVOID v207; // eax@611
+  LPVOID v208; // eax@614
+  LPVOID v209; // eax@617
+  LPVOID v210; // eax@620
+  LPVOID v211; // eax@623
+  LPVOID v212; // eax@626
+  LPVOID v213; // eax@629
+  LPVOID v214; // eax@632
+  LPVOID v215; // eax@635
+  LPVOID v216; // eax@638
+  LPVOID v217; // eax@641
+  LPVOID v218; // eax@644
+  LPVOID v219; // eax@647
+  LPVOID v220; // eax@650
+  LPVOID v221; // eax@653
+  LPVOID v222; // eax@656
+  LPVOID v223; // eax@659
+  LPVOID v224; // eax@662
+  LPVOID v225; // eax@665
+  LPVOID v226; // eax@668
+  LPVOID v227; // eax@671
+  LPVOID v228; // eax@674
+  LPVOID v229; // eax@677
+  LPVOID v230; // eax@680
+  LPVOID v231; // eax@683
+  LPVOID v232; // eax@686
+  LPVOID v233; // eax@689
+  LPVOID v234; // eax@692
+  LPVOID v235; // eax@695
+  LPVOID v236; // eax@698
+  LPVOID v237; // eax@701
+  LPVOID v238; // eax@704
+  LPVOID v239; // eax@707
+  LPVOID v240; // eax@710
+  LPVOID v241; // eax@713
+  LPVOID v242; // eax@716
+  LPVOID v243; // eax@719
+  LPVOID v244; // eax@722
+  LPVOID v245; // eax@725
+  LPVOID v246; // eax@728
+  LPVOID v247; // eax@731
+  LPVOID v248; // eax@734
+  LPVOID v249; // eax@737
+  LPVOID v250; // eax@740
+  LPVOID v251; // eax@743
+  LPVOID v252; // eax@746
+  LPVOID v253; // eax@749
+  LPVOID v254; // eax@752
+  LPVOID v255; // eax@755
+  LPVOID v256; // eax@758
+
+  v1 = 0;
+  if ( sub_5D74C0(0, *(a1 + 20), "ioWnd", 5) )
+  {
+    if ( sub_5D74C0(0, *(a1 + 20), "LogInConnectWnd", 15) )
+    {
+      if ( sub_5D79B0(a1, "ChannelBack") )
+      {
+        v5 = AllocateMemoryOrSomething(0x170u);
+        if ( v5 )
+        {
+          v3 = sub_62F1E0(v5);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "ChannelTrainingBack") )
+      {
+        v6 = AllocateMemoryOrSomething(0x9Cu);
+        if ( v6 )
+        {
+          v3 = sub_62ED00(v6);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "ServerList") )
+      {
+        v7 = AllocateMemoryOrSomething(0xD8u);
+        if ( v7 )
+        {
+          v3 = sub_63AEC0(v7);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "ServerRankWnd") )
+      {
+        v8 = AllocateMemoryOrSomething(0xD4u);
+        if ( v8 )
+        {
+          v3 = sub_66F000(v8);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "LobbyChat") )
+      {
+        v9 = AllocateMemoryOrSomething(0x518u);
+        if ( v9 )
+        {
+          v3 = sub_6794E0(v9);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "LobbyTextList") )
+      {
+        v10 = AllocateMemoryOrSomething(0x110u);
+        if ( v10 )
+        {
+          v3 = sub_677F80(v10);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "TextList") )
+      {
+        v11 = AllocateMemoryOrSomething(0xBCu);
+        if ( v11 )
+        {
+          v3 = sub_72B9A0(v11);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "LogoWnd") )
+      {
+        v12 = AllocateMemoryOrSomething(0xA4u);
+        if ( v12 )
+        {
+          v3 = sub_664D40(v12);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "LobbyMenu") )
+      {
+        v13 = AllocateMemoryOrSomething(0xC0u);
+        if ( v13 )
+        {
+          v3 = sub_67D220(v13);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "LobbyMenuSmall") )
+      {
+        v14 = AllocateMemoryOrSomething(0xA0u);
+        if ( v14 )
+        {
+          v3 = sub_67D140(v14);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "WhisperWnd") )
+      {
+        v15 = AllocateMemoryOrSomething(0xA0u);
+        if ( v15 )
+        {
+          v3 = sub_672990(v15);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "FindWnd") )
+      {
+        v16 = AllocateMemoryOrSomething(0xF0u);
+        if ( v16 )
+        {
+          v3 = sub_657560(v16);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "UserInfo") )
+      {
+        v17 = AllocateMemoryOrSomething(0x1B8u);
+        if ( v17 )
+        {
+          v3 = sub_671D10(v17);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "VisitWnd") )
+      {
+        v18 = AllocateMemoryOrSomething(0x110u);
+        if ( v18 )
+        {
+          v3 = sub_68BDD0(v18);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "IDListMyWnd") )
+      {
+        v19 = AllocateMemoryOrSomething(0x9Cu);
+        if ( v19 )
+        {
+          v3 = sub_65D180(v19);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "IDListAllWnd") )
+      {
+        v20 = AllocateMemoryOrSomething(0xB8u);
+        if ( v20 )
+        {
+          v3 = sub_660DA0(v20);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "IDListGuildWnd") )
+      {
+        v21 = AllocateMemoryOrSomething(0xB8u);
+        if ( v21 )
+        {
+          v3 = sub_661510(v21);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "IDListFriendWnd") )
+      {
+        v22 = AllocateMemoryOrSomething(0xCCu);
+        if ( v22 )
+        {
+          v3 = sub_661130(v22);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardInfo") )
+      {
+        v23 = AllocateMemoryOrSomething(0xD8u);
+        if ( v23 )
+        {
+          v3 = sub_63CE30(v23);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CommunityWnd") )
+      {
+        v24 = AllocateMemoryOrSomething(0xA4u);
+        if ( v24 )
+        {
+          v3 = sub_63FD10(v24);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "InvitedWnd") )
+      {
+        v25 = AllocateMemoryOrSomething(0xE4u);
+        if ( v25 )
+        {
+          v3 = sub_663910(v25);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomInfo") )
+      {
+        v26 = AllocateMemoryOrSomething(0xE8u);
+        if ( v26 )
+        {
+          v3 = sub_67E810(v26);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "ScrollShop") )
+      {
+        v27 = AllocateMemoryOrSomething(0xA0u);
+        if ( v27 )
+        {
+          v3 = sub_698B80(v27);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "MyCardWnd") )
+      {
+        v28 = AllocateMemoryOrSomething(0xB4u);
+        if ( v28 )
+        {
+          v3 = sub_668A00(v28);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "MapHelpWnd") )
+      {
+        v29 = AllocateMemoryOrSomething(0xA4u);
+        if ( v29 )
+        {
+          v3 = sub_631B00(v29);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "ModeHelpWnd") )
+      {
+        v30 = AllocateMemoryOrSomething(0xA4u);
+        if ( v30 )
+        {
+          v3 = sub_6339A0(v30);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "ioTabControl") )
+      {
+        v31 = AllocateMemoryOrSomething(0xACu);
+        if ( v31 )
+        {
+          v3 = sub_72CF30(v31);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "ioLBTabControl") )
+      {
+        v32 = AllocateMemoryOrSomething(0xD0u);
+        if ( v32 )
+        {
+          v3 = sub_6758A0(v32);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "OptionTabWnd") )
+      {
+        v33 = AllocateMemoryOrSomething(0xB0u);
+        if ( v33 )
+        {
+          v3 = sub_66CC70(v33);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CKeybordWnd") )
+      {
+        v34 = AllocateMemoryOrSomething(0xB8u);
+        if ( v34 )
+        {
+          v3 = sub_66C810(v34);
+          goto LABEL_104;
+        }
+      }
+      else if ( sub_5D79B0(a1, "GMBtnWnd") )
+      {
+        v35 = AllocateMemoryOrSomething(0x9Cu);
+        if ( v35 )
+        {
+          v3 = sub_65BC10(v35);
+          goto LABEL_104;
+        }
+      }
+      else
+      {
+        if ( !sub_5D79B0(a1, "GMWnd") )
+          goto LABEL_105;
+        v36 = AllocateMemoryOrSomething(0xA8u);
+        if ( v36 )
+        {
+          v3 = sub_65BC40(v36);
+          goto LABEL_104;
+        }
+      }
+    }
+    else
+    {
+      v4 = AllocateMemoryOrSomething(0xC8u);
+      if ( v4 )
+      {
+        v3 = sub_62E020(v4);
+        goto LABEL_104;
+      }
+    }
+  }
+  else
+  {
+    v2 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v2 )
+    {
+      v3 = sub_72E590(v2);
+      goto LABEL_104;
+    }
+  }
+  v3 = 0;
+LABEL_104:
+  v1 = v3;
+  if ( v3 )
+    return v1;
+LABEL_105:
+  if ( sub_5D74C0(0, *(a1 + 20), "CGameSetWnd", 11) )
+  {
+    if ( sub_5D74C0(0, *(a1 + 20), "CMacroWnd", 9) )
+    {
+      if ( sub_5D79B0(a1, "CTipWnd") )
+      {
+        v40 = AllocateMemoryOrSomething(0xA0u);
+        if ( v40 )
+        {
+          v38 = sub_687490(v40);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomSortWnd") )
+      {
+        v41 = AllocateMemoryOrSomething(0xA4u);
+        if ( v41 )
+        {
+          v38 = sub_687160(v41);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomList") )
+      {
+        v42 = AllocateMemoryOrSomething(0x554u);
+        if ( v42 )
+        {
+          v38 = sub_67FE10(v42);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomMakeWnd") )
+      {
+        v43 = AllocateMemoryOrSomething(0x1D0u);
+        if ( v43 )
+        {
+          v38 = sub_684A80(v43);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomMakeModeTab") )
+      {
+        v44 = AllocateMemoryOrSomething(0x224u);
+        if ( v44 )
+        {
+          v38 = sub_685AE0(v44);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomMakeMapTab") )
+      {
+        v45 = AllocateMemoryOrSomething(0xDCu);
+        if ( v45 )
+        {
+          v38 = sub_6835B0(v45);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "MakeModeSelWnd") )
+      {
+        v46 = AllocateMemoryOrSomething(0x9Cu);
+        if ( v46 )
+        {
+          v38 = sub_683920(v46);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomMakeSetTab") )
+      {
+        v47 = AllocateMemoryOrSomething(0x9Cu);
+        if ( v47 )
+        {
+          v38 = sub_683220(v47);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "EmoticonWnd") )
+      {
+        v48 = AllocateMemoryOrSomething(0xA0u);
+        if ( v48 )
+        {
+          v38 = sub_69E780(v48);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomTitleWnd") )
+      {
+        v49 = AllocateMemoryOrSomething(0xA0u);
+        if ( v49 )
+        {
+          v38 = sub_6920B0(v49);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "InviteWnd") )
+      {
+        v50 = AllocateMemoryOrSomething(0xC0u);
+        if ( v50 )
+        {
+          v38 = sub_663890(v50);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "InviteIDList") )
+      {
+        v51 = AllocateMemoryOrSomething(0xB8u);
+        if ( v51 )
+        {
+          v38 = sub_626360(v51);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "InviteGuildList") )
+      {
+        v52 = AllocateMemoryOrSomething(0xB8u);
+        if ( v52 )
+        {
+          v38 = sub_626380(v52);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "InviteFriendList") )
+      {
+        v53 = AllocateMemoryOrSomething(0xCCu);
+        if ( v53 )
+        {
+          v38 = sub_6263A0(v53);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CharSelect") )
+      {
+        v54 = AllocateMemoryOrSomething(0xD0u);
+        if ( v54 )
+        {
+          v38 = sub_68EBC0(v54);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardSelect") )
+      {
+        v55 = AllocateMemoryOrSomething(0xA4u);
+        if ( v55 )
+        {
+          v38 = sub_68D960(v55);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardSortWnd") )
+      {
+        v56 = AllocateMemoryOrSomething(0x230u);
+        if ( v56 )
+        {
+          v38 = sub_68D250(v56);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "ReadyWnd") )
+      {
+        v57 = AllocateMemoryOrSomething(0xA8u);
+        if ( v57 )
+        {
+          v38 = sub_690350(v57);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomMenu") )
+      {
+        v58 = AllocateMemoryOrSomething(0xA0u);
+        if ( v58 )
+        {
+          v38 = sub_693590(v58);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomChat") )
+      {
+        v59 = AllocateMemoryOrSomething(0x4B0u);
+        if ( v59 )
+        {
+          v38 = sub_691120(v59);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "IDListGameWnd") )
+      {
+        v60 = AllocateMemoryOrSomething(0xBCu);
+        if ( v60 )
+        {
+          v38 = sub_661360(v60);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "IDListEunWonWnd") )
+      {
+        v61 = AllocateMemoryOrSomething(0xB8u);
+        if ( v61 )
+        {
+          v38 = sub_660F80(v61);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomMenuSmall") )
+      {
+        v62 = AllocateMemoryOrSomething(0x9Cu);
+        if ( v62 )
+        {
+          v38 = sub_693500(v62);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopMyCardWnd") )
+      {
+        v63 = AllocateMemoryOrSomething(0xA8u);
+        if ( v63 )
+        {
+          v38 = sub_6C2D40(v63);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopCodeWnd") )
+      {
+        v64 = AllocateMemoryOrSomething(0x9Cu);
+        if ( v64 )
+        {
+          v38 = sub_6B8330(v64);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopCashWnd") )
+      {
+        v65 = AllocateMemoryOrSomething(0x9Cu);
+        if ( v65 )
+        {
+          v38 = sub_6B8360(v65);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopCoinWnd") )
+      {
+        v66 = AllocateMemoryOrSomething(0x9Cu);
+        if ( v66 )
+        {
+          v38 = sub_6B83E0(v66);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopTabWnd") )
+      {
+        v67 = AllocateMemoryOrSomething(0x100u);
+        if ( v67 )
+        {
+          v38 = sub_6C4B50(v67);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopHelpWnd") )
+      {
+        v68 = AllocateMemoryOrSomething(0xB8u);
+        if ( v68 )
+        {
+          v38 = sub_6C3FF0(v68);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopCardWnd") )
+      {
+        v69 = AllocateMemoryOrSomething(0xD0u);
+        if ( v69 )
+        {
+          v38 = sub_6C4160(v69);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopSilverWnd") )
+      {
+        v70 = AllocateMemoryOrSomething(0xD0u);
+        if ( v70 )
+        {
+          v38 = sub_6C43B0(v70);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopBlackWnd") )
+      {
+        v71 = AllocateMemoryOrSomething(0xD0u);
+        if ( v71 )
+        {
+          v38 = sub_6C46F0(v71);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopPetWnd") )
+      {
+        v72 = AllocateMemoryOrSomething(0xD0u);
+        if ( v72 )
+        {
+          v38 = sub_6C47D0(v72);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopWhiteWnd") )
+      {
+        v73 = AllocateMemoryOrSomething(0xD0u);
+        if ( v73 )
+        {
+          v38 = sub_6C48A0(v73);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopInfoWnd") )
+      {
+        v74 = AllocateMemoryOrSomething(0xCCu);
+        if ( v74 )
+        {
+          v38 = sub_6BAB20(v74);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopFillWnd") )
+      {
+        v75 = AllocateMemoryOrSomething(0x128u);
+        if ( v75 )
+        {
+          v38 = sub_6B8EC0(v75);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "CardShopFillEventWnd") )
+      {
+        v76 = AllocateMemoryOrSomething(0x9Cu);
+        if ( v76 )
+        {
+          v38 = sub_6B9490(v76);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "LobbySubTitle") )
+      {
+        v77 = AllocateMemoryOrSomething(0x2D8u);
+        if ( v77 )
+        {
+          v38 = sub_66F880(v77);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "RoomSubTitle") )
+      {
+        v78 = AllocateMemoryOrSomething(0x210u);
+        if ( v78 )
+        {
+          v38 = sub_670230(v78);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "ExitWnd") )
+      {
+        v79 = AllocateMemoryOrSomething(0x3F0u);
+        if ( v79 )
+        {
+          v38 = sub_674590(v79);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "MyCharWnd") )
+      {
+        v80 = AllocateMemoryOrSomething(0x340u);
+        if ( v80 )
+        {
+          v38 = sub_637BD0(v80);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "LogInConnectWnd") )
+      {
+        v81 = AllocateMemoryOrSomething(0xC8u);
+        if ( v81 )
+        {
+          v38 = sub_62E020(v81);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "UserShopSignWnd") )
+      {
+        v82 = AllocateMemoryOrSomething(0xD0u);
+        if ( v82 )
+        {
+          v38 = sub_6B42D0(v82);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "UserShopMakeWnd") )
+      {
+        v83 = AllocateMemoryOrSomething(0x2D0u);
+        if ( v83 )
+        {
+          v38 = sub_6B57A0(v83);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "UserShopSetValueWnd") )
+      {
+        v84 = AllocateMemoryOrSomething(0xB8u);
+        if ( v84 )
+        {
+          v38 = sub_6B5200(v84);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "UserShopWndItem") )
+      {
+        v85 = AllocateMemoryOrSomething(0xE0u);
+        if ( v85 )
+        {
+          v38 = sub_6B44E0(v85);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "UserShopSellWnd") )
+      {
+        v86 = AllocateMemoryOrSomething(0xCCu);
+        if ( v86 )
+        {
+          v38 = sub_6B53A0(v86);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "TradeRequestWnd") )
+      {
+        v87 = AllocateMemoryOrSomething(0xA0u);
+        if ( v87 )
+        {
+          v38 = sub_6AE440(v87);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "TradeRequestWndIDListGameWnd") )
+      {
+        v88 = AllocateMemoryOrSomething(0xBCu);
+        if ( v88 )
+        {
+          v38 = sub_6263C0(v88);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "AuctionWnd") )
+      {
+        v89 = AllocateMemoryOrSomething(0xC4u);
+        if ( v89 )
+        {
+          v38 = sub_673280(v89);
+          goto LABEL_268;
+        }
+      }
+      else if ( sub_5D79B0(a1, "AuctionResultWnd") )
+      {
+        v90 = AllocateMemoryOrSomething(0x9Cu);
+        if ( v90 )
+        {
+          v38 = sub_672EB0(v90);
+          goto LABEL_268;
+        }
+      }
+      else
+      {
+        if ( !sub_5D79B0(a1, "CardShopAvatarWnd") )
+          goto LABEL_269;
+        v91 = AllocateMemoryOrSomething(0xD0u);
+        if ( v91 )
+        {
+          v38 = sub_6C4970(v91);
+          goto LABEL_268;
+        }
+      }
+    }
+    else
+    {
+      v39 = AllocateMemoryOrSomething(0xA0u);
+      if ( v39 )
+      {
+        v38 = sub_66BFF0(v39);
+        goto LABEL_268;
+      }
+    }
+  }
+  else
+  {
+    v37 = AllocateMemoryOrSomething(0x148u);
+    if ( v37 )
+    {
+      v38 = sub_66C210(v37);
+      goto LABEL_268;
+    }
+  }
+  v38 = 0;
+LABEL_268:
+  v1 = v38;
+  if ( v38 )
+    return v1;
+LABEL_269:
+  if ( !sub_5D74C0(0, *(a1 + 20), "GameTabIDWnd", 12) )
+  {
+    v92 = AllocateMemoryOrSomething(0xACu);
+    if ( v92 )
+    {
+      v93 = sub_6A3990(v92);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( !sub_5D74C0(0, *(a1 + 20), "GameTabGameWnd", 14) )
+  {
+    v94 = AllocateMemoryOrSomething(0xBCu);
+    if ( v94 )
+    {
+      v93 = sub_6A3960(v94);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "GameTabGuildWnd") )
+  {
+    v95 = AllocateMemoryOrSomething(0xB8u);
+    if ( v95 )
+    {
+      v93 = sub_6A3750(v95);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "GameTabFriendWnd") )
+  {
+    v96 = AllocateMemoryOrSomething(0xCCu);
+    if ( v96 )
+    {
+      v93 = sub_6A3720(v96);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "CardFusionSelWnd") )
+  {
+    v97 = AllocateMemoryOrSomething(0xA8u);
+    if ( v97 )
+    {
+      v93 = sub_69A530(v97);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "CardFusionResultWnd") )
+  {
+    v98 = AllocateMemoryOrSomething(0xA8u);
+    if ( v98 )
+    {
+      v93 = sub_69AA70(v98);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "TradeMainWnd") )
+  {
+    v99 = AllocateMemoryOrSomething(0x2D8u);
+    if ( v99 )
+    {
+      v93 = sub_6AE820(v99);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "TradeElementCntInputWnd") )
+  {
+    v100 = AllocateMemoryOrSomething(0xA8u);
+    if ( v100 )
+    {
+      v93 = sub_6AE780(v100);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "TradeCodeCntInputWnd") )
+  {
+    v101 = AllocateMemoryOrSomething(0xB0u);
+    if ( v101 )
+    {
+      v93 = sub_6AE7B0(v101);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "TradeCodeCntInputGlobalWnd") )
+  {
+    v102 = AllocateMemoryOrSomething(0xB0u);
+    if ( v102 )
+    {
+      v93 = sub_65AD10(v102);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "GameMenu1") )
+  {
+    v103 = AllocateMemoryOrSomething(0xC0u);
+    if ( v103 )
+    {
+      v93 = sub_6A1630(v103);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "GameMenu2") )
+  {
+    v104 = AllocateMemoryOrSomething(0xA0u);
+    if ( v104 )
+    {
+      v93 = sub_6A1600(v104);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "GameMenu3") )
+  {
+    v105 = AllocateMemoryOrSomething(0xFA8u);
+    if ( v105 )
+    {
+      v93 = sub_6A21A0(v105);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "GameChat") )
+  {
+    v106 = AllocateMemoryOrSomething(0x4E8u);
+    if ( v106 )
+    {
+      v93 = sub_69FA20(v106);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "GameChatEdit") )
+  {
+    v107 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v107 )
+    {
+      v93 = sub_69EA00(v107);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "BottomHelp") )
+  {
+    v108 = AllocateMemoryOrSomething(0x1B4u);
+    if ( v108 )
+    {
+      v93 = sub_63AFF0(v108);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "MemoWnd") )
+  {
+    v109 = AllocateMemoryOrSomething(0xACu);
+    if ( v109 )
+    {
+      v93 = sub_6A58F0(v109);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "MemoSendWnd") )
+  {
+    v110 = AllocateMemoryOrSomething(0xD0u);
+    if ( v110 )
+    {
+      v93 = sub_6A3F70(v110);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "RoomModeBack") )
+  {
+    v111 = AllocateMemoryOrSomething(0x128u);
+    if ( v111 )
+    {
+      v93 = sub_695D50(v111);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ScreenShotBox") )
+  {
+    v112 = AllocateMemoryOrSomething(0xA0u);
+    if ( v112 )
+    {
+      v93 = sub_66EEE0(v112);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeHelper") )
+  {
+    v113 = AllocateMemoryOrSomething(0xC0u);
+    if ( v113 )
+    {
+      v93 = sub_6948D0(v113);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeEffect_Fire") )
+  {
+    v114 = AllocateMemoryOrSomething(0xC0u);
+    if ( v114 )
+    {
+      v93 = sub_694A10(v114);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeEffect_Orb") )
+  {
+    v115 = AllocateMemoryOrSomething(0xC0u);
+    if ( v115 )
+    {
+      v93 = sub_694DD0(v115);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeEffect_Mole") )
+  {
+    v116 = AllocateMemoryOrSomething(0xC0u);
+    if ( v116 )
+    {
+      v93 = sub_694F60(v116);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeEffect_Fire2") )
+  {
+    v117 = AllocateMemoryOrSomething(0xC0u);
+    if ( v117 )
+    {
+      v93 = sub_694B30(v117);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeEffect_Fire3") )
+  {
+    v118 = AllocateMemoryOrSomething(0xC0u);
+    if ( v118 )
+    {
+      v93 = sub_694C50(v118);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeEffect_Falls") )
+  {
+    v119 = AllocateMemoryOrSomething(0xC0u);
+    if ( v119 )
+    {
+      v93 = sub_695100(v119);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeEffect_TeamBall") )
+  {
+    v120 = AllocateMemoryOrSomething(0xC8u);
+    if ( v120 )
+    {
+      v93 = sub_695230(v120);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeEffect_Crystal") )
+  {
+    v121 = AllocateMemoryOrSomething(0x128u);
+    if ( v121 )
+    {
+      v93 = sub_6953E0(v121);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeEffect_Symbol") )
+  {
+    v122 = AllocateMemoryOrSomething(0xF8u);
+    if ( v122 )
+    {
+      v93 = sub_695810(v122);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeEffect_Crown") )
+  {
+    v123 = AllocateMemoryOrSomething(0xA8u);
+    if ( v123 )
+    {
+      v93 = sub_695B20(v123);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "TrainingHelpWnd") )
+  {
+    v124 = AllocateMemoryOrSomething(0xB0u);
+    if ( v124 )
+    {
+      v93 = sub_6B2790(v124);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "TrainingResultWnd") )
+  {
+    v125 = AllocateMemoryOrSomething(0xE8u);
+    if ( v125 )
+    {
+      v93 = sub_6B27F0(v125);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeStatus") )
+  {
+    v126 = AllocateMemoryOrSomething(0x118u);
+    if ( v126 )
+    {
+      v93 = sub_6A5AE0(v126);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ModeStatus_0") )
+  {
+    v127 = AllocateMemoryOrSomething(0x118u);
+    if ( v127 )
+    {
+      v93 = sub_6A6980(v127);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "CardFusionWnd") )
+  {
+    v128 = AllocateMemoryOrSomething(0xC4u);
+    if ( v128 )
+    {
+      v93 = sub_69AC60(v128);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "CardFusionSkillWnd") )
+  {
+    v129 = AllocateMemoryOrSomething(0xC4u);
+    if ( v129 )
+    {
+      v93 = sub_69B2A0(v129);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "GameReadyWnd") )
+  {
+    v130 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v130 )
+    {
+      v93 = sub_6A01D0(v130);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "GameDisconnectWnd") )
+  {
+    v131 = AllocateMemoryOrSomething(0xA4u);
+    if ( v131 )
+    {
+      v93 = sub_6A0260(v131);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ElementWnd") )
+  {
+    v132 = AllocateMemoryOrSomething(0xACu);
+    if ( v132 )
+    {
+      v93 = sub_6B2130(v132);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "EventCardWnd") )
+  {
+    v133 = AllocateMemoryOrSomething(0xB0u);
+    if ( v133 )
+    {
+      v93 = sub_673BD0(v133);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "EventShopCardBuyWnd") )
+  {
+    v134 = AllocateMemoryOrSomething(0xACu);
+    if ( v134 )
+    {
+      v93 = sub_6744D0(v134);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ChannelUpWnd") )
+  {
+    v135 = AllocateMemoryOrSomething(0xACu);
+    if ( v135 )
+    {
+      v93 = sub_69C5C0(v135);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ChannelUp3CardWnd") )
+  {
+    v136 = AllocateMemoryOrSomething(0xBCu);
+    if ( v136 )
+    {
+      v93 = sub_69C700(v136);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ChannelUpEventCardWnd") )
+  {
+    v137 = AllocateMemoryOrSomething(0x114u);
+    if ( v137 )
+    {
+      v93 = sub_69C880(v137);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "GameAngelPresentWnd") )
+  {
+    v138 = AllocateMemoryOrSomething(0xACu);
+    if ( v138 )
+    {
+      v93 = sub_69E600(v138);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "GameMainMenu") )
+  {
+    v139 = AllocateMemoryOrSomething(0xB4u);
+    if ( v139 )
+    {
+      v93 = sub_6A1750(v139);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "CEventAnnounce") )
+  {
+    v140 = AllocateMemoryOrSomething(0xACu);
+    if ( v140 )
+    {
+      v93 = sub_656AF0(v140);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "CEventWnd") )
+  {
+    v141 = AllocateMemoryOrSomething(0xA0u);
+    if ( v141 )
+    {
+      v93 = sub_657080(v141);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "CEventBtnWnd") )
+  {
+    v142 = AllocateMemoryOrSomething(0xF8u);
+    if ( v142 )
+    {
+      v93 = sub_656CE0(v142);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ObtainWnd") )
+  {
+    v143 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v143 )
+    {
+      v93 = sub_62EB30(v143);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "RuleHelpWnd") )
+  {
+    v144 = AllocateMemoryOrSomething(0xA4u);
+    if ( v144 )
+    {
+      v93 = sub_66E160(v144);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "InfoHelpWnd") )
+  {
+    v145 = AllocateMemoryOrSomething(0xA4u);
+    if ( v145 )
+    {
+      v93 = sub_66E1D0(v145);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "CharacterWnd") )
+  {
+    v146 = AllocateMemoryOrSomething(0xA8u);
+    if ( v146 )
+    {
+      v93 = sub_68EB70(v146);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "CharSelectBtnWnd") )
+  {
+    v147 = AllocateMemoryOrSomething(0xC0u);
+    if ( v147 )
+    {
+      v93 = sub_68ED60(v147);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "NotifyHelp") )
+  {
+    v148 = AllocateMemoryOrSomething(0x1B4u);
+    if ( v148 )
+    {
+      v93 = sub_66B780(v148);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "SimpleEventWnd") )
+  {
+    v149 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v149 )
+    {
+      v93 = sub_6571F0(v149);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "EventPopUpWnd") )
+  {
+    v150 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v150 )
+    {
+      v93 = sub_6417A0(v150);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "LevelUpWnd") )
+  {
+    v151 = AllocateMemoryOrSomething(0xACu);
+    if ( v151 )
+    {
+      v93 = sub_69CF50(v151);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "ChannelMyInfo") )
+  {
+    v152 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v152 )
+    {
+      v93 = sub_62EF90(v152);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "RoomChampWnd") )
+  {
+    v153 = AllocateMemoryOrSomething(0xFCu);
+    if ( v153 )
+    {
+      v93 = sub_63E930(v153);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "LobbyChampWnd") )
+  {
+    v154 = AllocateMemoryOrSomething(0xFCu);
+    if ( v154 )
+    {
+      v93 = sub_63EC40(v154);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "CChampCardWnd") )
+  {
+    v155 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v155 )
+    {
+      v93 = sub_68E530(v155);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "FreeCardWnd") )
+  {
+    v156 = AllocateMemoryOrSomething(0xA8u);
+    if ( v156 )
+    {
+      v93 = sub_645020(v156);
+      goto LABEL_465;
+    }
+    goto LABEL_464;
+  }
+  if ( sub_5D79B0(a1, "FreeCardRecvWnd") )
+  {
+    v157 = AllocateMemoryOrSomething(0xA0u);
+    if ( v157 )
+    {
+      v93 = sub_6455A0(v157);
+      goto LABEL_465;
+    }
+LABEL_464:
+    v93 = 0;
+LABEL_465:
+    v1 = v93;
+    if ( v93 )
+      return v1;
+  }
+  if ( !sub_5D74C0(0, *(a1 + 20), "PresentRecevieWnd", 17) )
+  {
+    v158 = AllocateMemoryOrSomething(0xC4u);
+    if ( v158 )
+      return sub_6D86F0(v158);
+    return 0;
+  }
+  if ( !sub_5D74C0(0, *(a1 + 20), "PresentWnd", 10) )
+  {
+    v160 = AllocateMemoryOrSomething(0xB8u);
+    if ( v160 )
+      return sub_6D58B0(v160);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PresentFriend") )
+  {
+    v161 = AllocateMemoryOrSomething(0xA8u);
+    if ( v161 )
+      return sub_6D5020(v161);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PresentSendWnd") )
+  {
+    v162 = AllocateMemoryOrSomething(0xB8u);
+    if ( v162 )
+      return sub_6D47E0(v162);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PresentLicenseWnd") )
+  {
+    v163 = AllocateMemoryOrSomething(0xC0u);
+    if ( v163 )
+      return sub_6D46E0(v163);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "MessageSendWnd") )
+  {
+    v164 = AllocateMemoryOrSomething(0xD4u);
+    if ( v164 )
+      return sub_667010(v164);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "GuildMessageSendWnd") )
+  {
+    v165 = AllocateMemoryOrSomething(0xB4u);
+    if ( v165 )
+      return sub_664FE0(v165);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "MessageRecvWnd") )
+  {
+    v166 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v166 )
+      return sub_6650A0(v166);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "GuildMessageRecvWnd") )
+  {
+    v167 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v167 )
+      return sub_665390(v167);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "UserShopSearchWnd") )
+  {
+    v168 = AllocateMemoryOrSomething(0x1F0u);
+    if ( v168 )
+      return sub_68B720(v168);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "SearchItem") )
+  {
+    v169 = AllocateMemoryOrSomething(0xE0u);
+    if ( v169 )
+      return sub_687C30(v169);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "SearchListWnd") )
+  {
+    v170 = AllocateMemoryOrSomething(0xB4u);
+    if ( v170 )
+      return sub_68B530(v170);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "WhiteInfoWnd") )
+  {
+    v171 = AllocateMemoryOrSomething(0xACu);
+    if ( v171 )
+      return sub_6BAA40(v171);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "SantaPetEventWnd") )
+  {
+    v172 = AllocateMemoryOrSomething(0xD0u);
+    if ( v172 )
+      return sub_641EB0(v172);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "SantaPetPrizeWnd") )
+  {
+    v173 = AllocateMemoryOrSomething(0xA0u);
+    if ( v173 )
+      return sub_642450(v173);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "TrainingSelectWnd") )
+  {
+    v174 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v174 )
+      return sub_6B2970(v174);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "EventPopUpWndExOne") )
+  {
+    v175 = AllocateMemoryOrSomething(0xA0u);
+    if ( v175 )
+      return sub_641880(v175);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "EventPopUpWndExTwo") )
+  {
+    v176 = AllocateMemoryOrSomething(0xACu);
+    if ( v176 )
+      return sub_641AF0(v176);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "ThreeFreeFusionWnd") )
+  {
+    v177 = AllocateMemoryOrSomething(0x100u);
+    if ( v177 )
+      return sub_6429C0(v177);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "ThreeFreeFusionGameWnd") )
+  {
+    v178 = AllocateMemoryOrSomething(0xC8u);
+    if ( v178 )
+      return sub_6431E0(v178);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "FreeFusionWnd") )
+  {
+    v179 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v179 )
+      return sub_643880(v179);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "FreeFusionMainWnd") )
+  {
+    v180 = AllocateMemoryOrSomething(0xB0u);
+    if ( v180 )
+      return sub_643B50(v180);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "FreeFusionPrizeWnd") )
+  {
+    v181 = AllocateMemoryOrSomething(0xA4u);
+    if ( v181 )
+      return sub_6434B0(v181);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "WorldCupPetEvnetWnd") )
+  {
+    v182 = AllocateMemoryOrSomething(0xD0u);
+    if ( v182 )
+      return sub_643CB0(v182);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "VolumeSlide") )
+  {
+    v183 = AllocateMemoryOrSomething(0xACu);
+    if ( v183 )
+      return sub_66C030(v183);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "AnyEventWnd2") )
+  {
+    v184 = AllocateMemoryOrSomething(0xB8u);
+    if ( v184 )
+      return sub_642570(v184);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "GlobalUserShopWnd") )
+  {
+    v185 = AllocateMemoryOrSomething(0xB8u);
+    if ( v185 )
+      return sub_65A7D0(v185);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "GusRegWnd") )
+  {
+    v186 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v186 )
+      return sub_65A7A0(v186);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "GusDelWnd") )
+  {
+    v187 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v187 )
+      return sub_687F00(v187);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "InfinityEventWnd") )
+  {
+    v188 = AllocateMemoryOrSomething(0xACu);
+    if ( v188 )
+      return sub_643E90(v188);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "InfinityEventResult") )
+  {
+    v189 = AllocateMemoryOrSomething(0xBCu);
+    if ( v189 )
+      return sub_6441A0(v189);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CRoomMakeCardLimitWnd") )
+  {
+    v190 = AllocateMemoryOrSomething(0xA0u);
+    if ( v190 )
+      return sub_684890(v190);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CRoomMakeFuryLimitWnd") )
+  {
+    v191 = AllocateMemoryOrSomething(0xA0u);
+    if ( v191 )
+      return sub_684670(v191);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "AvatarEquipWnd") )
+  {
+    v192 = AllocateMemoryOrSomething(0xC8u);
+    if ( v192 )
+      return sub_6686E0(v192);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CardShopCoinInfoWnd") )
+  {
+    v193 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v193 )
+      return sub_6B8410(v193);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "AvatarCoinVisitWnd") )
+  {
+    v194 = AllocateMemoryOrSomething(0xB0u);
+    if ( v194 )
+      return sub_644710(v194);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "AvatarCoinEventWnd") )
+  {
+    v195 = AllocateMemoryOrSomething(0xB0u);
+    if ( v195 )
+      return sub_644B10(v195);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "SurpCouponWnd") )
+  {
+    v196 = AllocateMemoryOrSomething(0xA4u);
+    if ( v196 )
+      return sub_645690(v196);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "SurpCouponCompleteWnd") )
+  {
+    v197 = AllocateMemoryOrSomething(0xA0u);
+    if ( v197 )
+      return sub_6457D0(v197);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "SurpCouponPresentWnd") )
+  {
+    v198 = AllocateMemoryOrSomething(0xC4u);
+    if ( v198 )
+      return sub_645830(v198);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "SurpCouponEventWnd") )
+  {
+    v199 = AllocateMemoryOrSomething(0xC0u);
+    if ( v199 )
+      return sub_646060(v199);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "MacroCheckWnd") )
+  {
+    v200 = AllocateMemoryOrSomething(0x4C4u);
+    if ( v200 )
+      return sub_653D30(v200);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "EventPrizeWnd") )
+  {
+    v201 = AllocateMemoryOrSomething(0xB0u);
+    if ( v201 )
+      return sub_6464D0(v201);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CardFusionFreeSelWnd") )
+  {
+    v202 = AllocateMemoryOrSomething(0xB4u);
+    if ( v202 )
+      return sub_69A890(v202);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "NewEntryCulturePresentWnd") )
+  {
+    v203 = AllocateMemoryOrSomething(0xA4u);
+    if ( v203 )
+      return sub_646920(v203);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "NewEntryPetPresentWnd") )
+  {
+    v204 = AllocateMemoryOrSomething(0xA4u);
+    if ( v204 )
+      return sub_646B00(v204);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "EventPopUpWndExThree") )
+  {
+    v205 = AllocateMemoryOrSomething(0xA0u);
+    if ( v205 )
+      return sub_641D80(v205);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "MakeNewPasswordWnd") )
+  {
+    v206 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v206 )
+      return sub_646DF0(v206);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "EventMainWnd") )
+  {
+    v207 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v207 )
+      return sub_646F10(v207);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "EventNoticeWnd") )
+  {
+    v208 = AllocateMemoryOrSomething(0xA0u);
+    if ( v208 )
+      return sub_647030(v208);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "TemporaryUserWnd") )
+  {
+    v209 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v209 )
+      return sub_6712D0(v209);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "SearchEventMainWnd") )
+  {
+    v210 = AllocateMemoryOrSomething(0xA0u);
+    if ( v210 )
+      return sub_6470D0(v210);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "HeroEventLotteryWnd") )
+  {
+    v211 = AllocateMemoryOrSomething(0xA8u);
+    if ( v211 )
+      return sub_647670(v211);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "HeroEventFreeCardWnd") )
+  {
+    v212 = AllocateMemoryOrSomething(0xA4u);
+    if ( v212 )
+      return sub_647160(v212);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "Notice7YearEventWnd") )
+  {
+    v213 = AllocateMemoryOrSomething(0xA4u);
+    if ( v213 )
+      return sub_647960(v213);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "Gift7YearEventWnd") )
+  {
+    v214 = AllocateMemoryOrSomething(0xA8u);
+    if ( v214 )
+      return sub_647C70(v214);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "Main7YearEventWnd") )
+  {
+    v215 = AllocateMemoryOrSomething(0xC8u);
+    if ( v215 )
+      return sub_648330(v215);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCargeEvent") )
+  {
+    v216 = AllocateMemoryOrSomething(0xA0u);
+    if ( v216 )
+      return sub_648B60(v216);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge090630EventWnd") )
+  {
+    v217 = AllocateMemoryOrSomething(0xA0u);
+    if ( v217 )
+      return sub_648C40(v217);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge090630EventGiftWnd") )
+  {
+    v218 = AllocateMemoryOrSomething(0xA4u);
+    if ( v218 )
+      return sub_648D20(v218);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "Main10000CashWnd") )
+  {
+    v219 = AllocateMemoryOrSomething(0xA8u);
+    if ( v219 )
+      return sub_649230(v219);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "Gift10000CashWnd") )
+  {
+    v220 = AllocateMemoryOrSomething(0xA8u);
+    if ( v220 )
+      return sub_649560(v220);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "Notice1000CashWnd") )
+  {
+    v221 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v221 )
+      return sub_6499E0(v221);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge090804EventWnd") )
+  {
+    v222 = AllocateMemoryOrSomething(0xA0u);
+    if ( v222 )
+      return sub_649A80(v222);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge090804EventGiftWnd") )
+  {
+    v223 = AllocateMemoryOrSomething(0xACu);
+    if ( v223 )
+      return sub_649B60(v223);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge090908EventWnd") )
+  {
+    v224 = AllocateMemoryOrSomething(0xA0u);
+    if ( v224 )
+      return sub_649FF0(v224);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge090908EventGiftWnd") )
+  {
+    v225 = AllocateMemoryOrSomething(0xACu);
+    if ( v225 )
+      return sub_64A0D0(v225);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge091016EventWnd") )
+  {
+    v226 = AllocateMemoryOrSomething(0xA0u);
+    if ( v226 )
+      return sub_64A3F0(v226);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge091016EventGiftWnd") )
+  {
+    v227 = AllocateMemoryOrSomething(0xA4u);
+    if ( v227 )
+      return sub_64A4D0(v227);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PlayTimeMainWnd") )
+  {
+    v228 = AllocateMemoryOrSomething(0xA8u);
+    if ( v228 )
+      return sub_64A860(v228);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PlayTimeGiftWnd") )
+  {
+    v229 = AllocateMemoryOrSomething(0xB8u);
+    if ( v229 )
+      return sub_64AB90(v229);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PlayTimeCouponWnd") )
+  {
+    v230 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v230 )
+      return sub_64AFD0(v230);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "JoinLevelUpEventWnd") )
+  {
+    v231 = AllocateMemoryOrSomething(0xA4u);
+    if ( v231 )
+      return sub_64B070(v231);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "JoinGiftWnd") )
+  {
+    v232 = AllocateMemoryOrSomething(0xA4u);
+    if ( v232 )
+      return sub_64B2E0(v232);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "GoldForceEventGiftWnd") )
+  {
+    v233 = AllocateMemoryOrSomething(0xA4u);
+    if ( v233 )
+      return sub_64B5F0(v233);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "ConnectionMainWnd") )
+  {
+    v234 = AllocateMemoryOrSomething(0xA8u);
+    if ( v234 )
+      return sub_64B880(v234);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "ConnectionGiftWnd") )
+  {
+    v235 = AllocateMemoryOrSomething(0xB8u);
+    if ( v235 )
+      return sub_64BBC0(v235);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "ConnectionCouponWnd") )
+  {
+    v236 = AllocateMemoryOrSomething(0x9Cu);
+    if ( v236 )
+      return sub_64C020(v236);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge100409EventWnd") )
+  {
+    v237 = AllocateMemoryOrSomething(0xA0u);
+    if ( v237 )
+      return sub_64C0C0(v237);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge100409EventGiftWnd") )
+  {
+    v238 = AllocateMemoryOrSomething(0xA4u);
+    if ( v238 )
+      return sub_64C1A0(v238);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PlayTime100409MainWnd") )
+  {
+    v239 = AllocateMemoryOrSomething(0xA8u);
+    if ( v239 )
+      return sub_64C440(v239);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PlayTime100409GiftWnd") )
+  {
+    v240 = AllocateMemoryOrSomething(0xA4u);
+    if ( v240 )
+      return sub_64C750(v240);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "ConnectionSlotMainWnd") )
+  {
+    v241 = AllocateMemoryOrSomething(0xA8u);
+    if ( v241 )
+      return sub_64C9F0(v241);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "ConnectionSlotGiftWnd") )
+  {
+    v242 = AllocateMemoryOrSomething(0xA4u);
+    if ( v242 )
+      return sub_64CD60(v242);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge100513EventWnd") )
+  {
+    v243 = AllocateMemoryOrSomething(0xA0u);
+    if ( v243 )
+      return sub_64CFB0(v243);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCarge100513EventGiftWnd") )
+  {
+    v244 = AllocateMemoryOrSomething(0xACu);
+    if ( v244 )
+      return sub_64D090(v244);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PlayTime100517MainWnd") )
+  {
+    v245 = AllocateMemoryOrSomething(0xACu);
+    if ( v245 )
+      return sub_64D8D0(v245);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PlayTime100517GiftWnd") )
+  {
+    v246 = AllocateMemoryOrSomething(0xA8u);
+    if ( v246 )
+      return sub_64DC80(v246);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "ChannelEventPopUpWnd") )
+  {
+    v247 = AllocateMemoryOrSomething(0xB4u);
+    if ( v247 )
+      return sub_64DFC0(v247);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CardCodeEventGiftWnd") )
+  {
+    v248 = AllocateMemoryOrSomething(0xA8u);
+    if ( v248 )
+      return sub_64E1E0(v248);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CardArrayEventGiftWnd") )
+  {
+    v249 = AllocateMemoryOrSomething(0xA4u);
+    if ( v249 )
+      return sub_64E520(v249);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "Connection100603Wnd") )
+  {
+    v250 = AllocateMemoryOrSomething(0xB0u);
+    if ( v250 )
+      return sub_64E7B0(v250);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashEventGiftWnd") )
+  {
+    v251 = AllocateMemoryOrSomething(0xA4u);
+    if ( v251 )
+      return sub_64EBC0(v251);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCargeEventSelectWnd") )
+  {
+    v252 = AllocateMemoryOrSomething(0x108u);
+    if ( v252 )
+      return sub_656140(v252);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "ElementEventGiftWnd") )
+  {
+    v253 = AllocateMemoryOrSomething(0xA8u);
+    if ( v253 )
+      return sub_64EE70(v253);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "CashCargeEventCommonWnd") )
+  {
+    v254 = AllocateMemoryOrSomething(0xA0u);
+    if ( v254 )
+      return sub_64F130(v254);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PremiumEventCardBonusWnd") )
+  {
+    v255 = AllocateMemoryOrSomething(0xA0u);
+    if ( v255 )
+      return sub_64F170(v255);
+    return 0;
+  }
+  if ( sub_5D79B0(a1, "PremiumEventCardBonusResultWnd") )
+  {
+    v256 = AllocateMemoryOrSomething(0xC4u);
+    if ( v256 )
+      return sub_64F1A0(v256);
+    return 0;
+  }
+  return v1;
+}
