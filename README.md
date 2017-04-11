@@ -41,6 +41,12 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
+# 11/04/2017
+* User shops: The card search feature is now working (by pressing F6 in the lobby).
+* User shops: You can add an automatic user shop using the UserShop II card.
+* User shops: You can buy a card in the card search window.
+* User shops: You cannot remove a card from the shop due to a bug in the client (I think)... :S
+
 # 10/04/2017
 * Mission training mode is working.
 * Changing the room's game mode (such as finishing a training and moving on to a different training) doesn't crash the game now.
