@@ -8,6 +8,10 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 **Not going to work on hokey mode because I can't fucking score a goal -_-"**
 
+# Built-in chat commands
+Apparently Surival Project has some built in commands. Type /macro in-game to see those commands.
+Some of them are obsolete, so they aren't working well, and it shows a big list of chat commands but only some of them are actually working.
+
 # Chat commands
 **After executing most of the commands, a reconnect is required in order to see the changes.**
 
