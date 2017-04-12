@@ -36,7 +36,7 @@ Some of them are obsolete, so not all of them are working.
 - [ ] Add timed events (such as a random element flying around).
 
 # List of bugs
-* If two players starts a game and a third one tries to join, his game automatically starts.
+* ~~If two players starts a game and a third one tries to join, his game automatically starts.~~
 * When you finish a mission, the mission level on the left of the screen doesn't change.
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
 * ~~Changing room's game mode message crashes the game.~~
@@ -47,6 +47,9 @@ Some of them are obsolete, so not all of them are working.
 * ~~When a player (I think the master) dies in symbol mode, his symbols disappear. o_o~~
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
+
+# 12/04/2017
+* Bug fix: If two players starts a game and a third one tries to join, his game automatically starts.
 
 # 11/04/2017
 * Invitation: You can now invite other people to your room.
