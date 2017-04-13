@@ -48,6 +48,10 @@ Some of them are obsolete, so not all of them are working.
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
+# 13/04/2017
+* You now lose a mission (in mission impossible 300) if all of the players in the room are dead.
+* You now win a mission training mode if you have more at least 1 kill, and lose otherwise.
+
 # 12/04/2017
 * Bug fix: If two players starts a game and a third one tries to join, his game automatically starts.
 
