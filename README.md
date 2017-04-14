@@ -32,7 +32,7 @@ Some of them are obsolete, so not all of them are working.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [ ] Change the tutorial item class to net.objects.Item.
 - [ ] Get a list of all the request messages.
-- [ ] Finish the guild mark handler.
+- [x ] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
 
 # List of bugs
