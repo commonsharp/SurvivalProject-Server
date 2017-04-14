@@ -22,6 +22,17 @@ Some of them are obsolete, so not all of them are working.
 
 **@guild-leave** - leaves your guild.
 
+# Game modes left to add
+- [ ] Hero mode
+- [ ] Infinity survival mode
+- [ ] Infinity king mode
+- [ ] Infinity symbol mode
+- [ ] Crystal capture mode
+- [ ] King slayer mode
+- [ ] Fight club mode
+- [ ] Tournament mode
+- [ ] Hokey :(
+
 # TODO
 - [ ] Change the guild points formula to the correct one.
 - [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
@@ -35,6 +46,9 @@ Some of them are obsolete, so not all of them are working.
 - [ ] Get a list of all the request messages.
 - [x] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
+- [ ] Change every game over message to a round over message.
+- [ ] Change the king when the king leaves
+- [ ] Change the game master when the master leaves
 
 # List of bugs
 * ~~If two players starts a game and a third one tries to join, his game automatically starts.~~
