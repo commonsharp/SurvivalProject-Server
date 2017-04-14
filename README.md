@@ -40,13 +40,16 @@ Some of them are obsolete, so not all of them are working.
 * When you finish a mission, the mission level on the left of the screen doesn't change.
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
 * ~~Changing room's game mode message crashes the game.~~
-* When someone's in a game and it crashes, the leave function is not getting called.
+* ~~When someone's in a game and it crashes, the leave function is not getting called.~~
 * If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.
 * ~~If you disconnect on the login screen, there will be an SQLException.~~
 * Death timer in big matches doesn't work.
 * ~~When a player (I think the master) dies in symbol mode, his symbols disappear. o_o~~
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
+
+# 14/04/2017
+* If a player's game crashes, the other player in the same room gets a LeavePlayer message.
 
 # 13/04/2017
 * You now lose a mission (in mission impossible 300) if all of the players in the room are dead.
