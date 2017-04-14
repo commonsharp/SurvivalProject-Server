@@ -49,7 +49,7 @@ Some of them are obsolete, so not all of them are working.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
 # 14/04/2017
-* If a player's game crashes, the other player in the same room gets a LeavePlayer message.
+* If a player's game crashes, the other players in the same room gets a LeavePlayer message.
 
 # 13/04/2017
 * You now lose a mission (in mission impossible 300) if all of the players in the room are dead.
