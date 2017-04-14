@@ -23,6 +23,7 @@ Some of them are obsolete, so not all of them are working.
 **@guild-leave** - leaves your guild.
 
 # TODO
+- [ ] Change the guild points formula to the correct one.
 - [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
 - [ ] Some premium cards also give you elements when you purchase them.
 - [ ] Change every saveUser call to a shorter SQL query to reduce database operations.
