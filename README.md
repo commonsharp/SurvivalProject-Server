@@ -31,7 +31,7 @@ Some of them are obsolete, so not all of them are working.
 - [ ] King slayer mode
 - [ ] Fight club mode
 - [ ] Tournament mode
-- [ ] Hokey :(
+- [ ] Ice hokey mode :(
 
 # TODO
 - [ ] Change the guild points formula to the correct one.
