@@ -66,6 +66,7 @@ Some of them are obsolete, so not all of them are working.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
 # 15/04/2017
+* Coin bubbles are now randomly spawned throughout the game. Every player in the game adds 1 'tick' every 9 seconds. Every 10 ticks, a random coin bubble is spawned. That means if there's 1 player in the room, a coin bubble will spawn every 90 second, and if there are 2 players, a coin bubble will spawn every 45 seconds. You get 1000 coins for a regular coin bubble and 3000 coins for a triple coin bubble. The values are subject to change.
 * You can now verify users in the send memo screen.
 * You can now send and receive memos. If the recipient is disconnected, he will get the memo when he logs in.
 * When the master of the room leaves, another player becomes the new master.
