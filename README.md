@@ -35,6 +35,18 @@ Some of them are obsolete, so not all of them are working.
 - [ ] Tournament mode
 - [ ] Ice hokey mode :(
 
+# Premiums cards that are not yet working:
+- [ ] Every gold force card
+- [ ] Master card
+- [ ] Visit bonus x2
+- [ ] Time bonus x2
+- [ ] Elemental bonus x3
+- [ ] Premium Event
+- [ ] SuperSilver
+- [ ] CardSlot+18, CardSlot+30
+- [ ] Skill I fusion
+- [ ] Skill II fusion
+
 # TODO
 - [ ] Change the guild points formula to the correct one.
 - [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
@@ -46,22 +58,14 @@ Some of them are obsolete, so not all of them are working.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [ ] Change the tutorial item class to net.objects.Item.
 - [ ] Get a list of all the request messages.
-- [x] Finish the guild mark handler.
 - [ ] Add timed events (such as a random element flying around).
 - [ ] Change every game over message to a round over message.
-- [x] Change the king when the king leaves
-- [x] Change the game master when the master leaves
 
 # List of bugs
-* ~~If two players starts a game and a third one tries to join, his game automatically starts.~~
 * When you finish a mission, the mission level on the left of the screen doesn't change.
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
-* ~~Changing room's game mode message crashes the game.~~
-* ~~When someone's in a game and it crashes, the leave function is not getting called.~~
 * If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.
-* ~~If you disconnect on the login screen, there will be an SQLException.~~
 * Death timer in big matches doesn't work.
-* ~~When a player (I think the master) dies in symbol mode, his symbols disappear. o_o~~
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
