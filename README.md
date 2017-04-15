@@ -65,6 +65,9 @@ Some of them are obsolete, so not all of them are working.
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
+# 15/04/2017
+* You can verify users in the send memo screen.
+
 # 14/04/2017
 * Tried to get the infinity game modes to work with no success :(
 * Elements are now randomly spawned throughout the game. Every player in the game adds 1 'tick' every 9 seconds. Every 10 ticks, a random element is spawned. That means if there's 1 player in the room, an element will spawn every 90 second, and if there are 2 players, an element will spawn every 45 seconds. The value might get changed in the future.
