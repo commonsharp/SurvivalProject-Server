@@ -68,6 +68,7 @@ Some of them are obsolete, so not all of them are working.
 # 15/04/2017
 * You can now verify users in the send memo screen.
 * You can now send and receive memos. If the recipient is disconnected, he will get the memo when he logs in.
+* Fixed a bug where if a user left the game and you pressed shift to see the list of users, the user would still be there.
 
 # 14/04/2017
 * Tried to get the infinity game modes to work with no success :(
