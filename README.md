@@ -50,7 +50,7 @@ Some of them are obsolete, so not all of them are working.
 - [ ] Add timed events (such as a random element flying around).
 - [ ] Change every game over message to a round over message.
 - [ ] Change the king when the king leaves
-- [ ] Change the game master when the master leaves
+- [x] Change the game master when the master leaves
 
 # List of bugs
 * ~~If two players starts a game and a third one tries to join, his game automatically starts.~~
@@ -68,6 +68,7 @@ Some of them are obsolete, so not all of them are working.
 # 15/04/2017
 * You can now verify users in the send memo screen.
 * You can now send and receive memos. If the recipient is disconnected, he will get the memo when he logs in.
+* When the master of the room leaves, another player becomes the new master.
 * Fixed a bug where if a user left the game and you pressed shift to see the list of users, the user would still be there.
 
 # 14/04/2017
