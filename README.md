@@ -66,7 +66,7 @@ Some of them are obsolete, so not all of them are working.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
 # 15/04/2017
-* You can verify users in the send memo screen.
+* You can now verify users in the send memo screen.
 
 # 14/04/2017
 * Tried to get the infinity game modes to work with no success :(
