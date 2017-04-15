@@ -35,7 +35,7 @@ Some of them are obsolete, so not all of them are working.
 - [ ] Tournament mode
 - [ ] Ice hokey mode :(
 
-# Premiums cards that are not yet working:
+# Premiums cards that are not yet working
 - [ ] Every gold force card
 - [ ] Master card
 - [ ] Visit bonus x2
