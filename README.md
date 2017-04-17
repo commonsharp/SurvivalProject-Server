@@ -53,6 +53,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Skill II fusion
 
 # TODO
+- [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
 - [ ] Change the guild points formula to the correct one.
 - [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
 - [ ] Some premium cards also give you elements when you purchase them.
