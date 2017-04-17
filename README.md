@@ -69,8 +69,12 @@ Some of them are obsolete, so not all of them are working.
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
+# 17/04/2017
+* Rooms can now have passwords.
+* You can change a room's password with the built-in /pw command. '/pw 123' will change the password to 123. '/pw' will remove the password.
+
 # 16/04/2017
-* Tried to fix a bug where the host of the server could not play the game, only to end up with the fact that the problem is with my router, and not the server. -_-
+* Spent the entire day trying to fix a bug where the host of the server could not play the game, only to end up with the fact that the problem is with my router, and not the server. -_-
 
 # 15/04/2017
 * Coin bubbles are now randomly spawned throughout the game. Every player in the game adds 1 'tick' every 9 seconds. Every 10 ticks, a random coin bubble is spawned. That means if there's 1 player in the room, a coin bubble will spawn every 90 second, and if there are 2 players, a coin bubble will spawn every 45 seconds. You get 1000 coins for a regular coin bubble and 3000 coins for a triple coin bubble. The values are subject to change.
