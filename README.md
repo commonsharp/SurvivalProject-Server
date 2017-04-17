@@ -11,7 +11,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **Not going to work on hokey mode because I can't fucking score a goal -_-"**
 
 # Built-in chat commands
-Apparently Surival Project has some built in commands. Unfortunately, most of them are in korean.
+Apparently Surival Project has some built in commands. Unfortunately, most of them are in Korean.
 Type /macro in-game to see those commands.
 
 The english ones are: /open, /title, /pw, /block, /friend, /search and /memo.
