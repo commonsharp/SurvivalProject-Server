@@ -11,7 +11,11 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **Not going to work on hokey mode because I can't fucking score a goal -_-"**
 
 # Built-in chat commands
-Apparently Surival Project has some built in commands. Type /macro in-game to see those commands.
+Apparently Surival Project has some built in commands. Unfortunately, most of them are in korean.
+Type /macro in-game to see those commands.
+
+The english ones are: /open, /title, /pw, /block, /friend, /search and /memo.
+There's also a command to change your character in mission training mode - /character [Character-name]. The problem is that the strings.xml translation is a bit off so that macro isn't working. In order to fix that, go to images\strings.xml and change "Character" in line 4752 to "/character". This should fix the macro. 
 
 Some of them are obsolete, so not all of them are working.
 
