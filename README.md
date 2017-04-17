@@ -79,6 +79,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Gold force cards are now working.
 * Rooms can now have passwords.
 * You can change a room's password with the built-in /pw command. '/pw 123' will change the password to 123. '/pw' will remove the password.
+* You can now change your character while being in a game in mission training mode with the built-in /character command.
 
 # 16/04/2017
 * Spent the entire day trying to fix a bug where the host of the server could not play the game, only to end up with the fact that the problem is with my router, and not the server. -_-
