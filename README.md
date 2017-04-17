@@ -70,7 +70,7 @@ Some of them are obsolete, so not all of them are working.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
 # 17/04/2017
-* Gifts: you can now send and receive gifts.
+* Gifts: you can now send and receive gifts. You can gift cards, elements or code.
 * Gold force cards are now working.
 * Rooms can now have passwords.
 * You can change a room's password with the built-in /pw command. '/pw 123' will change the password to 123. '/pw' will remove the password.
