@@ -15,9 +15,10 @@ Apparently Surival Project has some built in commands. Unfortunately, most of th
 Type /macro in-game to see those commands.
 
 The english ones are: /open, /title, /pw, /block, /friend, /search and /memo.
-There's also a command to change your character in mission training mode - /character [Character-name]. The problem is that the strings.xml translation is a bit off so that macro isn't working. In order to fix that, go to images\strings.xml and change "Character" in line 4752 to "/character". This should fix the macro. 
 
-Some of them are obsolete, so not all of them are working.
+There's also a command to change your character in mission training mode - /character [Character-name]. The problem is that the strings.xml translation is a bit off so that macro isn't working.
+
+In order to fix that, go to images\strings.xml and change "Character" in line 4752 to "/character". This should fix the macro. 
 
 # Chat commands
 **After executing most of the commands, a reconnect is required in order to see the changes.**
