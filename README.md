@@ -81,6 +81,8 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Game notifications: when a level 29+ player joins the server, other players in the game get a notification.
 * User mini shop: you can create a new user mini shop.
 * User mini shop: you can enter a user mini shop and see its content.
+* User mini shop: you can remove cards from the user mini shop.
+* User mini shop: you can add new cards to the user mini shop.
 * Fixed a bug where UDP packets were not always sent.
 
 # 17/04/2017
