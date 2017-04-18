@@ -75,6 +75,9 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
+# 18/04/2017
+* Fixed a bug where UDP packets were not always sent.
+
 # 17/04/2017
 * Found a few new packets related to events, which will not be implemented in the near future.
 * Started working on game announcements. Right now there's an option to send a "player x upgraded a card to level y". 
