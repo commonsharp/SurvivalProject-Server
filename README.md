@@ -51,6 +51,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] CardSlot+18, CardSlot+30
 - [ ] Skill I fusion
 - [ ] Skill II fusion
+- [ ] User shop I
 
 # TODO
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
