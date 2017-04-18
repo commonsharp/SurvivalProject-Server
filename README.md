@@ -64,7 +64,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Lose code/cash/coins when you make a purchase.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [ ] Change the tutorial item class to net.objects.Item.
-- [ ] Get a list of all the request messages.
+- [x] Get a list of all the request messages.
 - [ ] Add timed events (such as a random element flying around).
 - [ ] Change every game over message to a round over message.
 
@@ -84,6 +84,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * User mini shop: you can remove cards from the user mini shop.
 * User mini shop: you can add new cards to the user mini shop.
 * Fixed a bug where UDP packets were not always sent.
+* Finally got a list of all the messages in the game. There's a long way to go :O
 
 # 17/04/2017
 * Found a few new packets related to events, which will not be implemented in the near future.
