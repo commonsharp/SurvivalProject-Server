@@ -76,11 +76,13 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
 # 18/04/2017
+* Game notifications: when a player successfuly level up a card to level 7+, other players in the game get a notification.
+* Game notifications: when a level 29+ player joins the server, other players in the game get a notification.
 * Fixed a bug where UDP packets were not always sent.
 
 # 17/04/2017
 * Found a few new packets related to events, which will not be implemented in the near future.
-* Started working on game announcements. Right now there's an option to send a "player x upgraded a card to level y". 
+* Started working on game notifications. Right now there's an option to send a "player x upgraded a card to level y". 
 * Gifts: you can now send and receive gifts. You can gift cards, elements or code.
 * Gold force cards are now working.
 * Rooms can now have passwords.
