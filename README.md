@@ -65,7 +65,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [ ] Change the tutorial item class to net.objects.Item.
 - [x] Get a list of all the request messages.
-- [ ] Add timed events (such as a random element flying around).
+- [x] Add timed events (such as a random element flying around).
 - [ ] Change every game over message to a round over message.
 
 # List of bugs
