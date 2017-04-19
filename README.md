@@ -11,7 +11,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 **Not going to work on hokey mode because I can't fucking score a goal -_-"**
 
 # Built-in chat commands
-Apparently Surival Project has some built in commands. Unfortunately, most of them are in Korean.
+Apparently Survival Project has some built in commands. Unfortunately, most of them are in Korean.
 Type /macro in-game to see those commands.
 
 The english ones are: /open, /title, /pw, /block, /friend, /search and /memo.
@@ -63,7 +63,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
 - [ ] Lose code/cash/coins when you make a purchase.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
-- [ ] Change the tutorial item class to net.objects.Item.
+- [x] Change the tutorial item class to net.objects.Item.
 - [x] Get a list of all the request messages.
 - [x] Add timed events (such as a random element flying around).
 - [ ] Change every game over message to a round over message.
@@ -78,6 +78,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 
 # 19/04/2017
 * Extensive research on every game packet in the game.
+* The starting tutorial is now working perfectly. You gain 1 random weapon and 1 random accessory of the same element type and a random pet slime pet (green, purple or blue).
 
 # 18/04/2017
 * Game notifications: when a player successfuly level up a card to level 7+, other players in the game get a notification.
