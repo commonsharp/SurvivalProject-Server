@@ -76,6 +76,9 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
+# 19/04/2017
+* The quest to understand every game packet continues...
+
 # 18/04/2017
 * Game notifications: when a player successfuly level up a card to level 7+, other players in the game get a notification.
 * Game notifications: when a level 30+ player joins the server, other players in the game get a notification.
