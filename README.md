@@ -39,6 +39,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Fight club mode
 - [ ] Tournament mode
 - [ ] Ice hokey mode :(
+- [x] Initial tutorial
 
 # Premiums cards that are not yet working
 - [x] Every gold force card
