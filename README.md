@@ -77,7 +77,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
 # 19/04/2017
-* The quest to understand every game packet continues...
+* Extensive research on every game packet in the game.
 
 # 18/04/2017
 * Game notifications: when a player successfuly level up a card to level 7+, other players in the game get a notification.
