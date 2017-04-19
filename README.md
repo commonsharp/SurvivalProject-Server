@@ -62,6 +62,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Change every saveUser call to a shorter SQL query to reduce database operations.
 - [ ] Rename each SQL table according to the naming convention.
 - [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
+- [ ] Add foreign keys in the database.
 - [ ] Lose code/cash/coins when you make a purchase.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [x] Change the tutorial item class to net.objects.Item.
@@ -79,7 +80,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 
 # 19/04/2017
 * Extensive research on every game packet in the game.
-* The starting tutorial is now working perfectly. You gain 1 random weapon and 1 random accessory of the same element type and a random pet slime pet (green, purple or blue).
+* The starting tutorial is now working perfectly. You gain 1 random weapon and 1 random accessory of the same element type and a random slime pet (green, purple or blue).
 
 # 18/04/2017
 * Game notifications: when a player successfuly level up a card to level 7+, other players in the game get a notification.
