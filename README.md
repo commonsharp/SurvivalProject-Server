@@ -78,6 +78,10 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 
+# 20/04/2017
+* There are now 3 servers, one for each channel (beginner/hero/epic).
+* The activity of every channel is now the correct one instead of a random one (if there are 100 connected players, and 80% of them are in the epic channel, the epic channel will show 80% of the bars full. That way you know where most of the players are).
+
 # 19/04/2017
 * Extensive research on every game packet in the game.
 * The starting tutorial is now working perfectly. You gain 1 random weapon and 1 random accessory of the same element type and a random slime pet (green, purple or blue).
