@@ -10,7 +10,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 **Not going to work on hokey mode because I can't fucking score a goal -_-"**
 
-** Got a job interview next week so I'm going to take a break and continue the development next week **
+**Got a job interview next week so I'm going to take a break and continue the development next week**
 
 # Built-in chat commands
 Apparently Survival Project has some built in commands. Unfortunately, most of them are in Korean.
