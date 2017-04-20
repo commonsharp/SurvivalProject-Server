@@ -6,8 +6,10 @@ https://drive.google.com/file/d/0BzjxtOOu36E_ZnVTRVdXMTFuSDg/view?hc_location=uf
 * Install Survival Project. The password is "www.spgame.net".
 
 * The archive also contains a file called gng.ini.
-Open it and change the IP to the IP of the server you're connecting to (or 127.0.0.1 if you want to play alone) and the port to 21000 (the server doesn't support any port number at the moment).
+Open it and change the IP to the IP of the server you're connecting to (or 127.0.0.1 if you want to play alone) and the port to 21000.
 When you're done, put it in your SP folder in the config directory.
+
+* Install msxml.msi (it should be in your Survival Project folder). If you already have it installed, **uninstall it** and install it again.
 
 **The following step is needed if you want to run the game on Windows 10:**
 
@@ -24,10 +26,14 @@ If you get an error while running sp2.exe, run it as administrator.
 
 * Install MySQL workbench. Create a new database called spgame. Import the tables included in MySQL directory in this git. Make sure your MySQL port is 3306. If you change it to a different port, make sure you change it in DatabaseConnection.java in the server files as well.
 
-* Change the IP in the servers table (in your database) to your own IP (not the local one), or to 127.0.0.1 if you're playing alone.
+* Change the IP in the servers table (in your database) to your own IP (not the local one), or to 127.0.0.1 if you're playing alone. The channelType field in that table is as follows - 0 for beginner, 1 for hero and 2 for epic. The serverID field is should be 0 for the first server in the list (of the same channel), 1 for the second one and so on.
+
+* Every server needs a different IP/port.
+
+* Change the IP and port in src/main/Main.class to the IP and port you have used in the servers table in the database.
 
 * Compile the server files using any Java IDE and run /src/main/Main.java.
 
 * The server should be running now, and you can run the client.
 
-* If you're hosting a server for others to play, you would need to forward port 21000. I can't help you with that as it's router-specific.
+* If you're hosting a server for others to play, you would need to forward port 21000, 21001, 21002 and 21003 to your machine. I can't help you with that as it's router-specific.
