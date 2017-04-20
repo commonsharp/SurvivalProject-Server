@@ -81,6 +81,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 # 20/04/2017
 * There are now 3 servers, one for each channel (beginner/hero/epic).
 * The activity of every channel is now the correct one instead of a random one (if there are 100 connected players, and 80% of them are in the epic channel, the epic channel will show 80% of the bars full. That way you know where most of the players are).
+* Fixed a bug where different features weren't locked on the beginner channel when they should've.
 
 # 19/04/2017
 * Extensive research on every game packet in the game.
