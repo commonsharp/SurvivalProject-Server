@@ -223,7 +223,7 @@ CREATE TABLE `servers` (
 
 LOCK TABLES `servers` WRITE;
 /*!40000 ALTER TABLE `servers` DISABLE KEYS */;
-INSERT INTO `servers` VALUES ('10.0.0.50',21001,'Newbies',0,0,0,200),('10.0.0.50',21002,'Whatever',1,0,1,200),('10.0.0.50',21003,'Lookin\' Good',2,0,1,200);
+INSERT INTO `servers` VALUES ('10.0.0.50',21001,'Newbies',0,0,0,200),('10.0.0.50',21002,'Whatever',1,0,0,200),('10.0.0.50',21003,'Lookin\' Good',2,0,0,200);
 /*!40000 ALTER TABLE `servers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,6 +301,9 @@ CREATE TABLE `users` (
   `scroll1` int(11) DEFAULT '0',
   `scroll2` int(11) DEFAULT '0',
   `missionLevel` int(11) DEFAULT '1',
+  `server_hostname` varchar(100) DEFAULT NULL,
+  `server_port` int(11) DEFAULT NULL,
+  `is_connected` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -311,7 +314,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('barak2','123',90,17,12,1,1063631,2223,99999,'Guild3','Duty1',37,1258,13,14,1,-1,0,15,-1,-1,-1,-1,-1,-1,-1,-1,0,48,29,43,6000000,96,0,0,0,1),('barak3','123',10,17,12,1,1065252,800,0,NULL,NULL,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,5,5,26,6000000,96,0,0,0,1),('barak4','123',10,20,12,1,1064452,0,0,'',NULL,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,6000000,96,0,0,0,1),('baraklevy','123',100,17,12,1,1063631,922878025,0,'Guild3','Duty3',1000164,993195,933384,1000128,1,1,2,22,15,-1,-1,-1,-1,-1,-1,-1,2,126,116,18,6000000,90,0,14,10,14),('barakobkhi','123',90,1,12,1,0,1010,0,'',NULL,0,0,0,0,0,-1,0,1,2,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,12,0,0,0,1);
+INSERT INTO `users` VALUES ('barak2','123',90,17,12,1,1063631,2223,99999,'Guild3','Duty1',37,1258,13,14,1,-1,0,15,-1,-1,-1,-1,-1,-1,-1,-1,1,48,33,38,6000000,96,0,0,0,1,'10.0.0.50',21003,0),('barak3','123',10,17,12,1,1065252,800,0,NULL,NULL,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,5,5,26,6000000,96,0,0,0,1,NULL,NULL,0),('barak4','123',10,20,12,1,1064452,0,0,'',NULL,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,6000000,96,0,0,0,1,NULL,NULL,0),('baraklevy','123',100,17,12,1,1067651,922882045,0,'Guild3','Duty3',1000164,993195,933384,1000128,1,1,2,22,15,-1,-1,-1,-1,-1,-1,-1,3,126,124,13,6000000,90,0,14,10,14,'10.0.0.50',21003,0),('barakobkhi','123',90,1,12,1,0,1010,0,'',NULL,0,0,0,0,0,-1,0,1,2,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,12,0,0,0,1,NULL,NULL,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -324,4 +327,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-20 12:10:18
+-- Dump completed on 2017-04-20 23:04:57
