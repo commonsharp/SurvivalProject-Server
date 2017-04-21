@@ -10,7 +10,7 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 **Not going to work on hokey mode because I can't fucking score a goal -_-"**
 
-**Got a job interview next week so I'm going to take a break and continue the development next week**
+**~~Got a job interview next week so I'm going to take a break and continue the development next week~~** - Actually I have more time than I previously thought.
 
 # Built-in chat commands
 Apparently Survival Project has some built in commands. Unfortunately, most of them are in Korean.
@@ -32,7 +32,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 **@guild-leave** - leaves your guild.
 
 # Game modes left to add
-- [ ] Hero mode
+- [x] Hero mode
 - [ ] Infinity survival mode
 - [ ] Infinity king mode
 - [ ] Infinity symbol mode
@@ -57,6 +57,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] User shop I
 
 # TODO
+- [ ] Consider moving to a game server engine.
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
 - [ ] Change the guild points formula to the correct one.
 - [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
@@ -79,6 +80,10 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Death timer in big matches doesn't work.
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
+
+# 21/04/2017
+* Hero mode is now working.
+* Fixed a bug where if a player had a quest life, it would be used in battle modes as well, resulting in a never ending game.
 
 # 20/04/2017
 * There are now 3 servers, one for each channel (beginner/hero/epic).
