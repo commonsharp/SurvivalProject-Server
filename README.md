@@ -57,6 +57,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] User shop I
 
 # TODO
+- [ ] Random characters
 - [x] Consider moving to a game server engine.
 - [ ] Change the server sockets to NIO sockets.
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
