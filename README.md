@@ -36,7 +36,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Infinity survival mode
 - [ ] Infinity king mode
 - [ ] Infinity symbol mode
-- [ ] Crystal capture mode
+- [x] Crystal capture mode
 - [ ] King slayer mode
 - [ ] Fight club mode
 - [ ] Tournament mode
@@ -74,6 +74,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Change every game over message to a round over message.
 - [ ] Premium cards are only working when you buy them in the cards shop (will be changed once trades/user shops are completely implemented).
 - [ ] Lose premium days when a day passes.
+- [ ] Clean the game modes code a bit.
 
 # List of bugs
 * When you finish a mission, the mission level on the left of the screen doesn't change.
@@ -85,6 +86,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 
 # 21/04/2017
 * Hero mode is now working.
+* Crystal capture mode is now working.
 * You now gain elements every 30 minutes of gameplay. The amount increases every 30 minutes. The first 30 minutes you get 2 elements, then 4, then 8 and after 2 hours you get 16 elements every 30 minutes. I haven't played the game for more than 2 hours straight so I'm not sure if should actually stop at 16 elements. More testing will need to be done in the future...
 * The premium card 'Time Bonus' is now working.
 * Fixed a bug where if a player had a quest life, it would be used in battle modes as well, resulting in a never ending game.
