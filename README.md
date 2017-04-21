@@ -83,6 +83,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Death timer in big matches doesn't work.
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
+* Join a crystal game mode, let a player leave (because he's afk), destroy a crystal, get null pointer exception.
 
 # 21/04/2017
 * Hero mode is now working.
