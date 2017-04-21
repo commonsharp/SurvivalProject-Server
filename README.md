@@ -79,7 +79,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 # List of bugs
 * When you finish a mission, the mission level on the left of the screen doesn't change.
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
-* If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.
+* ~~If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.~~
 * Death timer in big matches doesn't work.
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
@@ -91,6 +91,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * You now gain elements every 30 minutes of gameplay. The amount increases every 30 minutes. The first 30 minutes you get 2 elements, then 4, then 8 and after 2 hours you get 16 elements every 30 minutes. I haven't played the game for more than 2 hours straight so I'm not sure if should actually stop at 16 elements. More testing will need to be done in the future...
 * The premium card 'Time Bonus' is now working.
 * Fixed a bug where if a player had a quest life, it would be used in battle modes as well, resulting in a never ending game.
+* Fixed the bug where switching teams wasn't shown to the people in the lobby.
 
 # 20/04/2017
 * There are now 3 servers, one for each channel (beginner/hero/epic).
