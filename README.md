@@ -73,6 +73,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [x] Add timed events (such as a random element flying around).
 - [ ] Change every game over message to a round over message.
 - [ ] Premium cards are only working when you buy them in the cards shop (will be changed once trades/user shops are completely implemented).
+- [ ] Lose premium days when a day passes.
 
 # List of bugs
 * When you finish a mission, the mission level on the left of the screen doesn't change.
