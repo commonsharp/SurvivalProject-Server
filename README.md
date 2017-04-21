@@ -1,6 +1,8 @@
 # SurvivalProject-Server
 Server files for the game Survival Project, written in Java.
 
+**THE USE OF THE SERVER FILES IS ON YOUR OWN RESPONSIBILITY, AND YOU MAY FIND YOURSELF GUILTY OF COPYRIGHT INFRINGEMENT.**
+
 For instructions on how to install Survival Project on Windows 10, go to the Win10 folder.
 
 Time spent on the project: 5 weeks.
@@ -87,6 +89,14 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 * Join a crystal game mode, let a player leave (because he's afk), destroy a crystal, get null pointer exception.
 * If someone leaves during a survival game, other players get a win message.
+
+# 22/04/2017
+* Infinity king mode: the first player to join the game of each team becomes the first king.
+* Infinity king mode: if the king has 1 points and a new player joins his team, that new player becomes the new king.
+* Infinity king mode: when the king dies, he goes back to having 1 point.
+* Infinity king mode: when the king dies, the points the king had are split between the team members of the other team.
+* Infinity king mode: when you kill a player who isn't the king, you get 1 point.
+* Infinity king mode: treasures are randomly spawned.
 
 # 21/04/2017
 * Finally found a way to get the infinity game modes to work. Still got a lot of work to get them to work properly.
