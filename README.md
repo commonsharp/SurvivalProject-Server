@@ -84,6 +84,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 * Join a crystal game mode, let a player leave (because he's afk), destroy a crystal, get null pointer exception.
+* If someone leaves during a survival game, other players get a win message.
 
 # 21/04/2017
 * Hero mode is now working.
@@ -92,6 +93,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * The premium card 'Time Bonus' is now working.
 * Fixed a bug where if a player had a quest life, it would be used in battle modes as well, resulting in a never ending game.
 * Fixed the bug where switching teams wasn't shown to the people in the lobby.
+* Fixed a bug where kicking a player didn't work properly.
 
 # 20/04/2017
 * There are now 3 servers, one for each channel (beginner/hero/epic).
