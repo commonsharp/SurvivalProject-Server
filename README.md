@@ -97,6 +97,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Infinity king mode: when the king dies, the points the king had are split between the team members of the other team.
 * Infinity king mode: when you kill a player who isn't the king, you get 1 point.
 * Infinity king mode: treasures are randomly spawned.
+* Fixed the bug where if someone left a game, the other players would get a win message (in every game mode).
 
 # 21/04/2017
 * Finally found a way to get the infinity game modes to work. Still got a lot of work to get them to work properly.
