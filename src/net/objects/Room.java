@@ -15,7 +15,6 @@ public class Room {
 	protected boolean isWithAutoTeams;
 	protected int cardsLimit;
 	protected boolean isLimitAnger;
-	protected int[] characters;
 	
 	protected int numberOfUsers;
 	public UserSession[] users = new UserSession[8];
@@ -47,9 +46,11 @@ public class Room {
 	public int coinLocation;
 	
 	public String password;
+	public int heroSlot;
+	public int numberOfCrystals;
 	
 	public Room(int roomID, String roomName, String password, String roomCreator, int gameMode, int gameMap, int numberOfPlayers, boolean isWithScrolls,
-			boolean isWithTeams, int cardsLimit, boolean isLimitAnger, int[] characters) {
+			boolean isWithTeams, int cardsLimit, boolean isLimitAnger) {
 		this.roomID = roomID;
 		this.roomName = roomName;
 		this.password = password;
@@ -65,14 +66,6 @@ public class Room {
 		this.totalTicks = 0;
 		this.masterIndex = 0;
 		this.coinLocation = 0;
-		
-		if (characters == null) {
-			characters = new int[10];
-			characters[0] = 10;
-		}
-		else {
-			this.characters = characters;
-		}
 		
 		symbols = new int[4];
 		isAlive= new boolean[40];
@@ -161,17 +154,32 @@ public class Room {
 	}
 
 	public int[] getCharacters() {
+//		return characters;
+		
+		int[] characters = new int[8];
+		for (int i = 0; i < 8; i++) {
+			if (users[i] != null) {
+				if (users[i].getUser().roomTeam == 10) {
+					characters[getEmpty(characters, 0)] = users[i].getUser().roomCharacter;
+				}
+				else {
+					characters[getEmpty(characters, 1)] = users[i].getUser().roomCharacter;
+				}
+			}
+		}
+		
 		return characters;
 	}
+	private int getEmpty(int[] characters, int offset) {
+		for (int i = offset; i < characters.length; i += 2) {
+			if (characters[i] == 0) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 
-	public void setCharacters(int[] characters) {
-		this.characters = characters;
-	}
-	
-	public void setCharacter(int index, int character) {
-		this.characters[index] = character;
-	}
-	
 	public UserSession[] getUsers() {
 		return users;
 	}
@@ -202,6 +210,16 @@ public class Room {
 					// If someone is not ready, don't start
 					if (currentSession.getUser().roomReady != 1)
 						isStart = false;
+				}
+			}
+			
+			// Hero mode
+			if (getTeamType() == 3) {
+				if (bluePlayersCount <= 1 && redPlayersCount <= 1) {
+					isStart = false;
+				}
+				else if (bluePlayersCount > 1 && redPlayersCount > 1) {
+					isStart = false;
 				}
 			}
 			
@@ -305,6 +323,7 @@ public class Room {
 		else if (getTeamType() == 1) {
 			if (bluePlayersCount > redPlayersCount) {
 				redPlayersCount++;
+				System.out.println("here");
 				return 20;
 			}
 			else {
@@ -316,6 +335,16 @@ public class Room {
 			bluePlayersCount++;
 			return 10;
 		}
+		else if (teamType == 3) {
+			if (bluePlayersCount == 0 && redPlayersCount == 0) {
+				bluePlayersCount++;
+				return 10;
+			}
+			else {
+				redPlayersCount++;
+				return 20;
+			}
+		}
 		
 		Log.error("Team type is -1.");
 		return -1;
@@ -325,6 +354,7 @@ public class Room {
 		// 0 = all vs all
 		// 1 = red vs blue
 		// 2 = only blue team (in quests)
+		// 3 = hero mode
 		switch (gameMode) {
 		case CHAMP_ASSAULT:
 			return 1;
@@ -335,7 +365,7 @@ public class Room {
 		case COMMUNITY:
 			return 0;
 		case HERO:
-			return 1;
+			return 3;
 		case INFINITY_SURVIVAL:
 			return 0;
 		case INFINITY_KING:
@@ -411,7 +441,8 @@ public class Room {
 		}
 		
 		for (int i = 0; i < 8; i++) {
-			if (getUserSession(i) != null && (isAlive[i] || getUserSession(i).getUser().gameExtraLife)) {
+			// If the player is alive or if he's dead but has an extra life in quest modes, then the team isn't dead
+			if (getUserSession(i) != null && (isAlive[i] || ((isQuestType() || getGameMode() == GameMode.MISSION) && getUserSession(i).getUser().gameExtraLife))) {
 				if (getUserSession(i).getUser().roomTeam == 10) {
 					isBlueDead = false;
 				}

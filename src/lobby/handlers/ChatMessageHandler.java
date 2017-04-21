@@ -62,7 +62,7 @@ public class ChatMessageHandler extends LobbyHandler {
 //		lobbyServer.sendBroadcastGameMessage(userSession, new GameNotificationHandler(lobbyServer.gameServer).getResponse(
 //				GameAnnouncementResult.LEVEL_UP, userSession.getUser().username, 37, 0));
 //		lobbyServer.sendRoomMessage(userSession, new Test4460Handler(lobbyServer, userSession).getResponse(), true);
-		sendTCPMessage(new Test4349Handler(lobbyServer, userSession).getResponse());
+		sendTCPMessage(new Test4377Handler(lobbyServer, userSession).getResponse());
 		if (text.toLowerCase().startsWith("@gender")) {
 			userSession.getUser().isMale = !userSession.getUser().isMale;
 			userSession.getUser().saveUser();

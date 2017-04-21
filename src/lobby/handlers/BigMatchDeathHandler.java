@@ -73,7 +73,7 @@ public class BigMatchDeathHandler extends LobbyHandler {
 		output.putInts(0x4C, ExperienceHelper.getLevels(experiences));
 		output.putInt(0x6C, 0); // something with slots maybe.
 		
-		System.out.println("Death time: " + sum + " " + (int)(Math.floor(sum / 50.0f * 3)));
+		System.out.println("Death time: " + sum + " " + (int)(Math.floor(sum * 0.2)));
 		
 		if (elementAmount != 0) {
 			output.putInt(0x8C, elementType);
@@ -83,7 +83,7 @@ public class BigMatchDeathHandler extends LobbyHandler {
 		
 		output.putInt(0x98, npcMultiplier); // npc points multiplier (not code/experience) (in big match survival). you get more points for killing those
 		// -1 - everyone is "shining". 0 - death timer works. 1 - death timer works+screen shakes. i think this is time.
-		output.putInt(0x9C, 10000); // if this is 0, then the death time percentage can change. -1 = 100% blue. having 100% gives the entire team crit
+		output.putInt(0x9C, 0); // if this is 0, then the death time percentage can change. -1 = 100% blue. having 100% gives the entire team crit
 		output.putInt(0xA0, 0);
 		
 		return output.toArray();
@@ -191,7 +191,7 @@ public class BigMatchDeathHandler extends LobbyHandler {
 			}
 		}
 		
-		experienceGained[0] = 30;
+		experienceGained[0] = 10;
 		slots[0] = 0;
 		randomLucky = 1;
 		luckyMultiplier = new int[3];

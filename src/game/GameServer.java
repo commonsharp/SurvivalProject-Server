@@ -44,6 +44,24 @@ public class GameServer extends GenericUDPServer {
 					lobby.sendRoomMessage(userSession, new SpawnCodeHandler(lobby, userSession).getResponse(), true);
 				}
 			}
+			userSession.getUser().totalTicks++;
+			
+			if (userSession.getUser().totalTicks % 200 == 0) {
+				int times = userSession.getUser().totalTicks / 200;
+				
+				if (times >= 4) {
+					times = 4;
+				}
+				
+				int amount = (int) Math.pow(2, times);
+				
+				if (userSession.getUser().timeBonus) {
+					amount *= 2;
+				}
+				
+				userSession.getUser().whiteCards[userSession.getUser().getElementType() - 1] += amount;
+				userSession.getUser().saveUser();
+			}
 			break;
 		case Messages.GAME_AFTER_ACTION: // after action (after attack/move/defense/...)
 		case Messages.GAME_STOPPED_MOVING: // stopped moving

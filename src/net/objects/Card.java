@@ -36,6 +36,8 @@ public class Card {
 	public static final int CARD_SLOT6 = 0x7D4;
 	public static final int CARD_SLOT12 = 0x7D5;
 	
+	public static final int TIME_BONUS = 0x7DA;
+	
 	public Card(int id, int premiumDays, int level, int skill) {
 		this.id = id;
 		this.premiumDays = premiumDays;

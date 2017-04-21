@@ -77,10 +77,8 @@ public class CreateRoomHandler extends LobbyHandler {
 
 	@Override
 	public byte[] getResponse() {
-		int[] characters = new int[10];
-		characters[0] = userSession.getUser().mainCharacter;
 		cardsLimit = -1;
-		Room room = new Room(roomNumber, roomName, password, userSession.getUser().username, gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger, characters);
+		Room room = new Room(roomNumber, roomName, password, userSession.getUser().username, gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger);
 		lobbyServer.setRoom(roomNumber, room);
 		userSession.getUser().isInRoom = true;
 		userSession.getUser().roomSlot = lobbyServer.getRoom(roomNumber).getSlot();
@@ -91,7 +89,6 @@ public class CreateRoomHandler extends LobbyHandler {
 		if (room.isTrainingType()) {
 			userSession.getUser().roomCharacter = 10; // xyrho
 			userSession.getUser().roomReady = 1;
-			characters[0] = 10;
 		}
 		
 		if (room.getGameMode() == GameMode.MISSION) {

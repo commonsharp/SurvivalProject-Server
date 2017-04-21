@@ -40,7 +40,7 @@ public class Messages {
 	public static final int GAME_HOKEY_1 = 0x1134;
 	public static final int GAME_HOKEY_2 = 0x1135;
 	public static final int GAME_UNKNOWN_7 = 0x1136; // new champion in champion title match
-	public static final int GAME_UNKNOWN_8 = 0x1137; // sets byte_810DA8 to 1. i didn't find any references to this byte
+	public static final int GAME_UNKNOWN_8 = 0x1137; // sets byte_810DA8 to 1. i didn't find any references to this byte. force close by administrator??
 	public static final int GAME_MISSION_AGGRESSION_INFO = 0x1138;
 	public static final int GAME_MISSION_PORTAL = 0x1139;
 	public static final int GAME_PUSHED_BACK = 0x1140;
@@ -141,7 +141,7 @@ public class Messages {
 	public static final int UNKNOWN_LOBBY_REQUEST_3 = 0x4374; // training
 	public static final int UNKNOWN_LOBBY_REQUEST_4 = 0x4375; // training
 	public static final int UNKNOWN_LOBBY_RESPONSE_26 = 0x4376;
-	public static final int UNKNOWN_LOBBY_RESPONSE_27 = 0x4377; // this one sets a lot of unknown fields in MyInfo TODO check
+	public static final int UNKNOWN_LOBBY_RESPONSE_27 = 0x4377; // this one sets a lot of unknown fields in MyInfo
 	public static final int SPAWN_ELEMENT_RESPONSE = 0x4378;
 	public static final int PICK_BUBBLE_RESPONSE = 0x4379;
 	public static final int SPAWN_CODE_RESPONSE = 0x4380;
@@ -172,7 +172,7 @@ public class Messages {
 	public static final int NOTHING_3 = 0x4405;
 	public static final int UNKNOWN_LOBBY_REQUEST_7 = 0x4406;
 	public static final int UNKNOWN_LOBBY_RESPONSE_44 = 0x4407;
-	public static final int UNKNOWN_LOBBY_RESPONSE_45 = 0x4408;
+	public static final int CRYSTALS_INFO_REQUEST = 0x4408;
 	public static final int UNKNOWN_LOBBY_RESPONSE_46 = 0x4409;
 	public static final int UNKNOWN_LOBBY_RESPONSE_47 = 0x4410;
 	public static final int UNKNOWN_LOBBY_REQUEST_8 = 0x4411; // only in quests...

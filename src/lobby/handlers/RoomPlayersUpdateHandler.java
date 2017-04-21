@@ -49,13 +49,38 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(3000);
+					sendTCPMessage(new Test4377Handler(lobbyServer, userSession).getResponse());
+				} catch (InterruptedException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}).start();
+		
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(room));
 		
 		lobbyServer.sendRoomMessage(userSession, getResponse(userSession.getUser()), false);
 		
 		if (room.isStarted) {
-			if (room.getGameMode() == GameMode.MISSION || room.getGameMode() == GameMode.BIG_MATCH_DEATH_MATCH || room.getGameMode() == GameMode.FIGHT_CLUB) {
+			if (room.getGameMode() == GameMode.HERO) {
+				int oneTeam = room.bluePlayersCount == 1 ? 10 : 20;
+				
+				for (int i = 0; i < 8; i++) {
+					if (room.getUserSession(i) != null && room.getUserSession(i).getUser().roomTeam == oneTeam) {
+						room.heroSlot = i;
+						break;
+					}
+				}
+			}
+			
+			if (room.getGameMode() == GameMode.MISSION || room.getGameMode() == GameMode.BIG_MATCH_DEATH_MATCH || room.getGameMode() == GameMode.FIGHT_CLUB || room.getGameMode() == GameMode.CRYSTAL) {
 				lobbyServer.sendRoomMessage(userSession, new SpawnHandler(lobbyServer, userSession).getResponse2(), true);
 			}
 			
@@ -126,7 +151,6 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 
 	public byte[] getResponse(User user) {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
-		room.setCharacter(user.roomSlot, user.roomCharacter);
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);

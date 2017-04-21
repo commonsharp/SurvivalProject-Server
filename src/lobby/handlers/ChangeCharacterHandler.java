@@ -25,7 +25,6 @@ public class ChangeCharacterHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		lobbyServer.getRoom(userSession.getUser().roomIndex).setCharacter(0, character);
 	}
 
 	@Override

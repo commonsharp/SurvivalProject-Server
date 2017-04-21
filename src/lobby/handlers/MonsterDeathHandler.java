@@ -197,7 +197,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 			int firstSymbol = room.symbols[0];
 			boolean isDone = true;
 			
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < room.numberOfCrystals; i++) {
 				if (room.symbols[i] == 0 || room.symbols[i] != firstSymbol) {
 					isDone = false;
 				}
@@ -215,6 +215,52 @@ public class MonsterDeathHandler extends LobbyHandler {
 				}
 				
 				lobbyServer.sendRoomMessage(userSession, new GameCompletedHandler(lobbyServer, userSession).getResponse(results, -1), true);
+			}
+		}
+		else if (room.getGameMode() == GameMode.CRYSTAL) {
+			room.symbols[monsterIndex] = userSession.getUser().roomTeam;
+			
+			int firstSymbol = room.symbols[0];
+			boolean isDone = true;
+			
+			for (int i = 0; i < room.numberOfCrystals; i++) {
+				if (room.symbols[i] == 0 || room.symbols[i] != firstSymbol) {
+					isDone = false;
+				}
+			}
+			
+			if (isDone) {
+				int userTeam = room.symbols[monsterIndex];
+				
+				if (userTeam == 10) {
+					room.blueScore++;
+				}
+				else {
+					room.redScore++;
+				}
+				
+				int[] results = new int[8];
+				
+				for (int i = 0; i < 8; i++) {
+					results[i] = -1;
+					
+					if (room.getUserSession(i) != null) {
+						results[i] = 0;
+						
+						if (room.blueScore == 4 || room.redScore == 4) {
+							results[i] = (room.getUserSession(i).getUser().roomTeam == userTeam) ? 1 : 2;
+							
+							if (results[i] == 1) {
+								room.getUserSession(i).getUser().playerWins++;
+							}
+							else {
+								room.getUserSession(i).getUser().playerLoses++;
+							}
+						}
+					}
+				}
+				
+				lobbyServer.sendRoomMessage(userSession, new GameCompletedHandler(lobbyServer, userSession).getResponse(results, userTeam), true);
 			}
 		}
 	}

@@ -65,8 +65,21 @@ public class LeaveGameHandler extends LobbyHandler {
 				room.kingIndex = room.getAnyPlayerSlot();
 				lobbyServer.sendRoomMessage(userSession, new NewKingHandler(lobbyServer, userSession).getResponse(), true);
 			}
-		}
 			
+			if (userSession.getUser().roomSlot == room.heroSlot) {
+				int[] results = new int[8];
+				for (int i = 0; i < 8; i++) {
+					results[i] = -1;
+					
+					if (room.getUserSession(i) != null) {
+						results[i] = 1;
+					}
+				}
+				
+				lobbyServer.sendRoomMessage(userSession, new GameCompletedHandler(lobbyServer, userSession).getResponse(results, 0), false);
+			}
+		}
+		
 		userSession.getUser().roomIndex = -1;
 		
 		lobbyServer.onJoinLobby(userSession);
@@ -80,7 +93,6 @@ public class LeaveGameHandler extends LobbyHandler {
 	public void processMessage(UserSession userSession) {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		room.users[userSession.getUser().roomSlot] = null;
-		room.setCharacter(userSession.getUser().roomSlot, 0);
 		room.setNumberOfUsers(room.getNumberOfPlayers() - 1);
 		room.isAlive[userSession.getUser().roomSlot] = false;
 		

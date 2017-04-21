@@ -55,6 +55,9 @@ public class BuyCardHandler extends LobbyHandler {
 			else if (cardID == Card.QUEST_LIFE) {
 				user.extraLife = true;
 			}
+			else if (cardID == Card.TIME_BONUS) {
+				user.timeBonus = true;
+			}
 		}
 		else {
 			user.cards[cardIndex].setPremiumDays(user.cards[cardIndex].getPremiumDays() + premiumDays);

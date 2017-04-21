@@ -22,6 +22,7 @@ import lobby.handlers.ChangePasswordHandler;
 import lobby.handlers.ChatMessageHandler;
 import lobby.handlers.CreateRoomHandler;
 import lobby.handlers.CrystalDeathHandler;
+import lobby.handlers.CrystalsInfoHandler;
 import lobby.handlers.EnterCardShopHandler;
 import lobby.handlers.FindUserHandler;
 import lobby.handlers.FusionHandler;
@@ -228,6 +229,9 @@ public class LobbyServer extends GenericTCPServer {
 			break;
 		case Messages.GET_ROOM_PLAYERS_GUILD_RANK_REQUEST:
 			message = new GetRoomPlayersGuildRankHandler(this, userSession, messageBytes);
+			break;
+		case Messages.CRYSTALS_INFO_REQUEST:
+			message = new CrystalsInfoHandler(this, userSession, messageBytes);
 			break;
 		case Messages.ID_VERIFICATION_REQUEST:
 			message = new IDVerificationHandler(this, userSession, messageBytes);

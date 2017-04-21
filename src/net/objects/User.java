@@ -79,9 +79,12 @@ public class User {
 	public boolean extraLife;
 	public boolean gameExtraLife;
 	
+	public boolean timeBonus;
+	
 	public BigUserShop bigUserShop;
 	
 	public int channelType;
+	public int totalTicks;
 	
 	public User() {
 		cards = new Card[96];
@@ -253,16 +256,19 @@ public class User {
 		}
 		
 		extraLife = false;
+		timeBonus = false;
+		booster = 0;
 		
-		if (booster == 0) {
-			for (int i = 0; i < 96; i++) {
-				if (cards[i] != null) {
-					if (cards[i].getId() == 0x7D7 || cards[i].getId() == 0x7D8 || cards[i].getId() == 0x7DC) {
-						booster = cards[i].getId();
-					}
-					else if (cards[i].getId() == Card.QUEST_LIFE) {
-						extraLife = true;
-					}
+		for (int i = 0; i < 96; i++) {
+			if (cards[i] != null) {
+				if (cards[i].getId() == 0x7D7 || cards[i].getId() == 0x7D8 || cards[i].getId() == 0x7DC) {
+					booster = cards[i].getId();
+				}
+				else if (cards[i].getId() == Card.QUEST_LIFE) {
+					extraLife = true;
+				}
+				else if (cards[i].getId() == Card.TIME_BONUS) {
+					timeBonus = true;
 				}
 			}
 		}
@@ -411,5 +417,37 @@ public class User {
 				return;
 			}
 		}
+	}
+
+	public int getElementType() {
+		if (mainCharacter >= 250) {
+			return (mainCharacter - 250) / 10 + 1;
+		}
+		int character = mainCharacter;
+		
+		if (character >= 130) {
+			character -= 120;
+		}
+		
+		switch (mainCharacter) {
+		case 30:
+		case 40:
+		case 110:
+			return 1;
+		case 10:
+		case 20:
+		case 90:
+			return 2;
+		case 50:
+		case 80:
+		case 100:
+			return 3;
+		case 60:
+		case 70:
+		case 120:
+			return 4;
+		}
+		
+		return -1;
 	}
 }

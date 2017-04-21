@@ -198,7 +198,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 		output.putInt(0x938, visitBonusAvatarMoney);
 		output.putBytes(0x93C, userSession.getUser().playerEventFlags); // 0x93C
 		output.putInt(0x944, playerRank); // 0x944
-		output.putByte(0x948, (byte) 1); // if it's 1 then the next strings are used somewhere: "Server recapturing battle has ended", "Server recapturing in progress", "Server capturing battle continue next Tuesday". something with packet 0x1132
+		output.putByte(0x948, (byte) 0); // if it's 1 then the next strings are used somewhere: "Server recapturing battle has ended", "Server recapturing in progress", "Server capturing battle continue next Tuesday". something with packet 0x1132
 		output.putInt(0x94C, LobbyServer.MAX_ROOMS); // 0x94c
 		output.putInt(0x950, userSession.getUser().footIndex);
 		output.putInt(0x954, userSession.getUser().bodyIndex);

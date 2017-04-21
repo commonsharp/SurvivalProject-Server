@@ -29,7 +29,7 @@ public class KickPlayerHandler extends LobbyHandler {
 	public void processMessage() throws SQLException {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		User user = room.getUserSession(playerSlot).getUser();
-		room.setCharacter(user.roomSlot, 0);
+		
 		room.setNumberOfUsers(room.getNumberOfPlayers() - 1);
 		
 		if (user.roomTeam == 10) {
@@ -58,7 +58,8 @@ public class KickPlayerHandler extends LobbyHandler {
 	public void afterSend() throws IOException, SQLException {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
+		room.setUserSession(playerSlot, null);
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(room));
-		sendTCPMessage(new GetListOfRoomsHandler(lobbyServer, room.getUserSession(playerSlot)).getResponse());
+		lobbyServer.onJoinLobby(userSession);
 	}
 }

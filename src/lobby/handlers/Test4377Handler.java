@@ -5,14 +5,13 @@ import java.sql.SQLException;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
-import net.Messages;
 import net.UserSession;
 import tools.ExtendedByteBuffer;
 
-public class GetMissionLevelHandler extends LobbyHandler {
-	public static final int RESPONSE_LENGTH = 0x1C;
-
-	public GetMissionLevelHandler(LobbyServer lobbyServer, UserSession userSession) {
+public class Test4377Handler extends LobbyHandler {
+	public static final int RESPONSE_LENGTH = 0x44;
+	
+	public Test4377Handler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 	}
 
@@ -27,19 +26,28 @@ public class GetMissionLevelHandler extends LobbyHandler {
 	}
 
 	@Override
-	public byte[] getResponse() throws SQLException {
+	public byte[] getResponse() {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
-		
 		output.putInt(0x0, RESPONSE_LENGTH);
-		output.putInt(0x4, Messages.GET_MISSION_LEVEL_RESPONSE);
-		output.putInt(0x14, userSession.getUser().missionLevel);
-		output.putInt(0x18, 2); // ?
+		output.putInt(0x4, 0x4377);
+		output.putInt(0x14, 10);
+		output.putInt(0x18, 10);
+		output.putInt(0x1C, 10);
+		output.putInt(0x20, 10);
+		output.putInt(0x24, 10);
+		output.putInt(0x28, 10);
+		output.putInt(0x2C, 10);
+		output.putInt(0x30, 10);
+		output.putInt(0x34, 10);
+		output.putInt(0x38, 10);
 		
 		return output.toArray();
 	}
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
+		// TODO Auto-generated method stub
 		
 	}
+
 }

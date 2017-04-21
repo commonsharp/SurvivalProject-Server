@@ -101,7 +101,7 @@ public class PlayerDeathHandler extends LobbyHandler {
 			}
 		}
 		else if (room.getGameMode() == GameMode.TEAMPLAY || room.getGameMode() == GameMode.DODGE || room.getGameMode() == GameMode.DUEL ||
-				room.getGameMode() == GameMode.ASSAULT) {
+				room.getGameMode() == GameMode.ASSAULT || room.getGameMode() == GameMode.HERO) {
 			if (room.isAllTeamDead()) {
 				int score = (userSession.getUser().roomTeam == 10) ? 20 : 10;
 				
@@ -162,7 +162,7 @@ public class PlayerDeathHandler extends LobbyHandler {
 			
 			lobbyServer.sendRoomMessage(userSession, new GameCompletedHandler(lobbyServer, userSession).getResponse(results, -1), true);
 		}
-		else if (room.getGameMode() == GameMode.SYMBOL) {
+		else if (room.getGameMode() == GameMode.SYMBOL || room.getGameMode() == GameMode.CRYSTAL) {
 //			int[] results = new int[8];
 //			
 //			for (int i = 0; i < 8; i++) {

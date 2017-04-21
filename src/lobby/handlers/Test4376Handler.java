@@ -30,14 +30,12 @@ public class Test4376Handler extends LobbyHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, 0x4376);
-		output.putInt(0x14, 2);
+		output.putInt(0x14, 1);
 		output.putString(0x18, "yoyyyyyyyyyyyyyyyyyyyy");
 		output.putInt(0x7C, 2);
 		output.putShort(0x80, (short) 10);
 		output.putShort(0x84, (short) 1);
 		output.putShort(0x86, (short) 1);
-//		output.putString(0x14, "hey");
-//		output.putString(0x34, "hey2");
 		
 		return output.toArray();
 	}
