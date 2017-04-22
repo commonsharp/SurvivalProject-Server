@@ -34,22 +34,16 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 **@guild-leave** - leaves your guild.
 
 # Game modes left to add
-- [x] Hero mode
 - [ ] Infinity survival mode
-- [x] Infinity king mode
 - [ ] Infinity symbol mode
-- [x] Crystal capture mode
 - [ ] King slayer mode
 - [ ] Fight club mode
 - [ ] Tournament mode
 - [ ] Ice hokey mode :(
-- [x] Initial tutorial
 
 # Premiums cards that are not yet working
-- [x] Every gold force card
 - [ ] Master card
 - [ ] Visit bonus x2
-- [x] Time bonus x2
 - [ ] Elemental bonus x3
 - [ ] Premium Event
 - [ ] SuperSilver
@@ -61,7 +55,6 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 # TODO
 - [ ] Change the infinity games timers to ticks-based instead of a new thread with a timer. It will also fix the bug that if you leave the room, the timer still goes on, and will get executed when finished.
 - [ ] Random characters
-- [x] Consider moving to a game server engine.
 - [ ] Change the server sockets to NIO sockets.
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
 - [ ] Change the guild points formula to the correct one.
@@ -73,9 +66,6 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Add foreign keys in the database.
 - [ ] Lose code/cash/coins when you make a purchase.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
-- [x] Change the tutorial item class to net.objects.Item.
-- [x] Get a list of all the request messages.
-- [x] Add timed events (such as a random element flying around).
 - [ ] Change every game over message to a round over message.
 - [ ] Premium cards are only working when you buy them in the cards shop (will be changed once trades/user shops are completely implemented).
 - [ ] Lose premium days when a day passes.
@@ -84,7 +74,6 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 # List of bugs
 * When you finish a mission, the mission level on the left of the screen doesn't change.
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
-* ~~If you switch teams in a room and someone watches in the lobby, he won't see that you switched teams.~~
 * Death timer in big matches doesn't work.
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
