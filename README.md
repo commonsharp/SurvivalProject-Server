@@ -52,6 +52,11 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [x] Skill II fusion
 - [ ] User shop I
 - [x] Packages
+- [ ] Skill 1-1 fusion
+- [ ] Skill 2-1 fusion
+- [ ] Skill 2-2 fusion
+- [ ] Skill fusion
+- [ ] Level fusion
 
 # TODO
 - [ ] Gain elements after a failed level up fusion.
