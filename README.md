@@ -51,17 +51,17 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [x] Skill I fusion
 - [x] Skill II fusion
 - [ ] User shop I
-- [ ] Packages
+- [x] Packages
 
 # TODO
-- [ ] Gain elements after a failed level up fusion
+- [ ] Gain elements after a failed level up fusion.
 - [ ] Change the infinity games timers to ticks-based instead of a new thread with a timer. It will also fix the bug that if you leave the room, the timer still goes on, and will get executed when finished.
 - [ ] Random characters
 - [ ] Change the server sockets to NIO sockets.
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
 - [ ] Change the guild points formula to the correct one.
 - [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
-- [ ] Some premium cards also give you elements when you purchase them.
+- [ ] Some premium cards also give you elements when you purchase them. **Packages too!*
 - [ ] Change every saveUser call to a shorter SQL query to reduce database operations.
 - [ ] Rename each SQL table according to the naming convention.
 - [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
@@ -85,6 +85,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 # 22/04/2017
 * Skill fusion (and skills in general) is now working. There are some missing skills that I will need to take care of in the future.
 * Premium cards: Skill Fusion I and Skill Fusion II are now working.
+* Premium packages: Skill1+25, Skill1+15, Skill2+25, Skill2+15, UserShop2+25, UserShop2+15, CardSlot+30 and CardSlot+18 are now working.
 * Infinity king mode: the first player to join the game of each team becomes the first king.
 * Infinity king mode: if the king has 1 points and a new player joins his team, that new player becomes the new king.
 * Infinity king mode: when the king dies, he goes back to having 1 point.
