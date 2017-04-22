@@ -59,6 +59,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] User shop I
 
 # TODO
+- [ ] Change the infinity games timers to ticks-based instead of a new thread with a timer.
 - [ ] Random characters
 - [x] Consider moving to a game server engine.
 - [ ] Change the server sockets to NIO sockets.
@@ -97,8 +98,10 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Infinity king mode: when the king dies, the points the king had are split between the team members of the other team.
 * Infinity king mode: when you kill a player who isn't the king, you get 1 point.
 * Infinity king mode: treasures are randomly spawned.
+* Infinity king mode: there's a timer of exactly 5 minutes. When the timer is over, so is the game.
 * Infinity king mode: when a new players joins the game, he gets the correct timer in the game.
 * Infinity king mode: when the timer reaches 0, the stats window pops up.
+* Infinity king mode: when a game is finished, each player gets 8000 points and code, 5 elements and coins. The last player gets 3 coins, the next one gets 4 and so on, up to a maximum of 10 points.
 * Fixed the bug where if someone left a game, the other players would get a win message (in every game mode).
 
 # 21/04/2017
