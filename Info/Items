@@ -1,0 +1,1756 @@
+void __userpurge sub_40C4E0(int a1@<ecx>, int a2@<edi>, int a3, int a4, int a5, signed int a6, signed int a7, signed int a8)
+{
+  int v8; // esi@1
+  int v9; // ebp@22
+  bool v10; // zf@142
+  int v11; // ecx@214
+  int v12; // ebp@254
+  signed int v13; // eax@258
+  int v14; // ebp@266
+  int v15; // ecx@270
+  signed int v16; // eax@271
+  signed int v17; // eax@415
+  int v18; // esi@417
+  int v19; // [sp-20h] [bp-3Ch]@272
+  int v20; // [sp-1Ch] [bp-38h]@272
+  __int64 v21; // [sp-Ch] [bp-28h]@272
+  int v22; // [sp+0h] [bp-1Ch]@307
+  int v23; // [sp+4h] [bp-18h]@272
+
+  v8 = a1;
+  if ( a5 <= 1211 )
+  {
+    if ( a5 == 1211 )
+    {
+LABEL_230:
+      v9 = *(16 * a6 + a1 + 4744);
+    }
+    else
+    {
+      switch ( a5 )
+      {
+        default:
+          goto LABEL_144;
+        case 1112:
+          goto LABEL_191;
+        case 1121:
+          goto LABEL_194;
+        case 1111:
+          goto LABEL_212;
+        case 1131:
+          goto LABEL_214;
+        case 1141:
+          goto LABEL_217;
+        case 1122:
+          goto LABEL_218;
+        case 1132:
+          goto LABEL_219;
+        case 1113:
+          goto LABEL_220;
+        case 1123:
+          goto LABEL_221;
+        case 1133:
+          goto LABEL_222;
+        case 1114:
+          goto LABEL_223;
+        case 1124:
+          goto LABEL_224;
+        case 1134:
+          goto LABEL_225;
+        case 1142:
+          goto LABEL_226;
+        case 1143:
+          goto LABEL_228;
+        case 1144:
+          break;
+      }
+LABEL_229:
+      v9 = *(16 * a6 + a1 + 4468);
+    }
+    goto LABEL_216;
+  }
+  if ( a5 > 4101 )
+  {
+    if ( a5 > 8141 )
+    {
+      if ( a5 > 9233 )
+      {
+        if ( a5 > 11142 )
+        {
+          switch ( a5 )
+          {
+            case 11341:
+            case 11342:
+              goto LABEL_22;
+            default:
+              goto LABEL_144;
+            case 11143:
+LABEL_228:
+              v9 = *(16 * a6 + a1 + 4180);
+              goto LABEL_216;
+            case 11144:
+              goto LABEL_229;
+            case 11211:
+              goto LABEL_230;
+            case 11221:
+LABEL_231:
+              v9 = *(16 * a6 + a1 + 4748);
+              goto LABEL_216;
+            case 11231:
+LABEL_232:
+              v11 = a6 + 297;
+              goto LABEL_215;
+            case 11241:
+LABEL_233:
+              v9 = *(16 * a6 + a1 + 4756);
+              goto LABEL_216;
+            case 11212:
+LABEL_234:
+              v9 = *(16 * a6 + a1 + 5176);
+              goto LABEL_216;
+            case 11222:
+LABEL_235:
+              v9 = *(16 * a6 + a1 + 5180);
+              goto LABEL_216;
+            case 11232:
+              goto LABEL_236;
+            case 11242:
+LABEL_237:
+              v9 = *(16 * a6 + a1 + 5188);
+              goto LABEL_216;
+            case 11213:
+LABEL_238:
+              v9 = *(16 * a6 + a1 + 4888);
+              goto LABEL_216;
+            case 11223:
+LABEL_239:
+              v9 = *(16 * a6 + a1 + 4892);
+              goto LABEL_216;
+            case 11233:
+              goto LABEL_240;
+            case 11243:
+              goto LABEL_241;
+            case 11214:
+LABEL_242:
+              v9 = *(16 * a6 + a1 + 5032);
+              goto LABEL_216;
+            case 11224:
+              goto LABEL_243;
+            case 11234:
+              goto LABEL_244;
+            case 11244:
+LABEL_245:
+              v9 = *(16 * a6 + a1 + 5044);
+              goto LABEL_216;
+            case 11311:
+            case 11312:
+LABEL_246:
+              v9 = *(16 * a6 + a1 + 5320);
+              goto LABEL_216;
+            case 11321:
+            case 11322:
+LABEL_247:
+              v9 = *(16 * a6 + a1 + 5324);
+              goto LABEL_216;
+            case 11331:
+            case 11332:
+              goto LABEL_248;
+          }
+          goto LABEL_248;
+        }
+        if ( a5 == 11142 )
+        {
+LABEL_226:
+          v9 = *(16 * a6 + a1 + 4612);
+          goto LABEL_216;
+        }
+        if ( a5 <= 11111 )
+        {
+          if ( a5 != 11111 )
+          {
+            switch ( a5 )
+            {
+              case 9341:
+              case 9342:
+                goto LABEL_22;
+              default:
+                goto LABEL_144;
+              case 9241:
+                goto LABEL_233;
+              case 9242:
+                goto LABEL_237;
+              case 9243:
+                goto LABEL_241;
+              case 9234:
+                goto LABEL_244;
+              case 9244:
+                goto LABEL_245;
+              case 9311:
+              case 9312:
+                goto LABEL_246;
+              case 9321:
+              case 9322:
+                goto LABEL_247;
+              case 9331:
+              case 9332:
+                goto LABEL_248;
+            }
+            goto LABEL_248;
+          }
+          goto LABEL_212;
+        }
+        switch ( a5 )
+        {
+          default:
+            goto LABEL_144;
+          case 11112:
+            goto LABEL_191;
+          case 11121:
+            goto LABEL_194;
+          case 11131:
+LABEL_214:
+            v11 = a6 + 270;
+            goto LABEL_215;
+          case 11141:
+            goto LABEL_217;
+          case 11122:
+            goto LABEL_218;
+          case 11132:
+LABEL_219:
+            v11 = a6 + 288;
+            goto LABEL_215;
+          case 11113:
+            goto LABEL_220;
+          case 11123:
+LABEL_221:
+            v9 = *(16 * a6 + a1 + 4172);
+            goto LABEL_216;
+          case 11133:
+LABEL_222:
+            v11 = a6 + 261;
+            goto LABEL_215;
+          case 11114:
+            goto LABEL_223;
+          case 11124:
+LABEL_224:
+            v9 = *(16 * a6 + a1 + 4460);
+            goto LABEL_216;
+          case 11134:
+            goto LABEL_225;
+        }
+        goto LABEL_225;
+      }
+      if ( a5 == 9233 )
+      {
+LABEL_240:
+        v11 = a6 + 306;
+        goto LABEL_215;
+      }
+      if ( a5 <= 8342 )
+      {
+        if ( a5 != 8342 )
+        {
+          switch ( a5 )
+          {
+            case 8341:
+              goto LABEL_22;
+            default:
+              goto LABEL_144;
+            case 8142:
+              goto LABEL_226;
+            case 8143:
+              goto LABEL_228;
+            case 8144:
+              goto LABEL_229;
+            case 8211:
+              goto LABEL_230;
+            case 8221:
+              goto LABEL_231;
+            case 8231:
+              goto LABEL_232;
+            case 8241:
+              goto LABEL_233;
+            case 8212:
+              goto LABEL_234;
+            case 8222:
+              goto LABEL_235;
+            case 8232:
+              goto LABEL_236;
+            case 8242:
+              goto LABEL_237;
+            case 8213:
+              goto LABEL_238;
+            case 8223:
+              goto LABEL_239;
+            case 8233:
+              goto LABEL_240;
+            case 8243:
+              goto LABEL_241;
+            case 8214:
+              goto LABEL_242;
+            case 8224:
+              goto LABEL_243;
+            case 8234:
+              goto LABEL_244;
+            case 8244:
+              goto LABEL_245;
+            case 8311:
+            case 8312:
+              goto LABEL_246;
+            case 8321:
+            case 8322:
+              goto LABEL_247;
+            case 8331:
+            case 8332:
+              goto LABEL_248;
+          }
+          goto LABEL_248;
+        }
+        goto LABEL_22;
+      }
+      switch ( a5 )
+      {
+        default:
+          goto LABEL_144;
+        case 9112:
+          goto LABEL_191;
+        case 9121:
+          goto LABEL_194;
+        case 9111:
+          goto LABEL_212;
+        case 9131:
+          goto LABEL_214;
+        case 9141:
+          goto LABEL_217;
+        case 9122:
+          goto LABEL_218;
+        case 9132:
+          goto LABEL_219;
+        case 9113:
+          goto LABEL_220;
+        case 9123:
+          goto LABEL_221;
+        case 9133:
+          goto LABEL_222;
+        case 9114:
+          goto LABEL_223;
+        case 9124:
+          goto LABEL_224;
+        case 9134:
+          goto LABEL_225;
+        case 9142:
+          goto LABEL_226;
+        case 9143:
+          goto LABEL_228;
+        case 9144:
+          goto LABEL_229;
+        case 9211:
+          goto LABEL_230;
+        case 9221:
+          goto LABEL_231;
+        case 9231:
+          goto LABEL_232;
+        case 9212:
+          goto LABEL_234;
+        case 9222:
+          goto LABEL_235;
+        case 9232:
+          goto LABEL_236;
+        case 9213:
+          goto LABEL_238;
+        case 9223:
+          goto LABEL_239;
+        case 9214:
+          goto LABEL_242;
+        case 9224:
+          break;
+      }
+    }
+    else
+    {
+      if ( a5 == 8141 )
+        goto LABEL_217;
+      if ( a5 <= 5910 )
+      {
+        if ( a5 == 5910 )
+        {
+LABEL_176:
+          v9 = *(a1 + 5844);
+          goto LABEL_216;
+        }
+        if ( a5 > 5004 )
+        {
+          if ( a5 <= 5100 )
+          {
+            if ( a5 != 5100 )
+            {
+              switch ( a5 )
+              {
+                case 5007:
+                  v9 = *(a1 + 5816);
+                  goto LABEL_216;
+                case 5011:
+                  v9 = *(a1 + 5832);
+                  goto LABEL_216;
+                case 5012:
+                  v9 = *(a1 + 5836);
+                  goto LABEL_216;
+                case 5013:
+                  v9 = *(a1 + 5840);
+                  goto LABEL_216;
+                case 5008:
+                  goto LABEL_167;
+                case 5005:
+                  goto LABEL_172;
+                case 5006:
+                  goto LABEL_173;
+                case 5009:
+                  goto LABEL_174;
+                case 5010:
+                  goto LABEL_175;
+                case 5014:
+                  goto LABEL_176;
+                default:
+                  goto LABEL_144;
+              }
+              goto LABEL_144;
+            }
+            goto LABEL_166;
+          }
+          if ( a5 > 5902 )
+          {
+            switch ( a5 )
+            {
+              case 5904:
+                goto LABEL_148;
+              case 5903:
+                goto LABEL_170;
+              case 5905:
+                goto LABEL_171;
+              case 5906:
+LABEL_172:
+                v9 = *(a1 + 5808);
+                goto LABEL_216;
+              case 5907:
+LABEL_173:
+                v9 = *(a1 + 5812);
+                goto LABEL_216;
+              case 5908:
+LABEL_174:
+                v9 = *(a1 + 5824);
+                goto LABEL_216;
+              case 5909:
+LABEL_175:
+                v9 = *(a1 + 5828);
+                goto LABEL_216;
+              default:
+                goto LABEL_144;
+            }
+            goto LABEL_144;
+          }
+          if ( a5 == 5902 )
+            goto LABEL_168;
+          if ( a5 > 5201 )
+          {
+            if ( a5 != 5202 )
+            {
+              if ( a5 == 5900 )
+              {
+LABEL_167:
+                v9 = *(a1 + 5820);
+                goto LABEL_216;
+              }
+              if ( a5 != 5901 )
+                goto LABEL_144;
+LABEL_166:
+              v9 = *(a1 + 5788);
+              goto LABEL_216;
+            }
+          }
+          else
+          {
+            if ( a5 == 5201 || a5 == 5101 )
+              goto LABEL_168;
+            if ( a5 != 5102 )
+            {
+              v10 = a5 == 5200;
+LABEL_143:
+              if ( !v10 )
+                goto LABEL_144;
+              goto LABEL_166;
+            }
+          }
+        }
+        else
+        {
+          if ( a5 == 5004 )
+          {
+LABEL_171:
+            v9 = *(a1 + 5804);
+            goto LABEL_216;
+          }
+          if ( a5 <= 4503 )
+          {
+            if ( a5 == 4503 )
+            {
+              v9 = *(a1 + 5720);
+              goto LABEL_216;
+            }
+            if ( a5 > 4302 )
+            {
+              switch ( a5 )
+              {
+                case 4303:
+                  v9 = *(a1 + 5712);
+                  goto LABEL_216;
+                case 4401:
+                  v9 = *(a1 + 5660);
+                  goto LABEL_216;
+                case 4402:
+                  v9 = *(a1 + 5688);
+                  goto LABEL_216;
+                case 4403:
+                  v9 = *(a1 + 5716);
+                  goto LABEL_216;
+                case 4501:
+                  v9 = *(a1 + 5664);
+                  goto LABEL_216;
+                case 4502:
+                  v9 = *(a1 + 5692);
+                  goto LABEL_216;
+                default:
+                  goto LABEL_144;
+              }
+            }
+            else
+            {
+              if ( a5 == 4302 )
+              {
+                v9 = *(a1 + 5684);
+                goto LABEL_216;
+              }
+              switch ( a5 )
+              {
+                case 4102:
+                  v9 = *(a1 + 5676);
+                  goto LABEL_216;
+                case 4103:
+                  v9 = *(a1 + 5704);
+                  goto LABEL_216;
+                case 4201:
+                  v9 = *(a1 + 5652);
+                  goto LABEL_216;
+                case 4202:
+                  v9 = *(a1 + 5680);
+                  goto LABEL_216;
+                case 4203:
+                  v9 = *(a1 + 5708);
+                  goto LABEL_216;
+                case 4301:
+                  v9 = *(a1 + 5656);
+                  goto LABEL_216;
+                default:
+                  goto LABEL_144;
+              }
+            }
+            goto LABEL_144;
+          }
+          if ( a5 <= 4704 )
+          {
+            if ( a5 == 4704 )
+            {
+              v9 = *(a1 + 5732);
+              goto LABEL_216;
+            }
+            switch ( a5 )
+            {
+              case 4601:
+                v9 = *(a1 + 5668);
+                goto LABEL_216;
+              case 4602:
+                v9 = *(a1 + 5696);
+                goto LABEL_216;
+              case 4603:
+                v9 = *(a1 + 5724);
+                goto LABEL_216;
+              case 4701:
+                v9 = *(a1 + 5672);
+                goto LABEL_216;
+              case 4702:
+                v9 = *(a1 + 5700);
+                goto LABEL_216;
+              case 4703:
+                v9 = *(a1 + 5728);
+                goto LABEL_216;
+              default:
+                goto LABEL_144;
+            }
+            goto LABEL_144;
+          }
+          if ( a5 <= 5001 )
+          {
+            if ( a5 != 5001 )
+            {
+              if ( a5 < 4705 )
+                goto LABEL_144;
+              if ( a5 <= 4706 )
+              {
+                v9 = *(a1 + 5736);
+                goto LABEL_216;
+              }
+              v10 = a5 == 5000;
+              goto LABEL_143;
+            }
+LABEL_168:
+            v9 = *(a1 + 5796);
+            goto LABEL_216;
+          }
+          if ( a5 != 5002 )
+          {
+            if ( a5 == 5003 )
+            {
+LABEL_148:
+              v9 = *(a1 + 5800);
+              goto LABEL_216;
+            }
+            goto LABEL_144;
+          }
+        }
+LABEL_170:
+        v9 = *(a1 + 5792);
+        goto LABEL_216;
+      }
+      if ( a5 > 7232 )
+      {
+        if ( a5 <= 7342 )
+        {
+          if ( a5 != 7342 )
+          {
+            switch ( a5 )
+            {
+              case 7341:
+                goto LABEL_22;
+              default:
+                goto LABEL_144;
+              case 7241:
+                goto LABEL_233;
+              case 7242:
+                goto LABEL_237;
+              case 7233:
+                goto LABEL_240;
+              case 7243:
+                goto LABEL_241;
+              case 7234:
+                goto LABEL_244;
+              case 7244:
+                goto LABEL_245;
+              case 7311:
+              case 7312:
+                goto LABEL_246;
+              case 7321:
+              case 7322:
+                goto LABEL_247;
+              case 7331:
+              case 7332:
+                goto LABEL_248;
+            }
+            goto LABEL_248;
+          }
+          goto LABEL_22;
+        }
+        switch ( a5 )
+        {
+          default:
+            goto LABEL_144;
+          case 8112:
+            goto LABEL_191;
+          case 8121:
+            goto LABEL_194;
+          case 8111:
+            goto LABEL_212;
+          case 8131:
+            goto LABEL_214;
+          case 8122:
+            goto LABEL_218;
+          case 8132:
+            goto LABEL_219;
+          case 8113:
+            goto LABEL_220;
+          case 8123:
+            goto LABEL_221;
+          case 8133:
+            goto LABEL_222;
+          case 8114:
+            goto LABEL_223;
+          case 8124:
+            goto LABEL_224;
+          case 8134:
+            break;
+        }
+LABEL_225:
+        v11 = a6 + 279;
+LABEL_215:
+        v9 = *(16 * v11 + v8);
+        goto LABEL_216;
+      }
+      if ( a5 == 7232 )
+      {
+LABEL_236:
+        v11 = a6 + 324;
+        goto LABEL_215;
+      }
+      if ( a5 <= 7141 )
+      {
+        if ( a5 != 7141 )
+        {
+          if ( a5 <= 7122 )
+          {
+            if ( a5 == 7122 )
+            {
+LABEL_218:
+              v9 = *(16 * a6 + a1 + 4604);
+              goto LABEL_216;
+            }
+            if ( a5 > 7113 )
+            {
+              if ( a5 == 7114 )
+              {
+LABEL_223:
+                v9 = *(16 * a6 + a1 + 4456);
+                goto LABEL_216;
+              }
+              if ( a5 == 7121 )
+              {
+LABEL_194:
+                v9 = *(16 * a6 + a1 + 4316);
+                goto LABEL_216;
+              }
+              goto LABEL_144;
+            }
+            if ( a5 == 7113 )
+            {
+LABEL_220:
+              v9 = *(16 * a6 + a1 + 4168);
+              goto LABEL_216;
+            }
+            if ( a5 > 7111 )
+            {
+              if ( a5 == 7112 )
+              {
+LABEL_191:
+                v9 = *(16 * a6 + a1 + 4600);
+                goto LABEL_216;
+              }
+              goto LABEL_144;
+            }
+            if ( a5 != 7111 )
+            {
+              if ( a5 >= 6000 && a5 <= 6003 )
+                return;
+              goto LABEL_144;
+            }
+LABEL_212:
+            v9 = *(16 * a6 + a1 + 4312);
+            goto LABEL_216;
+          }
+          switch ( a5 )
+          {
+            default:
+              goto LABEL_144;
+            case 7131:
+              goto LABEL_214;
+            case 7132:
+              goto LABEL_219;
+            case 7123:
+              goto LABEL_221;
+            case 7133:
+              goto LABEL_222;
+            case 7124:
+              goto LABEL_224;
+            case 7134:
+              goto LABEL_225;
+          }
+          goto LABEL_225;
+        }
+LABEL_217:
+        v9 = *(16 * a6 + a1 + 4324);
+        goto LABEL_216;
+      }
+      switch ( a5 )
+      {
+        default:
+          goto LABEL_144;
+        case 7142:
+          goto LABEL_226;
+        case 7143:
+          goto LABEL_228;
+        case 7144:
+          goto LABEL_229;
+        case 7211:
+          goto LABEL_230;
+        case 7221:
+          goto LABEL_231;
+        case 7231:
+          goto LABEL_232;
+        case 7212:
+          goto LABEL_234;
+        case 7222:
+          goto LABEL_235;
+        case 7213:
+          goto LABEL_238;
+        case 7223:
+          goto LABEL_239;
+        case 7214:
+          goto LABEL_242;
+        case 7224:
+          break;
+      }
+    }
+LABEL_243:
+    v9 = *(16 * a6 + a1 + 5036);
+    goto LABEL_216;
+  }
+  if ( a5 == 4101 )
+  {
+    v9 = *(a1 + 5648);
+    goto LABEL_216;
+  }
+  if ( a5 > 3031 )
+  {
+    switch ( a5 )
+    {
+      case 3040:
+      case 3050:
+      case 3060:
+      case 3210:
+LABEL_82:
+        v9 = *(a1 + 6232);
+        goto LABEL_216;
+      case 3041:
+      case 3051:
+      case 3061:
+      case 3211:
+        goto LABEL_83;
+      case 3032:
+      case 3042:
+      case 3052:
+      case 3062:
+      case 3212:
+LABEL_84:
+        v9 = *(a1 + 6240);
+        goto LABEL_216;
+      case 3033:
+      case 3043:
+      case 3053:
+      case 3063:
+      case 3213:
+LABEL_85:
+        v9 = *(a1 + 6244);
+        goto LABEL_216;
+      case 3034:
+      case 3044:
+      case 3054:
+      case 3064:
+      case 3214:
+LABEL_86:
+        v9 = *(a1 + 6248);
+        goto LABEL_216;
+      case 3035:
+      case 3045:
+      case 3055:
+      case 3065:
+      case 3215:
+LABEL_87:
+        v9 = *(a1 + 6252);
+        goto LABEL_216;
+      case 3036:
+      case 3046:
+      case 3056:
+      case 3066:
+      case 3216:
+LABEL_88:
+        v9 = *(a1 + 6256);
+        goto LABEL_216;
+      case 3037:
+      case 3047:
+      case 3057:
+      case 3067:
+      case 3217:
+LABEL_89:
+        v9 = *(a1 + 6260);
+        goto LABEL_216;
+      case 3038:
+      case 3048:
+      case 3058:
+      case 3068:
+      case 3218:
+LABEL_90:
+        v9 = *(a1 + 6264);
+        goto LABEL_216;
+      case 3100:
+      case 3110:
+      case 3120:
+      case 3130:
+      case 3140:
+      case 3150:
+      case 3200:
+        v9 = *(a1 + 6488);
+        goto LABEL_216;
+      case 3101:
+      case 3111:
+      case 3121:
+      case 3131:
+      case 3141:
+      case 3151:
+      case 3201:
+        v9 = *(a1 + 6492);
+        goto LABEL_216;
+      case 3102:
+      case 3112:
+      case 3122:
+      case 3132:
+      case 3142:
+      case 3152:
+      case 3202:
+        v9 = *(a1 + 6496);
+        goto LABEL_216;
+      case 3103:
+      case 3113:
+      case 3123:
+      case 3133:
+      case 3143:
+      case 3153:
+      case 3203:
+        v9 = *(a1 + 6500);
+        goto LABEL_216;
+      case 3104:
+      case 3114:
+      case 3124:
+      case 3134:
+      case 3144:
+      case 3154:
+      case 3204:
+        v9 = *(a1 + 6504);
+        goto LABEL_216;
+      case 3105:
+      case 3115:
+      case 3125:
+      case 3135:
+      case 3145:
+      case 3155:
+      case 3205:
+        v9 = *(a1 + 6508);
+        goto LABEL_216;
+      case 3106:
+      case 3116:
+      case 3126:
+      case 3136:
+      case 3146:
+      case 3156:
+      case 3206:
+        v9 = *(a1 + 6512);
+        goto LABEL_216;
+      case 3107:
+      case 3117:
+      case 3127:
+      case 3137:
+      case 3147:
+      case 3157:
+      case 3207:
+        v9 = *(a1 + 6516);
+        goto LABEL_216;
+      case 3108:
+      case 3118:
+      case 3128:
+      case 3138:
+      case 3148:
+      case 3158:
+      case 3208:
+        v9 = *(a1 + 6520);
+        goto LABEL_216;
+      case 3109:
+        v9 = *(a1 + 6524);
+        goto LABEL_216;
+      default:
+        goto LABEL_144;
+    }
+    goto LABEL_144;
+  }
+  if ( a5 == 3031 )
+    goto LABEL_83;
+  if ( a5 > 2109 )
+  {
+    if ( a5 > 3001 )
+    {
+      switch ( a5 )
+      {
+        case 3010:
+        case 3020:
+        case 3030:
+          goto LABEL_82;
+        case 3011:
+        case 3021:
+          goto LABEL_83;
+        case 3002:
+        case 3012:
+        case 3022:
+          goto LABEL_84;
+        case 3003:
+        case 3013:
+        case 3023:
+          goto LABEL_85;
+        case 3004:
+        case 3014:
+        case 3024:
+          goto LABEL_86;
+        case 3005:
+        case 3015:
+        case 3025:
+          goto LABEL_87;
+        case 3006:
+        case 3016:
+        case 3026:
+          goto LABEL_88;
+        case 3007:
+        case 3017:
+        case 3027:
+          goto LABEL_89;
+        case 3008:
+        case 3018:
+        case 3028:
+          goto LABEL_90;
+        default:
+          goto LABEL_144;
+      }
+      goto LABEL_144;
+    }
+    if ( a5 != 3001 )
+    {
+      if ( a5 > 2210 )
+      {
+        if ( a5 > 2904 )
+        {
+          switch ( a5 )
+          {
+            case 2913:
+              goto LABEL_75;
+            case 2911:
+              goto LABEL_77;
+            case 2912:
+              goto LABEL_78;
+            case 2914:
+              goto LABEL_79;
+            case 3000:
+              goto LABEL_82;
+            default:
+              goto LABEL_144;
+          }
+        }
+        else
+        {
+          if ( a5 == 2904 )
+          {
+LABEL_79:
+            v9 = *(a1 + 5584);
+            goto LABEL_216;
+          }
+          if ( a5 > 2901 )
+          {
+            if ( a5 == 2902 )
+            {
+LABEL_78:
+              v9 = *(a1 + 5576);
+              goto LABEL_216;
+            }
+            if ( a5 == 2903 )
+            {
+LABEL_75:
+              v9 = *(a1 + 5580);
+              goto LABEL_216;
+            }
+          }
+          else
+          {
+            if ( a5 == 2901 )
+            {
+LABEL_77:
+              v9 = *(a1 + 5572);
+              goto LABEL_216;
+            }
+            if ( a5 == 2211 )
+            {
+LABEL_72:
+              v9 = *(a1 + 5548);
+              goto LABEL_216;
+            }
+            if ( a5 == 2212 )
+            {
+LABEL_71:
+              v9 = *(a1 + 5552);
+              goto LABEL_216;
+            }
+            if ( a5 == 2900 )
+            {
+              v9 = *(a1 + 5564);
+              goto LABEL_216;
+            }
+          }
+        }
+      }
+      else
+      {
+        if ( a5 == 2210 )
+        {
+LABEL_62:
+          v9 = *(a1 + 5544);
+          goto LABEL_216;
+        }
+        switch ( a5 )
+        {
+          case 2201:
+LABEL_52:
+            v9 = *(a1 + 5508);
+            goto LABEL_216;
+          case 2202:
+LABEL_53:
+            v9 = *(a1 + 5512);
+            goto LABEL_216;
+          case 2203:
+LABEL_54:
+            v9 = *(a1 + 5516);
+            goto LABEL_216;
+          case 2204:
+LABEL_55:
+            v9 = *(a1 + 5520);
+            goto LABEL_216;
+          case 2205:
+LABEL_56:
+            v9 = *(a1 + 5524);
+            goto LABEL_216;
+          case 2206:
+LABEL_57:
+            v9 = *(a1 + 5528);
+            goto LABEL_216;
+          case 2207:
+LABEL_58:
+            v9 = *(a1 + 5532);
+            goto LABEL_216;
+          case 2208:
+LABEL_59:
+            v9 = *(a1 + 5536);
+            goto LABEL_216;
+          case 2209:
+            goto LABEL_60;
+          case 2150:
+            v9 = *(a1 + 5556);
+            goto LABEL_216;
+          case 2110:
+            goto LABEL_62;
+          case 2112:
+            goto LABEL_71;
+          case 2111:
+            goto LABEL_72;
+          default:
+            goto LABEL_144;
+        }
+      }
+      goto LABEL_144;
+    }
+LABEL_83:
+    v9 = *(a1 + 6236);
+    goto LABEL_216;
+  }
+  if ( a5 == 2109 )
+  {
+LABEL_60:
+    v9 = *(a1 + 5540);
+    goto LABEL_216;
+  }
+  if ( a5 > 2003 )
+  {
+    switch ( a5 )
+    {
+      case 2004:
+        v9 = *(a1 + 5780);
+        goto LABEL_216;
+      case 2005:
+        v9 = *(a1 + 5784);
+        goto LABEL_216;
+      case 2006:
+        v9 = *(a1 + 5588);
+        goto LABEL_216;
+      case 2007:
+        v9 = *(a1 + 5592);
+        goto LABEL_216;
+      case 2008:
+        v9 = *(a1 + 5596);
+        goto LABEL_216;
+      case 2009:
+      case 2011:
+        v9 = *(a1 + 5600);
+        goto LABEL_216;
+      case 2010:
+        v9 = *(a1 + 5604);
+        goto LABEL_216;
+      case 2012:
+        v9 = *(a1 + 5608);
+        goto LABEL_216;
+      case 2013:
+        v9 = *(a1 + 5612);
+        goto LABEL_216;
+      case 2014:
+        v9 = *(a1 + 5616);
+        goto LABEL_216;
+      case 2015:
+        v9 = *(a1 + 5620);
+        goto LABEL_216;
+      case 2016:
+        v9 = *(a1 + 5624);
+        goto LABEL_216;
+      case 2017:
+        v9 = *(a1 + 5640);
+        goto LABEL_216;
+      case 2018:
+        v9 = *(a1 + 5628);
+        goto LABEL_216;
+      case 2019:
+        v9 = *(a1 + 5632);
+        goto LABEL_216;
+      case 2020:
+        v9 = *(a1 + 5636);
+        goto LABEL_216;
+      case 2021:
+        v9 = *(a1 + 5644);
+        goto LABEL_216;
+      case 2101:
+        goto LABEL_52;
+      case 2102:
+        goto LABEL_53;
+      case 2103:
+        goto LABEL_54;
+      case 2104:
+        goto LABEL_55;
+      case 2105:
+        goto LABEL_56;
+      case 2106:
+        goto LABEL_57;
+      case 2107:
+        goto LABEL_58;
+      case 2108:
+        goto LABEL_59;
+      default:
+        goto LABEL_144;
+    }
+    goto LABEL_144;
+  }
+  if ( a5 == 2003 )
+  {
+    v9 = *(a1 + 5776);
+    goto LABEL_216;
+  }
+  if ( a5 <= 1243 )
+  {
+    if ( a5 == 1243 )
+    {
+LABEL_241:
+      v9 = *(16 * a6 + a1 + 4900);
+      goto LABEL_216;
+    }
+    switch ( a5 )
+    {
+      default:
+        goto LABEL_144;
+      case 1221:
+        goto LABEL_231;
+      case 1231:
+        goto LABEL_232;
+      case 1241:
+        goto LABEL_233;
+      case 1212:
+        goto LABEL_234;
+      case 1222:
+        goto LABEL_235;
+      case 1232:
+        goto LABEL_236;
+      case 1242:
+        goto LABEL_237;
+      case 1213:
+        goto LABEL_238;
+      case 1223:
+        goto LABEL_239;
+      case 1233:
+        goto LABEL_240;
+      case 1214:
+        goto LABEL_242;
+      case 1224:
+        goto LABEL_243;
+      case 1234:
+        break;
+    }
+LABEL_244:
+    v11 = a6 + 315;
+    goto LABEL_215;
+  }
+  if ( a5 <= 1332 )
+  {
+    if ( a5 != 1332 )
+    {
+      switch ( a5 )
+      {
+        default:
+          goto LABEL_144;
+        case 1244:
+          goto LABEL_245;
+        case 1311:
+        case 1312:
+          goto LABEL_246;
+        case 1321:
+        case 1322:
+          goto LABEL_247;
+        case 1331:
+          break;
+      }
+    }
+LABEL_248:
+    v11 = a6 + 333;
+    goto LABEL_215;
+  }
+  if ( a5 > 2000 )
+  {
+    if ( a5 == 2001 )
+    {
+      v9 = *(a1 + 5768);
+      goto LABEL_216;
+    }
+    if ( a5 == 2002 )
+    {
+      v9 = *(a1 + 5772);
+      goto LABEL_216;
+    }
+    goto LABEL_144;
+  }
+  if ( a5 == 2000 )
+  {
+    v9 = *(a1 + 5560);
+    goto LABEL_216;
+  }
+  if ( a5 != 1341 && a5 != 1342 )
+  {
+LABEL_144:
+    CLog::DebugLog(LOG, 0, ".\\GameResource.cpp", 2533, "ASSERT Fail,return");
+    return;
+  }
+LABEL_22:
+  v9 = *(16 * a6 + a1 + 5332);
+LABEL_216:
+  sub_70FDB0(v9, 0, 0, 26, 28);
+  switch ( a8 )
+  {
+    case 0:
+      sub_70FDD0(v9, a3 + 2, a4 + 2);
+      goto LABEL_252;
+    case 1:
+      sub_70FDD0(v9, a3 + 2, a4 + 2);
+      goto LABEL_251;
+    case 2:
+      sub_70FDD0(v9, a3 + 2, a4 + 2);
+      sub_70FE20(v9, a3 + 2, a4 + 2);
+LABEL_251:
+      sub_70FE20(v9, a3 + 2, a4 + 2);
+      goto LABEL_252;
+    case 3:
+      sub_70FE70(v9, a3 + 2, a4 + 2);
+      goto LABEL_264;
+    default:
+      if ( a8 < 0 )
+        return;
+      if ( a8 <= 2 )
+      {
+LABEL_252:
+        if ( a5 >= 3100 && a5 < 3110 )
+        {
+          v12 = a5;
+        }
+        else
+        {
+          v12 = a5;
+          if ( !sub_61D320(a5) && !sub_61D650(a5) && !sub_61D6B0(a5) )
+          {
+            if ( sub_61D600(a5) )
+            {
+              sub_70FDB0(*(v8 + 6320), 0, 0, 30, 32);
+              sub_70FDD0(*(v8 + 6320), a3, a4);
+              v13 = a7;
+LABEL_394:
+              v23 = 0;
+              goto LABEL_395;
+            }
+            if ( a5 >= 4100 && a5 < 5000 )
+            {
+              sub_70FDB0(*(v8 + 6320), 0, 0, 30, 32);
+              sub_70FDD0(*(v8 + 6320), a3, a4);
+              sub_409C80(a3, a4);
+              return;
+            }
+            if ( (a5 < 1000 || a5 >= 2000) && (a5 < 3000 || a5 >= 4000) && !sub_61D2A0(a5) )
+            {
+              if ( sub_61D610(a5) || sub_61D2E0(a5) )
+              {
+                sub_70FDB0(*(v8 + 6536), 0, 0, 30, 32);
+                sub_70FDD0(*(v8 + 6536), a3, a4);
+                sub_70FEC0(*(v8 + 6340), a3 + 8, a4 + 3, 8, 7, 1, a7, a7 >> 32, 1, 6, 0, 100);
+                sub_409C80(a3, a4);
+                return;
+              }
+              if ( a5 >= 2000 && a5 < 3000 )
+              {
+                if ( sub_61A4B0(a5) || sub_61A4D0(a5) )
+                  a7 = 6000;
+                sub_70FDB0(*(v8 + 6312), 0, 0, 30, 32);
+                sub_70FDD0(*(v8 + 6312), a3, a4);
+                if ( a7 > 0 && a7 != 6000 )
+                  sub_70FEC0(*(v8 + 6340), a3 + 8, a4 + 3, 8, 7, 1, a7, a7 >> 32, 1, 6, 0, 100);
+                if ( sub_61A4D0(a5) )
+                  TextBoxSetString((a3 + 14), a4 + 20, &byte_FFFFFF, 0, 4, 0, "%d", a6);
+                sub_409C80(a3, a4);
+                return;
+              }
+              if ( a5 >= 5900 && a5 < 6000 )
+              {
+                sub_70FDB0(*(v8 + 6536), 0, 0, 30, 32);
+                sub_70FDD0(*(v8 + 6536), a3, a4);
+                v13 = a7;
+                if ( a7 <= 0 || a7 == 6000 )
+                  goto LABEL_397;
+                goto LABEL_394;
+              }
+              if ( a5 >= 5000 && a5 < 6000 )
+              {
+                sub_70FDB0(*(v8 + 6312), 0, 0, 30, 32);
+                sub_70FDD0(*(v8 + 6312), a3, a4);
+                sub_409C80(a3, a4);
+                return;
+              }
+              if ( sub_61D1E0(a5) )
+              {
+                sub_70FDB0(*(v8 + 6324), 0, 0, 30, 32);
+                sub_70FDD0(*(v8 + 6324), a3, a4);
+                sub_409C80(a3, a4);
+                sub_70FEC0(*(v8 + 6336), a3 + 19, a4 + 22, 8, 7, 1, a6 + 1, (a6 + 1) >> 32, 2, 0, 0, 100);
+                return;
+              }
+              if ( !sub_61D220(a5) && !sub_61D260(a5) )
+                return;
+              sub_70FDB0(*(v8 + 6532), 0, 0, 30, 32);
+              sub_70FDD0(*(v8 + 6532), a3, a4);
+              sub_409C80(a3, a4);
+LABEL_406:
+              v22 = 0;
+              goto LABEL_407;
+            }
+            if ( a5 < 3000 )
+            {
+              if ( a5 < 3010 )
+              {
+                if ( a5 < 3020 )
+                {
+                  if ( a5 < 3030 )
+                  {
+                    if ( a5 < 3040 )
+                    {
+                      if ( a5 < 3050 )
+                      {
+                        if ( a5 < 3060 )
+                        {
+LABEL_370:
+                          if ( a7 <= 0 )
+                          {
+                            sub_70FDB0(*(v8 + 6308), 0, 0, 30, 32);
+                            sub_70FDD0(*(v8 + 6308), a3, a4);
+LABEL_373:
+                            if ( (a5 < 1000 || a5 >= 2000) && !sub_61D2A0(a5) )
+                              return;
+                            goto LABEL_406;
+                          }
+LABEL_371:
+                          sub_70FDB0(*(v8 + 6304), 0, 0, 30, 32);
+                          sub_70FDD0(*(v8 + 6304), a3, a4);
+                          sub_70FEC0(*(v8 + 6340), a3 + 8, a4 + 3, 8, 7, 1, a7, a7 >> 32, 1, 6, 0, 100);
+                          sub_409C80(a3, a4);
+                          goto LABEL_373;
+                        }
+LABEL_368:
+                        if ( a5 < 3070 )
+                        {
+                          a7 = 999;
+                          goto LABEL_371;
+                        }
+                        goto LABEL_370;
+                      }
+LABEL_365:
+                      if ( a5 < 3060 )
+                      {
+                        a7 = 45;
+                        goto LABEL_371;
+                      }
+                      goto LABEL_368;
+                    }
+LABEL_362:
+                    if ( a5 < 3050 )
+                    {
+                      a7 = 3;
+                      goto LABEL_371;
+                    }
+                    goto LABEL_365;
+                  }
+LABEL_359:
+                  if ( a5 < 3040 )
+                  {
+                    a7 = 1;
+                    goto LABEL_371;
+                  }
+                  goto LABEL_362;
+                }
+LABEL_356:
+                if ( a5 < 3030 )
+                {
+                  a7 = 425;
+                  goto LABEL_371;
+                }
+                goto LABEL_359;
+              }
+            }
+            else if ( a5 < 3010 )
+            {
+              a7 = 30;
+              goto LABEL_371;
+            }
+            if ( a5 < 3020 )
+            {
+              a7 = 365;
+              goto LABEL_371;
+            }
+            goto LABEL_356;
+          }
+        }
+        if ( sub_61D650(v12) || sub_61D6B0(v12) )
+        {
+          a7 = a6;
+        }
+        else if ( !sub_61D470(&a7, v12) )
+        {
+          a7 = 7;
+        }
+        sub_70FDB0(*(v8 + 6532), 0, 0, 30, 32);
+        sub_70FDD0(*(v8 + 6532), a3, a4);
+        sub_70FEC0(*(v8 + 6340), a3 + 8, a4 + 3, 8, 7, 1, a7, a7 >> 32, 1, 6, 0, 100);
+        v17 = *(v8 + 6672);
+        if ( v17 >= 0 && v17 < 9 )
+        {
+          v18 = *(v8 + 6364);
+          if ( v18 )
+            sub_713340(v18, a3, a4, v17);
+        }
+        return;
+      }
+      if ( a8 != 3 )
+        return;
+LABEL_264:
+      if ( a5 >= 3100 && a5 < 3110 )
+      {
+        v14 = a5;
+LABEL_335:
+        if ( sub_61D650(v14) || sub_61D6B0(v14) )
+        {
+          a7 = a6;
+        }
+        else if ( !sub_61D470(&a7, v14) )
+        {
+          a7 = 7;
+        }
+        sub_70FDB0(*(v8 + 6532), 0, 0, 30, 32);
+        v15 = *(v8 + 6532);
+        goto LABEL_271;
+      }
+      v14 = a5;
+      if ( sub_61D320(a5) || sub_61D650(a5) || sub_61D6B0(a5) )
+        goto LABEL_335;
+      if ( sub_61D600(a5) )
+      {
+        sub_70FDB0(*(v8 + 6320), 0, 0, 30, 32);
+        v15 = *(v8 + 6320);
+LABEL_271:
+        sub_70FE70(v15, a3, a4);
+        v16 = a7;
+LABEL_272:
+        v23 = 4;
+        v21 = v16;
+        v20 = a4 + 3;
+        v19 = a3 + 8;
+LABEL_396:
+        sub_70FEC0(*(v8 + 6340), v19, v20, 8, 7, 1, v21, SHIDWORD(v21), 1, 6, v23, 100);
+LABEL_397:
+        sub_409C80(a3, a4);
+        return;
+      }
+      if ( a5 >= 4100 && a5 < 5000 )
+      {
+        sub_70FDB0(*(v8 + 6320), 0, 0, 30, 32);
+        sub_70FE70(*(v8 + 6320), a3, a4);
+        sub_409C80(a3, a4);
+        return;
+      }
+      if ( a5 >= 1000 && a5 < 2000 || a5 >= 3000 && a5 < 4000 || sub_61D2A0(a5) )
+      {
+        if ( a5 < 3000 )
+        {
+          if ( a5 < 3010 )
+          {
+            if ( a5 < 3020 )
+            {
+              if ( a5 < 3030 )
+              {
+                if ( a5 < 3040 )
+                {
+                  if ( a5 < 3050 )
+                  {
+                    if ( a5 < 3060 )
+                    {
+LABEL_302:
+                      if ( a7 <= 0 )
+                      {
+                        sub_70FDB0(*(v8 + 6308), 0, 0, 30, 32);
+                        sub_70FE70(*(v8 + 6308), a3, a4);
+                        goto LABEL_305;
+                      }
+LABEL_303:
+                      sub_70FDB0(*(v8 + 6304), 0, 0, 30, 32);
+                      sub_70FE70(*(v8 + 6304), a3, a4);
+                      sub_70FEC0(*(v8 + 6340), a3 + 8, a4 + 3, 8, 7, 1, a7, a7 >> 32, 1, 6, 4, 100);
+                      sub_409C80(a3, a4);
+LABEL_305:
+                      if ( a5 >= 1000 && a5 < 2000 )
+                      {
+                        v22 = 4;
+LABEL_407:
+                        sub_70FEC0(*(v8 + 6336), a3 + 19, a4 + 22, 8, 7, 1, a6 + 1, (a6 + 1) >> 32, 2, v22, 0, 100);
+                        return;
+                      }
+                      return;
+                    }
+LABEL_300:
+                    if ( a5 < 3070 )
+                    {
+                      a7 = 999;
+                      goto LABEL_303;
+                    }
+                    goto LABEL_302;
+                  }
+LABEL_297:
+                  if ( a5 < 3060 )
+                  {
+                    a7 = 45;
+                    goto LABEL_303;
+                  }
+                  goto LABEL_300;
+                }
+LABEL_294:
+                if ( a5 < 3050 )
+                {
+                  a7 = 3;
+                  goto LABEL_303;
+                }
+                goto LABEL_297;
+              }
+LABEL_291:
+              if ( a5 < 3040 )
+              {
+                a7 = 1;
+                goto LABEL_303;
+              }
+              goto LABEL_294;
+            }
+LABEL_288:
+            if ( a5 < 3030 )
+            {
+              a7 = 425;
+              goto LABEL_303;
+            }
+            goto LABEL_291;
+          }
+        }
+        else if ( a5 < 3010 )
+        {
+          a7 = 30;
+          goto LABEL_303;
+        }
+        if ( a5 < 3020 )
+        {
+          a7 = 365;
+          goto LABEL_303;
+        }
+        goto LABEL_288;
+      }
+      if ( sub_61D610(a5) || sub_61D2E0(a5) )
+      {
+        sub_70FDB0(*(v8 + 6536), 0, 0, 30, 32);
+        sub_70FE70(*(v8 + 6536), a3, a4);
+        v13 = a7;
+        v23 = 4;
+LABEL_395:
+        v21 = v13;
+        v20 = a4 + 3;
+        v19 = a3 + 8;
+        goto LABEL_396;
+      }
+      if ( a5 >= 2000 && a5 < 3000 )
+      {
+        if ( sub_61A4B0(a5) || sub_61A4D0(a5) )
+          a7 = 6000;
+        sub_70FDB0(*(v8 + 6312), 0, 0, 30, 32);
+        sub_70FE70(*(v8 + 6312), a3, a4);
+        if ( a7 > 0 && a7 != 6000 )
+          sub_70FEC0(*(v8 + 6340), a3 + 8, a4 + 3, 8, 7, 1, a7, a7 >> 32, 1, 6, 4, 100);
+        if ( sub_61A4D0(a5) )
+        {
+          TextBoxSetString((a3 + 14), a4 + 20, &byte_FFFFFF, 0, 4, 0, "%d", a6);
+          sub_409C80(a3, a4);
+          return;
+        }
+        goto LABEL_397;
+      }
+      if ( a5 >= 5900 && a5 < 6000 )
+      {
+        sub_70FDB0(*(v8 + 6536), 0, 0, 30, 32);
+        sub_70FE70(*(v8 + 6536), a3, a4);
+        v16 = a7;
+        if ( a7 <= 0 || a7 == 6000 )
+          goto LABEL_397;
+        goto LABEL_272;
+      }
+      if ( a5 >= 5000 && a5 < 6000 )
+      {
+        sub_70FDB0(*(v8 + 6312), 0, 0, 30, 32);
+        sub_70FE70(*(v8 + 6312), a3, a4);
+        sub_409C80(a3, a4);
+        return;
+      }
+      if ( sub_61D1E0(a5) )
+      {
+        sub_70FDB0(*(v8 + 6324), 0, 0, 30, 32);
+        sub_70FE70(*(v8 + 6324), a3, a4);
+        sub_409C80(a3, a4);
+        v22 = 4;
+        goto LABEL_407;
+      }
+      if ( sub_61D220(a5) || sub_61D260(a5) )
+      {
+        sub_70FDB0(*(v8 + 6532), 0, 0, 30, 32);
+        sub_70FE70(*(v8 + 6532), a3, a4);
+        sub_409C80(a3, a4);
+        v22 = 4;
+        goto LABEL_407;
+      }
+      return;
+  }
+}
