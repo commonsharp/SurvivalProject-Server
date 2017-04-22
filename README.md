@@ -51,8 +51,10 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Skill I fusion
 - [ ] Skill II fusion
 - [ ] User shop I
+- [ ] Packages
 
 # TODO
+- [ ] Gain elements after a failed level up fusion
 - [ ] Change the infinity games timers to ticks-based instead of a new thread with a timer. It will also fix the bug that if you leave the room, the timer still goes on, and will get executed when finished.
 - [ ] Random characters
 - [ ] Change the server sockets to NIO sockets.
