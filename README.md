@@ -48,8 +48,8 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Premium Event
 - [ ] SuperSilver
 - [ ] CardSlot+18, CardSlot+30
-- [ ] Skill I fusion
-- [ ] Skill II fusion
+- [x] Skill I fusion
+- [x] Skill II fusion
 - [ ] User shop I
 - [ ] Packages
 
@@ -83,6 +83,8 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * If someone leaves during a survival game, other players get a win message.
 
 # 22/04/2017
+* Started working on skills.
+* Premium cards: Skill Fusion I and Skill Fusion II are now working.
 * Infinity king mode: the first player to join the game of each team becomes the first king.
 * Infinity king mode: if the king has 1 points and a new player joins his team, that new player becomes the new king.
 * Infinity king mode: when the king dies, he goes back to having 1 point.
