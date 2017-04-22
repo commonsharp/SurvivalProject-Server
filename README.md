@@ -83,7 +83,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * If someone leaves during a survival game, other players get a win message.
 
 # 22/04/2017
-* Started working on skills.
+* Skill fusion (and skills in general) is now working. There are some missing skills that I will need to take care of in the future.
 * Premium cards: Skill Fusion I and Skill Fusion II are now working.
 * Infinity king mode: the first player to join the game of each team becomes the first king.
 * Infinity king mode: if the king has 1 points and a new player joins his team, that new player becomes the new king.
