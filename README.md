@@ -101,7 +101,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Infinity king mode: there's a timer of exactly 5 minutes. When the timer is over, so is the game.
 * Infinity king mode: when a new players joins the game, he gets the correct timer in the game.
 * Infinity king mode: when the timer reaches 0, the stats window pops up.
-* Infinity king mode: when a game is finished, each player gets 8000 points and code, 5 elements and some coins. The last player gets 3 coins, the next one gets 4 and so on, up to a maximum of 10 points.
+* Infinity king mode: when a game is finished, each player gets 8000 points and code, 5 elements and some coins. The last player gets 3 coins, the next one gets 4 and so on. If there are 8 players in the room, the first one gets 11 coins, not 10.
 * Fixed the bug where if someone left a game, the other players would get a win message (in every game mode).
 
 # 21/04/2017
