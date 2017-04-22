@@ -59,7 +59,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] User shop I
 
 # TODO
-- [ ] Change the infinity games timers to ticks-based instead of a new thread with a timer.
+- [ ] Change the infinity games timers to ticks-based instead of a new thread with a timer. It will also fix the bug that if you leave the room, the timer still goes on, and will get executed when finished.
 - [ ] Random characters
 - [x] Consider moving to a game server engine.
 - [ ] Change the server sockets to NIO sockets.
