@@ -13,7 +13,11 @@ If x+1 is not the response message, it is **usually** close to request message.
 The bytes are in little-endian format.
 
 int length (the entire packet's length. This field's length is included)
+
 int messageType
+
 int validator // when a message is received, this value is compared to 0x2B1C. if it's anything else, the message is thrown.
+
 int checksum // the checksum of the message
+
 int state // the state of the message. not sure what's its uses, but it needs to be calculated each time
