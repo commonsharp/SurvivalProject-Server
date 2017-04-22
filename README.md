@@ -47,7 +47,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Elemental bonus x3
 - [ ] Premium Event
 - [ ] SuperSilver
-- [ ] CardSlot+18, CardSlot+30
+- [x] CardSlot+18, CardSlot+30 - **This is actually a package**
 - [x] Skill I fusion
 - [x] Skill II fusion
 - [ ] User shop I
