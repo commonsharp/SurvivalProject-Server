@@ -36,7 +36,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 # Game modes left to add
 - [x] Hero mode
 - [ ] Infinity survival mode
-- [ ] Infinity king mode
+- [x] Infinity king mode
 - [ ] Infinity symbol mode
 - [x] Crystal capture mode
 - [ ] King slayer mode
