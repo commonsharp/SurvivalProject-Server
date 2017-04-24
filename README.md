@@ -63,6 +63,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Change the infinity games timers to ticks-based instead of a new thread with a timer. It will also fix the bug that if you leave the room, the timer still goes on, and will get executed when finished.
 - [ ] Random characters
 - [ ] Change the server sockets to NIO sockets.
+- [ ] Implement Hibernate (or any other ORM support).
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
 - [ ] Change the guild points formula to the correct one.
 - [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
