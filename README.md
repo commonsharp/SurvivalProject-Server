@@ -1,7 +1,7 @@
 # SurvivalProject-Server
 Server files for the game Survival Project, written in Java.
 
-**THE USE OF THE SERVER FILES IS ON YOUR OWN RESPONSIBILITY, AND YOU MAY FIND YOURSELF GUILTY OF COPYRIGHT INFRINGEMENT.**
+**THE USE OF THE SERVER FILES IS ON YOUR OWN RESPONSIBILITY, AND BY USING THEM YOU MAY FIND YOURSELF GUILTY OF COPYRIGHT INFRINGEMENT.**
 
 For instructions on how to install Survival Project on Windows 10, go to the Win10 folder.
 
