@@ -66,7 +66,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
 - [ ] Change the guild points formula to the correct one.
 - [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
-- [ ] Some premium cards also give you elements when you purchase them. **Packages too!*
+- [ ] Some premium cards also give you elements when you purchase them. **Packages too!**
 - [ ] Change every saveUser call to a shorter SQL query to reduce database operations.
 - [ ] Rename each SQL table according to the naming convention.
 - [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
@@ -86,6 +86,9 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 * Join a crystal game mode, let a player leave (because he's afk), destroy a crystal, get null pointer exception.
 * If someone leaves during a survival game, other players get a win message.
+
+# 24/04/2017
+* While having 2 or more players in a room, when one player performs an action, such as moving, this action is sent to the server, which then forwards the message to everyone in the room. This mean the latency is doubled, because the communication works like this: client->server->client. The last two days I worked on getting the message to skip the server, so the client would send the action directly to the other users, instead of passing through the server (client->client). This would reduce latency by at least half. I believe I got it working, but more tests need to be taken.
 
 # 22/04/2017
 * Skill fusion (and skills in general) is now working. There are some missing skills that I will need to take care of in the future.
