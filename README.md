@@ -77,19 +77,23 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Premium cards are only working when you buy them in the cards shop (will be changed once trades/user shops are completely implemented).
 - [ ] Lose premium days when a day passes.
 - [ ] Clean the game modes code a bit.
+- [ ] The stats after a mission isn't correct.
+- [ ] The stats after every game mode isn't correct.
 
 # List of bugs
-* When you finish a mission, the mission level on the left of the screen doesn't change.
+* ~~When you finish a mission, the mission level on the left of the screen doesn't change.~~
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
 * Death timer in big matches doesn't work.
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 * ~~Join a crystal game mode, let a player leave (because he's afk), destroy a crystal, get null pointer exception.~~
 * ~~If someone leaves during a survival game, other players get a win message.~~
+* Level xx5 missions aren't working.
 
 # 24/04/2017
 * While having 2 or more players in a room, when one player performs an action, such as moving, this action is sent to the server, which then forwards the message to everyone in the room. This mean the latency is doubled, because the communication works like this: client->server->client. The last two days I worked on getting the message to skip the server, so the client would send the action directly to the other users, instead of passing through the server (client->client). This would reduce latency by at least half. I believe I got it working, but more tests need to be taken.
 * Fixed a bug where if there would be 2+ players in a mission, and the mission was completed, the two player's mission level would increase (so if a level 200 completed a level 1 mission, he would get to level 201).
+* Fixed the bug where the mission level on the left of the screen didn't change when you finished a mission.
 * Fixed a bug where if the game was a bit laggy, the mission level/friends/guild members was not sent properly when you joined the lobby.
 
 # 22/04/2017
