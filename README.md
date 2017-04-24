@@ -91,6 +91,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * ~~Join a crystal game mode, let a player leave (because he's afk), destroy a crystal, get null pointer exception.~~
 * ~~If someone leaves during a survival game, other players get a win message.~~
 * Level xx5 missions aren't working.
+* When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
 
 # 24/04/2017
 * While having 2 or more players in a room, when one player performs an action, such as moving, this action is sent to the server, which then forwards the message to everyone in the room. This mean the latency is doubled, because the communication works like this: client->server->client. The last two days I worked on getting the message to skip the server, so the client would send the action directly to the other users, instead of passing through the server (so that the communication would work like this: client->client). This would reduce latency by at least half. I believe I got it working, but more tests need to be taken.
