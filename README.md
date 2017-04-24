@@ -80,6 +80,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Clean the game modes code a bit.
 - [ ] The stats after a mission isn't correct.
 - [ ] The stats after every game mode isn't correct.
+- [ ] Change the mission lost packet to GameCompletedHandler.
 
 # List of bugs
 * ~~When you finish a mission, the mission level on the left of the screen doesn't change.~~
