@@ -81,6 +81,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] The stats after a mission isn't correct.
 - [ ] The stats after every game mode isn't correct.
 - [ ] Change the mission lost packet to GameCompletedHandler.
+- [ ] Change the lucky multipliers to 2, 3, 5 and 10.
 
 # List of bugs
 * ~~When you finish a mission, the mission level on the left of the screen doesn't change.~~
@@ -92,6 +93,9 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * ~~If someone leaves during a survival game, other players get a win message.~~
 * Level xx5 missions aren't working.
 * When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
+
+# 26/04/2017
+* Balancing: The last player in infinity king mode gets a lucky multiplier of 2, the next one gets 3 and so on. That means the last player gets x2 elements and code, while the first one gets x10 (if there are 8 players, the first player have a lucky multiplier of 10, instead of 9). That is according to this video - https://www.youtube.com/watch?v=ghxMZ4jF8Jg
 
 # 24/04/2017
 * While having 2 or more players in a room, when one player performs an action, such as moving, this action is sent to the server, which then forwards the message to everyone in the room. This mean the latency is doubled, because the communication works like this: client->server->client. The last two days I worked on getting the message to skip the server, so the client would send the action directly to the other users, instead of passing through the server (so that the communication would work like this: client->client). This would reduce latency by at least half. I believe I got it working, but more tests need to be taken.
