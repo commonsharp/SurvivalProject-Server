@@ -98,6 +98,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Performance: There's now one thread that goes through the rooms and execute the time-driven events (when the timer reaches 0 in infinity king mode for example), instead of one thread per each room.
 * Balancing: The last player in infinity king mode gets a lucky multiplier of 2, the next one gets 3 and so on. That means the last player gets x2 elements and code, while the first one gets x10 (if there are 8 players, the first player have a lucky multiplier of 10, instead of 9). That is according to this video - https://www.youtube.com/watch?v=ghxMZ4jF8Jg
 * Fixed a bug where the infinity king timer wasn't started.
+* Fixed a bug where the infinity score popup was shown in mission mode when the timer reaches 0. 
 
 # 24/04/2017
 * While having 2 or more players in a room, when one player performs an action, such as moving, this action is sent to the server, which then forwards the message to everyone in the room. This mean the latency is doubled, because the communication works like this: client->server->client. The last two days I worked on getting the message to skip the server, so the client would send the action directly to the other users, instead of passing through the server (so that the communication would work like this: client->client). This would reduce latency by at least half. I believe I got it working, but more tests need to be taken.
