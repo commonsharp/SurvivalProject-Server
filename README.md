@@ -106,6 +106,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 # 26/04/2017
 * Infinity symbol mode is now working. When you destroy a symbol, each player of the same team gets 1 point. The one dealing the killing blow gets 2 points, instead of 1. If the symbol that was destroyed belongs to the other team, the other team loses 1 point. I couldn't find a video of this game mode, so the mechanism may be different than the one in the original game.
 * The master of the room in infinity king mode or infinity symbol mode can now change the game map, game type (to king/to symbol) or the time of the game.
+* Level 300+ missions are now working.
 * The timer now shows the correct time in mission mode.
 * Premium cards: Skill fusion and Level fusion are now working.
 * Performance: There's now one thread that goes through the rooms and execute the time-driven events (when the timer reaches 0 in infinity king mode for example), instead of one thread per each room.
