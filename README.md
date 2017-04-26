@@ -37,7 +37,12 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 There are some visual bugs in the client that the server cannot fix. To fix them, close the game and run the game again.
 * When you use a ranged attack, the projectile is invisible. May happen after an infinity symbol mode game.
 
-# Game modes there aren't working yet
+# Features that aren't working yet
+- [ ] Trading
+- [ ] User shop 1
+- [ ] Spectators
+
+# Game modes that aren't working yet
 - [ ] Infinity survival mode
 - [x] Infinity symbol mode
 - [ ] King slayer mode
@@ -86,7 +91,6 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] The stats after every game mode isn't correct.
 - [ ] Change the mission lost packet to GameCompletedHandler.
 - [x] Change the lucky multipliers to 2, 3, 5 and 10.
-- [ ] Add spectators.
 
 # Known bugs
 * ~~When you finish a mission, the mission level on the left of the screen doesn't change.~~
