@@ -35,7 +35,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 
 # Bugs in the client
 There are some visual bugs in the client that the server cannot fix. To fix them, close the game and run the game again.
-* When you use a ranged attack, the projectile is invisible.
+* When you use a ranged attack, the projectile is invisible. May happen after an infinity symbol mode game.
 
 # Game modes there aren't working yet
 - [ ] Infinity survival mode
