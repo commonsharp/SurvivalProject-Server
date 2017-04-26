@@ -33,7 +33,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 
 **@guild-leave** - leaves your guild.
 
-# Game modes left to add
+# Game modes there aren't working yet
 - [ ] Infinity survival mode
 - [ ] Infinity symbol mode
 - [ ] King slayer mode
@@ -41,7 +41,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Tournament mode
 - [ ] Ice hokey mode :(
 
-# Premiums cards that are not yet working
+# Premiums cards that aren't yet working
 - [ ] Master card
 - [ ] Visit bonus x2
 - [ ] Elemental bonus x3
