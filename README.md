@@ -39,7 +39,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 
 # Game modes there aren't working yet
 - [ ] Infinity survival mode
-- [ ] Infinity symbol mode
+- [x] Infinity symbol mode
 - [ ] King slayer mode
 - [ ] Fight club mode
 - [ ] Tournament mode
@@ -49,16 +49,16 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] Master card
 - [ ] Visit bonus x2
 - [ ] Elemental bonus x3
-- [ ] Premium Event
+- [ ] Premium Event - **Can't work on this card because I don't know what it's suppose to do**
 - [ ] SuperSilver
 - [x] CardSlot+18, CardSlot+30 - **This is actually a package**
 - [x] Skill I fusion
 - [x] Skill II fusion
 - [ ] User shop I
 - [x] Packages
-- [ ] Skill 1-1 fusion
-- [ ] Skill 2-1 fusion
-- [ ] Skill 2-2 fusion
+- [ ] Skill 1-1 fusion - **Can't work on this card because I don't know what it's suppose to do**
+- [ ] Skill 2-1 fusion - **Can't work on this card because I don't know what it's suppose to do**
+- [ ] Skill 2-2 fusion - **Can't work on this card because I don't know what it's suppose to do**
 - [x] Skill fusion
 - [x] Level fusion
 
@@ -99,6 +99,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
 
 # 26/04/2017
+* Infinity symbol mode is now working. When you destroy a symbol, each player of the same team gets 1 point. The one dealing the killing blow gets 2 points, instead of 1. If the symbol that was destroyed belongs to the other team, the other team loses 1 point. I couldn't find a video of this game mode, so the mechanism may be different than the one in the original game.
 * The master of the room in infinity king mode or infinity symbol mode can now change the game map, game type (to king/to symbol) or the time of the game.
 * The timer now shows the correct time in mission mode.
 * Premium cards: Skill fusion and Level fusion are now working.
