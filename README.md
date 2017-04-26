@@ -33,6 +33,10 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 
 **@guild-leave** - leaves your guild.
 
+# Bugs in the client
+There are some visual bugs in the client that the server cannot fix. To fix them, close the game and run the game again.
+* When you use a ranged attack, the projectile is invisible.
+
 # Game modes there aren't working yet
 - [ ] Infinity survival mode
 - [ ] Infinity symbol mode
@@ -83,7 +87,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] Change the mission lost packet to GameCompletedHandler.
 - [x] Change the lucky multipliers to 2, 3, 5 and 10.
 
-# List of bugs
+# Known bugs
 * ~~When you finish a mission, the mission level on the left of the screen doesn't change.~~
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
 * Death timer in big matches doesn't work.
