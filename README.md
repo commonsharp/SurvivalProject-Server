@@ -81,7 +81,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 - [ ] The stats after a mission isn't correct.
 - [ ] The stats after every game mode isn't correct.
 - [ ] Change the mission lost packet to GameCompletedHandler.
-- [ ] Change the lucky multipliers to 2, 3, 5 and 10.
+- [x] Change the lucky multipliers to 2, 3, 5 and 10.
 
 # List of bugs
 * ~~When you finish a mission, the mission level on the left of the screen doesn't change.~~
@@ -98,6 +98,7 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 * Premium cards: Skill fusion and Level fusion are now working.
 * Performance: There's now one thread that goes through the rooms and execute the time-driven events (when the timer reaches 0 in infinity king mode for example), instead of one thread per each room.
 * Balancing: The last player in infinity king mode gets a lucky multiplier of 2, the next one gets 3 and so on. That means the last player gets x2 elements and code, while the first one gets x10 (if there are 8 players, the first player have a lucky multiplier of 10, instead of 9). That is according to this video - https://www.youtube.com/watch?v=ghxMZ4jF8Jg
+* Balancing: The lucky multiplier can now be one the following values: 1, 2, 3, 5 and 10 instead of every value.
 * Fixed a bug where the infinity king timer wasn't started.
 * Fixed a bug where the infinity score popup was shown in mission mode when the timer reaches 0. 
 
