@@ -39,7 +39,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 
 # Features that aren't working yet
 - [ ] Trading
-- [ ] User shop 1
+- [ ] Manual user shops
 - [ ] Spectators
 
 # Game modes that aren't working yet
