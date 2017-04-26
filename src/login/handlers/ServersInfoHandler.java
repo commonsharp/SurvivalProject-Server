@@ -161,10 +161,10 @@ public class ServersInfoHandler extends LoginHandler {
 		output.putInt(0x2C, server.getPopulation());
 		output.putString(0x30, server.getName());
 		output.putString(0x4D, server.getBestGuild());
-		output.putShort(0x5A, (short) 0);
+		output.putShort(0x5A, (short) 4000);
 		output.putInt(0x5C, server.getMaxPopulation());
-		output.putByte(0x60, (byte) 0);
-		output.putInt(0x64, 0);
+		output.putByte(0x60, (byte) 3000);
+		output.putInt(0x64, 2000);
 		
 		return output.toArray();
 	}

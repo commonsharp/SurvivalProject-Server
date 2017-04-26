@@ -7,15 +7,20 @@ public class ExperienceHelper {
 		return experience;
 	}
 	
-	// 50% to get 1. 25% to get 2. 12.5% to get 3... 100/2^k% to get k
 	public static int getLuckyMultiplier() {
-		int randomLucky = (int) Math.ceil(Math.log(Math.random()) / Math.log(0.5f));
+		int amount = (int) Math.ceil(Math.log(Math.random()) / Math.log(0.5f));
 		
-		if (randomLucky == 0) {
-			randomLucky = 1;
+		if (amount == 0) {
+			amount = 1;
 		}
 		
-		return randomLucky;
+		if (amount > 5) {
+			amount = 5;
+		}
+		
+		int[] values = {1, 2, 3, 5, 10};
+		
+		return values[amount - 1];
 	}
 	
 	// 50% to get 0. 25% to get 1. 12.5% to get 2. 6.25% to get 3 and 6.25% to get 4.
@@ -77,6 +82,7 @@ public class ExperienceHelper {
 				6553600, 13107200, 26214400, 52428800,
 				104857600, 209715200, 419430400, 838860800,
 				1677721600};
+		
 	    final long minPointForLevelQword[] = {3355443200L, 6710886400L, 13421772800L, 26843545600L};
 	    
 	    for (int i = minPointForLevelQword.length - 1; i >= 0; i--) {

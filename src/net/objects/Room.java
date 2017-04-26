@@ -52,6 +52,7 @@ public class Room {
 	
 	public int[] infinityPoints;
 	public long roomStartTime;
+	public int roomTimerTime;
 	
 	public Room(int roomID, String roomName, String password, String roomCreator, int gameMode, int gameMap, int numberOfPlayers, boolean isWithScrolls,
 			boolean isWithTeams, int cardsLimit, boolean isLimitAnger) {
@@ -72,6 +73,7 @@ public class Room {
 		this.masterIndex = 0;
 		this.coinLocation = 0;
 		this.infinityPoints = new int[8];
+		this.roomTimerTime = 8 * 60 * 1000;
 		
 		for (int i = 0; i < 8; i++) {
 			infinityPoints[i] = 1;
@@ -271,6 +273,8 @@ public class Room {
 			return false;
 		case INFINITY_KING:
 			return false;
+		case INFINITY_SYMBOL:
+			return false;
 		case DUEL:
 			return true;
 		case ASSAULT:
@@ -390,6 +394,8 @@ public class Room {
 		case INFINITY_SURVIVAL:
 			return 0;
 		case INFINITY_KING:
+			return 1;
+		case INFINITY_SYMBOL:
 			return 1;
 		case DUEL:
 			return 1;

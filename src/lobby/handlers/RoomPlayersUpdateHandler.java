@@ -52,10 +52,13 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 	public void afterSend() throws IOException, SQLException {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(room));
-		
 		lobbyServer.sendRoomMessage(userSession, getResponse(userSession.getUser()), false);
 		
 		if (room.isStarted) {
+			if (room.roomStartTime == 0) {
+				System.out.println("in");
+				room.roomStartTime = System.currentTimeMillis();
+			}
 			if (room.getGameMode() == GameMode.HERO) {
 				int oneTeam = room.bluePlayersCount == 1 ? 10 : 20;
 				
@@ -96,7 +99,7 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 				
 				System.out.println("Infinity king: " + room.blueKingIndex);
 				lobbyServer.sendRoomMessage(userSession, new RoomGameModeChangedHandler(lobbyServer, userSession).getResponse2(), true);
-				lobbyServer.sendRoomMessage(userSession, new InfinityKingPointsHandler(lobbyServer, userSession).getResponse(room.infinityPoints, 1), true);
+				lobbyServer.sendRoomMessage(userSession, new InfinityKingPointsHandler(lobbyServer, userSession).getResponse(room.infinityPoints, 1, 0), true);
 				sendTCPMessage(new StartCountdownHandler(lobbyServer, userSession).getResponse());
 			}
 			if (room.getGameMode() == GameMode.INFINITY_SURVIVAL) {
@@ -105,8 +108,8 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 			}
 			if (room.getGameMode() == GameMode.INFINITY_SYMBOL) {
 				lobbyServer.sendRoomMessage(userSession, new RoomGameModeChangedHandler(lobbyServer, userSession).getResponse2(), true);
-				lobbyServer.sendRoomMessage(userSession, new InfinityKingPointsHandler(lobbyServer, userSession).getResponse(room.infinityPoints, 1), true);
-				lobbyServer.sendRoomMessage(userSession, new StartCountdownHandler(lobbyServer, userSession).getResponse(), true);
+				lobbyServer.sendRoomMessage(userSession, new InfinityKingPointsHandler(lobbyServer, userSession).getResponse(room.infinityPoints, 1, 0), true);
+				sendTCPMessage(new StartCountdownHandler(lobbyServer, userSession).getResponse());
 			}
 			
 			if (room.getGameMode() == GameMode.KING_SLAYER) {
@@ -130,13 +133,9 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 			for (int i = 8; i < 40; i++) {
 				room.isAlive[i] = true;
 			}
-			
-			if (room.roomStartTime == 0) {
-				room.roomStartTime = System.currentTimeMillis();
-			}
 		}
 		
-		System.out.println(room.roomStartTime);
+		System.out.println("room time: " + room.roomStartTime);
 	}
 
 	byte b;
@@ -160,7 +159,6 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		
 		return getResponse(userSession.getUser());
 	}
-	
 
 	public byte[] getResponse(User user) {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
@@ -169,17 +167,18 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.ROOM_PLAYERS_UPDATE_RESPONSE);
 		output.putInt(0x14, user.roomSlot); // slot. first player in the room = slot 0. next one = slot 1 and so on.
-//		output.putString(0x18, "10.0.0.50");
-//		output.putString(0x28, "10.0.0.50");
+//		output.putString(0x18, "10.0.0.50"); // IP!!!
+		output.putString(0x18, user.udpIPAddress.getHostAddress()); // IP!!!
+		output.putString(0x28, user.udpIPAddress.getHostAddress()); // not sure lol
 		output.putInt(0x38, user.playerLevel);
 		output.putString(0x3C, user.username);
 		output.putString(0x49, user.guildName);
 		output.putString(0x56, user.guildDuty);
-		output.putByte(0x63, (byte) 10);
-		output.putInt(0x64, 10);
+		output.putByte(0x63, (byte) 0);
+		output.putInt(0x64, 0);
 		output.putInt(0x70, user.roomReady);
 		output.putInt(0x74, user.roomCharacter);
-		output.putInt(0x78, 10); // same as unknown04 in the request. if this is -1, there are no characters?
+		output.putInt(0x78, 0); // same as unknown04 in the request. if this is -1, there are no characters?
 		output.putInt(0x7C, isRandom); // is random
 		output.putInt(0x80, user.roomTeam);
 		output.putInt(0x84, 0); //ko
@@ -214,8 +213,8 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		output.putInt(0xC8, user.getItemSkill(user.petIndex));
 		
 		output.putInts(0xCC, user.scrolls);
-		output.putInt(0xD0, -1); // between 1 and 16
-		output.putInt(0xD4, -1); // same ^
+		output.putInt(0xD0, 0); // between 1 and 16
+		output.putInt(0xD4, 0); // same ^
 		output.putInt(0xD8, user.getItemID(user.footIndex));
 		output.putInt(0xDC, user.getItemID(user.bodyIndex));
 		output.putInt(0xE0, user.getItemID(user.hand1Index));
@@ -248,8 +247,8 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		else
 			output.putInt(0xF4, 2);
 		
-		output.putInt(0xF8, -1); // this one is used in modes where you can spectate (teams). this one is compared with 0~7 (each slot)
-		output.putInt(0xFC, -1); // same ^ this one is also compared with 0~7...
+		output.putInt(0xF8, 0); // this one is used in modes where you can spectate (teams). this one is compared with 0~7 (each slot)
+		output.putInt(0xFC, 0); // same ^ this one is also compared with 0~7...
 		
 //		if (user.username.equals(lobbyServer.getRoom(roomID).roomCreator)) {
 //			b = 0;
@@ -265,14 +264,14 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		// where if it's set to 1 the game waits for everyone but still doesn't do much afterwards.
 		output.putBoolean(0x100, user.isJoined); // this is a boolean... setting it to 1 doesn't start for some reason :S
 		output.putBoolean(0x101, user.extraLife); // heart near the player. extra life by super silver or so.
-		output.putByte(0x102, (byte) -1); // 0x59 in create room. this is master card 1.3x exp/code bonus
-		output.putByte(0x103, (byte) -1);
+		output.putByte(0x102, (byte) 0); // 0x59 in create room. this is master card 1.3x exp/code bonus
+		output.putByte(0x103, (byte) 0);
 
 		output.putInt(0x104, room.missionLevel); // current mission level (you can play a level 20 mission with someone who's level 20 while you're level 40 for example)
 		output.putInt(0x108, user.missionLevel); // my mission level
-		output.putInt(0x10C, -1); // aura. 1 - aura. others - nothing?
+		output.putInt(0x10C, 0); // aura. 1 - aura. others - nothing?
 		output.putInt(0x110, user.booster);
-		output.putInt(0x114, -1); // something to do with guild mark
+		output.putInt(0x114, 0); // something to do with guild mark
 		
 		return output.toArray();
 	}

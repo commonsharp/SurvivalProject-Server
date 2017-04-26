@@ -33,7 +33,7 @@ public class GetMissionLevelHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.GET_MISSION_LEVEL_RESPONSE);
 		output.putInt(0x14, userSession.getUser().missionLevel);
-		output.putInt(0x18, 2); // ?
+		output.putInt(0x18, 0); // ?
 		
 		return output.toArray();
 	}

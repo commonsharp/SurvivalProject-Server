@@ -32,7 +32,7 @@ public class InfinityKingPointsHandler extends LobbyHandler {
 		return null;
 	}
 	
-	public byte[] getResponse(int[] pointsDifference, int type) {
+	public byte[] getResponse(int[] pointsDifference, int type, int monsterIndex) {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
@@ -48,7 +48,7 @@ public class InfinityKingPointsHandler extends LobbyHandler {
 		 */
 		output.putInt(0x14, type);
 		output.putInts(0x18, pointsDifference);
-		output.putInt(0x38, 0); // monster index (for symbols probably)
+		output.putInt(0x38, monsterIndex); // monster index (for symbols probably)
 		
 		return output.toArray();
 	}

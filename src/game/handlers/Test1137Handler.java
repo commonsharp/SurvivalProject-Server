@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import game.GameHandler;
-import net.GenericUDPServer;
+import game.GameServer;
 import tools.ExtendedByteBuffer;
 
 public class Test1137Handler extends GameHandler {
 	public static final int RESPONSE_LENGTH = 0x14;
 	
-	public Test1137Handler(GenericUDPServer udpServer) {
-		super(udpServer);
+	public Test1137Handler(GameServer gameServer) {
+		super(gameServer);
 	}
 
 	@Override

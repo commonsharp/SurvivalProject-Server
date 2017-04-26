@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import database.GuildsHelper;
+import game.handlers.GameNotificationHandler;
+import game.handlers.GameNotificationHandler.GameAnnouncementResult;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
@@ -59,11 +61,11 @@ public class ChatMessageHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-//		lobbyServer.sendBroadcastGameMessage(userSession, new GameNotificationHandler(lobbyServer.gameServer).getResponse(
-//				GameAnnouncementResult.LEVEL_UP, userSession.getUser().username, 37, 0));
+		lobbyServer.sendBroadcastGameMessage(userSession, new GameNotificationHandler(lobbyServer.gameServer).getResponse(
+				GameAnnouncementResult.LEVEL_UP, userSession.getUser().username, 37, 0));
 //		lobbyServer.sendRoomMessage(userSession, new Test4471Handler(lobbyServer, userSession).getResponse(), true);
 //		sendTCPMessage(new Test4471Handler(lobbyServer, userSession).getResponse());
-		lobbyServer.sendRoomMessage(userSession, new RoomGameModeChangedHandler(lobbyServer, userSession).getResponse2(), true);
+//		lobbyServer.sendRoomMessage(userSession, new RoomGameModeChangedHandler(lobbyServer, userSession).getResponse2(), true);
 //		lobbyServer.sendRoomMessage(userSession, new ChangeMapHandler(lobbyServer, userSession).getResponse(), true);
 		if (text.toLowerCase().startsWith("@gender")) {
 			userSession.getUser().isMale = !userSession.getUser().isMale;

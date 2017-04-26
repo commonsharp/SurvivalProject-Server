@@ -31,7 +31,7 @@ public class InfinityPointsHandler extends LobbyHandler {
 		return null;
 	}
 	
-	public byte[] getResponse(User user, int multiplier, int[] levels, int[] elements, int[] coins) throws SQLException {
+	public byte[] getResponse(User user, int[] luckyMultiplier, int[] levels, int[] elements, int[] coins) throws SQLException {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, 0x4473);
@@ -53,22 +53,22 @@ public class InfinityPointsHandler extends LobbyHandler {
 			output.putInt(0x78 + 4 * i, 8000); // code gained
 			output.putInt(0x98 + 4 * i, elements[i]); // element type
 			output.putInt(0xB8 + 4 * i, 5); // element count
-			output.putInt(0xD8 + 4 * i, multiplier); // element multiplier
-			output.putInt(0xF8 + 4 * i, multiplier); // lucky multiplier
+			output.putInt(0xD8 + 4 * i, luckyMultiplier[i] + 1); // element multiplier
+			output.putInt(0xF8 + 4 * i, luckyMultiplier[i]); // lucky multiplier
 			output.putInt(0x118 + 4 * i, levels[i]); // new level
 			output.putInt(0x138 + 4 * i, 0); // ?
 			output.putInt(0x158 + 4 * i, coins[i]); // coins gained
-			output.putInt(0x178 + 4 * i, multiplier); // coins multiplier
+			output.putInt(0x178 + 4 * i, 2); // coins multiplier
 			output.putInt(0x198 + 4 * i, 0); // ?
 		}
 		
 		int mySlot = userSession.getUser().roomSlot;
 		
-		userSession.getUser().whiteCards[elements[mySlot] - 1] += 5 * multiplier;
+		userSession.getUser().whiteCards[elements[mySlot] - 1] += 5 * (luckyMultiplier[mySlot] + 1);
 		userSession.getUser().playerLevel = levels[mySlot];
-		userSession.getUser().playerCode += 8000 * multiplier;
-		userSession.getUser().playerExperience += 8000 * multiplier;
-		userSession.getUser().avatarMoney += coins[mySlot] * multiplier;
+		userSession.getUser().playerCode += 8000 * luckyMultiplier[mySlot];
+		userSession.getUser().playerExperience += 8000 * luckyMultiplier[mySlot];
+		userSession.getUser().avatarMoney += coins[mySlot] * 2;
 		userSession.getUser().saveUser();
 		
 		output.putInt(0x1B8, 0); // no use it seems

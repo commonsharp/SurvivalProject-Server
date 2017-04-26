@@ -252,7 +252,7 @@ public class PlayerDeathHandler extends LobbyHandler {
 				difference[i] = room.infinityPoints[i] - oldPoints[i];
 			}
 			
-			lobbyServer.sendRoomMessage(userSession, new InfinityKingPointsHandler(lobbyServer, userSession).getResponse(difference, 4), true);
+			lobbyServer.sendRoomMessage(userSession, new InfinityKingPointsHandler(lobbyServer, userSession).getResponse(difference, 4, 0), true);
 		}
 	}
 

@@ -68,8 +68,6 @@ public class JoinLobbyHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		lobbyServer.onJoinLobby(userSession);
-		
 		// Change the population
 		Connection con = DatabaseConnection.getConnection();
 		PreparedStatement ps = con.prepareStatement("UPDATE servers SET population=? WHERE hostname=? AND port=?");
@@ -216,7 +214,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 	}
 
 	@Override
-	public void processMessage() throws SQLException {
+	public void processMessage() throws SQLException, IOException {
 		userSession.getUser().loadUser(lobbyServer);
 		
 		// Get the channel type
@@ -235,5 +233,8 @@ public class JoinLobbyHandler extends LobbyHandler {
 		con.close();
 		
 		lobbyServer.moveToCorrectPlace();
+		
+		// This is here because the mission level needs to get sent before the join lobby response.
+		lobbyServer.onJoinLobby(userSession);
 	}
 }

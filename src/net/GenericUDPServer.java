@@ -7,8 +7,8 @@ import java.net.InetAddress;
 import java.sql.SQLException;
 
 import lobby.LobbyServer;
+import main.Main;
 import net.handlers.GenericHandler;
-import net.objects.User;
 import tools.ExtendedByteBuffer;
 import tools.HexTools;
 
@@ -39,8 +39,12 @@ public abstract class GenericUDPServer implements Runnable {
 	public void run() {
 		try {
 			System.out.println(name + " has started listening.");
-			socket = new DatagramSocket(port, InetAddress.getByName("10.0.0.50"));
-//			sendSocket = new DatagramSocket(8107, InetAddress.getByName("10.0.0.50"));
+			if (Main.IS_RELEASE) {
+				socket = new DatagramSocket(port, InetAddress.getByName("192.99.73.148"));
+			}
+			else {
+				socket = new DatagramSocket(port, InetAddress.getByName("10.0.0.50"));
+			}
 			
 			while (isRunning) {
 				// need to check maybe there can be bigger packets...
@@ -60,6 +64,15 @@ public abstract class GenericUDPServer implements Runnable {
 				if (length == -1) {
 					System.out.println("User disconnected");
 					break;
+				}
+				
+				if (Main.FORCE_LATENCY) {
+					try {
+						Thread.sleep(Main.FORCE_LATENCY_TIME);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				
 				int encryptionVersion = 1;
@@ -130,28 +143,36 @@ public abstract class GenericUDPServer implements Runnable {
 		}
 	}
 	
-	public void sendMessage(UserSession sender, User user, byte[] response) throws IOException {
+	public void sendMessage(UserSession fromSession, UserSession toSession, byte[] response) throws IOException {
 		// Change the validator
 		HexTools.putIntegerInByteArray(response, 0x8, 0x2B1C);
 		
 		// Change the state
-		HexTools.putIntegerInByteArray(response, 16, sender.getUser().udpState);
+		HexTools.putIntegerInByteArray(response, 16, (int) (Math.random() * Integer.MAX_VALUE));
+//		HexTools.putIntegerInByteArray(response, 16, fromSession.getUser().udpState);
 
 		// Change the checksum
 		HexTools.putIntegerInByteArray(response, 12, Cryptography.getDigest(response));
 		
 		// Encrypt and send
-		Cryptography.encryptMessage(user.encryptionVersion, response);
-		DatagramPacket packet = new DatagramPacket(response, response.length, user.udpIPAddress, user.udpPort);
+		Cryptography.encryptMessage(toSession.getUser().encryptionVersion, response);
+		DatagramPacket packet = new DatagramPacket(response, response.length, toSession.getUser().udpIPAddress, toSession.getUser().udpPort);
 		socket.send(packet);
 	}
 	
 	public void sendMessage(int encryptionVersion, int state, InetAddress ipAddress, int port, byte[] response) throws IOException {
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Change the validator
 		HexTools.putIntegerInByteArray(response, 0x8, 0x2B1C);
 		
 		// Change the state
-		HexTools.putIntegerInByteArray(response, 16, state);
+		HexTools.putIntegerInByteArray(response, 16, (int) (Math.random() * Integer.MAX_VALUE));
+//		HexTools.putIntegerInByteArray(response, 16, state);
 		
 		// Change the checksum
 		HexTools.putIntegerInByteArray(response, 12, Cryptography.getDigest(response));

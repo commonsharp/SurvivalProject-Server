@@ -5,7 +5,7 @@ import java.net.InetAddress;
 import java.sql.SQLException;
 
 import game.GameHandler;
-import net.GenericUDPServer;
+import game.GameServer;
 import net.Messages;
 import tools.ExtendedByteBuffer;
 
@@ -15,8 +15,8 @@ public class JoinServerHandler extends GameHandler {
 	InetAddress ipAddress;
 	int port;
 	
-	public JoinServerHandler(GenericUDPServer udpServer, byte[] messageBytes, InetAddress ipAddress, int port) {
-		super(udpServer, messageBytes);
+	public JoinServerHandler(GameServer gameServer, byte[] messageBytes, InetAddress ipAddress, int port) {
+		super(gameServer, messageBytes);
 		this.ipAddress = ipAddress;
 		this.port = port;
 	}

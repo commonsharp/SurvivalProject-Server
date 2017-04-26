@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import database.DatabaseConnection;
 import lobby.LobbyHandler;
@@ -70,8 +71,8 @@ public class MonsterDeathHandler extends LobbyHandler {
 		int randomLucky = ExperienceHelper.getLuckyMultiplier();
 		int[] experienceGained = ExperienceHelper.getExperience(damageDone);
 		
-		experienceGained[0] = 200;
-		randomLucky = 1;
+//		experienceGained[0] = 200;
+//		randomLucky = 1;
 		
 		int[] luckyMultiplier = new int[8];
 		for (int i = 0; i < 8; i++) {
@@ -262,6 +263,42 @@ public class MonsterDeathHandler extends LobbyHandler {
 				
 				lobbyServer.sendRoomMessage(userSession, new GameCompletedHandler(lobbyServer, userSession).getResponse(results, userTeam), true);
 			}
+		}
+		else if (room.getGameMode() == GameMode.INFINITY_SYMBOL && monsterIndex < 4) {
+			int[] oldPoints = Arrays.copyOf(room.infinityPoints, room.infinityPoints.length);
+			
+			UserSession currentUserSession;
+			int scoringTeam = userSession.getUser().roomTeam;
+			
+			for (int i = 0; i < 8; i++) {
+				currentUserSession = room.getUserSession(i);
+				
+				if (currentUserSession != null) {
+					if (room.symbols[monsterIndex] == 0) {
+						if (currentUserSession.getUser().roomTeam == scoringTeam) {
+							room.infinityPoints[i]++;
+						}
+					}
+					else {
+						if (currentUserSession.getUser().roomTeam == scoringTeam) {
+							room.infinityPoints[i]++;
+						}
+						else {
+							room.infinityPoints[i]--;
+						}
+					}
+				}
+			}
+			
+			room.infinityPoints[userSession.getUser().roomSlot]++;
+			
+			int[] difference = new int[8];
+			for (int i = 0; i < 8; i++) {
+				difference[i] = room.infinityPoints[i] - oldPoints[i];
+			}
+			
+			lobbyServer.sendRoomMessage(userSession, new InfinityKingPointsHandler(lobbyServer, userSession).getResponse(difference, 2, monsterIndex), true);
+			room.symbols[monsterIndex] = userSession.getUser().roomTeam;
 		}
 	}
 

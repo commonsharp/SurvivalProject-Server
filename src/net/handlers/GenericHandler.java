@@ -17,7 +17,7 @@ public abstract class GenericHandler {
 	protected ExtendedByteBuffer input;
 	
 	public abstract void interpretBytes();
-	public abstract void processMessage() throws SQLException;
+	public abstract void processMessage() throws SQLException, IOException;
 	public abstract byte[] getResponse() throws SQLException;
 	public abstract void afterSend() throws IOException, SQLException;
 	

@@ -5,7 +5,6 @@ import java.io.IOException;
 import game.GameHandler;
 import game.GameServer;
 import lobby.handlers.SoccerGoalHandler;
-import net.GenericUDPServer;
 import net.UserSession;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
@@ -18,13 +17,13 @@ public class GameStartedHandler extends GameHandler {
 	int fromSlot;
 	int toSlot;
 	
-	public GameStartedHandler(GameServer gameServer, GenericUDPServer udpServer, byte[] messageBytes) {
+	public GameStartedHandler(GameServer gameServer, GameServer udpServer, byte[] messageBytes) {
 		super(udpServer, messageBytes);
 		response = messageBytes;
 		this.gameServer = gameServer;
 	}
 	
-	public GameStartedHandler(GameServer gameServer, GenericUDPServer udpServer) {
+	public GameStartedHandler(GameServer gameServer, GameServer udpServer) {
 		super(udpServer);
 		this.gameServer = gameServer;
 	}
@@ -54,7 +53,7 @@ public class GameStartedHandler extends GameHandler {
 	@Override
 	public void afterSend() throws IOException {
 		// Send the packet to everyone in the room
-		gameServer.sendToUser(udpServer, roomID, fromSlot, toSlot, getResponse2(), false);
+		gameServer.sendToUser(gameServer, roomID, fromSlot, toSlot, getResponse2(), false);
 
 		UserSession userSession = gameServer.lobby.getRoom(roomID).getUserSession(fromSlot);
 		

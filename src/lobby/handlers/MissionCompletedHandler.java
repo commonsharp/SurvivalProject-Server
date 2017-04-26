@@ -7,6 +7,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
 public class MissionCompletedHandler extends LobbyHandler {
@@ -37,7 +38,7 @@ public class MissionCompletedHandler extends LobbyHandler {
 		if (progression == 1) {
 			result = 1; // wait
 		}
-		else if (userSession.getUser().missionLevel < 300) {
+		else if (userSession.getUser().missionLevel % 300 != 0) {
 			result = 3; // next mission
 		}
 		else {
@@ -53,16 +54,46 @@ public class MissionCompletedHandler extends LobbyHandler {
 	@Override
 	public void afterSend() throws IOException, SQLException {
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
-		sendTCPMessage(new GetMissionLevelHandler(lobbyServer, userSession).getResponse());
+		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(userSession.getUser().roomIndex)));
 	}
 
 	@Override
-	public void processMessage() throws SQLException {
-		if (progression == 2 && userSession.getUser().missionLevel < 300) {
-			userSession.getUser().missionLevel++;
-			lobbyServer.getRoom(userSession.getUser().roomIndex).missionLevel++;
+	public void processMessage() throws SQLException, IOException {
+		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		if (progression == 1) {
+			int[] results = new int[8];
+			
+			for (int i = 0; i < 8; i++) {
+				results[i] = -1;
+				
+				if (room.getUserSession(i) != null) {
+					results[i] = 1;
+				}
+			}
+			
+			lobbyServer.sendRoomMessage(userSession, new GameCompletedHandler(lobbyServer, userSession).getResponse(results, 10), true);
+			
+			if (room.missionLevel == userSession.getUser().missionLevel) {
+				userSession.getUser().missionLevel++;
+				
+				if (userSession.getUser().missionLevel % 5 == 0 && userSession.getUser().missionLevel % 10 != 0) {
+					userSession.getUser().missionLevel++;
+				}
+			}
+			
+			room.missionLevel++;
+			
+			if (room.missionLevel % 5 == 0 && room.missionLevel % 10 != 0) {
+				room.missionLevel++;
+			}
+			
 			userSession.getUser().saveUser();
 		}
+
+		if (progression == 2) {
+			room.roomStartTime = System.currentTimeMillis();
+		}
+//		sendTCPMessage(new GetMissionLevelHandler(lobbyServer, userSession).getResponse());
 	}
 
 }

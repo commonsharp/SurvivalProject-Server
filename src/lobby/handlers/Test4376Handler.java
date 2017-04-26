@@ -26,24 +26,26 @@ public class Test4376Handler extends LobbyHandler {
 	}
 
 	@Override
-	public byte[] getResponse() {
+	public byte[] getResponse() throws SQLException {
+		return null;
+	}
+	
+	public byte[] getResponse(int i) {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, 0x4376);
-		output.putInt(0x14, 1);
-		output.putString(0x18, "yoyyyyyyyyyyyyyyyyyyyy");
-		output.putInt(0x7C, 2);
-		output.putShort(0x80, (short) 10);
-		output.putShort(0x84, (short) 1);
-		output.putShort(0x86, (short) 1);
+		output.putInt(0x14, i); // 2 or 3
+		output.putString(0x18, "baraklevy");
+		output.putInt(0x7C, 3); // element type
+		output.putShort(0x80, (short) 10); // element count
+		output.putShort(0x84, (short) 0);
+		output.putShort(0x86, (short) 0);
 		
 		return output.toArray();
 	}
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

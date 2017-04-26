@@ -140,7 +140,7 @@ public class Messages {
 	public static final int NEW_USER_SHOP_I_RESPONSE = 0x4373;
 	public static final int UNKNOWN_LOBBY_REQUEST_3 = 0x4374; // training
 	public static final int UNKNOWN_LOBBY_REQUEST_4 = 0x4375; // training
-	public static final int UNKNOWN_LOBBY_RESPONSE_26 = 0x4376;
+	public static final int UNKNOWN_LOBBY_RESPONSE_26 = 0x4376; // training record
 	public static final int UNKNOWN_LOBBY_RESPONSE_27 = 0x4377; // this one sets a lot of unknown fields in MyInfo
 	public static final int SPAWN_ELEMENT_RESPONSE = 0x4378;
 	public static final int PICK_BUBBLE_RESPONSE = 0x4379;

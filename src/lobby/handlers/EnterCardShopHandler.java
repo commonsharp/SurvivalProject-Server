@@ -41,6 +41,5 @@ public class EnterCardShopHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		sendTCPMessage(new Test4429Handler(lobbyServer, userSession).getResponse());
 	}
 }

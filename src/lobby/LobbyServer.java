@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import database.DatabaseConnection;
 import game.GameServer;
@@ -44,6 +45,7 @@ import lobby.handlers.HokeyGoalHandler;
 import lobby.handlers.IDVerificationHandler;
 import lobby.handlers.IncreaseCardSlotsHandler;
 import lobby.handlers.InfinityInfoHandler;
+import lobby.handlers.InfinityPointsHandler;
 import lobby.handlers.InvitePlayersHandler;
 import lobby.handlers.ItemsChangedHandler;
 import lobby.handlers.JoinLobbyHandler;
@@ -67,6 +69,8 @@ import lobby.handlers.SellCardHandler;
 import lobby.handlers.SendGiftHandler;
 import lobby.handlers.SendMemoHandler;
 import lobby.handlers.SoccerGoalHandler;
+import lobby.handlers.SpawnCodeHandler;
+import lobby.handlers.SpawnElementHandler;
 import lobby.handlers.StartCountdownHandler;
 import lobby.handlers.SymbolStateChanged;
 import lobby.handlers.TradeHandler;
@@ -76,10 +80,12 @@ import lobby.handlers.UserShopBuyCardHandler;
 import lobby.handlers.UserShopExtraSearchHandler;
 import lobby.handlers.UserShopIActionHandler;
 import lobby.handlers.UserShopSearchHandler;
+import net.ExperienceHelper;
 import net.GenericTCPServer;
 import net.Messages;
 import net.UserSession;
 import net.handlers.GenericHandler;
+import net.objects.GameMode;
 import net.objects.Room;
 import net.objects.UserShop;
 import tools.HexTools;
@@ -100,6 +106,7 @@ public class LobbyServer extends GenericTCPServer {
 		this.port = port;
 		
 		rooms = new Room[MAX_ROOMS];
+		startLobbyThread();
 	}
 	
 	public Room getRoom(int index) {
@@ -341,7 +348,7 @@ public class LobbyServer extends GenericTCPServer {
 		for (UserSession currentUserSession : userSessions) {
 			if (currentUserSession.getUser().udpIPAddress != null) {
 				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
-				gameServer.sendMessage(userSession, currentUserSession.getUser(), HexTools.duplicateArray(message));
+				gameServer.sendMessage(userSession, currentUserSession, HexTools.duplicateArray(message));
 			}
 		}
 	}
@@ -605,5 +612,140 @@ public class LobbyServer extends GenericTCPServer {
 	
 	public void setGameServer(GameServer gameServer) {
 		this.gameServer = gameServer;
+	}
+
+	public void onKeepAlive(InetAddress ipAddress, int port) throws IOException, SQLException {
+		UserSession userSession = findUserSession(ipAddress, port);
+		
+		if (userSession != null) {
+			if (userSession.getUser().isInGame) {
+				Room room = getRoom(userSession.getUser().roomIndex);
+				
+				room.totalTicks++;
+				
+				if (room.totalTicks % 10 == 0) {
+					sendRoomMessage(userSession, new SpawnElementHandler(this, userSession).getResponse(), true);
+				}
+				if (room.totalTicks % 1 == 0) {
+					sendRoomMessage(userSession, new SpawnCodeHandler(this, userSession).getResponse(), true);
+				}
+			}
+			userSession.getUser().totalTicks++;
+			
+			if (userSession.getUser().totalTicks % 200 == 0) {
+				int times = userSession.getUser().totalTicks / 200;
+				
+				if (times >= 4) {
+					times = 4;
+				}
+				
+				int amount = (int) Math.pow(2, times);
+				
+				if (userSession.getUser().timeBonus) {
+					amount *= 2;
+				}
+				
+				userSession.getUser().whiteCards[userSession.getUser().getElementType() - 1] += amount;
+				userSession.getUser().saveUser();
+			}
+		}
+	}
+	
+	public void startLobbyThread() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					while (true) {
+						for (int i = 0; i < rooms.length; i++) {
+							if (rooms[i] != null) {
+								if (rooms[i].getGameMode() == GameMode.INFINITY_SURVIVAL || rooms[i].getGameMode() == GameMode.INFINITY_KING || rooms[i].getGameMode() == GameMode.INFINITY_SYMBOL) {
+									if (rooms[i].roomStartTime != 0 && (System.currentTimeMillis() - rooms[i].roomStartTime) >= rooms[i].roomTimerTime) {
+										showInfinityScore(rooms[i]);
+									}
+								}
+							}
+						}
+						
+						Thread.sleep(500);
+					}
+				} catch (IOException | SQLException | InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}).start();
+	}
+	
+	public void showInfinityScore(Room room) throws IOException, SQLException {
+		System.out.println("in start countdown");
+		
+		int[] luckyMultiplier = new int[8];
+		int[] elements = new int[8];
+		int[] levels = new int[8];
+		
+		int[] slots = new int[8];
+		
+		for (int i = 0; i < 8; i++) {
+			slots[i] = i;
+		}
+		
+		int minimumIndex;
+		for (int i = 0; i < 8; i++) {
+			minimumIndex = -1;
+			if (room.getUserSession(i) != null) {
+				minimumIndex = i;
+				for (int j = i; j < 8; j++) {
+					if (room.getUserSession(j) != null && room.infinityPoints[minimumIndex] > room.infinityPoints[j]) {
+						minimumIndex = j;
+					}
+				}
+				
+				int temp = room.infinityPoints[minimumIndex];
+				room.infinityPoints[minimumIndex] = room.infinityPoints[i];
+				room.infinityPoints[i] = temp;
+				
+				temp = slots[minimumIndex];
+				slots[minimumIndex] = slots[i];
+				slots[i] = temp;
+			}
+		}
+		
+		System.out.println(Arrays.toString(slots));
+		int[] coins = new int[8];
+		int k = 0;
+		for (int i = 0; i < 8; i++) {
+			if (room.getUserSession(slots[i]) != null) {
+				coins[slots[i]] = 3 + k;
+				luckyMultiplier[slots[i]] = 2 + k;
+				k++;
+			}
+		}
+		
+		// If we have 8 players, the first one gets 11 coins, not 10.
+		// also, the lucky multiplier is 10, not 9.
+		if (k == 8) {
+			coins[slots[7]] = 11;
+			luckyMultiplier[slots[7]] = 10;
+		}
+		
+		for (int i = 0; i < 8; i++) {
+			UserSession currentUserSession = room.getUserSession(i);
+			
+			if (currentUserSession != null) {
+				elements[i] = (int) (Math.random() * 4) + 1;
+				levels[i] = ExperienceHelper.getLevel(currentUserSession.getUser().playerExperience + 8000 * luckyMultiplier[i]);
+			}
+		}
+		
+		for (int i = 0; i < 8; i++) {
+			UserSession currentUserSession = room.getUserSession(i);
+			
+			if (currentUserSession != null) {
+				InfinityPointsHandler iph = new InfinityPointsHandler(this, currentUserSession);
+				currentUserSession.sendMessage(iph.getResponse(currentUserSession.getUser(), luckyMultiplier, levels, elements, coins));
+				iph.afterSend();
+			}
+		}
 	}
 }

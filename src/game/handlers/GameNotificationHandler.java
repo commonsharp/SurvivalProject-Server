@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import game.GameHandler;
-import net.GenericUDPServer;
+import game.GameServer;
 import tools.ExtendedByteBuffer;
 
 public class GameNotificationHandler extends GameHandler {
@@ -36,8 +36,8 @@ public class GameNotificationHandler extends GameHandler {
 		}
 	}
 	
-	public GameNotificationHandler(GenericUDPServer udpServer) {
-		super(udpServer);
+	public GameNotificationHandler(GameServer gameServer) {
+		super(gameServer);
 	}
 
 	@Override

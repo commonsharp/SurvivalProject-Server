@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import game.GameHandler;
 import game.GameServer;
-import net.GenericUDPServer;
 import tools.ExtendedByteBuffer;
 
 public class ForwardMessageHandler extends GameHandler {
@@ -15,13 +14,13 @@ public class ForwardMessageHandler extends GameHandler {
 	int fromSlot;
 	int toSlot;
 	
-	public ForwardMessageHandler(GameServer gameServer, GenericUDPServer udpServer, byte[] messageBytes) {
+	public ForwardMessageHandler(GameServer gameServer, GameServer udpServer, byte[] messageBytes) {
 		super(udpServer, messageBytes);
 		response = messageBytes;
 		this.gameServer = gameServer;
 	}
 	
-	public ForwardMessageHandler(GameServer gameServer, GenericUDPServer udpServer) {
+	public ForwardMessageHandler(GameServer gameServer, GameServer udpServer) {
 		super(udpServer);
 		this.gameServer = gameServer;
 	}
@@ -56,8 +55,8 @@ public class ForwardMessageHandler extends GameHandler {
 		if (messageID == 0x1124 || messageID == 0x1112) {
 			sendInRoom = true;
 		}
-		gameServer.sendToUser(udpServer, roomID, fromSlot, toSlot, getResponse2(), sendInRoom);
-//		gameServer.roomMessage(udpServer, roomID, slot, getResponse2());
+		
+		gameServer.sendToUser(gameServer, roomID, fromSlot, toSlot, getResponse2(), sendInRoom);
 	}
 
 	@Override

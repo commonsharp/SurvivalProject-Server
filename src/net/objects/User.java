@@ -86,11 +86,14 @@ public class User {
 	public int channelType;
 	public int totalTicks;
 	
+	public boolean isInitialLoginDataSent;
+	
 	public User() {
 		cards = new Card[96];
 		whiteCards = new int[4];
 		friends = new String[24];
 		scrolls = new int[3];
+		isInitialLoginDataSent = false;
 	}
 	
 	public Card getCard(int index) {
@@ -138,6 +141,12 @@ public class User {
 	}
 	
 	public void loadUser(LobbyServer lobbyServer) throws SQLException {
+		try {
+			Thread.sleep(0);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Connection con = DatabaseConnection.getConnection();
 		PreparedStatement ps = con.prepareStatement("Select * FROM users WHERE username = ?");
 		ps.setString(1, username);

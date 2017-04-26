@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.sql.SQLException;
 
 import log.Log;
+import main.Main;
 import net.handlers.GenericHandler;
 import net.objects.User;
 import tools.HexTools;
@@ -51,6 +52,15 @@ public class UserSession implements Runnable {
 					
 					System.out.println("User disconnected");
 					break;
+				}
+				
+				if (Main.FORCE_LATENCY) {
+					try {
+						Thread.sleep(Main.FORCE_LATENCY_TIME);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				
 				byte[] messageBytes = new byte[length];
@@ -115,6 +125,14 @@ public class UserSession implements Runnable {
 	}
 	
 	public void sendMessage(byte[] response) throws IOException {
+		if (Main.FORCE_LATENCY) {
+			try {
+				Thread.sleep(Main.FORCE_LATENCY_TIME);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		// Change the validator
 		HexTools.putIntegerInByteArray(response, 0x8, 0x2B1C);
 				

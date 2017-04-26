@@ -1,14 +1,17 @@
 package game;
 
-import net.GenericUDPServer;
 import net.handlers.UDPHandler;
 
 public abstract class GameHandler extends UDPHandler {
-	public GameHandler(GenericUDPServer udpServer, byte[] messageBytes) {
-		super(udpServer, messageBytes);
+	protected GameServer gameServer;
+	
+	public GameHandler(GameServer gameServer, byte[] messageBytes) {
+		super(gameServer, messageBytes);
+		this.gameServer = gameServer;
 	}
 	
-	public GameHandler(GenericUDPServer udpServer) {
-		super(udpServer);
+	public GameHandler(GameServer gameServer) {
+		super(gameServer);
+		this.gameServer = gameServer;
 	}
 }

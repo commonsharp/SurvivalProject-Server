@@ -52,8 +52,8 @@ public class GameCompletedHandler extends LobbyHandler {
 		// result array. -1 = do nothing. 0 = next round. 1 = win. 2 = lose. 3 = draw. others = leaves the game with no message
 		output.putInts(0x14, results);
 		output.putInt(0x34, userSession.getUser().gameKO); // ko
-		output.putInt(0x38, 1);
-		output.putInt(0x3C, 1);
+		output.putInt(0x38, 0);
+		output.putInt(0x3C, 0);
 		output.putLong(0x40, 1234); // new experience
 		output.putLong(0x48, 4321); // new code
 		output.putLong(0x50, 125); // new avatar money
@@ -65,19 +65,20 @@ public class GameCompletedHandler extends LobbyHandler {
 		output.putInt(0xF8, scoringTeam); // winning team
 		
 		 // this array cannot have zeroes or there will be a division by 0.
+		// This is the lucky bonuses
 		int[] unknowns = new int[8];
 		for (int i = 0; i < 8; i++)
 			unknowns[i] = 5;
 		
 		output.putInts(0xFC, unknowns);
-		output.putInt(0x11C, 1);
-		output.putInt(0x13C, 1);
-		output.putInt(0x15C, 1);
+		output.putInt(0x11C, 0);
+		output.putInt(0x13C, 0);
+		output.putInt(0x15C, 0);
 		
 		for (int i = 0; i < 8; i++) {
-			output.putInt(0x11C + i * 4, 1);
-			output.putInt(0x13C + i * 4, 1);
-			output.putInt(0x15C + i * 4, 1);
+			output.putInt(0x11C + i * 4, 0);
+			output.putInt(0x13C + i * 4, 0);
+			output.putInt(0x15C + i * 4, 0);
 		}
 		
 		return output.toArray();

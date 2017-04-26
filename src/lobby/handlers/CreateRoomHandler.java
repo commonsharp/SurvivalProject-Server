@@ -67,6 +67,20 @@ public class CreateRoomHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					Thread.sleep(3000);
+//					sendTCPMessage(new StartCountdownHandler(lobbyServer, userSession).getResponse());
+//					
+////					sendTCPMessage(new Test4376Handler(lobbyServer, userSession).getResponse(2));
+//				} catch (InterruptedException | IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		}).start();
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(roomNumber)));
 		
 		RoomPlayersUpdateHandler rpuh = new RoomPlayersUpdateHandler(lobbyServer, userSession);

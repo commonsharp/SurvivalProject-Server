@@ -87,6 +87,7 @@ public class RoomGameModeChangedHandler extends LobbyHandler {
 	public void afterSend() throws IOException, SQLException {
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(roomID)));
 //		lobbyServer.sendBroadcastMessage(userSession, getResponse());
+		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
 	}
 
 }

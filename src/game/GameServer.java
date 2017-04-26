@@ -6,9 +6,8 @@ import java.sql.SQLException;
 import game.handlers.ForwardMessageHandler;
 import game.handlers.GameStartedHandler;
 import game.handlers.JoinServerHandler;
+import game.handlers.KeepAliveHandler;
 import lobby.LobbyServer;
-import lobby.handlers.SpawnCodeHandler;
-import lobby.handlers.SpawnElementHandler;
 import net.GenericUDPServer;
 import net.Messages;
 import net.UserSession;
@@ -17,51 +16,30 @@ import net.objects.Room;
 import tools.HexTools;
 
 public class GameServer extends GenericUDPServer {
+	public long serverStartTime;
+	
 	public GameServer(LobbyServer lobby, int port) {
 		super(lobby, "Game server", port);
+		serverStartTime = System.currentTimeMillis();
 	}
 	
 	@Override
 	public GenericHandler processPacket(GenericUDPServer udpServer, int messageID, byte[] messageBytes, InetAddress ipAddress, int port) throws IOException, SQLException {
 		GenericHandler message = null;
 		
+//		System.out.println("Slot: " + HexTools.getIntegerInByteArray(messageBytes, 0x18));
+		if (HexTools.getIntegerInByteArray(messageBytes, 0x18) == 0 && messageID == Messages.GAME_CONSTANT_UPDATE) {
+//			System.out.println("port : " + port);
+//			System.out.println(HexTools.integerToHexString(messageID) + " received!");
+//			HexTools.printHexArray(messageBytes, 0x14, false);
+		}
 		switch (messageID) {
 		case Messages.GAME_JOIN_LOBBY:
-			message = new JoinServerHandler(udpServer, messageBytes, ipAddress, port);
+			message = new JoinServerHandler(this, messageBytes, ipAddress, port);
 			break;
 		case Messages.GAME_KEEP_ALIVE:
-			UserSession userSession = lobby.findUserSession(ipAddress, port);
-			
-			if (userSession.getUser().isInGame) {
-				Room room = lobby.getRoom(userSession.getUser().roomIndex);
-				
-				room.totalTicks++;
-				
-				if (room.totalTicks % 10 == 0) {
-					lobby.sendRoomMessage(userSession, new SpawnElementHandler(lobby, userSession).getResponse(), true);
-				}
-				if (room.totalTicks % 1 == 0) {
-					lobby.sendRoomMessage(userSession, new SpawnCodeHandler(lobby, userSession).getResponse(), true);
-				}
-			}
-			userSession.getUser().totalTicks++;
-			
-			if (userSession.getUser().totalTicks % 200 == 0) {
-				int times = userSession.getUser().totalTicks / 200;
-				
-				if (times >= 4) {
-					times = 4;
-				}
-				
-				int amount = (int) Math.pow(2, times);
-				
-				if (userSession.getUser().timeBonus) {
-					amount *= 2;
-				}
-				
-				userSession.getUser().whiteCards[userSession.getUser().getElementType() - 1] += amount;
-				userSession.getUser().saveUser();
-			}
+			message = new KeepAliveHandler(this, messageBytes);
+			udpServer.lobby.onKeepAlive(ipAddress, port);
 			break;
 		case Messages.GAME_AFTER_ACTION: // after action (after attack/move/defense/...)
 		case Messages.GAME_STOPPED_MOVING: // stopped moving
@@ -106,16 +84,15 @@ public class GameServer extends GenericUDPServer {
 	
 	long time;
 	
-	public void sendToUser(GenericUDPServer udpServer, int roomID, int fromSlot, int toSlot, byte[] message, boolean sendInRoom) throws IOException {
-		for (UserSession user : lobby.getRoom(roomID).getUsers()) {
-			// If the user is not null
-			if (user != null) {
-				// If the user is someone else
-				if (user.getUser().roomSlot == toSlot && (user.getUser().isInGame || sendInRoom)) {
-					// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
-					udpServer.sendMessage(lobby.findUserSession(lobby.getRoom(roomID).getUsers()[fromSlot].getUser().username), user.getUser(), HexTools.duplicateArray(message));
-					break;
-				}
+	public void sendToUser(GameServer udpServer, int roomID, int fromSlot, int toSlot, byte[] message, boolean sendInRoom) throws IOException {
+		Room room = lobby.getRoom(roomID);
+		
+		if (room != null) {
+			UserSession fromSession = room.getUserSession(fromSlot);
+			UserSession toSession = room.getUserSession(toSlot);
+			
+			if (fromSession != null && toSession != null && (toSession.getUser().isInGame || sendInRoom)) {
+				udpServer.sendMessage(fromSession, toSession, HexTools.duplicateArray(message));
 			}
 		}
 	}

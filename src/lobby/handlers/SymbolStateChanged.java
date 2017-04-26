@@ -25,8 +25,6 @@ public class SymbolStateChanged extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

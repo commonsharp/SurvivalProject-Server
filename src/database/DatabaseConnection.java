@@ -4,9 +4,22 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import main.Main;
+
 public class DatabaseConnection {
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "1234";
+	private static final String USERNAME;
+	private static final String PASSWORD;
+	
+	static {
+		if (Main.IS_RELEASE) {
+			USERNAME = "bak";
+			PASSWORD = "spgame101";
+		}
+		else {
+			USERNAME = "root";
+			PASSWORD = "1234";
+		}
+	}
 	   
 	public static Connection getConnection() {
 		Connection conn = null;
