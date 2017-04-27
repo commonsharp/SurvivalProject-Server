@@ -54,16 +54,16 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] Master card
 - [ ] Visit bonus x2
 - [ ] Elemental bonus x3
-- [ ] Premium Event - **Can't work on this card because I don't know what it's supposed to do**
+- [ ] Premium Event - **This card gives you a better bonus in every event. I'm not going to implement that card**
 - [ ] SuperSilver
 - [x] CardSlot+18, CardSlot+30 - **This is actually a package**
 - [x] Skill I fusion
 - [x] Skill II fusion
 - [ ] User shop I
 - [x] Packages
-- [ ] Skill 1-1 fusion - **Can't work on this card because I don't know what it's supposed to do**
-- [ ] Skill 2-1 fusion - **Can't work on this card because I don't know what it's supposed to do**
-- [ ] Skill 2-2 fusion - **Can't work on this card because I don't know what it's supposed to do**
+- [x] Skill 1-1 fusion - Same as Skill 1 fusion but obtained through packages
+- [x] Skill 2-1 fusion - Same as Skill 2 fusion but obtained through packages
+- [x] Skill 2-2 fusion - Only changes the success chance of the second skill (or both in magic cards). Obtained through packages
 - [x] Skill fusion
 - [x] Level fusion
 
@@ -105,6 +105,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 
 # 27/04/2017
 * Started implementing Hibernate. There's still a lot more work to be done.
+* Premium cards: Skill 1-1, Skill 2-1 and Skill 2-2 cards are now working.
 * Fixed a bug where searching for avatar cards in the card search window resulted in gold force cards and vice versa.
 * Fixed a bug where sending a gift to someone who was disconnected would throw a null pointer exception.
 
