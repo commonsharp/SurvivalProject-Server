@@ -104,6 +104,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
 
 # 27/04/2017
+* Started implementing Hibernate. There's still a lot more work to be done.
 * Fixed a bug where searching for avatar cards in the card search window resulted in gold force cards and vice versa.
 * Fixed a bug where sending a gift to someone who was disconnected would throw a null pointer exception.
 
