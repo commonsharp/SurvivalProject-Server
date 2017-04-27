@@ -70,7 +70,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 # TODO
 - [ ] Gain elements after a failed level up fusion.
 - [x] Change the infinity games timers to ticks-based instead of a new thread with a timer. It will also fix the bug that if you leave the room, the timer still goes on, and will get executed when finished.
-- [ ] Random characters
+- [x] Random characters
 - [ ] Change the server sockets to NIO sockets.
 - [ ] Implement Hibernate (or any other ORM framework).
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
@@ -102,9 +102,11 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * ~~If someone leaves during a survival game, other players get a win message.~~
 * Level xx5 missions aren't working.
 * When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
+* If you use a random character, people in the lobby can't see that you picked a random character.
 
 # 27/04/2017
 * Started implementing Hibernate. There's still a lot more work to be done. Hibernate allows for an easy way to deal with RDBMS in Java. There are A LOT of SQL-related tasks that I need to complete, and it would help me get them done a lot quicker.
+* Random characters is now working. There's a bug where people in the lobby don't see that the player in the game are random.
 * Premium cards: Skill 1-1, Skill 2-1 and Skill 2-2 cards are now working.
 * Fixed a bug where searching for avatar cards in the card search window resulted in gold force cards and vice versa.
 * Fixed a bug where sending a gift to someone who was disconnected would throw a null pointer exception.
