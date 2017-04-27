@@ -103,6 +103,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * Level xx5 missions aren't working.
 * When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
 * If you use a random character, people in the lobby can't see that you picked a random character.
+* If you have 2 players on one team in hero mode, the game starts.
 
 # 27/04/2017
 * Started implementing Hibernate. There's still a lot more work to be done. Hibernate allows for an easy way to deal with RDBMS in Java. There are A LOT of SQL-related tasks that I need to complete, and it would help me get them done a lot quicker.
