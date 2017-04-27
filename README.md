@@ -104,7 +104,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
 
 # 27/04/2017
-* Started implementing Hibernate. There's still a lot more work to be done.
+* Started implementing Hibernate. There's still a lot more work to be done. Hibernate allows for an easy way to deal with RDBMS in Java. There are A LOT of SQL-related tasks that I need to complete, and it would help me get them done a lot quicker.
 * Premium cards: Skill 1-1, Skill 2-1 and Skill 2-2 cards are now working.
 * Fixed a bug where searching for avatar cards in the card search window resulted in gold force cards and vice versa.
 * Fixed a bug where sending a gift to someone who was disconnected would throw a null pointer exception.
