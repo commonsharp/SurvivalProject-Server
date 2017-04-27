@@ -103,6 +103,9 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * Level xx5 missions aren't working.
 * When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
 
+# 27/04/2017
+* Fixed a bug where searching for avatar cards in the card search window resulted in gold force cards and vice versa.
+
 # 26/04/2017
 * Infinity symbol mode is now working. When you destroy a symbol, each player of the same team gets 1 point. The one dealing the killing blow gets 2 points, instead of 1. If the symbol that was destroyed belongs to the other team, the other team loses 1 point. I couldn't find a video of this game mode, so the mechanism may be different than the one in the original game.
 * The master of the room in infinity king mode or infinity symbol mode can now change the game map, game type (to king/to symbol) or the time of the game.
