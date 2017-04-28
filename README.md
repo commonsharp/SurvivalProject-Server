@@ -70,7 +70,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [x] Level fusion
 
 # TODO
-- [ ] Gain elements after a failed level up fusion.
+- [x] Gain elements after a failed level up fusion.
 - [x] Change the infinity games timers to ticks-based instead of a new thread with a timer. It will also fix the bug that if you leave the room, the timer still goes on, and will get executed when finished.
 - [x] Random characters
 - [ ] Change the server sockets to NIO sockets.
@@ -117,6 +117,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * Trades: If you're trying to trade with someone who's not in the room, you get an error.
 * Trades: If you're trying to trade with someone who's already trading, you get an error.
 * Trades: If you're trying to trade with someone who's in the room, but haven't clicked ready yet, you get an error.
+* If you try to level fusion a card and it fails, you get 20% of the elements back.
 * New chat command: @pw. It allows you to change your password.
 * Fixed a bug where using a chat command was sent to other players in the lobby.
 
