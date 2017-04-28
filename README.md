@@ -109,6 +109,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If you have 2 players on one team in hero mode, the game starts.
 
 # 28/04/2017
+* Changed a bit more code to use Hibernate. Still got a lot to work on...
 * Trades: You can open up the trade interface.
 * Trades: You can put new cards, elements and/or code in the trade interface.
 * Trades: You can cancel a trade.
