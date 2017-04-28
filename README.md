@@ -93,6 +93,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] The stats after every game mode isn't correct.
 - [ ] Change the mission lost packet to GameCompletedHandler.
 - [x] Change the lucky multipliers to 2, 3, 5 and 10.
+- [ ] After a chat command is completed, send the user a response.
 
 # Known bugs
 * ~~When you finish a mission, the mission level on the left of the screen doesn't change.~~
