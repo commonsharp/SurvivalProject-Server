@@ -29,6 +29,8 @@ In order to fix that, go to images\strings.xml and change "Character" in line 47
 
 **@gender** - changes your gender from male to female and vice versa. Reconnect to see the changes (others will see it instantly).
 
+**@pw [new-password]** - changes your password to [new-password].
+
 **@guild-join [guild-name]** - joins the guild [guild-name].
 
 **@guild-leave** - leaves your guild.
@@ -114,6 +116,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * Trades: If you're trying to trade with someone who's not in the room, you get an error.
 * Trades: If you're trying to trade with someone who's already trading, you get an error.
 * Trades: If you're trying to trade with someone who's in the room, but haven't clicked ready yet, you get an error.
+* New chat command: @pw. It allows you to change your password.
 
 # 27/04/2017
 * Started implementing Hibernate. There's still a lot more work to be done. Hibernate allows for an easy way to deal with RDBMS in Java. There are A LOT of SQL-related tasks that I need to complete, and it would help me get them done a lot quicker.
