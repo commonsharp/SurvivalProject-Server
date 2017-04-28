@@ -38,7 +38,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * When you use a ranged attack, the projectile is invisible. May happen after an infinity symbol mode game.
 
 # Features that aren't working yet
-- [ ] Trading
+- [ ] Trades
 - [ ] Manual user shops
 - [ ] Spectators
 
@@ -104,6 +104,11 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
 * If you use a random character, people in the lobby can't see that you picked a random character.
 * If you have 2 players on one team in hero mode, the game starts.
+
+# 28/04/2017
+* Trades: You can open up the trade interface.
+* Trades: You can put new cards, elements and/or code in the trade interface.
+* Trades: You can cancel a trade.
 
 # 27/04/2017
 * Started implementing Hibernate. There's still a lot more work to be done. Hibernate allows for an easy way to deal with RDBMS in Java. There are A LOT of SQL-related tasks that I need to complete, and it would help me get them done a lot quicker.
