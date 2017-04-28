@@ -109,6 +109,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * Trades: You can open up the trade interface.
 * Trades: You can put new cards, elements and/or code in the trade interface.
 * Trades: You can cancel a trade.
+* Trades: You can complete a trade and gain new cards, elements and/or code.
 
 # 27/04/2017
 * Started implementing Hibernate. There's still a lot more work to be done. Hibernate allows for an easy way to deal with RDBMS in Java. There are A LOT of SQL-related tasks that I need to complete, and it would help me get them done a lot quicker.
