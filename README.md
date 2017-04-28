@@ -38,7 +38,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * When you use a ranged attack, the projectile is invisible. May happen after an infinity symbol mode game.
 
 # Features that aren't working yet
-- [ ] Trades
+- [x] Trades
 - [ ] Manual user shops
 - [ ] Spectators
 
