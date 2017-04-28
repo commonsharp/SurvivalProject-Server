@@ -52,7 +52,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] Tournament mode
 - [ ] Ice hokey mode :(
 
-# Premiums cards that aren't yet working
+# Premiums cards that aren't working yet
 - [ ] Master card
 - [ ] Visit bonus x2
 - [ ] Elemental bonus x3
