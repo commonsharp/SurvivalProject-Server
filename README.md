@@ -108,6 +108,9 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If you use a random character, people in the lobby can't see that you picked a random character.
 * If you have 2 players on one team in hero mode, the game starts.
 
+# 29/04/2017
+* Fixed a bug where if you had finished a soccer game and started a new one, the timer wouldn't have started.
+
 # 28/04/2017
 * Changed a bit more code to use Hibernate. Still got a lot to work on...
 * Trades: You can open up the trade interface.
