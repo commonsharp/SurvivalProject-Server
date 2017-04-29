@@ -52,7 +52,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] Master card
 - [ ] Visit bonus x2
 - [ ] Elemental bonus x3
-- [ ] Premium Event - **This card gives you a better bonus in every event. I'm not going to implement that card**
+- [ ] Premium Event - **This card gives you a better bonus in every event. I'm not going to implement that card until I find a way to get the events to work**
 - [ ] SuperSilver
 - [ ] User shop I
 
