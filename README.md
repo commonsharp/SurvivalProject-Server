@@ -77,7 +77,6 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] The stats after every game mode isn't correct.
 - [ ] Change the mission lost packet to GameCompletedHandler.
 - [ ] After a chat command is completed, send the user a response.
-- [ ] Find all the references to getCard(index). If there's a loop that goes through the 96 cards, remove it.
 
 # Known bugs
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
