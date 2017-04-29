@@ -91,6 +91,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If a user puts two cards of the same type and same price in the user shop, and someone purchase it, the two of them are removed.
 
 # 29/04/2017
+* Almost finished implementing Hibernate.
 * Fixed a bug where purchasing elements (white cards) through the user shop interface (F6) threw an exception.
 * Fixed a bug where removing friends threw a concurrent modification exception.
 * Fixed a bug where if a user's game crashed, a socket exception was thrown.
