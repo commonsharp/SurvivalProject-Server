@@ -12,8 +12,6 @@ https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_priva
 
 **Not going to work on hokey mode because I can't fucking score a goal -_-"**
 
-**~~Got a job interview next week so I'm going to take a break and continue the development next week~~** - Actually I have more time than I previously thought.
-
 # Built-in chat commands
 Apparently Survival Project has some built in commands. Unfortunately, most of them are in Korean.
 Type /macro in-game to see those commands.
@@ -91,6 +89,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If you have 2 players on one team in hero mode, the game starts.
 
 # 29/04/2017
+* Fixed a bug where purchasing elements (white cards) through the user shop interface (F6) threw an exception.
 * Fixed a bug where removing friends threw a concurrent modification exception.
 * Fixed a bug where if a user's game crashed, a socket exception was thrown.
 * Fixed a bug where if you had finished a soccer game and started a new one, the timer wouldn't have started.
