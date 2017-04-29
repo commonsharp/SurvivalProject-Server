@@ -8,8 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import database.DatabaseConnection;
+import org.hibernate.Session;
+
+import database.Database;
 import game.GameServer;
 import lobby.handlers.AddFriend;
 import lobby.handlers.AutoUserShopNewItemHandler;
@@ -85,8 +88,12 @@ import net.GenericTCPServer;
 import net.Messages;
 import net.UserSession;
 import net.handlers.GenericHandler;
+import net.objects.Friend;
 import net.objects.GameMode;
+import net.objects.GuildMember;
 import net.objects.Room;
+import net.objects.Server;
+import net.objects.Trade;
 import net.objects.UserShop;
 import tools.HexTools;
 
@@ -95,17 +102,18 @@ public class LobbyServer extends GenericTCPServer {
 	
 	public static final int MAX_ROOMS = 300;
 	
-	public String hostname;
-	public int port;
+	public Server server;
 	
 	public GameServer gameServer;
 	
-	public LobbyServer(String hostname, int port, int initialCapacity) {
-		super("Lobby server", port, initialCapacity);
-		this.hostname = hostname;
-		this.port = port;
+	public ArrayList<Trade> ongoingTrades;
+	
+	public LobbyServer(Server server) {
+		super(server.getName(), server.getPort(), server.getMaxPopulation() / 2);
+		this.server = server;
 		
 		rooms = new Room[MAX_ROOMS];
+		ongoingTrades = new ArrayList<Trade>();
 		startLobbyThread();
 	}
 	
@@ -354,8 +362,8 @@ public class LobbyServer extends GenericTCPServer {
 	}
 	
 	public void sendFriendsMessage(UserSession userSession, byte[] message) throws IOException {
-		for (String friend : userSession.getUser().friends) {
-			UserSession friendSession = findUserSession(friend);
+		for (Friend friend : userSession.getUser().friends) {
+			UserSession friendSession = findUserSession(friend.getFriendName());
 			
 			if (friendSession != null) {
 				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
@@ -364,14 +372,14 @@ public class LobbyServer extends GenericTCPServer {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void sendGuildMessage(UserSession userSession, byte[] message, boolean sendToSelf) throws IOException, SQLException {
-		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM guild_member WHERE guildName=?");
-		ps.setString(1, userSession.getUser().guildName);
-		ResultSet rs = ps.executeQuery();
+		Session session = Database.getSession();
+		session.beginTransaction();
+		List<GuildMember> guildMembers = session.createQuery("from GuildMember where guildName = :guildName").setParameter("guildName", userSession.getUser().guildName).list();
 		
-		while (rs.next()) {
-			UserSession guildMemberSession = findUserSession(rs.getString("username"));
+		for (GuildMember member : guildMembers) {
+			UserSession guildMemberSession = findUserSession(member.getUsername());
 			
 			if (guildMemberSession != null && (guildMemberSession != userSession || sendToSelf)) {
 				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
@@ -379,9 +387,8 @@ public class LobbyServer extends GenericTCPServer {
 			}
 		}
 		
-		rs.close();
-		ps.close();
-		con.close();
+		session.getTransaction().commit();
+		session.close();
 	}
 	
 	public void sendRoomMessage(UserSession userSession, byte[] message, boolean sendToSelf) throws IOException {
@@ -445,71 +452,60 @@ public class LobbyServer extends GenericTCPServer {
 		return null;
 	}
 	
-	public ArrayList<UserShop> findShops(int elementType, int cardLevel, int cardType) throws SQLException {
+	@SuppressWarnings("unchecked")
+	public List<UserShop> findShops(int elementType, int cardLevel, int cardType) throws SQLException {
 		String query;
 		
 		// premium cards + pets
 		if (cardType == 90) {
-			query = "SELECT * FROM user_shop WHERE (card_id >= 2000 AND card_id < 3000) OR (card_id >= 5000 AND card_id < 6000);";
-		}
-		// avatar cards
-		else if (cardType == 91) {
-			query = "SELECT * FROM user_shop WHERE (card_id >= 4000 AND card_id < 5000)";
+			query = "FROM UserShop WHERE (cardID >= 2000 AND cardID < 3000) OR (cardID >= 5000 AND cardID < 6000)";
 		}
 		// gold force
+		else if (cardType == 91) {
+			query = "FROM UserShop WHERE (cardID >= 3000 AND cardID < 4000)";
+		}
+		// avatar cards
 		else if (cardType == 92) {
-			query = "SELECT * FROM user_shop WHERE (card_id >= 3000 AND card_id < 4000)";
+			query = "FROM UserShop WHERE (cardID >= 4000 AND cardID < 5000)";
 		}
 		// normal cards (black cards)
 		else if (cardType != 0) {
 			if (elementType == -1) {
-				query = "SELECT * FROM user_shop WHERE card_id LIKE \'" + "_" + (cardType / 10) + "_" + (cardType % 10) + "\'";
+				query = "FROM UserShop WHERE cardID LIKE \'_" + (cardType / 10) + "_" + (cardType % 10) + "\'";
 			}
 			else {
-				query = "SELECT * FROM user_shop WHERE card_id LIKE \'" + "_" + (cardType / 10) + "" + elementType + "" + (cardType % 10) + "\'";
+				query = "FROM UserShop WHERE cardID LIKE \'_" + (cardType / 10) + "" + elementType + "" + (cardType % 10) + "\'";
 			}
 			
 			if (cardLevel != -1) {
-				query += " AND card_level = " + cardLevel;
+				query += " AND cardLevel = " + cardLevel;
 			}
 		}
 		// elements (white cards)
 		else {
 			if (elementType != -1) {
-				query = "SELECT * FROM user_shop WHERE floor(card_id / 10000) = " + elementType;
+				query = "FROM UserShop WHERE floor(cardID / 10000) = " + elementType;
 			}
 			else {
-				query = "SELECT * FROM user_shop WHERE card_id >= 10000";
+				query = "FROM UserShop WHERE cardID >= 10000";
 			}
 		}
 		
-		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement(query);
-		ResultSet rs = ps.executeQuery();
-		
-		ArrayList<UserShop> result = new ArrayList<UserShop>();
-		
-		while (rs.next()) {
-			result.add(new UserShop(rs.getString("username"), rs.getInt("card_id"), rs.getInt("card_premium_days"),
-					rs.getInt("card_level"), rs.getInt("card_skill"), rs.getInt("code")));
-		}
-		
+		Session session = Database.getSession();
+		session.beginTransaction();
+		List<UserShop> result = session.createQuery(query).list();
+		session.getTransaction().commit();
+		session.close();
 		
 		return result;
 	}
 	
-	public void addShop(String username, int cardID, int cardPremiumDays, int cardLevel, int cardSkill, long code) throws SQLException {
-		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("INSERT INTO user_shop (username, card_id, card_premium_days, card_level, card_skill, code) VALUES (?, ?, ?, ?, ?, ?);");
-		ps.setString(1, username);
-		ps.setInt(2, cardID);
-		ps.setInt(3, cardPremiumDays);
-		ps.setInt(4, cardLevel);
-		ps.setInt(5, cardSkill);
-		ps.setLong(6, code);
-		ps.executeUpdate();
-		ps.close();
-		con.close();
+	public void addShop(UserShop shop) throws SQLException {
+		Session session = Database.getSession();
+		session.beginTransaction();
+		session.save(shop);
+		session.getTransaction().commit();
+		session.close();
 	}
 	
 	@Override
@@ -524,26 +520,28 @@ public class LobbyServer extends GenericTCPServer {
 			LeaveRoomHandler leaveRoomHandler = new LeaveRoomHandler(this, userSession);
 			leaveRoomHandler.processMessage(userSession);
 			sendRoomMessage(userSession, leaveRoomHandler.getResponse(userSession), false);
+			leaveRoomHandler.isDisconnected = true;
 			leaveRoomHandler.afterSend();
 		}
 		else if (userSession.getUser().isInGame) {
 			LeaveGameHandler leaveGameHandler = new LeaveGameHandler(this, userSession);
 			leaveGameHandler.processMessage(userSession);
 			sendRoomMessage(userSession, leaveGameHandler.getResponse(userSession), false);
+			leaveGameHandler.isDisconnected = true;
 			leaveGameHandler.afterSend();
 		}
 		
 		// Update the population
-		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("UPDATE servers SET population=? WHERE hostname=? AND port=?");
-		ps.setInt(1, userSessions.size());
-		ps.setString(2, hostname);
-		ps.setInt(3, port);
-		ps.executeUpdate();
-		ps.close();
+		Session session = Database.getSession();
+		session.beginTransaction();
+		server.setPopulation(userSessions.size());
+		session.update(server);
+		session.getTransaction().commit();
+		session.close();
 		
 		// Set server hostname, server port and isConnected
-		ps = con.prepareStatement("UPDATE users SET is_connected = false WHERE username = ?;");
+		Connection con = Database.getConnection();
+		PreparedStatement ps = con.prepareStatement("UPDATE users SET is_connected = false WHERE username = ?;");
 		ps.setString(1, userSession.getUser().username);
 		ps.executeUpdate();
 		ps.close();
@@ -558,6 +556,7 @@ public class LobbyServer extends GenericTCPServer {
 		return userSessions;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void onJoinLobby(UserSession userSession) throws IOException, SQLException {
 		// Get list of rooms
 		for (int i = 0; i < MAX_ROOMS; i += 22) {
@@ -584,26 +583,25 @@ public class LobbyServer extends GenericTCPServer {
 		sendGuildMessage(userSession, new GuildMemberOnlineStatusHandler(this, userSession).getResponse(userSession, true), false);
 		
 		// Get connectivities from anyone who's connected in the guild
-		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM guild_member WHERE guildName=?");
-		ps.setString(1, userSession.getUser().guildName);
-		ResultSet rs = ps.executeQuery();
+		Session session = Database.getSession();
+		session.beginTransaction();
+		List<GuildMember> guildMembers = session.createQuery("from GuildMember where guildName = :guildName").setParameter("guildName", userSession.getUser().guildName).list();
 		
-		while (rs.next()) {
-			UserSession guildMemberSession = findUserSession(rs.getString("username"));
+		for (GuildMember member : guildMembers) {
+			UserSession guildMemberSession = findUserSession(member.getUsername());
 
 			if (guildMemberSession != null) {
 				userSession.sendMessage(new GuildMemberOnlineStatusHandler(this, userSession).getResponse(guildMemberSession, true));
 			}
 		}
 		
-		rs.close();
-		ps.close();
+		Connection con = Database.getConnection();
+		PreparedStatement ps;
 		
 		// Set server hostname, server port and isConnected
 		ps = con.prepareStatement("UPDATE users SET server_hostname = ?, server_port = ?, is_connected = true WHERE username = ?;");
-		ps.setString(1, hostname);
-		ps.setInt(2, port);
+		ps.setString(1, server.getHostname());
+		ps.setInt(2, server.getPort());
 		ps.setString(3, userSession.getUser().username);
 		ps.executeUpdate();
 		
@@ -747,5 +745,23 @@ public class LobbyServer extends GenericTCPServer {
 				iph.afterSend();
 			}
 		}
+	}
+	
+	public void addTrade(Trade trade) {
+		ongoingTrades.add(trade);
+	}
+	
+	public Trade findTrade(String username) {
+		for (Trade trade : ongoingTrades) {
+			if (trade.firstUsername.equals(username) || trade.secondUsername.equals(username)) {
+				return trade;
+			}
+		}
+		
+		return null;
+	}
+	
+	public void removeTrade(Trade trade) {
+		ongoingTrades.remove(trade);
 	}
 }

@@ -2,11 +2,13 @@ package lobby.handlers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.Friend;
 import tools.ExtendedByteBuffer;
 
 public class GetFriendsHandler extends LobbyHandler {
@@ -37,16 +39,20 @@ public class GetFriendsHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.GET_FRIENDS_RESPONSE);
 		
-		String[] friends = userSession.getUser().friends;
-		output.putStrings(0x14, friends, 0xD);
+		List<Friend> friends = userSession.getUser().friends;
 		
-		for (int i = 0; i < friends.length; i++) {
-			if (friends[i] != null && lobbyServer.findUserSession(friends[i]) != null) {
+		int i = 0;
+		for (Friend friend : friends) {
+			output.putString(0x14 + 0xD * i, friend.getFriendName());
+			
+			if (lobbyServer.findUserSession(friend.getFriendName()) != null) {
 				output.putInt(0x14C + 4 * i, 0); // connected
 			}
 			else {
 				output.putInt(0x14C + 4 * i, -1); // disconnected
 			}
+			
+			i++;
 		}
 		
 		return output.toArray();

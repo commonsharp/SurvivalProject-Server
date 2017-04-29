@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import database.DatabaseConnection;
+import database.Database;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
@@ -48,7 +48,7 @@ public class FindUserHandler extends LobbyHandler {
 		String serverName = null;
 		
 		if (userSession == null) {
-			Connection con = DatabaseConnection.getConnection();
+			Connection con = Database.getConnection();
 			PreparedStatement ps = con.prepareStatement("SELECT server_hostname, server_port, is_connected FROM users WHERE username = ?");
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();

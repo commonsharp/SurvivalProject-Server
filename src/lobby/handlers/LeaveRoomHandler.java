@@ -14,6 +14,7 @@ import tools.ExtendedByteBuffer;
 public class LeaveRoomHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x28;
 	
+	public boolean isDisconnected;
 	public LeaveRoomHandler(LobbyServer lobbyServer, UserSession userSession) {
 		super(lobbyServer, userSession);
 	}
@@ -64,7 +65,9 @@ public class LeaveRoomHandler extends LobbyHandler {
 		
 		userSession.getUser().roomIndex = -1;
 		
-		lobbyServer.onJoinLobby(userSession);
+		if (!isDisconnected) {
+			lobbyServer.onJoinLobby(userSession);
+		}
 	}
 
 	@Override

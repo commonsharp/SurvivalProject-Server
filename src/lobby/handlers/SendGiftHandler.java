@@ -1,17 +1,18 @@
 package lobby.handlers;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import database.DatabaseConnection;
+import org.hibernate.Session;
+
+import database.Database;
 import database.DatabaseHelper;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
 import net.objects.Card;
+import net.objects.Gift;
 import tools.ExtendedByteBuffer;
 
 public class SendGiftHandler extends LobbyHandler {
@@ -106,30 +107,27 @@ public class SendGiftHandler extends LobbyHandler {
 				}
 			}
 			else {
-				Connection con = DatabaseConnection.getConnection();
-				PreparedStatement ps = con.prepareStatement("INSERT INTO gift (from_username, to_username, gift_type, amount, card_id, card_premium_days, card_level, card_skill) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-				ps.setString(1, userSession.getUser().username);
-				ps.setString(2, toUsername);
-				ps.setInt(3, giftType);
-				ps.setLong(4, amountOrIndex);
+				Session session = Database.getSession();
+				session.beginTransaction();
+				Gift gift = new Gift();
+				gift.setFromUsername(userSession.getUser().username);
+				gift.setToUsername(toUsername);
+				gift.setGiftType(giftType);
+				gift.setAmount(amountOrIndex);
 				
 				if (giftType == 1) {
-					Card card = userSession.getUser().cards[(int) amountOrIndex];
-					ps.setInt(5, card.getId());
-					ps.setInt(6, card.getPremiumDays());
-					ps.setInt(7, card.getLevel());
-					ps.setInt(8, card.getSkill());
+					gift.setCardID(card.getId());
+					gift.setCardPremiumDays(card.getPremiumDays());
+					gift.setCardLevel(card.getLevel());
+					gift.setCardSkill(card.getSkill());
 				}
 				else {
-					ps.setInt(5, 0);
-					ps.setInt(6, 0);
-					ps.setInt(7, 0);
-					ps.setInt(8, 0);
+					// Everything is 0
 				}
 				
-				ps.executeUpdate();
-				ps.close();
-				con.close();
+				session.save(gift);
+				session.getTransaction().commit();
+				session.close();
 			}
 		}
 	}

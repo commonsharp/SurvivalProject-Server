@@ -2,16 +2,17 @@ package login.handlers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
-import database.DatabaseConnection;
+import org.hibernate.Session;
+
+import database.Database;
 import login.LoginHandler;
 import net.Messages;
 import net.UserSession;
+import net.objects.Server;
 import tools.ExtendedByteBuffer;
 
 public class ServersInfoHandler extends LoginHandler {
@@ -19,64 +20,7 @@ public class ServersInfoHandler extends LoginHandler {
 	
 	protected short channelType;
 	
-	protected ArrayList<Server> servers;
-	
-	private class Server {
-		private String hostname;
-		private int port;
-		private String name;
-		private short channelType;
-		private short serverID;
-		private int population;
-		private int maxPopulation;
-		private String bestGuild;
-		
-		private Server(String hostname, int port, String name, short channelType, short serverID, int population, int maxPopulation) {
-			this.hostname = hostname;
-			this.port = port;
-			this.name = name;
-			this.channelType = channelType;
-			this.serverID = serverID;
-			this.population = population;
-			this.maxPopulation = maxPopulation;
-		}
-
-		public String getHostname() {
-			return hostname;
-		}
-
-		public int getPort() {
-			return port;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public short getChannelType() {
-			return channelType;
-		}
-
-		public short getServerID() {
-			return serverID;
-		}
-
-		public int getPopulation() {
-			return population;
-		}
-
-		public int getMaxPopulation() {
-			return maxPopulation;
-		}
-
-		public String getBestGuild() {
-			return bestGuild;
-		}
-
-		public void setBestGuild(String bestGuild) {
-			this.bestGuild = bestGuild;
-		}
-	}
+	protected List<Server> servers;
 	
 	public ServersInfoHandler(UserSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
@@ -103,46 +47,37 @@ public class ServersInfoHandler extends LoginHandler {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void initializeServersList() throws FileNotFoundException, IOException, SQLException {
 		servers = new ArrayList<Server>(41 * 3);
 		
-		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM servers WHERE channelType=?");
-		ps.setShort(1, channelType);
-		ResultSet rs = ps.executeQuery();
-		
-		while (rs.next()) {
-			servers.add(new Server(
-					rs.getString("hostname"),
-					rs.getInt("port"),
-					rs.getString("name"),
-					rs.getShort("channelType"),
-					rs.getShort("serverID"),
-					rs.getInt("population"),
-					rs.getInt("maxPopulation")));
-		}
-		
-		rs.close();
+		Session session = Database.getSession();
+		session.beginTransaction();
+		servers = session.createQuery("FROM Server WHERE channelType = :channelType").setParameter("channelType", channelType).list();
+		session.getTransaction().commit();
+		session.close();
 		
 		for (Server server : servers) {
-			ps = con.prepareStatement("SELECT guild_name FROM guild_score WHERE server_hostname = ? AND server_port = ? AND "
-					+ "guild_score = (SELECT max(guild_score) FROM guild_score WHERE server_hostname = ? AND server_port = ?);");
-			ps.setString(1, server.getHostname());
-			ps.setInt(2, server.getPort());
-			ps.setString(3, server.getHostname());
-			ps.setInt(4, server.getPort());
-			rs = ps.executeQuery();
+			session = Database.getSession();
+			session.beginTransaction();
 			
-			if (rs.next()) {
-				server.setBestGuild(rs.getString("guild_name"));
+			
+			List<String> l = session.createQuery("SELECT guildName FROM GuildScore WHERE serverID = :serverID AND score = "
+					+ "(SELECT max(score) FROM GuildScore WHERE serverID = :serverID)").
+					setParameter("serverID", server.getId()).list();
+			
+			if (!l.isEmpty()) {
+				server.setBestGuild(l.get(0));
 			}
 			
-			rs.close();
+//			List l = session.createQuery("SELECT Guild.guildName FROM Guild WHERE GuildScore.serverID = :serverID AND GuildScore.score = "
+//					+ "(SELECT max(score) FROM GuildScore WHERE serverID = :serverID)").
+//					setParameter("serverID", server.getId()).list();
+//			System.out.println(l);
 		}
 		
-		
-		ps.close();
-		con.close();
+		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -155,7 +90,7 @@ public class ServersInfoHandler extends LoginHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.SERVERS_INFO_RESPONSE);
 		output.putShort(0x14, (short)(server.getChannelType() + 1));
-		output.putShort(0x16, server.getServerID());
+		output.putShort(0x16, server.getServerIndex());
 		output.putString(0x18, server.getHostname());
 		output.putInt(0x28, server.getPort());
 		output.putInt(0x2C, server.getPopulation());

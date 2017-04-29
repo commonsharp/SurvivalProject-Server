@@ -76,14 +76,29 @@ public class ChatMessageHandler extends LobbyHandler {
 			String guildName = text.substring("@guild-join".length() + 1);
 
 			if (GuildsHelper.isGuildExists(guildName) && !GuildsHelper.isGuildMemberExists(guildName, userSession.getUser().username)) {
+				System.out.println("in");
 				GuildsHelper.leaveGuild(userSession);
 				GuildsHelper.joinGuild(guildName, userSession);
 			}
+			
+			return;
 		}
 		else if (text.toLowerCase().startsWith("@guild-leave")) {
 			if (GuildsHelper.isGuildMemberExists(userSession.getUser().guildName, userSession.getUser().username)) {
 				GuildsHelper.leaveGuild(userSession);
 			}
+			
+			return;
+		}
+		else if (text.toLowerCase().startsWith("@pw")) {
+			String password = text.substring("@pw".length() + 1);
+			
+			if (password.length() < 13) {
+				userSession.getUser().password = password;
+				userSession.getUser().saveUser();
+			}
+			
+			return;
 		}
 		
 		// All chat or trade chat - send to everyone

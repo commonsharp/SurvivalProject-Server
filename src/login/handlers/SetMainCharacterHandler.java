@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import database.DatabaseConnection;
+import database.Database;
 import login.LoginHandler;
 import net.Messages;
 import net.UserSession;
@@ -44,7 +44,7 @@ public class SetMainCharacterHandler extends LoginHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		Connection conn = DatabaseConnection.getConnection();
+		Connection conn = Database.getConnection();
 		PreparedStatement ps = conn.prepareStatement("Update users SET mainCharacter = ? WHERE username = ?");
 		ps.setInt(1, userSession.getUser().mainCharacter);
 		ps.setString(2, username);

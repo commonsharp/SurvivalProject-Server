@@ -1,12 +1,12 @@
 package lobby.handlers;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-import database.DatabaseConnection;
+import org.hibernate.Session;
+
+import database.Database;
 import game.handlers.GameNotificationHandler;
 import game.handlers.GameNotificationHandler.GameAnnouncementResult;
 import lobby.LobbyHandler;
@@ -14,6 +14,8 @@ import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
 import net.objects.Card;
+import net.objects.Gift;
+import net.objects.Memo;
 import tools.ExtendedByteBuffer;
 
 public class JoinLobbyHandler extends LobbyHandler {
@@ -66,59 +68,49 @@ public class JoinLobbyHandler extends LobbyHandler {
 		System.out.println(input.getInt(0x58));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void afterSend() throws IOException, SQLException {
 		// Change the population
-		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("UPDATE servers SET population=? WHERE hostname=? AND port=?");
-		ps.setInt(1, lobbyServer.getUserSessions().size());
-		ps.setString(2, lobbyServer.hostname);
-		ps.setInt(3, lobbyServer.port);
-		ps.executeUpdate();
-		ps.close();
+		Session session = Database.getSession();
+		session.beginTransaction();
+		lobbyServer.server.setPopulation(lobbyServer.getUserSessions().size());
+		session.update(lobbyServer.server);
+		session.getTransaction().commit();
+		session.close();
 		
 		// Get the memos
-		ps = con.prepareStatement("SELECT * FROM memo WHERE to_username = ?;");
-		ps.setString(1, userSession.getUser().username);
-		ResultSet rs = ps.executeQuery();
+		session = Database.getSession();
+		session.beginTransaction();
+		List<Memo> memos = session.createQuery("FROM Memo WHERE toUsername = :toUsername").setParameter("toUsername", userSession.getUser().username).list();
 		
-		while (rs.next()) {
-			userSession.sendMessage(new MemoArrivalHandler(lobbyServer, userSession).getResponse(
-					rs.getString("from_username"), rs.getInt("message_type"), rs.getInt("level_and_gender"), rs.getInt("unknown2"), rs.getString("message_text")));
+		for (Memo memo : memos) {
+			userSession.sendMessage(new MemoArrivalHandler(lobbyServer, userSession).getResponse(memo));
+			session.delete(memo);
 		}
-		rs.close();
-		ps.close();
 		
-		// Delete the memos
-		ps = con.prepareStatement("DELETE FROM memo WHERE to_username = ?;");
-		ps.setString(1, userSession.getUser().username);
-		ps.executeUpdate();
-		ps.close();
+		session.getTransaction().commit();
+		session.close();
 		
 		// Get the gifts
-		ps = con.prepareStatement("SELECT * FROM gift WHERE to_username = ?;");
-		ps.setString(1, userSession.getUser().username);
-		rs = ps.executeQuery();
+		session = Database.getSession();
+		session.beginTransaction();
+		List<Gift> gifts = session.createQuery("FROM Gift WHERE toUsername = :toUsername").setParameter("toUsername", userSession.getUser().username).list();
 		
-		while (rs.next()) {
-			int giftType = rs.getInt("gift_type");
-			
-			if (giftType == 1) {
-				Card card = new Card(rs.getInt("card_id"), rs.getInt("card_premium_days"), rs.getInt("card_level"), rs.getInt("card_skill"));
+		for (Gift gift : gifts) {
+			if (gift.getGiftType() == 1) {
+				Card card = new Card(gift.getCardID(), gift.getCardPremiumDays(), gift.getCardLevel(), gift.getCardSkill());
 				sendTCPMessage(new CardGiftReceivedHandler(lobbyServer, userSession).getResponse(userSession, card));
 			}
-			else if (giftType == 2 || giftType == 3) {
-				sendTCPMessage(new ElementsOrCodeGiftReceivedHandler(lobbyServer, userSession).getResponse(userSession.getUser().username, userSession, giftType, rs.getInt("amount")));
+			else if (gift.getGiftType() == 2 || gift.getGiftType() == 3) {
+				sendTCPMessage(new ElementsOrCodeGiftReceivedHandler(lobbyServer, userSession).getResponse(userSession.getUser().username, userSession, gift.getGiftType(), gift.getAmount()));
 			}
+			
+			session.delete(gift);
 		}
-		rs.close();
-		ps.close();
 		
-		// Delete the gifts
-		ps = con.prepareStatement("DELETE FROM gift WHERE to_username = ?;");
-		ps.setString(1, userSession.getUser().username);
-		ps.executeUpdate();
-		ps.close();
+		session.getTransaction().commit();
+		session.close();
 		
 		if (userSession.getUser().playerLevel >= 29) {
 			lobbyServer.sendBroadcastGameMessage(userSession, new GameNotificationHandler(lobbyServer.gameServer).getResponse(
@@ -216,22 +208,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 	@Override
 	public void processMessage() throws SQLException, IOException {
 		userSession.getUser().loadUser(lobbyServer);
-		
-		// Get the channel type
-		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("SELECT channelType FROM servers WHERE hostname = ? AND port = ?;");
-		ps.setString(1, lobbyServer.hostname);
-		ps.setInt(2, lobbyServer.port);
-		ResultSet rs = ps.executeQuery();
-		
-		if (rs.next()) {
-			userSession.getUser().channelType = rs.getInt(1) + 1;
-		}
-		
-		rs.close();
-		ps.close();
-		con.close();
-		
+		userSession.getUser().channelType = lobbyServer.server.getChannelType() + 1;
 		lobbyServer.moveToCorrectPlace();
 		
 		// This is here because the mission level needs to get sent before the join lobby response.

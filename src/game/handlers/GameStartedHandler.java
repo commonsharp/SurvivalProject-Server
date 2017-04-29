@@ -66,6 +66,7 @@ public class GameStartedHandler extends GameHandler {
 		if (!currentRoom.isRoomCreatedMessageSent) {
 			switch (currentRoom.getGameMode()) {
 			case SOCCER:
+				System.out.println("In send timer");
 				gameServer.lobby.sendRoomMessage(userSession, new SoccerGoalHandler(gameServer.lobby, null).getResponse(currentRoom, 3), true);
 				break;
 //			case HOKEY:

@@ -2,6 +2,7 @@ package net.objects;
 
 public class Card {
 	protected int id;
+	protected int index;
 	protected int premiumDays;
 	protected int level;
 	protected int skill;
@@ -66,6 +67,11 @@ public class Card {
 	
 	
 	public Card(int id, int premiumDays, int level, int skill) {
+		this(0, id, premiumDays, level, skill);
+	}
+	
+	public Card(int index, int id, int premiumDays, int level, int skill) {
+		this.index = index;
 		this.id = id;
 		this.premiumDays = premiumDays;
 		this.level = level;
@@ -74,6 +80,10 @@ public class Card {
 
 	public int getId() {
 		return id;
+	}
+	
+	public int getIndex() {
+		return index;
 	}
 	
 	public int getPremiumDays() {
@@ -168,11 +178,13 @@ public class Card {
 		if (skill == 2 || skill == 0) {
 			if (skill2Array != null) {
 				secondSkill = skill2Array[(int)(Math.random() * skill2Array.length)];
+				chance = (int) (Math.random() * 100) + 1;
 			}
 		}
+		if (skill == 3 || skill == 0) {
+			chance = (int) (Math.random() * 100) + 1;
+		}
 		
-//		return 100201000;
-		// 033200000
 		return chance * 1000000 + firstSkill * 1000 + secondSkill;
 	}
 	
@@ -186,5 +198,18 @@ public class Card {
 	
 	public int getSkill2() {
 		return skill % 1000;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("Index: ").append(index).append("\t");
+		buffer.append("ID: ").append(id).append("\t");
+		buffer.append("Premium days: ").append(premiumDays).append("\t");
+		buffer.append("Level: ").append(level).append("\t");
+		buffer.append("Skill: ").append(skill).append("\t");
+		buffer.append("\n");
+		
+		return buffer.toString();
 	}
 }

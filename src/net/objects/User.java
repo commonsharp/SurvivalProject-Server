@@ -5,9 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
-import database.DatabaseConnection;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import database.Database;
 import lobby.LobbyServer;
 
 public class User {
@@ -32,13 +35,14 @@ public class User {
 	public Card[] cards;
 	
 	/*
+	 * event 2 - premium event does something with it
 	 * event 8 - triple exp/code/elements
 	 */
 //	public byte playerEventFlags[] = {1, 1, 1, 1, 1, 1, 1, 1};
-	public byte playerEventFlags[] = {0, 0, 0, 0, 0, 0, 0, 0};
+	public byte playerEventFlags[] = {0, 0, 0, 1, 0, 0, 0, 0};
 	
 	public int playerInventorySlots;
-	public int playerType = 0; //set to 7 for GM... otherwise 0
+	public int playerType = 0; // 0 - normal. 1 - demo. 7 - GM
 	public int[] whiteCards;
 	public int scrolls[];
 	public int playerWins;
@@ -59,6 +63,7 @@ public class User {
 	public int roomTeam;
 	public int roomCharacter;
 	public byte roomReady;
+	public int roomRandom;
 	
 	public int udpState;
 	public InetAddress udpIPAddress;
@@ -69,10 +74,10 @@ public class User {
 	public int lives;
 	public int gameKO;
 	
-	public String[] friends;
+	public List<Friend> friends;
 	public boolean isJoined;
 	
-	public ArrayList<UserShop> userShopResults;
+	public List<UserShop> userShopResults;
 	public int userShopOffset;
 	
 	public int booster;
@@ -91,7 +96,7 @@ public class User {
 	public User() {
 		cards = new Card[96];
 		whiteCards = new int[4];
-		friends = new String[24];
+//		friends = new Friend[24];
 		scrolls = new int[3];
 		isInitialLoginDataSent = false;
 	}
@@ -140,6 +145,7 @@ public class User {
 		return cards[index].getSkill();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void loadUser(LobbyServer lobbyServer) throws SQLException {
 		try {
 			Thread.sleep(0);
@@ -147,7 +153,7 @@ public class User {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Connection con = DatabaseConnection.getConnection();
+		Connection con = Database.getConnection();
 		PreparedStatement ps = con.prepareStatement("Select * FROM users WHERE username = ?");
 		ps.setString(1, username);
 		ResultSet rs = ps.executeQuery();
@@ -216,49 +222,34 @@ public class User {
 	        ps.close();
 	        
 	        // load friends
-	        ps = con.prepareStatement("Select * FROM friends WHERE username = ?");
-	        ps.setString(1, username);
-	        rs = ps.executeQuery();
-	        i = 0;
-	        
-	        while (rs.next()) {
-	        	friends[i++] = rs.getString("friend");
-	        }
-	        
-	        rs.close();
-	        ps.close();
+	        Session session = Database.getSession();
+	        session.beginTransaction();
+	        friends = session.createQuery("FROM Friend WHERE username = :username").setParameter("username", username).list();
+	        session.getTransaction().commit();
+	        session.close();
 	        
 	        // Load guild rank
 	        if (lobbyServer != null && guildName != null) {
 				int myScore = 0;
 				int myRank = 0;
 				
-				ps = con.prepareStatement("SELECT guild_score FROM guild_score WHERE server_hostname = ? AND server_port = ? AND guild_name = ?");
-				ps.setString(1, lobbyServer.hostname);
-				ps.setInt(2, lobbyServer.port);
-				ps.setString(3, guildName);
-				rs = ps.executeQuery();
+				session = Database.getSession();
+				Query query = session.createQuery("SELECT score FROM GuildScore WHERE serverID = :serverID AND guildName = :guildName");
+				query.setParameter("serverID", lobbyServer.server.getId());
+				query.setParameter("guildName", guildName);
+				List<Integer> guildScores = query.list();
 				
-				if (rs.next()) {
-					myScore = rs.getInt("guild_score");
-					rs.close();
+				if (!guildScores.isEmpty()) {
+					myScore = guildScores.get(0);
 					
-					ps = con.prepareStatement("SELECT Count(*) FROM guild_score WHERE server_hostname = ? AND server_port = ? AND guild_score > ?");
-					ps.setString(1, lobbyServer.hostname);
-					ps.setInt(2, lobbyServer.port);
-					ps.setInt(3, myScore);
+					query = session.createQuery("SELECT count(*) FROM GuildScore WHERE serverID = :serverID AND score > :score");
+					query.setParameter("serverID", lobbyServer.server.getId());
+					query.setParameter("score", myScore);
 					
-					rs = ps.executeQuery();
+					List<Long> count = query.list();
 					
-					if (rs.next()) {
-						myRank = rs.getInt(1) + 1;
-					}
-					
-					rs.close();
+					myRank = count.get(0).intValue() + 1;
 				}
-				
-				ps.close();
-				con.close();
 				
 				guildRank = myRank - 1;
 			}
@@ -287,7 +278,7 @@ public class User {
 	
 	public void saveUser() throws SQLException {
 		if (username != null) {
-			Connection con = DatabaseConnection.getConnection();
+			Connection con = Database.getConnection();
 			PreparedStatement ps = con.prepareStatement("Update users SET username=?, mainCharacter=?, playerLevel=?, usuableCharacterCount=?, "
 					+ "ageRestriction=?, experience=?, code=?, avatarMoney=?, guildName=?, guildDuty=?, waterElements=?, "
 					+ "fireElements=?, earthElements=?, windElements=?, isMale=?, magicIndex=?, weaponIndex=?, accessoryIndex=?, petIndex=?, "
@@ -389,41 +380,27 @@ public class User {
 		return -1;
 	}
 	
-	public void addFriend(String friendName) throws SQLException {
-		int i;
+	public void addFriend(String friendName) {
+		Friend friend = new Friend(username, friendName);
+		friends.add(friend);
 		
-		for (i = 0; i < 24; i++) {
-			if (friends[i] == null) {
-				break;
-			}
-		}
-		
-		friends[i] = friendName;
-		
-		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("INSERT INTO friends VALUES (?, ?)");
-		ps.setString(1, username);
-		ps.setString(2, friendName);
-		ps.executeUpdate();
-		
-		ps.close();
-		con.close();
+		Session session = Database.getSession();
+		session.beginTransaction();
+		session.save(friend);
+		session.getTransaction().commit();
+		session.close();
 	}
 
-	public void removeFriend(String friendName) throws SQLException {
-		for (int i = 0; i < 24; i++) {
-			if (friends[i] != null && friends[i].equals(friendName)) {
-				friends[i] = null;
+	public void removeFriend(String friendName) {
+		for (Friend friend : friends) {
+			if (friend.getFriendName().equals(friendName)) {
+				Session session = Database.getSession();
+				session.beginTransaction();
+				session.delete(friend);
+				session.getTransaction().commit();
+				session.close();
 				
-				Connection con = DatabaseConnection.getConnection();
-				PreparedStatement ps = con.prepareStatement("DELETE FROM friends WHERE username = ? AND friend = ?");
-				ps.setString(1, username);
-				ps.setString(2, friendName);
-				ps.executeUpdate();
-				
-				ps.close();
-				con.close();
-				return;
+				friends.remove(friend);
 			}
 		}
 	}

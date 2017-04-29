@@ -15,7 +15,7 @@ import tools.ExtendedByteBuffer;
 public class RoomPlayersUpdateHandler extends LobbyHandler {
 	public static final int RESPONSE_LENGTH = 0x118;
 	
-    int unknown04, isRandom;
+    int unknown04;
     int action;
     
     public RoomPlayersUpdateHandler(LobbyServer lobbyServer, UserSession tcpServer) {
@@ -35,7 +35,7 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		userSession.getUser().roomReady = input.getByte(0x20);
 		action = input.getInt(0x24);
 		unknown04 = input.getInt(0x28);
-		isRandom = input.getByte(0x2C);
+		userSession.getUser().roomRandom = input.getByte(0x2C);
 		
 		System.out.println("Ready: " + userSession.getUser().roomReady);
 		System.out.println("Action: " + action); // 0 - change character. 1 - change team. 2 - pressed ready
@@ -45,7 +45,7 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 //		System.out.println(isReadyMaybe);
 //		System.out.println(gameStart);
 		System.out.println(unknown04);
-		System.out.println(isRandom);
+		System.out.println(userSession.getUser().roomRandom);
 	}
 
 	@Override
@@ -70,6 +70,10 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 				}
 			}
 			
+//			if (room.getGameMode() == GameMode.SOCCER) {
+//				lobbyServer.sendRoomMessage(userSession, new SoccerGoalHandler(lobbyServer, null).getResponse(room, 3), true);
+//			}
+			
 			if (room.getGameMode() == GameMode.MISSION || room.getGameMode() == GameMode.BIG_MATCH_DEATH_MATCH || room.getGameMode() == GameMode.FIGHT_CLUB || room.getGameMode() == GameMode.CRYSTAL) {
 				lobbyServer.sendRoomMessage(userSession, new SpawnHandler(lobbyServer, userSession).getResponse2(), true);
 			}
@@ -83,6 +87,7 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 				if (room.blueKingIndex == -1) {
 					room.blueKingIndex = userSession.getUser().roomSlot;
 				}
+				sendTCPMessage(new NewKingHandler(lobbyServer, userSession).getResponse());
 			}
 			if (room.getGameMode() == GameMode.INFINITY_KING) {
 				if (userSession.getUser().roomTeam == 10) {
@@ -152,7 +157,8 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 			b = 1;
 		}
 		
-		if (lobbyServer.getRoom(userSession.getUser().roomIndex).shouldStart(userSession.getUser().roomSlot)) {
+		if (!lobbyServer.getRoom(userSession.getUser().roomIndex).isStarted && lobbyServer.getRoom(userSession.getUser().roomIndex).shouldStart(userSession.getUser().roomSlot)) {
+			lobbyServer.getRoom(userSession.getUser().roomIndex).isRoomCreatedMessageSent = false;
 			lobbyServer.getRoom(userSession.getUser().roomIndex).isStarted = true;
 			userSession.getUser().isInGame = true;
 		}
@@ -179,7 +185,7 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 		output.putInt(0x70, user.roomReady);
 		output.putInt(0x74, user.roomCharacter);
 		output.putInt(0x78, 0); // same as unknown04 in the request. if this is -1, there are no characters?
-		output.putInt(0x7C, isRandom); // is random
+		output.putInt(0x7C, userSession.getUser().roomRandom); // is random
 		output.putInt(0x80, user.roomTeam);
 		output.putInt(0x84, 0); //ko
 		output.putInt(0x88, 0); // round number. starts with 0.
@@ -269,7 +275,7 @@ public class RoomPlayersUpdateHandler extends LobbyHandler {
 
 		output.putInt(0x104, room.missionLevel); // current mission level (you can play a level 20 mission with someone who's level 20 while you're level 40 for example)
 		output.putInt(0x108, user.missionLevel); // my mission level
-		output.putInt(0x10C, 0); // aura. 1 - aura. others - nothing?
+		output.putInt(0x10C, 1); // aura. 1 - aura. others - nothing?
 		output.putInt(0x110, user.booster);
 		output.putInt(0x114, 0); // something to do with guild mark
 		

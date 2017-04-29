@@ -53,7 +53,23 @@ public class LobbyRoomsChangedHandler extends LobbyHandler {
 			output.putBoolean(0x50, room.isWithAutoTeams()); // is auto team
 			output.putInt(0x54, room.getCardsLimit()); // cards limit.
 			output.putInts(0x58, room.getCharacters()); // characters in the room
-			output.putInt(0x98, 0); // -1 - everyone is random. 0 - normal. 1 - red team random. 2 - blue team random
+			output.putInt(0x98, 0x000000F0); // Flags! second digit - first slot, third digit - second slot and so on?? (only checked the second and third digits)
+			
+//			for (int i = 0x98; i < 0xA8; i += 4) {
+//				output.putInt(i, -1);
+//			}
+//			UserSession currentUserSession;
+//			for (int i = 0; i < 8; i++) {
+//				currentUserSession = room.getUserSession(i);
+//				
+//				if (currentUserSession != null) {
+//					System.out.println("random : " + currentUserSession.getUser().roomRandom);
+//					 // -1 - everyone is random. 0 - normal
+//					if (currentUserSession.getUser().roomRandom == 1) {
+//						output.putInt(0x98 + 4 * i, -1);
+//					}
+//				}
+//			}
 			output.putInt(0xA8, room.missionLevel); // this is big mission quest number. something with field 2E54 in MyInfo
 			
 			output.putByte(0xAC, (byte) 0); // can you get in or not

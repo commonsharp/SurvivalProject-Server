@@ -7,6 +7,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.Memo;
 import tools.ExtendedByteBuffer;
 
 public class MemoArrivalHandler extends LobbyHandler {
@@ -31,17 +32,17 @@ public class MemoArrivalHandler extends LobbyHandler {
 		return null;
 	}
 	
-	public byte[] getResponse(String username, int messageType, int levelAndGender, int unknown2, String text) {
+	public byte[] getResponse(Memo memo) {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.MEMO_ARRIVAL_RESPONSE);
 		
-		output.putString(0x14, username);
-		output.putInt(0x24, messageType);
-		output.putInt(0x28, levelAndGender);
-		output.putInt(0x2C, unknown2);
-		output.putString(0x30, text);
+		output.putString(0x14, memo.getFromUsername());
+		output.putInt(0x24, memo.getMessageType());
+		output.putInt(0x28, memo.getLevelAndGender());
+		output.putInt(0x2C, memo.getUnknown2());
+		output.putString(0x30, memo.getText());
 		
 		return output.toArray();
 	}

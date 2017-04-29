@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class DatabaseHelper {
 	public static boolean isUserExists(String username) throws SQLException {
-		Connection con = DatabaseConnection.getConnection();
+		Connection con = Database.getConnection();
 		PreparedStatement ps = con.prepareStatement("Select * FROM users WHERE username = ?");
 		ps.setString(1, username);
 		ResultSet rs = ps.executeQuery();

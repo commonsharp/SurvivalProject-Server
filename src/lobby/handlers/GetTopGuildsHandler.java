@@ -1,15 +1,17 @@
 package lobby.handlers;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-import database.DatabaseConnection;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import database.Database;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.GuildScore;
 import tools.ExtendedByteBuffer;
 
 public class GetTopGuildsHandler extends LobbyHandler {
@@ -29,6 +31,7 @@ public class GetTopGuildsHandler extends LobbyHandler {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public byte[] getResponse() throws SQLException {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
@@ -37,60 +40,60 @@ public class GetTopGuildsHandler extends LobbyHandler {
 		// If your clan is in this list, then 9 0x4486 requests are being sent to the server.
 		// Otherwise, 10 0x4486 requests are being sent to the server...
 		
-		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM guild_score WHERE server_hostname=? AND server_port=? ORDER BY guild_score DESC LIMIT 10;");
-		ps.setString(1, lobbyServer.hostname);
-		ps.setInt(2, lobbyServer.port);
-		ResultSet rs = ps.executeQuery();
+		Session session = Database.getSession();
+		session.beginTransaction();
+		List<GuildScore> guildScores = session.createQuery("FROM GuildScore WHERE serverID = :serverID ORDER BY score DESC")
+				.setParameter("serverID", lobbyServer.server.getId()).list();
 		
-		for (int i = 0; i < 10 && rs.next(); i++) {
-			output.putString(0x14 + 0xD * i, rs.getString("guild_name"));
-			output.putInt(0x98 + 4 * i, rs.getInt("guild_score"));
+		for (int i = 0; i < 10 && i < guildScores.size(); i++) {
+			output.putString(0x14 + 0xD * i, guildScores.get(i).getGuildName());
+			output.putInt(0x98 + 4 * i, guildScores.get(i).getScore());
 		}
 		
-		rs.close();
-		ps.close();
 		
-		if (userSession.getUser().guildName != null) {
+//		Connection con = Database.getConnection();
+//		PreparedStatement ps = con.prepareStatement("SELECT * FROM guild_score WHERE server_hostname=? AND server_port=? ORDER BY guild_score DESC LIMIT 10;");
+//		ps.setString(1, lobbyServer.hostname);
+//		ps.setInt(2, lobbyServer.port);
+//		ResultSet rs = ps.executeQuery();
+//		
+//		for (int i = 0; i < 10 && rs.next(); i++) {
+//			output.putString(0x14 + 0xD * i, rs.getString("guild_name"));
+//			output.putInt(0x98 + 4 * i, rs.getInt("guild_score"));
+//		}
+//		
+//		rs.close();
+//		ps.close();
+		
+		// Load guild rank
+        if (lobbyServer != null && userSession.getUser().guildName != null) {
 			int myScore = 0;
 			int myRank = 0;
 			
-			ps = con.prepareStatement("SELECT guild_score FROM guild_score WHERE server_hostname = ? AND server_port = ? AND guild_name = ?");
-			ps.setString(1, lobbyServer.hostname);
-			ps.setInt(2, lobbyServer.port);
-			ps.setString(3, userSession.getUser().guildName);
-			rs = ps.executeQuery();
+			session = Database.getSession();
+			Query query = session.createQuery("SELECT score FROM GuildScore WHERE serverID = :serverID AND guildName = :guildName");
+			query.setParameter("serverID", lobbyServer.server.getId());
+			query.setParameter("guildName", userSession.getUser().guildName);
+			List<Integer> guildScores2 = query.list();
 			
-			if (rs.next()) {
-				myScore = rs.getInt("guild_score");
-				rs.close();
+			if (!guildScores2.isEmpty()) {
+				myScore = guildScores2.get(0);
 				
-				ps = con.prepareStatement("SELECT Count(*) FROM guild_score WHERE server_hostname = ? AND server_port = ? AND guild_score > ?");
-				ps.setString(1, lobbyServer.hostname);
-				ps.setInt(2, lobbyServer.port);
-				ps.setInt(3, myScore);
+				query = session.createQuery("SELECT count(*) FROM GuildScore WHERE serverID = :serverID AND score > :score");
+				query.setParameter("serverID", lobbyServer.server.getId());
+				query.setParameter("score", myScore);
 				
-				rs = ps.executeQuery();
+				List<Long> count = query.list();
 				
-				if (rs.next()) {
-					myRank = rs.getInt(1) + 1;
-				}
-				
-				rs.close();
+				myRank = count.get(0).intValue() + 1;
 			}
-			
-			ps.close();
-			con.close();
 			
 			userSession.getUser().guildRank = myRank - 1;
 			output.putInt(0xE8, myRank - 1);
 			output.putInt(0xEC, myScore);
 		}
-		
+			
 		output.putInt(0xC0, 0); // another array (10 integers)
-		
-		rs.close();
-		ps.close();
 		
 		return output.toArray();
 	}

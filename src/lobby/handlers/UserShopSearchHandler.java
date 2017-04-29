@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import database.DatabaseConnection;
+import database.Database;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
@@ -69,7 +69,7 @@ public class UserShopSearchHandler extends LobbyHandler {
 				output.putBoolean(0x84 + i, lobbyServer.findUserSession(userSession.getUser().userShopResults.get(i + offset).getUsername()).getUser().isMale);
 			}
 			else {
-				Connection con = DatabaseConnection.getConnection();
+				Connection con = Database.getConnection();
 				PreparedStatement ps = con.prepareStatement("SELECT playerLevel, isMale FROM users WHERE username = ?;");
 				ps.setString(1, userSession.getUser().userShopResults.get(i + offset).getUsername());
 				ResultSet rs = ps.executeQuery();

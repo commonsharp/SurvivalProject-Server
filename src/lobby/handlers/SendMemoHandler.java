@@ -1,16 +1,17 @@
 package lobby.handlers;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import database.DatabaseConnection;
+import org.hibernate.Session;
+
+import database.Database;
 import database.DatabaseHelper;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.Memo;
 import tools.ExtendedByteBuffer;
 
 public class SendMemoHandler extends LobbyHandler {
@@ -78,21 +79,15 @@ public class SendMemoHandler extends LobbyHandler {
 			UserSession otherUserSession = lobbyServer.findUserSession(username);
 			
 			if (otherUserSession != null) {
-				otherUserSession.sendMessage(new MemoArrivalHandler(lobbyServer, userSession).getResponse(
-						userSession.getUser().username, messageType, levelAndGender, unknown2, text));
+				otherUserSession.sendMessage(new MemoArrivalHandler(lobbyServer, userSession).getResponse(new Memo(
+						userSession.getUser().username, messageType, levelAndGender, unknown2, text)));
 			}
 			else {
-				Connection con = DatabaseConnection.getConnection();
-				PreparedStatement ps = con.prepareStatement("INSERT INTO memo (from_username, to_username, message_type, level_and_gender, unknown2, message_text) VALUES (?, ?, ?, ?, ?, ?);");
-				ps.setString(1, userSession.getUser().username);
-				ps.setString(2, username);
-				ps.setInt(3, messageType);
-				ps.setInt(4, levelAndGender);
-				ps.setInt(5, unknown2);
-				ps.setString(6, text);
-				ps.executeUpdate();
-				ps.close();
-				con.close();
+				Session session = Database.getSession();
+				session.beginTransaction();
+				session.save(new Memo(userSession.getUser().username, username, messageType, levelAndGender, unknown2, text));
+				session.getTransaction().commit();
+				session.close();
 			}
 		}
 	}

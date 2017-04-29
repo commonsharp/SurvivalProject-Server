@@ -41,6 +41,7 @@ public class SoccerGoalHandler extends LobbyHandler {
 		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
 		
 		if (room.blueScore == 3 || room.redScore == 3) {
+			room.isStarted = false;
 			int[] results = new int[8];
 			
 			int winningTeam = (room.blueScore == 3) ? 10 : 20; 
@@ -77,8 +78,8 @@ public class SoccerGoalHandler extends LobbyHandler {
 		output.putInt(0x14, result);
 		output.putInt(0x18, room.blueScore);
 		output.putInt(0x1C, room.redScore);
-		output.putInt(0x20, (int)(System.currentTimeMillis() / 1000));
-		output.putInt(0x24, (int)(System.currentTimeMillis() / 1000));
+		output.putInt(0x20, (int)(System.currentTimeMillis() - lobbyServer.gameServer.serverStartTime));
+		output.putInt(0x24, 0);
 		
 		return output.toArray();
 	}

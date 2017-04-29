@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-import database.DatabaseConnection;
+import database.Database;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.ExperienceHelper;
@@ -287,21 +287,21 @@ public class PlayerDeathHandler extends LobbyHandler {
 		}
 		
 		// Update guild points
-		Connection con = DatabaseConnection.getConnection();
+		Connection con = Database.getConnection();
 		PreparedStatement ps = con.prepareStatement("UPDATE guild_score SET guild_score = guild_score + ? WHERE server_hostname = ? AND server_port = ? AND guild_name = ?;");
 		
-		int guildPoints;
-		for (int i = 0; i < 8; i++) {
-			guildPoints = ExperienceHelper.experienceToGuildPoints(experienceGained[i] * luckyMultiplier[i], room.getGameMode());
-			
-			if (guildPoints != 0) {
-				ps.setInt(1, guildPoints);
-				ps.setString(2, lobbyServer.hostname);
-				ps.setInt(3, lobbyServer.port);
-				ps.setString(4, room.getUserSession(i).getUser().guildName);
-				ps.executeUpdate();
-			}
-		}
+//		int guildPoints;
+//		for (int i = 0; i < 8; i++) {
+//			guildPoints = ExperienceHelper.experienceToGuildPoints(experienceGained[i] * luckyMultiplier[i], room.getGameMode());
+//			
+//			if (guildPoints != 0) {
+//				ps.setInt(1, guildPoints);
+//				ps.setString(2, lobbyServer.hostname);
+//				ps.setInt(3, lobbyServer.port);
+//				ps.setString(4, room.getUserSession(i).getUser().guildName);
+//				ps.executeUpdate();
+//			}
+//		}
 		
 		ps.close();
 		con.close();
@@ -315,7 +315,7 @@ public class PlayerDeathHandler extends LobbyHandler {
 			room.getUserSession(killerIndex).getUser().gameKO++;
 			room.getUserSession(killerIndex).getUser().playerKOs++;
 			
-			con = DatabaseConnection.getConnection();
+			con = Database.getConnection();
 			ps = con.prepareStatement("UPDATE users SET koCount=? WHERE username=?");
 			ps.setInt(1, room.getUserSession(killerIndex).getUser().playerKOs);
 			ps.setString(2, room.getUserSession(killerIndex).getUser().username);

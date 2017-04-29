@@ -15,7 +15,7 @@ import tools.ExtendedByteBuffer;
 
 //change to card fusion
 public class FusionHandler extends LobbyHandler {
-	public static final int RESPONSE_LENGTH = 0x979;
+	public static final int RESPONSE_LENGTH = 0x58;
 	
 	protected int itemIndex;
 	protected int fusionType; // 1 - level. 2 - skill
@@ -23,6 +23,7 @@ public class FusionHandler extends LobbyHandler {
 	
 	protected int result;
 	RemovedType removedType;
+	int gainedElementsAmount;
 	
 	private enum RemovedType {
 		/*
@@ -37,6 +38,7 @@ public class FusionHandler extends LobbyHandler {
 		 */
 		
 		NON(0),
+		GAIN_ELEMENTS(1),
 		LEVEL(3),
 		SKILL(4),
 		SKILL1(5),
@@ -94,19 +96,8 @@ public class FusionHandler extends LobbyHandler {
 		output.putInt(0x28, card.getId()); // item ID
 		output.putInt(0x2C, card.getPremiumDays()); // premium days
 		output.putInt(0x30, userSession.getUser().roomSlot); // player slot
-		/*
-		 * 34 - this one make you lose 1 use if you use a certain. values:
-		 * 3 - 2013
-		 * 4 - 2014
-		 * 5 - 2015 - skill 1
-		 * 6 - 2016 - skill 2
-		 * 7 - 2018
-		 * 8 - 2019
-		 * 9 - 2020
-		 */
 		output.putInt(0x34, removedType.getValue());
-		output.putInt(0x38, 2); // I think this is only used in game (game state 4)
-		output.putInt(0x3C, 3);
+		output.putInt(0x38, gainedElementsAmount);
 		output.putLong(0x40, userSession.getUser().playerCode); // new money amount
 		output.putInts(0x48, userSession.getUser().whiteCards); // new elements amount
 		
@@ -141,10 +132,13 @@ public class FusionHandler extends LobbyHandler {
 			
 			if ((int)(Math.random() * 100 + 1) <= successPercentage) {
 				result = 1;
-				card.setLevel(card.getLevel() + 1);
+//				card.setLevel(card.getLevel() + 1);
 			}
 			else {
-				result = 2;
+				gainedElementsAmount = CurrencyHelper.getLevelFusionSpirits(card) / 5;
+				userSession.getUser().whiteCards[card.getElement() - 1] += gainedElementsAmount;
+				removedType = RemovedType.GAIN_ELEMENTS;
+				result = 5;
 				card.setSkill(card.getRandomSkill(0));
 			}
 		}
@@ -165,77 +159,70 @@ public class FusionHandler extends LobbyHandler {
 				card.setLevel(card.getLevel() + 1);
 			}
 			else {
-				result = 2;
+				result = 3;
 				card.setSkill(card.getRandomSkill(0));
 			}
 			
-			for (int i = 0; i < 96; i++) {
-				if (userSession.getUser().cards[i] != null && userSession.getUser().cards[i].getId() == Card.LEVEL_FUSION) {
-					userSession.getUser().cards[i].setLevel(userSession.getUser().cards[i].getLevel() - 1);
-					
-					if (userSession.getUser().cards[i].getLevel() == 0) {
-						userSession.getUser().cards[i] = null;
-					}
-					
-					break;
-				}
-			}
+			removeCard(Card.LEVEL_FUSION);
 		}
 		// skill fusion card
-		else if (fusionType == 5) {
+		else if (fusionType == 4) {
 			result = 5;
 			removedType = RemovedType.SKILL;
 			card.setSkill(card.getRandomSkill(0));
-			
-			for (int i = 0; i < 96; i++) {
-				if (userSession.getUser().cards[i] != null && userSession.getUser().cards[i].getId() == Card.SKILL_FUSION) {
-					userSession.getUser().cards[i].setLevel(userSession.getUser().cards[i].getLevel() - 1);
-					
-					if (userSession.getUser().cards[i].getLevel() == 0) {
-						userSession.getUser().cards[i] = null;
-					}
-					
-					break;
-				}
-			}
+			removeCard(Card.SKILL_FUSION);
 		}
 		// only skill 1 card
 		else if (fusionType == 5) {
 			result = 5;
 			removedType = RemovedType.SKILL1;
 			card.setSkill(card.getRandomSkill(1));
-			
-			for (int i = 0; i < 96; i++) {
-				if (userSession.getUser().cards[i] != null && userSession.getUser().cards[i].getId() == Card.SKILL1_FUSION) {
-					userSession.getUser().cards[i].setLevel(userSession.getUser().cards[i].getLevel() - 1);
-					
-					if (userSession.getUser().cards[i].getLevel() == 0) {
-						userSession.getUser().cards[i] = null;
-					}
-					
-					break;
-				}
-			}
+			removeCard(Card.SKILL1_FUSION);
 		}
 		// only skill 2 card
 		else if (fusionType == 6) {
 			result = 5;
 			removedType = RemovedType.SKILL2;
 			card.setSkill(card.getRandomSkill(2));
-			
-			for (int i = 0; i < 96; i++) {
-				if (userSession.getUser().cards[i] != null && userSession.getUser().cards[i].getId() == Card.SKILL2_FUSION) {
-					userSession.getUser().cards[i].setLevel(userSession.getUser().cards[i].getLevel() - 1);
-					
-					if (userSession.getUser().cards[i].getLevel() == 0) {
-						userSession.getUser().cards[i] = null;
-					}
-					
-					break;
-				}
-			}
+			removeCard(Card.SKILL2_FUSION);
+		}
+		// skill 1-1
+		else if (fusionType == 7) {
+			result = 5;
+			removedType = RemovedType.SKILL1_1;
+			card.setSkill(card.getRandomSkill(1));
+			removeCard(Card.SKILL_1_1_FUSION);
+		}
+		// skill 2-1
+		else if (fusionType == 8) {
+			result = 5;
+			removedType = RemovedType.SKILL2_1;
+			card.setSkill(card.getRandomSkill(2));
+			removeCard(Card.SKILL_2_1_FUSION);
+		}
+		
+		// skill 2-2
+		else if (fusionType == 9) {
+			result = 5;
+			removedType = RemovedType.SKILL2_2;
+			card.setSkill(card.getRandomSkill(3));
+			removeCard(Card.SKILL_2_2_FUSION);
 		}
 		
 		userSession.getUser().saveUser();
+	}
+	
+	private void removeCard(int cardID) {
+		for (int i = 0; i < 96; i++) {
+			if (userSession.getUser().cards[i] != null && userSession.getUser().cards[i].getId() == cardID) {
+				userSession.getUser().cards[i].setLevel(userSession.getUser().cards[i].getLevel() - 1);
+				
+				if (userSession.getUser().cards[i].getLevel() == 0) {
+					userSession.getUser().cards[i] = null;
+				}
+				
+				break;
+			}
+		}
 	}
 }

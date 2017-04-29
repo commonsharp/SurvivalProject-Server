@@ -1,11 +1,11 @@
 package login.handlers;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-import database.DatabaseConnection;
+import org.hibernate.Session;
+
+import database.Database;
 import login.LoginHandler;
 import net.Messages;
 import net.UserSession;
@@ -47,32 +47,28 @@ public class GetChannelActivityHandler extends LoginHandler {
 		return output.toArray();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void processMessage() throws SQLException {
-		Connection con = DatabaseConnection.getConnection();
-		PreparedStatement ps = con.prepareStatement("SELECT sum(population) FROM servers;");
-		ResultSet rs = ps.executeQuery();
-		
+		Session session = Database.getSession();
+		session.beginTransaction();
+		List<Long> sum = session.createQuery("SELECT sum(population) FROM Server").list();
 		playersPercentage = new int[3];
 		
-		if (rs.next()) {
-			totalUsers = rs.getInt(1);
+		if (!sum.isEmpty()) {
+			System.out.println(sum.get(0).getClass());
+			totalUsers = sum.get(0).intValue();
 			
 			if (totalUsers != 0) {
 				for (int i = 0; i < 3; i++) {
-					ps = con.prepareStatement("SELECT sum(population) FROM servers WHERE channelType = ?;");
-					ps.setInt(1, i);
-					rs = ps.executeQuery();
+					List<Long> population = session.createQuery("SELECT sum(population) FROM Server WHERE channelType = :channelType").
+							setParameter("channelType", (short) i).list();
 					
-					if (rs.next()) {
-						playersPercentage[i] = rs.getInt(1) * 100 / totalUsers;
+					if (!population.isEmpty()) {
+						playersPercentage[i] = population.get(0).intValue() * 100 / totalUsers;
 					}
 				}
 			}
 		}
-		
-		rs.close();
-		ps.close();
-		con.close();
 	}
 }

@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import database.DatabaseConnection;
+import database.Database;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
@@ -73,7 +73,7 @@ public class UserShopBuyCardHandler extends LobbyHandler {
 			ownerUserSession.getUser().saveUser();
 		}
 		else {
-			Connection con = DatabaseConnection.getConnection();
+			Connection con = Database.getConnection();
 			PreparedStatement ps = con.prepareStatement("UPDATE users SET code = code - ? WHERE username = ?;");
 			ps.setLong(1, code);
 			ps.setString(2, username);
@@ -84,7 +84,7 @@ public class UserShopBuyCardHandler extends LobbyHandler {
 		
 		
 		// Remove the card from the usershop
-		Connection con = DatabaseConnection.getConnection();
+		Connection con = Database.getConnection();
 		PreparedStatement ps = con.prepareStatement("DELETE FROM user_shop WHERE username = ? AND card_id = ? AND card_premium_days = ? AND card_level = ? AND card_skill = ? AND code = ?;");
 		ps.setString(1, username);
 		

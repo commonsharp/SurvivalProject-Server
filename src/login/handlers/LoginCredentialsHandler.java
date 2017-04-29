@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import database.DatabaseConnection;
+import database.Database;
 import login.LoginHandler;
 import net.Messages;
 import net.UserSession;
@@ -62,7 +62,7 @@ public class LoginCredentialsHandler extends LoginHandler {
 //			DatabaseConnection.setUser(userSession.getUser());
 //		}
 		
-		Connection con = DatabaseConnection.getConnection();
+		Connection con = Database.getConnection();
 		PreparedStatement ps = con.prepareStatement("Select * FROM users WHERE username = ?");
 		ps.setString(1, userSession.getUser().username);
 		ResultSet rs = ps.executeQuery();

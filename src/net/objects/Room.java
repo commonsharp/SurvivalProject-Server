@@ -177,8 +177,6 @@ public class Room {
 	}
 
 	public int[] getCharacters() {
-//		return characters;
-		
 		int[] characters = new int[8];
 		for (int i = 0; i < 8; i++) {
 			if (users[i] != null) {
@@ -507,5 +505,15 @@ public class Room {
 		}
 		
 		return -1;
+	}
+	
+	public boolean containsPlayer(String username) {
+		for (int i = 0; i < 8; i++) {
+			if (users[i] != null && users[i].getUser().username.equals(username)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

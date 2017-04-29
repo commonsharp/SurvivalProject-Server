@@ -8,6 +8,7 @@ import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
 import net.objects.User;
+import net.objects.UserShop;
 import tools.ExtendedByteBuffer;
 
 public class AutoUserShopNewItemHandler extends LobbyHandler {
@@ -57,8 +58,8 @@ public class AutoUserShopNewItemHandler extends LobbyHandler {
 		
 		if (cardType == 1) {
 			if (isBuy) {
-				lobbyServer.addShop(user.username, user.cards[cardIndex].getId(), user.cards[cardIndex].getPremiumDays(),
-						user.cards[cardIndex].getLevel(), user.cards[cardIndex].getSkill(), code);
+				lobbyServer.addShop(new UserShop(user.username, user.cards[cardIndex].getId(),
+						user.cards[cardIndex].getPremiumDays(), user.cards[cardIndex].getLevel(), user.cards[cardIndex].getSkill(), code));
 				
 				int id = user.cards[cardIndex].getId();
 				user.cards[cardIndex] = null;
@@ -98,8 +99,7 @@ public class AutoUserShopNewItemHandler extends LobbyHandler {
 		// itemType = 2. elements
 		else {
 			if (isBuy) {
-				lobbyServer.addShop(user.username, cardIndex, 0, 0, 0, code);
-				user.whiteCards[cardIndex / 10000 - 1] -= cardIndex % 10000;
+				lobbyServer.addShop(new UserShop(user.username, cardIndex, 0, 0, 0, code));
 			}
 		}
 		
