@@ -40,13 +40,11 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * When you use a ranged attack, the projectile is invisible. May happen after an infinity symbol mode game.
 
 # Features that aren't working yet
-- [x] Trades
 - [ ] Manual user shops
 - [ ] Spectators
 
 # Game modes that aren't working yet
 - [ ] Infinity survival mode
-- [x] Infinity symbol mode
 - [ ] King slayer mode
 - [ ] Fight club mode
 - [ ] Tournament mode
@@ -58,21 +56,9 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] Elemental bonus x3
 - [ ] Premium Event - **This card gives you a better bonus in every event. I'm not going to implement that card**
 - [ ] SuperSilver
-- [x] CardSlot+18, CardSlot+30 - **This is actually a package**
-- [x] Skill I fusion
-- [x] Skill II fusion
 - [ ] User shop I
-- [x] Packages
-- [x] Skill 1-1 fusion - Same as Skill 1 fusion but obtained through packages
-- [x] Skill 2-1 fusion - Same as Skill 2 fusion but obtained through packages
-- [x] Skill 2-2 fusion - Only changes the success chance of the second skill (or both in magic cards). Obtained through packages
-- [x] Skill fusion
-- [x] Level fusion
 
 # TODO
-- [x] Gain elements after a failed level up fusion.
-- [x] Change the infinity games timers to ticks-based instead of a new thread with a timer. It will also fix the bug that if you leave the room, the timer still goes on, and will get executed when finished.
-- [x] Random characters
 - [ ] Change the server sockets to NIO sockets.
 - [ ] Implement Hibernate (or any other ORM framework).
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
@@ -92,17 +78,13 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] The stats after a mission isn't correct.
 - [ ] The stats after every game mode isn't correct.
 - [ ] Change the mission lost packet to GameCompletedHandler.
-- [x] Change the lucky multipliers to 2, 3, 5 and 10.
 - [ ] After a chat command is completed, send the user a response.
 
 # Known bugs
-* ~~When you finish a mission, the mission level on the left of the screen doesn't change.~~
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
 * Death timer in big matches doesn't work.
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
-* ~~Join a crystal game mode, let a player leave (because he's afk), destroy a crystal, get null pointer exception.~~
-* ~~If someone leaves during a survival game, other players get a win message.~~
 * Level xx5 missions aren't working.
 * When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
 * If you use a random character, people in the lobby can't see that you picked a random character.
