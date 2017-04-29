@@ -91,6 +91,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If you have 2 players on one team in hero mode, the game starts.
 
 # 29/04/2017
+* Fixed a bug where removing friends threw a concurrent modification exception.
 * Fixed a bug where if a user's game crashed, a socket exception was thrown.
 * Fixed a bug where if you had finished a soccer game and started a new one, the timer wouldn't have started.
 
