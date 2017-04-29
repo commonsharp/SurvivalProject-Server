@@ -87,6 +87,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
 * If you use a random character, people in the lobby can't see that you picked a random character.
 * If you have 2 players on one team in hero mode, the game starts.
+* If a user puts two cards of the same type and same price in the user shop, and someone purchase it, the two of them are removed.
 
 # 29/04/2017
 * Fixed a bug where purchasing elements (white cards) through the user shop interface (F6) threw an exception.
