@@ -32,7 +32,7 @@ public class NewKingHandler extends LobbyHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.NEW_KING_RESPONSE);
-		output.putInt(0x14, lobbyServer.getRoom(userSession.getUser().roomIndex).blueKingIndex);
+		output.putInt(0x14, lobbyServer.getRoom(userSession.getUser().getRoomIndex()).blueKingIndex);
 
 		return output.toArray();
 	}

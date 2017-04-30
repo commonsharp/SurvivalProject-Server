@@ -39,7 +39,7 @@ public class GetFriendsHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.GET_FRIENDS_RESPONSE);
 		
-		List<Friend> friends = userSession.getUser().friends;
+		List<Friend> friends = userSession.getUser().getFriends();
 		
 		int i = 0;
 		for (Friend friend : friends) {

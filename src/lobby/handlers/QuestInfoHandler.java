@@ -28,7 +28,7 @@ public class QuestInfoHandler extends LobbyHandler {
 
 	@Override
 	public void interpretBytes() {
-		System.out.println("In slot " + userSession.getUser().roomSlot);
+		System.out.println("In slot " + userSession.getUser().getRoomSlot());
 		input.getInt(0x14); // unknown
 		input.getInt(0x18); // unknown
 	}

@@ -58,18 +58,19 @@ public class AutoUserShopNewItemHandler extends LobbyHandler {
 		
 		if (cardType == 1) {
 			if (isBuy) {
-				lobbyServer.addShop(new UserShop(user.username, user.cards[cardIndex].getId(),
-						user.cards[cardIndex].getPremiumDays(), user.cards[cardIndex].getLevel(), user.cards[cardIndex].getSkill(), code));
+				lobbyServer.addShop(new UserShop(user.getUsername(), user.getCard(cardIndex).getCardID(),
+						user.getCard(cardIndex).getCardPremiumDays(), user.getCard(cardIndex).getCardLevel(), user.getCard(cardIndex).getCardSkill(), code));
 				
-				int id = user.cards[cardIndex].getId();
-				user.cards[cardIndex] = null;
+				
+				int id = user.getCard(cardIndex).getCardID();
+				user.removeCard(cardIndex);
 				
 				if (id == 0x7D7 || id == 0x7D8 || id == 0x7DC) {
-					user.booster = 0;
+					user.setBooster(0);
 					
 					for (int i = 0; i < 96; i++) {
-						if (user.cards[i] != null && (user.cards[i].getId() == 0x7D7 || user.cards[i].getId() == 0x7D8 || user.cards[i].getId() == 0x7DC)) {
-							user.booster = user.cards[i].getId();
+						if (user.getCard(i) != null && (user.getCard(i).getCardID() == 0x7D7 || user.getCard(i).getCardID() == 0x7D8 || user.getCard(i).getCardID() == 0x7DC)) {
+							user.setBooster(user.getCard(i).getCardID());
 							break;
 						}
 					}
@@ -99,24 +100,33 @@ public class AutoUserShopNewItemHandler extends LobbyHandler {
 		// itemType = 2. elements
 		else {
 			if (isBuy) {
-				lobbyServer.addShop(new UserShop(user.username, cardIndex, 0, 0, 0, code));
+				lobbyServer.addShop(new UserShop(user.getUsername(), cardIndex, 0, 0, 0, code));
 			}
 		}
 		
 		if (isBuy) {
-			for (int i = 0; i < 96; i++) {
-				if (userSession.getUser().cards[i] != null && userSession.getUser().cards[i].getId() == 2009) {
-					userSession.getUser().cards[i].setLevel(userSession.getUser().cards[i].getLevel() - 1);
+			int i;
+			for (i = 0; i < 96; i++) {
+				if (user.getCard(i) != null && user.getCard(i).getCardID() == 2009) {
+					user.getCard(i).setCardLevel(user.getCard(i).getCardLevel() - 1);
 					
-					if (userSession.getUser().cards[i].getLevel() == 0) {
-						userSession.getUser().cards[i] = null;
+					if (user.getCard(i).getCardLevel() == 0) {
+						user.removeCard(i);
 					}
 					break;
 				}
 			}
+			
+			if (cardIndex < 10000) {
+				User.saveCards(userSession.getUser(), cardIndex, i);
+			}
+			else {
+				User.saveCards(userSession.getUser(), i);
+			}
 		}
 		
-		user.saveUser();
+		User.saveUser(userSession.getUser());
+		
 	}
 
 	@Override

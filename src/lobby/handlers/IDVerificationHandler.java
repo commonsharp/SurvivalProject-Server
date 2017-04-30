@@ -3,11 +3,11 @@ package lobby.handlers;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import database.DatabaseHelper;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class IDVerificationHandler extends LobbyHandler {
@@ -44,7 +44,7 @@ public class IDVerificationHandler extends LobbyHandler {
 		 */
 		int response;
 		
-		if (lobbyServer.findUserSession(username) != null || DatabaseHelper.isUserExists(username)) {
+		if (lobbyServer.findUserSession(username) != null || User.isUserExists(username)) {
 			response = 1;
 		}
 		else {

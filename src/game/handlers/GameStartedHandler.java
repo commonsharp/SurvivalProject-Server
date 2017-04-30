@@ -58,7 +58,7 @@ public class GameStartedHandler extends GameHandler {
 		UserSession userSession = gameServer.lobby.getRoom(roomID).getUserSession(fromSlot);
 		
 		if (userSession != null) {
-			userSession.getUser().isInGame = true;
+			userSession.getUser().setInGame(true);
 		}
 		
 		Room currentRoom = gameServer.lobby.getRoom(roomID);

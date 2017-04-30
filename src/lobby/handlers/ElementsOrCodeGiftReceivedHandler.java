@@ -7,6 +7,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class ElementsOrCodeGiftReceivedHandler extends LobbyHandler {
@@ -45,12 +46,12 @@ public class ElementsOrCodeGiftReceivedHandler extends LobbyHandler {
 		output.putString(0x30, "hello"); // ??
 		
 		if (giftType == 2) {
-			toUserSession.getUser().whiteCards[(int) amount / 10000 - 1] += amount % 10000;
-			toUserSession.getUser().saveUser();
+			userSession.getUser().setWhiteCard((int) amount / 10000 - 1, userSession.getUser().getWhiteCard((int) amount / 10000 - 1) + (int) amount % 10000);
+			User.saveUser(toUserSession.getUser());
 		}
 		else if (giftType == 3) {
-			toUserSession.getUser().playerCode += amount;
-			toUserSession.getUser().saveUser();
+			toUserSession.getUser().setPlayerCode(toUserSession.getUser().getPlayerCode() + amount);
+			User.saveUser(toUserSession.getUser());
 		}
 		
 		return output.toArray();

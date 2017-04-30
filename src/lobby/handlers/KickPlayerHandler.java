@@ -27,20 +27,20 @@ public class KickPlayerHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		User user = room.getUserSession(playerSlot).getUser();
 		
 		room.setNumberOfUsers(room.getNumberOfPlayers() - 1);
 		
-		if (user.roomTeam == 10) {
+		if (user.getRoomTeam() == 10) {
 			room.bluePlayersCount--;
 		}
 		else {
 			room.redPlayersCount--;
 		}
 		
-		user.isInRoom = false;
-		user.isInGame = false;
+		user.setInRoom(false);
+		user.setInGame(false);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class KickPlayerHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
 		room.setUserSession(playerSlot, null);
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(room));

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import login.LoginHandler;
 import net.Messages;
 import net.UserSession;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class TutorialCompletedNewVersionHandler extends LoginHandler {
@@ -22,8 +23,9 @@ public class TutorialCompletedNewVersionHandler extends LoginHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		userSession.getUser().playerLevel = 1;
-		userSession.getUser().saveUser();
+		userSession.getUser().setPlayerLevel(1);
+		User.saveUser(userSession.getUser());
+//		User.saveCards(userSession.getUser(), userSession.getUser().getCards());
 	}
 
 	@Override

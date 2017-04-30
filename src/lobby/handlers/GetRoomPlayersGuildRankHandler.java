@@ -33,11 +33,11 @@ public class GetRoomPlayersGuildRankHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, 0x4403);
 		
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		for (int i = 0; i < 8; i++) {
 			if (room.getUserSession(i) != null) {
-				output.putShort(0x14 + 2 * i, (short) room.getUserSession(i).getUser().guildRank);
+				output.putShort(0x14 + 2 * i, (short) room.getUserSession(i).getUser().getGuildRank());
 			}
 		}
 		

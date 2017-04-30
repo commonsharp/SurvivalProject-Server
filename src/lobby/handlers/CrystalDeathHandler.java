@@ -60,23 +60,23 @@ public class CrystalDeathHandler extends LobbyHandler {
 		int code = 300;
 		 // result array. 0 = resurrection. 1 = quest success. 2 = quest failed. 4 = player left game? others = nothing.
 		output.putInts(0x14, results); // result (per slot)
-		output.putInt(0x34, userSession.getUser().gameKO); //ko
+		output.putInt(0x34, userSession.getUser().getGameKO()); //ko
 		output.putInt(0x38, 0); // ? maybe guild exp?
 		
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		for (int i = 0; i < 8; i++) {
 			output.putInt(0x3C + i * 4, exp);
 			output.putInt(0x5C + i * 4, code);
 			
 			if (room.getUserSession(i) != null) {
-				room.getUserSession(i).getUser().playerExperience += exp;
-				room.getUserSession(i).getUser().playerCode += code;
+				room.getUserSession(i).getUser().setPlayerExperience(room.getUserSession(i).getUser().getPlayerExperience() + exp);
+				room.getUserSession(i).getUser().setPlayerCode(room.getUserSession(i).getUser().getPlayerCode() + code);
 			}
 		}
 		
-		output.putLong(0x80, userSession.getUser().playerExperience); // new experience
-		output.putLong(0x88, userSession.getUser().playerCode); // new code
+		output.putLong(0x80, userSession.getUser().getPlayerExperience()); // new experience
+		output.putLong(0x88, userSession.getUser().getPlayerCode()); // new code
 		
 		return output.toArray();
 	}
@@ -86,7 +86,7 @@ public class CrystalDeathHandler extends LobbyHandler {
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
 		
 		if (questProgression == 100) {
-			userSession.getUser().playerWins++;
+			userSession.getUser().setPlayerWins(userSession.getUser().getPlayerWins() + 1);
 		}
 	}
 

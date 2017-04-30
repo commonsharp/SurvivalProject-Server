@@ -91,7 +91,7 @@ public class GameServer extends GenericUDPServer {
 			UserSession fromSession = room.getUserSession(fromSlot);
 			UserSession toSession = room.getUserSession(toSlot);
 			
-			if (fromSession != null && toSession != null && (toSession.getUser().isInGame || sendInRoom)) {
+			if (fromSession != null && toSession != null && (toSession.getUser().isInGame() || sendInRoom)) {
 				udpServer.sendMessage(fromSession, toSession, HexTools.duplicateArray(message));
 			}
 		}

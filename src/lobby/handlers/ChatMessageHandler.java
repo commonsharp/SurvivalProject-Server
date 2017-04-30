@@ -3,13 +3,14 @@ package lobby.handlers;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import database.GuildsHelper;
 import game.handlers.GameNotificationHandler;
 import game.handlers.GameNotificationHandler.GameAnnouncementResult;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.Guild;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class ChatMessageHandler extends LobbyHandler {
@@ -62,30 +63,30 @@ public class ChatMessageHandler extends LobbyHandler {
 	@Override
 	public void afterSend() throws IOException, SQLException {
 		lobbyServer.sendBroadcastGameMessage(userSession, new GameNotificationHandler(lobbyServer.gameServer).getResponse(
-				GameAnnouncementResult.LEVEL_UP, userSession.getUser().username, 37, 0));
+				GameAnnouncementResult.LEVEL_UP, userSession.getUser().getUsername(), 37, 0));
 //		lobbyServer.sendRoomMessage(userSession, new Test4471Handler(lobbyServer, userSession).getResponse(), true);
 //		sendTCPMessage(new Test4471Handler(lobbyServer, userSession).getResponse());
 //		lobbyServer.sendRoomMessage(userSession, new RoomGameModeChangedHandler(lobbyServer, userSession).getResponse2(), true);
 //		lobbyServer.sendRoomMessage(userSession, new ChangeMapHandler(lobbyServer, userSession).getResponse(), true);
 		if (text.toLowerCase().startsWith("@gender")) {
-			userSession.getUser().isMale = !userSession.getUser().isMale;
-			userSession.getUser().saveUser();
+			userSession.getUser().setMale(!userSession.getUser().isMale());
+			User.saveUser(userSession.getUser());
 			return;
 		}
 		else if (text.toLowerCase().startsWith("@guild-join")) {
 			String guildName = text.substring("@guild-join".length() + 1);
 
-			if (GuildsHelper.isGuildExists(guildName) && !GuildsHelper.isGuildMemberExists(guildName, userSession.getUser().username)) {
+			if (Guild.isGuildExists(guildName) && !Guild.isGuildMemberExists(guildName, userSession.getUser().getUsername())) {
 				System.out.println("in");
-				GuildsHelper.leaveGuild(userSession);
-				GuildsHelper.joinGuild(guildName, userSession);
+				Guild.leaveGuild(userSession);
+				Guild.joinGuild(guildName, userSession);
 			}
 			
 			return;
 		}
 		else if (text.toLowerCase().startsWith("@guild-leave")) {
-			if (GuildsHelper.isGuildMemberExists(userSession.getUser().guildName, userSession.getUser().username)) {
-				GuildsHelper.leaveGuild(userSession);
+			if (Guild.isGuildMemberExists(userSession.getUser().getGuildName(), userSession.getUser().getUsername())) {
+				Guild.leaveGuild(userSession);
 			}
 			
 			return;
@@ -94,8 +95,8 @@ public class ChatMessageHandler extends LobbyHandler {
 			String password = text.substring("@pw".length() + 1);
 			
 			if (password.length() < 13) {
-				userSession.getUser().password = password;
-				userSession.getUser().saveUser();
+				userSession.getUser().setPassword(password);
+				User.saveUser(userSession.getUser());
 			}
 			
 			return;

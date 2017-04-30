@@ -38,7 +38,7 @@ public class SoccerGoalHandler extends LobbyHandler {
 	public void afterSend() throws IOException {
 		lobbyServer.sendRoomMessage(userSession, getResponse(), true);
 		
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		if (room.blueScore == 3 || room.redScore == 3) {
 			room.isStarted = false;
@@ -50,7 +50,7 @@ public class SoccerGoalHandler extends LobbyHandler {
 				results[i] = -1;
 				
 				if (room.getUserSession(i) != null) {
-					results[i] = (room.getUserSession(i).getUser().roomTeam == winningTeam) ? 1 : 2;
+					results[i] = (room.getUserSession(i).getUser().getRoomTeam() == winningTeam) ? 1 : 2;
 				}
 			}
 			
@@ -68,7 +68,7 @@ public class SoccerGoalHandler extends LobbyHandler {
 			result = 1;
 		}
 		
-		return getResponse(lobbyServer.getRoom(userSession.getUser().roomIndex), result);
+		return getResponse(lobbyServer.getRoom(userSession.getUser().getRoomIndex()), result);
 	}
 
 	public byte[] getResponse(Room room, int result) {
@@ -87,10 +87,10 @@ public class SoccerGoalHandler extends LobbyHandler {
 	@Override
 	public void processMessage() {
 		if (goal == 0) {
-			lobbyServer.getRoom(userSession.getUser().roomIndex).redScore++;
+			lobbyServer.getRoom(userSession.getUser().getRoomIndex()).redScore++;
 		}
 		else if (goal == 1) {
-			lobbyServer.getRoom(userSession.getUser().roomIndex).blueScore++;
+			lobbyServer.getRoom(userSession.getUser().getRoomIndex()).blueScore++;
 		}
 	}
 }

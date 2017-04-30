@@ -35,14 +35,14 @@ public class GuildMemberOnlineStatusHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.GUILD_MEMBER_ONLINE_STATE_HANDLER);
 		
-		output.putString(0x14, userSession.getUser().username);
-		output.putInt(0x24, userSession.getUser().playerLevel);
+		output.putString(0x14, userSession.getUser().getUsername());
+		output.putInt(0x24, userSession.getUser().getPlayerLevel());
 		
-		if (userSession.getUser().isInRoom) {
-			output.putInt(0x28, userSession.getUser().roomIndex + 1);
+		if (userSession.getUser().isInRoom()) {
+			output.putInt(0x28, userSession.getUser().getRoomIndex() + 1);
 		}
 		
-		output.putBoolean(0x2C, userSession.getUser().isMale);
+		output.putBoolean(0x2C, userSession.getUser().isMale());
 		output.putBoolean(0x2D, isConnected);
 		
 		return output.toArray();

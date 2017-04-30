@@ -51,8 +51,8 @@ public class TradeCompletedHandler extends LobbyHandler {
 			}
 		}
 		
-		output.putLong(0x688, userSession.getUser().playerCode);
-		output.putInts(0x690, userSession.getUser().whiteCards);
+		output.putLong(0x688, userSession.getUser().getPlayerCode());
+		output.putInts(0x690, userSession.getUser().getWhiteCards());
 		
 		return output.toArray();
 	}

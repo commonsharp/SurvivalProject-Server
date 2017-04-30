@@ -26,14 +26,14 @@ public class IncreaseCardSlotsHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		if (userSession.getUser().cards[cardIndex].getId() == Card.CARD_SLOT6) {
-			userSession.getUser().playerInventorySlots += 6;
+		if (userSession.getUser().getCard(cardIndex).getCardID() == Card.CARD_SLOT6) {
+			userSession.getUser().setPlayerInventorySlots(userSession.getUser().getPlayerInventorySlots() + 6);
 		}
-		else if (userSession.getUser().cards[cardIndex].getId() == Card.CARD_SLOT12){
-			userSession.getUser().playerInventorySlots += 12;
+		else if (userSession.getUser().getCard(cardIndex).getCardID() == Card.CARD_SLOT12){
+			userSession.getUser().setPlayerInventorySlots(userSession.getUser().getPlayerInventorySlots() + 12);
 		}
 		
-		userSession.getUser().cards[cardIndex] = null;
+		userSession.getUser().removeCard(cardIndex);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class IncreaseCardSlotsHandler extends LobbyHandler {
 		 */
 		output.putInt(0x14, 1);
 		output.putInt(0x18, cardIndex);
-		output.putInt(0x1C, userSession.getUser().playerInventorySlots);
+		output.putInt(0x1C, userSession.getUser().getPlayerInventorySlots());
 		
 		return output.toArray();
 	}

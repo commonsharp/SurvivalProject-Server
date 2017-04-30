@@ -67,7 +67,7 @@ public abstract class GenericTCPServer implements Runnable {
 		userSessions.sort(new Comparator<UserSession>() {
 			@Override
 			public int compare(UserSession o1, UserSession o2) {
-				return o1.getUser().username.compareTo(o2.getUser().username);
+				return o1.getUser().getUsername().compareTo(o2.getUser().getUsername());
 			}
 		});
 	}

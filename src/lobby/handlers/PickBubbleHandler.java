@@ -46,7 +46,7 @@ public class PickBubbleHandler extends LobbyHandler {
 		 */
 		int response = isElement ? 4 : 0;
 		
-		output.putInt(0x14, userSession.getUser().roomSlot);
+		output.putInt(0x14, userSession.getUser().getRoomSlot());
 		output.putInt(0x18, response);
 		output.putInt(0x1C, elementType);
 		

@@ -54,8 +54,8 @@ public class JoinRoomHandler extends LobbyHandler {
 		output.putInt(0x5C, 0); // character?
 		output.putByte(0x60, (byte) 0); //this is like field F4. set to -1 to start automatically...
 		output.putByte(0x61, (byte) 0);
-		output.putInt(0x64, userSession.getUser().roomSlot);
-		output.putInt(0x68, userSession.getUser().roomTeam);
+		output.putInt(0x64, userSession.getUser().getRoomSlot());
+		output.putInt(0x68, userSession.getUser().getRoomTeam());
 		output.putBoolean(0x6C, lobbyServer.getRoom(roomID).isWithAutoTeams());
 		output.putInt(0x70, lobbyServer.getRoom(roomID).getCardsLimit());
 		output.putShort(0x74, (short) 0); // same as 0x10C in RoomPlayersUpdate. it's aura.
@@ -77,7 +77,7 @@ public class JoinRoomHandler extends LobbyHandler {
 				// If that slot is used
 				if (currentUserSession != userSession && currentUserSession != null) {
 					// Send the user
-					sendTCPMessage(new RoomPlayersUpdateHandler(lobbyServer, currentUserSession).getResponse(currentUserSession.getUser()));
+					sendTCPMessage(new RoomPlayersUpdateHandler(lobbyServer, currentUserSession).getResponse(currentUserSession));
 				}
 			}
 			
@@ -95,14 +95,14 @@ public class JoinRoomHandler extends LobbyHandler {
 	public void processMessage() {
 		if (lobbyServer.getRoom(roomID).password == null || (lobbyServer.getRoom(roomID).password != null && lobbyServer.getRoom(roomID).password.equals(password))) {
 			response = 0;
-			userSession.getUser().isInRoom = true;
-			userSession.getUser().roomIndex = roomID;
-			userSession.getUser().roomSlot = lobbyServer.getRoom(roomID).getSlot();
-			userSession.getUser().roomTeam = lobbyServer.getRoom(roomID).getTeam();
-			userSession.getUser().roomCharacter = userSession.getUser().mainCharacter;
-			userSession.getUser().roomReady = 0;
-			userSession.getUser().isJoined = true;
-			lobbyServer.getRoom(roomID).setUserSession(userSession.getUser().roomSlot, userSession);
+			userSession.getUser().setInRoom(true);
+			userSession.getUser().setRoomIndex(roomID);
+			userSession.getUser().setRoomSlot(lobbyServer.getRoom(roomID).getSlot());
+			userSession.getUser().setRoomTeam(lobbyServer.getRoom(roomID).getTeam());
+			userSession.getUser().setRoomCharacter(userSession.getUser().getMainCharacter());
+			userSession.getUser().setRoomReady((byte) 0);
+			userSession.getUser().setJoined(true);
+			lobbyServer.getRoom(roomID).setUserSession(userSession.getUser().getRoomSlot(), userSession);
 		}
 		else {
 			response = 2;

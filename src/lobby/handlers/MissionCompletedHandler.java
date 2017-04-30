@@ -8,6 +8,7 @@ import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
 import net.objects.Room;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class MissionCompletedHandler extends LobbyHandler {
@@ -38,7 +39,7 @@ public class MissionCompletedHandler extends LobbyHandler {
 		if (progression == 1) {
 			result = 1; // wait
 		}
-		else if (userSession.getUser().missionLevel % 300 != 0) {
+		else if (userSession.getUser().getMissionLevel() % 300 != 0) {
 			result = 3; // next mission
 		}
 		else {
@@ -46,7 +47,7 @@ public class MissionCompletedHandler extends LobbyHandler {
 		}
 		
 		output.putInt(0x14, result); // 2, 3, 4
-		output.putInt(0x18, userSession.getUser().missionLevel);
+		output.putInt(0x18, userSession.getUser().getMissionLevel());
 		
 		return output.toArray();
 	}
@@ -54,12 +55,12 @@ public class MissionCompletedHandler extends LobbyHandler {
 	@Override
 	public void afterSend() throws IOException, SQLException {
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
-		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(userSession.getUser().roomIndex)));
+		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(userSession.getUser().getRoomIndex())));
 	}
 
 	@Override
 	public void processMessage() throws SQLException, IOException {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		if (progression == 1) {
 			int[] results = new int[8];
 			
@@ -73,11 +74,11 @@ public class MissionCompletedHandler extends LobbyHandler {
 			
 			lobbyServer.sendRoomMessage(userSession, new GameCompletedHandler(lobbyServer, userSession).getResponse(results, 10), true);
 			
-			if (room.missionLevel == userSession.getUser().missionLevel) {
-				userSession.getUser().missionLevel++;
+			if (room.missionLevel == userSession.getUser().getMissionLevel()) {
+				userSession.getUser().setMissionLevel(userSession.getUser().getMissionLevel() + 1);
 				
-				if (userSession.getUser().missionLevel % 5 == 0 && userSession.getUser().missionLevel % 10 != 0) {
-					userSession.getUser().missionLevel++;
+				if (userSession.getUser().getMissionLevel() % 5 == 0 && userSession.getUser().getMissionLevel() % 10 != 0) {
+					userSession.getUser().setMissionLevel(userSession.getUser().getMissionLevel() + 1);
 				}
 			}
 			
@@ -87,7 +88,7 @@ public class MissionCompletedHandler extends LobbyHandler {
 				room.missionLevel++;
 			}
 			
-			userSession.getUser().saveUser();
+			User.saveUser(userSession.getUser());
 		}
 
 		if (progression == 2) {

@@ -39,12 +39,7 @@ public abstract class GenericUDPServer implements Runnable {
 	public void run() {
 		try {
 			System.out.println(name + " has started listening.");
-			if (Main.IS_RELEASE) {
-				socket = new DatagramSocket(port, InetAddress.getByName("192.99.73.148"));
-			}
-			else {
-				socket = new DatagramSocket(port, InetAddress.getByName("10.0.0.50"));
-			}
+			socket = new DatagramSocket(port);
 			
 			while (isRunning) {
 				// need to check maybe there can be bigger packets...
@@ -77,7 +72,7 @@ public abstract class GenericUDPServer implements Runnable {
 				
 				int encryptionVersion = 1;
 				if (lobby.findUserSession(ipAddress, port) != null) {
-					encryptionVersion = lobby.findUserSession(ipAddress, port).getUser().encryptionVersion;
+					encryptionVersion = lobby.findUserSession(ipAddress, port).encryptionVersion;
 					Cryptography.decryptMessage(encryptionVersion, messageBytes);
 				}
 				else {
@@ -94,26 +89,18 @@ public abstract class GenericUDPServer implements Runnable {
 				
 				int messageID = HexTools.getIntegerInByteArray(messageBytes, 4);
 				int state = HexTools.getIntegerInByteArray(messageBytes, 16);
-				UserSession userSession;
+				;
 				
 				if (messageID == 0x1100) {
 					ExtendedByteBuffer buf = new ExtendedByteBuffer(messageBytes);
 					String username = buf.getString(0x14);
 					
-					userSession = lobby.findUserSession(username);
+					UserSession userSession = lobby.findUserSession(username);
 					
 					if (userSession != null) {
-						userSession.getUser().udpIPAddress = ipAddress;
-						userSession.getUser().udpPort = port;
-						userSession.getUser().udpState = state;
+						userSession.udpIPAddress = ipAddress;
+						userSession.udpPort = port;
 						userSession.timeSinceLastActivity = System.currentTimeMillis();
-					}
-				}
-				else if (messageID != 0x1101) {
-					userSession = lobby.findUserSession(ipAddress, port);
-					
-					if (userSession != null) {
-						userSession.getUser().udpState = state;
 					}
 				}
 				
@@ -155,8 +142,8 @@ public abstract class GenericUDPServer implements Runnable {
 		HexTools.putIntegerInByteArray(response, 12, Cryptography.getDigest(response));
 		
 		// Encrypt and send
-		Cryptography.encryptMessage(toSession.getUser().encryptionVersion, response);
-		DatagramPacket packet = new DatagramPacket(response, response.length, toSession.getUser().udpIPAddress, toSession.getUser().udpPort);
+		Cryptography.encryptMessage(toSession.encryptionVersion, response);
+		DatagramPacket packet = new DatagramPacket(response, response.length, toSession.udpIPAddress, toSession.udpPort);
 		socket.send(packet);
 	}
 	

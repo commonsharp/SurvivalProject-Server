@@ -55,6 +55,5 @@ public class LoginServer extends GenericTCPServer {
 
 	@Override
 	public void onUserDisconnect(UserSession userSession) throws SQLException {
-		userSession.getUser().saveUser();
 	}
 }

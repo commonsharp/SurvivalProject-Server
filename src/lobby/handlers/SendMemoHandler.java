@@ -6,12 +6,12 @@ import java.sql.SQLException;
 import org.hibernate.Session;
 
 import database.Database;
-import database.DatabaseHelper;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
 import net.objects.Memo;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class SendMemoHandler extends LobbyHandler {
@@ -60,7 +60,7 @@ public class SendMemoHandler extends LobbyHandler {
 		 * 5 - kill notice???
 		 */
 		
-		if (lobbyServer.findUserSession(username) != null || DatabaseHelper.isUserExists(username)) {
+		if (lobbyServer.findUserSession(username) != null || User.isUserExists(username)) {
 			response = 1;
 		}
 		else {
@@ -80,12 +80,12 @@ public class SendMemoHandler extends LobbyHandler {
 			
 			if (otherUserSession != null) {
 				otherUserSession.sendMessage(new MemoArrivalHandler(lobbyServer, userSession).getResponse(new Memo(
-						userSession.getUser().username, messageType, levelAndGender, unknown2, text)));
+						userSession.getUser().getUsername(), messageType, levelAndGender, unknown2, text)));
 			}
 			else {
 				Session session = Database.getSession();
 				session.beginTransaction();
-				session.save(new Memo(userSession.getUser().username, username, messageType, levelAndGender, unknown2, text));
+				session.save(new Memo(userSession.getUser().getUsername(), username, messageType, levelAndGender, unknown2, text));
 				session.getTransaction().commit();
 				session.close();
 			}

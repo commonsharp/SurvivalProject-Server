@@ -1,16 +1,17 @@
 package lobby.handlers;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
+import org.hibernate.Session;
 
 import database.Database;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class FindUserHandler extends LobbyHandler {
@@ -33,6 +34,7 @@ public class FindUserHandler extends LobbyHandler {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public byte[] getResponse() throws SQLException {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
@@ -48,42 +50,27 @@ public class FindUserHandler extends LobbyHandler {
 		String serverName = null;
 		
 		if (userSession == null) {
-			Connection con = Database.getConnection();
-			PreparedStatement ps = con.prepareStatement("SELECT server_hostname, server_port, is_connected FROM users WHERE username = ?");
-			ps.setString(1, username);
-			ResultSet rs = ps.executeQuery();
+			Session session = Database.getSession();
+			session.beginTransaction();
 			
-			if (rs.next()) {
-				if (rs.getBoolean("is_connected")) {
-					String hostname = rs.getString("server_hostname");
-					int port = rs.getInt("server_port");
-					rs.close();
-					ps.close();
-					
-					ps = con.prepareStatement("SELECT name, channelType FROM servers WHERE hostname = ? AND port = ?;");
-					ps.setString(1, hostname);
-					ps.setInt(2, port);
-					rs = ps.executeQuery();
-					
-					if (rs.next()) {
-						serverName = rs.getString("name");
-						channelType = rs.getInt("channelType") + 1;
-						isConnected = 0;
-					}
-					
-					rs.close();
-					ps.close();
+			List<User> users = session.createQuery("select u from User u inner join u.server where u.username = :username").setParameter("username", username).list();
+			if (!users.isEmpty()) {
+				System.out.println(users);
+				if (users.get(0).isConnected()) {
+					serverName = users.get(0).getServer().getName();
+					channelType = users.get(0).getServer().getChannelType() + 1;
+					isConnected = 0;
 				}
 			}
-			
-			con.close();
+			session.getTransaction().commit();
+			session.close();
 		}
 		else {
 			isConnected = 0;
-			channelType = userSession.getUser().channelType;
+			channelType = userSession.getUser().getChannelType();
 			
-			if (userSession.getUser().isInRoom) {
-				roomIndex = userSession.getUser().roomIndex + 1;
+			if (userSession.getUser().isInRoom()) {
+				roomIndex = userSession.getUser().getRoomIndex() + 1;
 			}
 			else {
 				roomIndex = 0;

@@ -1,11 +1,17 @@
 package net.objects;
 
-import java.net.InetAddress;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.security.InvalidParameterException;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -13,231 +19,224 @@ import org.hibernate.query.Query;
 import database.Database;
 import lobby.LobbyServer;
 
+@Entity
+@Table(name = "user")
 public class User {
-	public String username;
-	public String password;
+	private String username;
+	private String password;
+	private int mainCharacter;
+	private int playerLevel;
+	private int usuableCharacterCount;
+	private int ageRestriction;
+	private long playerExperience;
+	private long playerCode;
+	private long avatarMoney;
+	private String guildName;
+	private String guildDuty;
+	private long cash;
 	
-	public int userType;
-	public int mainCharacter;
-	public int playerLevel;
-	public int usuableCharacterCount;
-	public int isMuted = 13;
-	public int banDays = 19;
-	public int ageRestriction;
-	public long playerExperience;
-	public long playerCode;
-	public long avatarMoney;
-	public String guildName;
-	public String guildDuty;
-	public int guildRank;
-	public long cash;
-	
-	public Card[] cards;
-	
+	private Card[] cards;
+	private int userType;
+	private int isMuted = 13;
+	private int banDays = 19;
+	private int guildRank;
 	/*
-	 * event 2 - premium event does something with it
+	 * event 2 - premium event card changes this event somehow
 	 * event 8 - triple exp/code/elements
 	 */
 //	public byte playerEventFlags[] = {1, 1, 1, 1, 1, 1, 1, 1};
-	public byte playerEventFlags[] = {0, 0, 0, 1, 0, 0, 0, 0};
+	private byte playerEventFlags[] = {0, 0, 0, 1, 0, 0, 0, 0};
 	
-	public int playerInventorySlots;
-	public int playerType = 0; // 0 - normal. 1 - demo. 7 - GM
-	public int[] whiteCards;
-	public int scrolls[];
-	public int playerWins;
-	public int playerLoses;
-	public int playerKOs;
-	public int playerDowns;
+	private int playerInventorySlots;
+	private int playerType = 0; // 0 - normal. 1 - demo. 7 - GM
+	private int water;
+	private int fire;
+	private int earth;
+	private int wind;
+	private int scroll0;
+	private int scroll1;
+	private int scroll2;
+	private int playerWins;
+	private int playerLoses;
+	private int playerKOs;
+	private int playerDowns;
 	
-	public boolean isMale;
+	private boolean male;
+	private boolean connected;
 	
-	public int magicIndex, weaponIndex, accessoryIndex, petIndex;
-	public int footIndex, bodyIndex, hand1Index, hand2Index, faceIndex, hairIndex, headIndex;
-	public int missionLevel;
+	private int magicIndex;
+	private int weaponIndex;
+	private int accessoryIndex;
+	private int petIndex;
 	
-	public boolean isInRoom = false;
-	public boolean isInGame = false;
-	public int roomIndex;
-	public int roomSlot;
-	public int roomTeam;
-	public int roomCharacter;
-	public byte roomReady;
-	public int roomRandom;
+	private int footIndex;
+	private int bodyIndex;
+	private int hand1Index;
+	private int hand2Index;
+	private int faceIndex;
+	private int hairIndex;
+	private int headIndex;
+	private int missionLevel;
 	
-	public int udpState;
-	public InetAddress udpIPAddress;
-	public int udpPort;
+	private boolean isInRoom = false;
+	private boolean isInGame = false;
+	private int roomIndex;
+	private int roomSlot;
+	private int roomTeam;
+	private int roomCharacter;
+	private byte roomReady;
+	private int roomRandom;
 	
-	public int encryptionVersion;
+	private int lives;
+	private int gameKO;
 	
-	public int lives;
-	public int gameKO;
+	private List<Friend> friends;
+	private boolean isJoined;
 	
-	public List<Friend> friends;
-	public boolean isJoined;
+	private List<UserShop> userShopResults;
+	private int userShopOffset;
 	
-	public List<UserShop> userShopResults;
-	public int userShopOffset;
+	private int booster;
+	private boolean extraLife;
+	private boolean gameExtraLife;
 	
-	public int booster;
-	public boolean extraLife;
-	public boolean gameExtraLife;
+	private boolean timeBonus;
 	
-	public boolean timeBonus;
+	private BigUserShop bigUserShop;
 	
-	public BigUserShop bigUserShop;
+	private int channelType;
+	private int totalTicks;
 	
-	public int channelType;
-	public int totalTicks;
+	private boolean isInitialLoginDataSent;
 	
-	public boolean isInitialLoginDataSent;
+	private Server server;
 	
 	public User() {
 		cards = new Card[96];
-		whiteCards = new int[4];
 //		friends = new Friend[24];
-		scrolls = new int[3];
-		isInitialLoginDataSent = false;
+		setInitialLoginDataSent(false);
 	}
 	
+	public void removeCard(int index) {
+		cards[index] = null;
+	}
+	
+	public int addCard(Card card) {
+		int emptySlot = getEmptyCardSlot();
+		card.setCardIndex(emptySlot);
+		cards[emptySlot] = card;
+		
+		return emptySlot;
+	}
+	
+	@Transient
 	public Card getCard(int index) {
-		return cards[index];
+		for (Card card : cards) {
+			if (card != null && card.getCardIndex() == index) {
+				return card;
+			}
+		}
+		
+		return null;
 	}
 	
+	@Transient
 	public int getAvatarItemID(int index) {
-		if (index == -1 || cards[index] == null) {
+		if (index == -1 || getCard(index) == null) {
 			return -1;
 		}
 		
-		return cards[index].getId();
+		return getCard(index).getCardID();
 	}
 	
+	@Transient
 	public int getItemID(int index) {
-		if (index == -1 || cards[index] == null) {
+		if (index == -1 || getCard(index) == null) {
 			return -1;
 		}
 		
-		return cards[index].getId();
+		return getCard(index).getCardID();
 	}
 	
+	@Transient
 	public int getItemPremiumDays(int index) {
-		if (index == -1 || cards[index] == null) {
+		if (index == -1 || getCard(index) == null) {
 			return 0;
 		}
 		
-		return cards[index].getPremiumDays();
+		return getCard(index).getCardPremiumDays();
 	}
 	
+	@Transient
 	public int getItemLevel(int index) {
-		if (index == -1 || cards[index] == null) {
+		if (index == -1 || getCard(index) == null) {
 			return 0;
 		}
 		
-		return cards[index].getLevel();
+		return getCard(index).getCardLevel();
 	}
 	
+	@Transient
 	public int getItemSkill(int index) {
-		if (index == -1 || cards[index] == null) {
+		if (index == -1 || getCard(index) == null) {
 			return 0;
 		}
 		
-		return cards[index].getSkill();
+		return getCard(index).getCardSkill();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void loadUser(LobbyServer lobbyServer) throws SQLException {
-		try {
-			Thread.sleep(0);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Connection con = Database.getConnection();
-		PreparedStatement ps = con.prepareStatement("Select * FROM users WHERE username = ?");
-		ps.setString(1, username);
-		ResultSet rs = ps.executeQuery();
+	public static User loadUser(String username, LobbyServer lobbyServer) throws SQLException {
+		Session session = Database.getSession();
+		session.beginTransaction();
+		List<User> users = session.createQuery("from User where username = :username").setParameter("username", username).list();
+		User result = null;
+		session.getTransaction().commit();
+		session.close();
 		
-		if (rs.next()) {
-			username = rs.getString("username");
-			password = rs.getString("password");
-	        mainCharacter = rs.getInt("mainCharacter");
-	        playerLevel = rs.getInt("playerLevel");
-	        usuableCharacterCount = rs.getInt("usuableCharacterCount");
-	        ageRestriction = rs.getInt("ageRestriction");
-	        playerExperience = rs.getLong("experience");
-	        playerCode = rs.getLong("code");
-	        avatarMoney = rs.getLong("avatarMoney");
-	        guildName = rs.getString("guildName");
-	        guildDuty = rs.getString("guildDuty");
-	        whiteCards[0] = rs.getInt("waterElements");
-	        whiteCards[1] = rs.getInt("fireElements");
-	        whiteCards[2] = rs.getInt("earthElements");
-	        whiteCards[3] = rs.getInt("windElements");
-	        isMale = rs.getBoolean("isMale");
-	        magicIndex = rs.getInt("magicIndex");
-	        weaponIndex = rs.getInt("weaponIndex");
-	        accessoryIndex = rs.getInt("accessoryIndex");
-	        petIndex = rs.getInt("petIndex");
-	        footIndex = rs.getInt("footIndex");
-	        bodyIndex = rs.getInt("bodyIndex");
-	        hand1Index = rs.getInt("hand1Index");
-	        hand2Index = rs.getInt("hand2Index");
-	        faceIndex = rs.getInt("faceIndex");
-	        hairIndex = rs.getInt("hairIndex");
-	        headIndex = rs.getInt("headIndex");
-	        playerWins = rs.getInt("winCount");
-	        playerLoses = rs.getInt("loseCount");
-	        playerKOs = rs.getInt("koCount");
-	        playerDowns = rs.getInt("downCount");
-	        cash = rs.getLong("cash");
-	        playerInventorySlots = rs.getInt("inventorySlots");
-	        scrolls[0] = rs.getInt("scroll0");
-	        scrolls[1] = rs.getInt("scroll1");
-	        scrolls[2] = rs.getInt("scroll2");
-	        missionLevel = rs.getInt("missionLevel");
-	        
-	        userType = (playerLevel == 0) ? 0 : (playerLevel >= 17) ? 30 : (playerLevel >= 13) ? 20 : 10;
-	        
-	        ps.close();
-	        rs.close();
-	        
-	        // load cards
-	        ps = con.prepareStatement("Select * FROM cards WHERE username = ?");
-	        ps.setString(1, username);
-	        rs = ps.executeQuery();
-	        
-	        int i;
-	        while (rs.next()) {
-	        	i = rs.getInt("index");
-	        	
-	        	int id = rs.getInt("id");
-	        	
-	        	if (id != -1) { 
-	        		cards[i] = new Card(id, rs.getInt("premiumDays"), rs.getInt("level"), rs.getInt("skill"));
-	        	}
-	        }
-	        
-	        rs.close();
-	        ps.close();
+		if (!users.isEmpty()) {
+			result = users.get(0);
+			result.setUserType((result.getPlayerLevel() == 0) ? 0 : (result.getPlayerLevel() >= 17) ? 30 : (result.getPlayerLevel() >= 13) ? 20 : 10);
+			
+			// load cards
+			session = Database.getSession();
+			session.beginTransaction();
+			List<Card> cardsList = session.createQuery("from Card where username = :username").setParameter("username", username).list();
+			
+			for (Card card : cardsList) {
+				if (card.getCardIndex() != -1) {
+					result.cards[card.getCardIndex()] = card;
+				}
+			}
+			
+			// New user
+			if (cardsList.isEmpty()) {
+				for (int i = 0; i < 96; i++) {
+					session.save(new Card(i, -1, -1, -1, -1));
+				}
+			}
+			
+			session.getTransaction().commit();
+			session.close();
 	        
 	        // load friends
-	        Session session = Database.getSession();
+	        session = Database.getSession();
 	        session.beginTransaction();
-	        friends = session.createQuery("FROM Friend WHERE username = :username").setParameter("username", username).list();
+	        result.setFriends(session.createQuery("FROM Friend WHERE username = :username").setParameter("username", result.getUsername()).list());
 	        session.getTransaction().commit();
 	        session.close();
 	        
 	        // Load guild rank
-	        if (lobbyServer != null && guildName != null) {
+	        if (lobbyServer != null && result.getGuildName() != null) {
 				int myScore = 0;
 				int myRank = 0;
 				
 				session = Database.getSession();
-				Query query = session.createQuery("SELECT score FROM GuildScore WHERE serverID = :serverID AND guildName = :guildName");
+				session.beginTransaction();
+				Query<?> query = session.createQuery("SELECT score FROM GuildScore WHERE serverID = :serverID AND guildName = :guildName");
 				query.setParameter("serverID", lobbyServer.server.getId());
-				query.setParameter("guildName", guildName);
-				List<Integer> guildScores = query.list();
+				query.setParameter("guildName", result.getGuildName());
+				List<Integer> guildScores = (List<Integer>) query.list();
 				
 				if (!guildScores.isEmpty()) {
 					myScore = guildScores.get(0);
@@ -246,123 +245,91 @@ public class User {
 					query.setParameter("serverID", lobbyServer.server.getId());
 					query.setParameter("score", myScore);
 					
-					List<Long> count = query.list();
+					List<Long> count = (List<Long>) query.list();
 					
 					myRank = count.get(0).intValue() + 1;
 				}
 				
-				guildRank = myRank - 1;
-			}
-		}
-		
-		extraLife = false;
-		timeBonus = false;
-		booster = 0;
-		
-		for (int i = 0; i < 96; i++) {
-			if (cards[i] != null) {
-				if (cards[i].getId() == 0x7D7 || cards[i].getId() == 0x7D8 || cards[i].getId() == 0x7DC) {
-					booster = cards[i].getId();
-				}
-				else if (cards[i].getId() == Card.QUEST_LIFE) {
-					extraLife = true;
-				}
-				else if (cards[i].getId() == Card.TIME_BONUS) {
-					timeBonus = true;
-				}
-			}
-		}
-		
-		con.close();
-	}
-	
-	public void saveUser() throws SQLException {
-		if (username != null) {
-			Connection con = Database.getConnection();
-			PreparedStatement ps = con.prepareStatement("Update users SET username=?, mainCharacter=?, playerLevel=?, usuableCharacterCount=?, "
-					+ "ageRestriction=?, experience=?, code=?, avatarMoney=?, guildName=?, guildDuty=?, waterElements=?, "
-					+ "fireElements=?, earthElements=?, windElements=?, isMale=?, magicIndex=?, weaponIndex=?, accessoryIndex=?, petIndex=?, "
-					+ "footIndex=?, bodyIndex=?, hand1Index=?, hand2Index=?, faceIndex=?, hairIndex=?, headIndex=?, password=?, "
-					+ "winCount=?, loseCount=?, koCount=?, downCount=?, cash=?, inventorySlots=?, scroll0=?, scroll1=?, scroll2=?, missionLevel=? WHERE username=?");
-			
-			ps.setString(1, username);
-			ps.setInt(2, mainCharacter);
-			ps.setInt(3, playerLevel);
-			ps.setInt(4, usuableCharacterCount);
-			ps.setInt(5, ageRestriction);
-			ps.setLong(6, playerExperience);
-			ps.setLong(7, playerCode);
-			ps.setLong(8, avatarMoney);
-			ps.setString(9, guildName);
-			ps.setString(10, guildDuty);
-			ps.setInt(11, whiteCards[0]);
-			ps.setInt(12, whiteCards[1]);
-			ps.setInt(13, whiteCards[2]);
-			ps.setInt(14, whiteCards[3]);
-			ps.setBoolean(15, isMale);
-			ps.setInt(16, magicIndex);
-			ps.setInt(17, weaponIndex);
-			ps.setInt(18, accessoryIndex);
-			ps.setInt(19, petIndex);
-			ps.setInt(20, footIndex);
-			ps.setInt(21, bodyIndex);
-			ps.setInt(22, hand1Index);
-			ps.setInt(23, hand2Index);
-			ps.setInt(24, faceIndex);
-			ps.setInt(25, hairIndex);
-			ps.setInt(26, headIndex);
-			ps.setString(27, password);
-			ps.setInt(28, playerWins);
-			ps.setInt(29, playerLoses);
-			ps.setInt(30, playerKOs);
-			ps.setInt(31, playerDowns);
-			ps.setLong(32, cash);
-			ps.setInt(33, playerInventorySlots);
-			ps.setInt(34, scrolls[0]);
-			ps.setInt(35, scrolls[1]);
-			ps.setInt(36, scrolls[2]);
-			ps.setInt(37, missionLevel);
-			
-			ps.setString(38, username);
-			ps.executeUpdate();
-			ps.close();
-			
-			for (int i = 0; i < cards.length; i++) {
-				ps = con.prepareStatement("INSERT INTO cards VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = ?, premiumDays = ?, level = ?, skill = ?");
-				ps.setString(1, username);
-				ps.setInt(2, i);
+				result.setGuildRank(myRank - 1);
 				
-				if (cards[i] != null) {
-					ps.setInt(3, cards[i].getId());
-					ps.setInt(4, cards[i].getPremiumDays());
-					ps.setInt(5, cards[i].getLevel());
-					ps.setInt(6, cards[i].getSkill());
-					ps.setInt(7, cards[i].getId());
-					ps.setInt(8, cards[i].getPremiumDays());
-					ps.setInt(9, cards[i].getLevel());
-					ps.setInt(10, cards[i].getSkill());
+				session.getTransaction().commit();
+				session.close();
+			}
+	        
+	        result.setExtraLife(false);
+	        result.setTimeBonus(false);
+	        result.setBooster(0);
+			
+			for (int i = 0; i < 96; i++) {
+				if (result.getCards()[i] != null) {
+					if (result.getCards()[i].getCardID() == 0x7D7 || result.getCards()[i].getCardID() == 0x7D8 || result.getCards()[i].getCardID() == 0x7DC) {
+						result.setBooster(result.getCards()[i].getCardID());
+					}
+					else if (result.getCards()[i].getCardID() == Card.QUEST_LIFE) {
+						result.setExtraLife(true);
+					}
+					else if (result.getCards()[i].getCardID() == Card.TIME_BONUS) {
+						result.setTimeBonus(true);
+					}
 				}
-				else {
-					ps.setInt(3, -1);
-					ps.setInt(4, -1);
-					ps.setInt(5, -1);
-					ps.setInt(6, -1);
-					ps.setInt(7, -1);
-					ps.setInt(8, -1);
-					ps.setInt(9, -1);
-					ps.setInt(10, -1);
-				}
-				ps.executeUpdate();
-				ps.close();
 			}
 			
-			con.close();
 		}
+		
+		return result;
 	}
 	
+	public static void saveUser(User user) throws SQLException {
+		// Update user information
+		Session session = Database.getSession();
+		session.beginTransaction();
+		session.update(user);
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void saveCards(User user, int... cardIndexes) {
+		Session session = Database.getSession();
+		session.beginTransaction();
+
+		for (int i = 0; i < cardIndexes.length; i++) {
+			if (user.cards[cardIndexes[i]] != null) {
+				user.cards[cardIndexes[i]].setUsername(user.getUsername());
+				List<Card> cardsList = session.createQuery("from Card where username = :username and cardIndex = :cardIndex").
+						setParameter("username", user.getUsername()).setParameter("cardIndex", cardIndexes[i]).list();
+				
+				if (!cardsList.isEmpty()) {
+					cardsList.get(0).setCardID(user.cards[cardIndexes[i]].getCardID());
+					cardsList.get(0).setCardPremiumDays(user.cards[cardIndexes[i]].getCardPremiumDays());
+					cardsList.get(0).setCardLevel(user.cards[cardIndexes[i]].getCardLevel());
+					cardsList.get(0).setCardSkill(user.cards[cardIndexes[i]].getCardSkill());
+					
+					session.update(cardsList.get(0));
+				}
+			}
+			else {
+				session.createQuery("update Card set cardID = -1, cardPremiumDays = -1, cardLevel = -1, cardSkill = -1 where cardIndex = :cardIndex").
+					setParameter("cardIndex", cardIndexes[i]).executeUpdate();
+			}
+		}
+				
+		session.getTransaction().commit();
+		session.close();
+		
+	}
+	@Transient
 	public int getEmptyCardSlot() {
+		boolean[] isUsed = new boolean[96];
+		
+		for (Card card : cards) {
+			if (card.getCardID() != -1) {
+				isUsed[card.getCardIndex()] = true;
+			}
+		}
+		
 		for (int i = 0; i < 96; i++) {
-			if (cards[i] == null) {
+			if (!isUsed[i]) {
 				return i;
 			}
 		}
@@ -370,18 +337,23 @@ public class User {
 		return -1;
 	}
 	
+	@Transient
 	public int getEmptyScrollSlot() {
-		for (int i = 0; i < 3; i++) {
-			if (scrolls[i] == 0) {
-				return i;
-			}
+		if (getScroll0() == 0) {
+			return 0;
+		}
+		if (getScroll1() == 0) {
+			return 1;
+		}
+		if (getScroll2() == 0) {
+			return 2;
 		}
 		
 		return -1;
 	}
 	
 	public void addFriend(String friendName) {
-		Friend friend = new Friend(username, friendName);
+		Friend friend = new Friend(getUsername(), friendName);
 		friends.add(friend);
 		
 		Session session = Database.getSession();
@@ -392,30 +364,35 @@ public class User {
 	}
 
 	public void removeFriend(String friendName) {
-		for (Friend friend : friends) {
+		Iterator<Friend> iter = friends.iterator();
+		
+		while (iter.hasNext()) {
+			Friend friend = iter.next();
+			
 			if (friend.getFriendName().equals(friendName)) {
 				Session session = Database.getSession();
 				session.beginTransaction();
 				session.delete(friend);
 				session.getTransaction().commit();
 				session.close();
-				
-				friends.remove(friend);
+			
+				iter.remove();
 			}
 		}
 	}
 
+	@Transient
 	public int getElementType() {
-		if (mainCharacter >= 250) {
-			return (mainCharacter - 250) / 10 + 1;
+		if (getMainCharacter() >= 250) {
+			return (getMainCharacter() - 250) / 10 + 1;
 		}
-		int character = mainCharacter;
+		int character = getMainCharacter();
 		
 		if (character >= 130) {
 			character -= 120;
 		}
 		
-		switch (mainCharacter) {
+		switch (getMainCharacter()) {
 		case 30:
 		case 40:
 		case 110:
@@ -435,5 +412,728 @@ public class User {
 		}
 		
 		return -1;
+	}
+
+	@Id
+	@Column(name = "username")
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Column(name = "password")
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@Column(name = "main_character")
+	public int getMainCharacter() {
+		return mainCharacter;
+	}
+
+	public void setMainCharacter(int mainCharacter) {
+		this.mainCharacter = mainCharacter;
+	}
+
+	@Column(name = "level")
+	public int getPlayerLevel() {
+		return playerLevel;
+	}
+
+	public void setPlayerLevel(int playerLevel) {
+		this.playerLevel = playerLevel;
+	}
+
+	@Column(name = "usuable_character_count")
+	public int getUsuableCharacterCount() {
+		return usuableCharacterCount;
+	}
+
+	public void setUsuableCharacterCount(int usuableCharacterCount) {
+		this.usuableCharacterCount = usuableCharacterCount;
+	}
+
+	@Column(name = "age_restriction")
+	public int getAgeRestriction() {
+		return ageRestriction;
+	}
+
+	public void setAgeRestriction(int ageRestriction) {
+		this.ageRestriction = ageRestriction;
+	}
+
+	@Column(name = "points")
+	public long getPlayerExperience() {
+		return playerExperience;
+	}
+
+	public void setPlayerExperience(long playerExperience) {
+		this.playerExperience = playerExperience;
+	}
+
+	@Column(name = "code")
+	public long getPlayerCode() {
+		return playerCode;
+	}
+
+	public void setPlayerCode(long playerCode) {
+		this.playerCode = playerCode;
+	}
+
+	@Column(name = "coins")
+	public long getAvatarMoney() {
+		return avatarMoney;
+	}
+
+	public void setAvatarMoney(long avatarMoney) {
+		this.avatarMoney = avatarMoney;
+	}
+
+	@Column(name = "guild_name")
+	public String getGuildName() {
+		return guildName;
+	}
+
+	public void setGuildName(String guildName) {
+		this.guildName = guildName;
+	}
+
+	@Column(name = "guild_duty")
+	public String getGuildDuty() {
+		return guildDuty;
+	}
+
+	public void setGuildDuty(String guildDuty) {
+		this.guildDuty = guildDuty;
+	}
+
+	@Column(name = "cash")
+	public long getCash() {
+		return cash;
+	}
+
+	public void setCash(long cash) {
+		this.cash = cash;
+	}
+
+	@Column(name = "inventory_slots")
+	public int getPlayerInventorySlots() {
+		return playerInventorySlots;
+	}
+
+	public void setPlayerInventorySlots(int playerInventorySlots) {
+		this.playerInventorySlots = playerInventorySlots;
+	}
+
+	public int getWhiteCard(int index) {
+		switch (index) {
+		case 0: return getWater();
+		case 1: return getFire();
+		case 2: return getEarth();
+		case 3: return getWind();
+		}
+		
+		return -1;
+	}
+	
+	@Transient
+	public int[] getWhiteCards() {
+		int[] whiteCards = new int[4];
+		
+		whiteCards[0] = water;
+		whiteCards[1] = fire;
+		whiteCards[2] = earth;
+		whiteCards[3] = wind;
+		
+		return whiteCards;
+	}
+	
+	public void setWhiteCard(int index, int value) {
+		switch (index) {
+		case 0:
+			setWater(value);
+			break;
+		case 1:
+			setWater(value);
+			break;
+		case 2:
+			setWater(value);
+			break;
+		case 3:
+			setWater(value);
+			break;
+		default:
+			throw new InvalidParameterException("Wrong element type.");
+		}
+	}
+//	@Column(name = "white_cards")
+//	public int[] getWhiteCards() {
+//		return whiteCards;
+//	}
+//
+//	public void setWhiteCards(int[] whiteCards) {
+//		this.whiteCards = whiteCards;
+//	}
+
+//	@Column(name = "scrolls")
+//	public int[] getScrolls() {
+//		return scrolls;
+//	}
+//
+//	public void setScrolls(int scrolls[]) {
+//		this.scrolls = scrolls;
+//	}
+	
+	public int getScroll(int index) {
+		switch (index) {
+		case 0: return getScroll0();
+		case 1: return getScroll1();
+		case 2: return getScroll2();
+		}
+		
+		return -1;
+	}
+	
+	public void setScroll(int index, int value) {
+		switch (index) {
+		case 0:
+			setScroll0(value);
+			break;
+		case 1:
+			setScroll1(value);
+			break;
+		case 2:
+			setScroll2(value);
+			break;
+		default:
+			throw new InvalidParameterException("Wrong element type.");
+		}
+	}
+	
+	@Transient
+	public int[] getScrolls() {
+		int[] scrolls = new int[3];
+		scrolls[0] = scroll0;
+		scrolls[1] = scroll1;
+		scrolls[2] = scroll2;
+		
+		return scrolls;
+	}
+
+	@Column(name = "wins")
+	public int getPlayerWins() {
+		return playerWins;
+	}
+
+	public void setPlayerWins(int playerWins) {
+		this.playerWins = playerWins;
+	}
+
+	@Column(name = "loses")
+	public int getPlayerLoses() {
+		return playerLoses;
+	}
+
+	public void setPlayerLoses(int playerLoses) {
+		this.playerLoses = playerLoses;
+	}
+
+	@Column(name = "kills")
+	public int getPlayerKOs() {
+		return playerKOs;
+	}
+
+	public void setPlayerKOs(int playerKOs) {
+		this.playerKOs = playerKOs;
+	}
+
+	@Column(name = "downs")
+	public int getPlayerDowns() {
+		return playerDowns;
+	}
+
+	public void setPlayerDowns(int playerDowns) {
+		this.playerDowns = playerDowns;
+	}
+
+	@Column(name = "is_male")
+	public boolean isMale() {
+		return male;
+	}
+
+	public void setMale(boolean male) {
+		this.male = male;
+	}
+
+	@Column(name = "magic_index")
+	public int getMagicIndex() {
+		return magicIndex;
+	}
+
+	public void setMagicIndex(int magicIndex) {
+		this.magicIndex = magicIndex;
+	}
+
+	@Column(name = "weapon_index")
+	public int getWeaponIndex() {
+		return weaponIndex;
+	}
+
+	public void setWeaponIndex(int weaponIndex) {
+		this.weaponIndex = weaponIndex;
+	}
+
+	@Column(name = "accessory_index")
+	public int getAccessoryIndex() {
+		return accessoryIndex;
+	}
+
+	public void setAccessoryIndex(int accessoryIndex) {
+		this.accessoryIndex = accessoryIndex;
+	}
+
+	@Column(name = "pet_index")
+	public int getPetIndex() {
+		return petIndex;
+	}
+
+	public void setPetIndex(int petIndex) {
+		this.petIndex = petIndex;
+	}
+
+	@Column(name = "foot_index")
+	public int getFootIndex() {
+		return footIndex;
+	}
+
+	public void setFootIndex(int footIndex) {
+		this.footIndex = footIndex;
+	}
+
+	@Column(name = "body_index")
+	public int getBodyIndex() {
+		return bodyIndex;
+	}
+
+	public void setBodyIndex(int bodyIndex) {
+		this.bodyIndex = bodyIndex;
+	}
+
+	@Column(name = "hand1_index")
+	public int getHand1Index() {
+		return hand1Index;
+	}
+
+	public void setHand1Index(int hand1Index) {
+		this.hand1Index = hand1Index;
+	}
+
+	@Column(name = "hand2_index")
+	public int getHand2Index() {
+		return hand2Index;
+	}
+
+	public void setHand2Index(int hand2Index) {
+		this.hand2Index = hand2Index;
+	}
+
+	@Column(name = "face_index")
+	public int getFaceIndex() {
+		return faceIndex;
+	}
+
+	public void setFaceIndex(int faceIndex) {
+		this.faceIndex = faceIndex;
+	}
+
+	@Column(name = "hair_index")
+	public int getHairIndex() {
+		return hairIndex;
+	}
+
+	public void setHairIndex(int hairIndex) {
+		this.hairIndex = hairIndex;
+	}
+
+	@Column(name = "head_index")
+	public int getHeadIndex() {
+		return headIndex;
+	}
+
+	public void setHeadIndex(int headIndex) {
+		this.headIndex = headIndex;
+	}
+
+	@Column(name = "mission_level")
+	public int getMissionLevel() {
+		return missionLevel;
+	}
+
+	public void setMissionLevel(int missionLevel) {
+		this.missionLevel = missionLevel;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "server_id")
+	public Server getServer() {
+		return server;
+	}
+
+	public void setServer(Server server) {
+		this.server = server;
+	}
+
+	@Column(name = "is_connected")
+	public boolean isConnected() {
+		return connected;
+	}
+
+	public void setConnected(boolean connected) {
+		this.connected = connected;
+	}
+
+	@Transient
+	public Card[] getCards() {
+		return cards;
+	}
+
+	public void setCards(Card[] cards) {
+		this.cards = cards;
+	}
+
+	@Transient
+	public int getUserType() {
+		return userType;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
+	}
+
+	@Transient
+	public int getIsMuted() {
+		return isMuted;
+	}
+
+	public void setIsMuted(int isMuted) {
+		this.isMuted = isMuted;
+	}
+
+	@Transient
+	public int getBanDays() {
+		return banDays;
+	}
+
+	public void setBanDays(int banDays) {
+		this.banDays = banDays;
+	}
+
+	@Transient
+	public int getGuildRank() {
+		return guildRank;
+	}
+
+	public void setGuildRank(int guildRank) {
+		this.guildRank = guildRank;
+	}
+
+	@Transient
+	public byte[] getPlayerEventFlags() {
+		return playerEventFlags;
+	}
+
+	public void setPlayerEventFlags(byte playerEventFlags[]) {
+		this.playerEventFlags = playerEventFlags;
+	}
+
+	@Transient
+	public int getPlayerType() {
+		return playerType;
+	}
+
+	public void setPlayerType(int playerType) {
+		this.playerType = playerType;
+	}
+
+	@Transient
+	public boolean isInRoom() {
+		return isInRoom;
+	}
+
+	public void setInRoom(boolean isInRoom) {
+		this.isInRoom = isInRoom;
+	}
+
+	@Transient
+	public boolean isInGame() {
+		return isInGame;
+	}
+
+	public void setInGame(boolean isInGame) {
+		this.isInGame = isInGame;
+	}
+
+	@Transient
+	public int getRoomIndex() {
+		return roomIndex;
+	}
+
+	public void setRoomIndex(int roomIndex) {
+		this.roomIndex = roomIndex;
+	}
+
+	@Transient
+	public int getRoomSlot() {
+		return roomSlot;
+	}
+
+	public void setRoomSlot(int roomSlot) {
+		this.roomSlot = roomSlot;
+	}
+
+	@Transient
+	public int getRoomTeam() {
+		return roomTeam;
+	}
+
+	public void setRoomTeam(int roomTeam) {
+		this.roomTeam = roomTeam;
+	}
+
+	@Transient
+	public int getRoomCharacter() {
+		return roomCharacter;
+	}
+
+	public void setRoomCharacter(int roomCharacter) {
+		this.roomCharacter = roomCharacter;
+	}
+
+	@Transient
+	public byte getRoomReady() {
+		return roomReady;
+	}
+
+	public void setRoomReady(byte roomReady) {
+		this.roomReady = roomReady;
+	}
+
+	@Transient
+	public int getRoomRandom() {
+		return roomRandom;
+	}
+
+	public void setRoomRandom(int roomRandom) {
+		this.roomRandom = roomRandom;
+	}
+
+	@Transient
+	public int getLives() {
+		return lives;
+	}
+
+	public void setLives(int lives) {
+		this.lives = lives;
+	}
+
+	@Transient
+	public int getGameKO() {
+		return gameKO;
+	}
+
+	public void setGameKO(int gameKO) {
+		this.gameKO = gameKO;
+	}
+
+	@Transient
+	public List<Friend> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(List<Friend> friends) {
+		this.friends = friends;
+	}
+
+	@Transient
+	public boolean isJoined() {
+		return isJoined;
+	}
+
+	public void setJoined(boolean isJoined) {
+		this.isJoined = isJoined;
+	}
+
+	@Transient
+	public List<UserShop> getUserShopResults() {
+		return userShopResults;
+	}
+
+	public void setUserShopResults(List<UserShop> userShopResults) {
+		this.userShopResults = userShopResults;
+	}
+
+	@Transient
+	public int getUserShopOffset() {
+		return userShopOffset;
+	}
+
+	public void setUserShopOffset(int userShopOffset) {
+		this.userShopOffset = userShopOffset;
+	}
+
+	@Transient
+	public int getBooster() {
+		return booster;
+	}
+
+	public void setBooster(int booster) {
+		this.booster = booster;
+	}
+
+	@Transient
+	public boolean isExtraLife() {
+		return extraLife;
+	}
+
+	public void setExtraLife(boolean extraLife) {
+		this.extraLife = extraLife;
+	}
+
+	@Transient
+	public boolean isGameExtraLife() {
+		return gameExtraLife;
+	}
+
+	public void setGameExtraLife(boolean gameExtraLife) {
+		this.gameExtraLife = gameExtraLife;
+	}
+
+	@Transient
+	public boolean isTimeBonus() {
+		return timeBonus;
+	}
+
+	public void setTimeBonus(boolean timeBonus) {
+		this.timeBonus = timeBonus;
+	}
+
+	@Transient
+	public BigUserShop getBigUserShop() {
+		return bigUserShop;
+	}
+
+	public void setBigUserShop(BigUserShop bigUserShop) {
+		this.bigUserShop = bigUserShop;
+	}
+
+	@Transient
+	public int getChannelType() {
+		return channelType;
+	}
+
+	public void setChannelType(int channelType) {
+		this.channelType = channelType;
+	}
+
+	@Transient
+	public int getTotalTicks() {
+		return totalTicks;
+	}
+
+	public void setTotalTicks(int totalTicks) {
+		this.totalTicks = totalTicks;
+	}
+
+	@Transient
+	public boolean isInitialLoginDataSent() {
+		return isInitialLoginDataSent;
+	}
+
+	public void setInitialLoginDataSent(boolean isInitialLoginDataSent) {
+		this.isInitialLoginDataSent = isInitialLoginDataSent;
+	}
+
+	@Column(name = "water")
+	public int getWater() {
+		return water;
+	}
+
+	public void setWater(int water) {
+		this.water = water;
+	}
+
+	@Column(name = "fire")
+	public int getFire() {
+		return fire;
+	}
+
+	public void setFire(int fire) {
+		this.fire = fire;
+	}
+
+	@Column(name = "earth")
+	public int getEarth() {
+		return earth;
+	}
+
+	public void setEarth(int earth) {
+		this.earth = earth;
+	}
+
+	@Column(name = "wind")
+	public int getWind() {
+		return wind;
+	}
+
+	public void setWind(int wind) {
+		this.wind = wind;
+	}
+
+	@Column(name = "scroll0")
+	public int getScroll0() {
+		return scroll0;
+	}
+
+	public void setScroll0(int scroll0) {
+		this.scroll0 = scroll0;
+	}
+
+	@Column(name = "scroll1")
+	public int getScroll1() {
+		return scroll1;
+	}
+
+	public void setScroll1(int scroll1) {
+		this.scroll1 = scroll1;
+	}
+
+	@Column(name = "scroll2")
+	public int getScroll2() {
+		return scroll2;
+	}
+
+	public void setScroll2(int scroll2) {
+		this.scroll2 = scroll2;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static boolean isUserExists(String username) throws SQLException {
+		Session session = Database.getSession();
+		session.beginTransaction();
+		List<User> users = session.createQuery("from User where username = :username").setParameter("username", username).list();
+		
+		boolean isExists = !users.isEmpty();
+		
+		session.getTransaction().commit();
+		session.close();
+		
+		return isExists;
 	}
 }

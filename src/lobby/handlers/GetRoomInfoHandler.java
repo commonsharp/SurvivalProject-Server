@@ -38,9 +38,9 @@ public class GetRoomInfoHandler extends LobbyHandler {
 			currentUserSession = room.getUserSession(i);
 			
 			if (currentUserSession != null) {
-				output.putInt(0x18 + 4 * i, currentUserSession.getUser().playerLevel);
-				output.putBoolean(0x38 + i, currentUserSession.getUser().isMale);
-				output.putString(0x40 + 0xD * i, currentUserSession.getUser().username);
+				output.putInt(0x18 + 4 * i, currentUserSession.getUser().getPlayerLevel());
+				output.putBoolean(0x38 + i, currentUserSession.getUser().isMale());
+				output.putString(0x40 + 0xD * i, currentUserSession.getUser().getUsername());
 				output.putInt(0xA8 + 4 * i, 1); // ping. 0 - nothing. i=1~5 - i lines. i>5 - 5 lines
 			}
 			else {

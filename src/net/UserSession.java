@@ -3,6 +3,7 @@ package net;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.sql.SQLException;
 
@@ -22,6 +23,10 @@ public class UserSession implements Runnable {
 	public int serverState = -1;
 	
 	public long timeSinceLastActivity;
+	
+	public InetAddress udpIPAddress;
+	public int udpPort;
+	public int encryptionVersion;
 	
 	protected User user;
 	
@@ -70,7 +75,7 @@ public class UserSession implements Runnable {
 				input.read(messageBytes, 4, length - 4);
 				
 				// Decide which encryption to use based on the login packet
-				if (user.encryptionVersion == 0) {
+				if (encryptionVersion == 0) {
 					Cryptography.decryptMessage(1, messageBytes);
 					
 					// If you decrypt it with the normal decryption algorithm and get the right message
@@ -78,18 +83,18 @@ public class UserSession implements Runnable {
 							HexTools.getIntegerInByteArray(messageBytes, 4) == Messages.JOIN_LOBBY_REQUEST ||
 							HexTools.getIntegerInByteArray(messageBytes, 4) == Messages.SERVERS_INFO_REQUEST) {
 						// then set the encryption version to 1
-						user.encryptionVersion = 1;
+						encryptionVersion = 1;
 					}
 					else {
 						// otherwise, we're on the second encryption algorithm
-						user.encryptionVersion = 2;
+						encryptionVersion = 2;
 					}
 					
 					// Encrypt again
 					Cryptography.encryptMessage(1, messageBytes);
 				}
 				
-				Cryptography.decryptMessage(user.encryptionVersion, messageBytes);
+				Cryptography.decryptMessage(encryptionVersion, messageBytes);
 				
 				int messageID = HexTools.getIntegerInByteArray(messageBytes, 4);
 				int stateFromMessage = HexTools.getIntegerInByteArray(messageBytes, 16);
@@ -147,7 +152,7 @@ public class UserSession implements Runnable {
 //		System.out.println();
 		
 		// Encrypt and send
-		Cryptography.encryptMessage(user.encryptionVersion, response);
+		Cryptography.encryptMessage(encryptionVersion, response);
 		output.write(response);
 		output.flush();
 		
@@ -177,12 +182,16 @@ public class UserSession implements Runnable {
 		return user;
 	}
 	
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	@Override
 	public String toString() {
-		if (user == null || user.username == null) {
+		if (user == null || user.getUsername() == null) {
 			return "no username";
 		}
 		
-		return user.username;
+		return user.getUsername();
 	}
 }

@@ -7,6 +7,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class SellCardHandler extends LobbyHandler {
@@ -25,8 +26,9 @@ public class SellCardHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		userSession.getUser().cards[cardIndex] = null;
-		userSession.getUser().saveUser();
+		userSession.getUser().removeCard(cardIndex);
+		User.saveUser(userSession.getUser());
+		User.saveCards(userSession.getUser(), cardIndex);
 	}
 
 	@Override
@@ -37,8 +39,8 @@ public class SellCardHandler extends LobbyHandler {
 		output.putInt(0x14, 1); // must be 1. other values result in an assert fail
 		output.putInt(0x18, cardIndex);
 		output.putInt(0x1C, 0); // not sure if this should be here. probably NOT.
-		output.putLong(0x20, userSession.getUser().playerCode);
-		output.putLong(0x28, userSession.getUser().avatarMoney);
+		output.putLong(0x20, userSession.getUser().getPlayerCode());
+		output.putLong(0x28, userSession.getUser().getAvatarMoney());
 		
 		return output.toArray();
 	}

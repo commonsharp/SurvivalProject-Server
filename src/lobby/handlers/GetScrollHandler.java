@@ -7,6 +7,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class GetScrollHandler extends LobbyHandler {
@@ -29,8 +30,8 @@ public class GetScrollHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		userSession.getUser().scrolls[scrollSlot] = scrollID;
-		userSession.getUser().saveUser();
+		userSession.getUser().setScroll(scrollSlot, scrollID);
+		User.saveUser(userSession.getUser());
 	}
 
 	@Override

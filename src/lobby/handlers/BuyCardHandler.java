@@ -2,6 +2,7 @@ package lobby.handlers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
@@ -44,68 +45,79 @@ public class BuyCardHandler extends LobbyHandler {
 	public void processMessage() throws SQLException {
 		User user = userSession.getUser();
 		
+		ArrayList<Integer> changedIndexes = new ArrayList<Integer>();
+		
 		if (isBuy) {
 			if (cardID == Card.PACKAGE_SKILL1_25) {
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL1_FUSION, premiumDays, 25, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL_1_1_FUSION, premiumDays, 1, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL_2_1_FUSION, premiumDays, 1, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL_2_2_FUSION, premiumDays, 1, 0);
+				changedIndexes.add(user.addCard(new Card(Card.SKILL1_FUSION, premiumDays, 25, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL1_FUSION, premiumDays, 25, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL_1_1_FUSION, premiumDays, 1, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL_2_1_FUSION, premiumDays, 1, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL_2_2_FUSION, premiumDays, 1, 0)));
 			}
 			else if (cardID == Card.PACKAGE_SKILL1_15) {
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL1_FUSION, premiumDays, 16, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL2_FUSION, premiumDays, 1, 0);
+				changedIndexes.add(user.addCard(new Card(Card.SKILL1_FUSION, premiumDays, 16, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL2_FUSION, premiumDays, 1, 0)));
 			}
 			else if (cardID == Card.PACKAGE_SKILL2_25) {
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL2_FUSION, premiumDays, 25, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL_1_1_FUSION, premiumDays, 1, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL_2_1_FUSION, premiumDays, 1, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL_2_2_FUSION, premiumDays, 1, 0);
+				changedIndexes.add(user.addCard(new Card(Card.SKILL2_FUSION, premiumDays, 25, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL_1_1_FUSION, premiumDays, 1, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL_2_1_FUSION, premiumDays, 1, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL_2_2_FUSION, premiumDays, 1, 0)));
 			}
 			else if (cardID == Card.PACKAGE_SKILL2_15) {
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL2_FUSION, premiumDays, 16, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL1_FUSION, premiumDays, 1, 0);
+				changedIndexes.add(user.addCard(new Card(Card.SKILL2_FUSION, premiumDays, 16, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL1_FUSION, premiumDays, 1, 0)));
 			}
 			else if (cardID == Card.PACKAGE_USERSHOP2_25) {
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.USERSHOP2, premiumDays, 25, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL_FUSION, premiumDays, 2, 0);
+				changedIndexes.add(user.addCard(new Card(Card.USERSHOP2, premiumDays, 25, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL_FUSION, premiumDays, 2, 0)));
 			}
 			else if (cardID == Card.PACKAGE_USERSHOP2_15) {
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.USERSHOP2, premiumDays, 15, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.LEVEL_FUSION, premiumDays, 2, 0);
+				changedIndexes.add(user.addCard(new Card(Card.USERSHOP2, premiumDays, 15, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.LEVEL_FUSION, premiumDays, 2, 0)));
 			}
 			else if (cardID == Card.PACKAGE_CARD_CARD_30) {
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.CARD_SLOT12, premiumDays, 0, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.CARD_SLOT12, premiumDays, 0, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.CARD_SLOT6, premiumDays, 0, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL_1_1_FUSION, premiumDays, 1, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL_2_1_FUSION, premiumDays, 1, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL_2_2_FUSION, premiumDays, 1, 0);
+				changedIndexes.add(user.addCard(new Card(Card.CARD_SLOT12, premiumDays, 0, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.CARD_SLOT12, premiumDays, 0, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.CARD_SLOT6, premiumDays, 0, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL_1_1_FUSION, premiumDays, 1, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL_2_1_FUSION, premiumDays, 1, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL_2_2_FUSION, premiumDays, 1, 0)));
 			}
 			else if (cardID == Card.PACKAGE_CARD_CARD_18) {
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.CARD_SLOT12, premiumDays, 0, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.CARD_SLOT6, premiumDays, 0, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL1_FUSION, premiumDays, 1, 0);
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(Card.SKILL2_FUSION, premiumDays, 1, 0);
+				changedIndexes.add(user.addCard(new Card(Card.CARD_SLOT12, premiumDays, 0, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.CARD_SLOT6, premiumDays, 0, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL1_FUSION, premiumDays, 1, 0)));
+				changedIndexes.add(user.addCard(new Card(Card.SKILL2_FUSION, premiumDays, 1, 0)));
 			}
 			else {
-				user.cards[userSession.getUser().getEmptyCardSlot()] = new Card(cardID, premiumDays, amount, 0);
+				changedIndexes.add(user.addCard(new Card(cardID, premiumDays, amount, 0)));
 			}
 			
 			if (cardID == 0x7D7 || cardID == 0x7D8 || cardID == 0x7DC) {
-				user.booster = cardID;
+				user.setBooster(cardID);
 			}
 			else if (cardID == Card.QUEST_LIFE) {
-				user.extraLife = true;
+				user.setExtraLife(true);
 			}
 			else if (cardID == Card.TIME_BONUS) {
-				user.timeBonus = true;
+				user.setTimeBonus(true);
 			}
 		}
 		else {
-			user.cards[cardIndex].setPremiumDays(user.cards[cardIndex].getPremiumDays() + premiumDays);
+			changedIndexes.add(cardIndex);
+			user.getCard(cardIndex).setCardPremiumDays(user.getCard(cardIndex).getCardPremiumDays() + premiumDays);
 		}
 		
-		user.saveUser();
+		User.saveUser(user);
+		
+		int[] indexes = new int[changedIndexes.size()];
+		for (int i = 0; i < indexes.length; i++) {
+			indexes[i] = changedIndexes.get(i);
+		}
+		
+		User.saveCards(userSession.getUser(), indexes);
 	}
 
 	@Override
@@ -158,10 +170,10 @@ public class BuyCardHandler extends LobbyHandler {
 			}
 		}
 		
-		output.putInt(0x678, user.playerInventorySlots); // new inventory slots
-		output.putLong(0x680, user.playerCode); // code
-		output.putLong(0x688, user.cash); // cash
-		output.putLong(0x690, user.avatarMoney); // coin (avatar money)
+		output.putInt(0x678, user.getPlayerInventorySlots()); // new inventory slots
+		output.putLong(0x680, user.getPlayerCode()); // code
+		output.putLong(0x688, user.getCash()); // cash
+		output.putLong(0x690, user.getAvatarMoney()); // coin (avatar money)
 		
 //		user.saveUser();
 		return output.toArray();

@@ -26,10 +26,10 @@ public class HokeyGoalHandler extends LobbyHandler {
 	@Override
 	public void processMessage() {
 		if (goalTeam == 0) {
-			lobbyServer.getRoom(userSession.getUser().roomIndex).blueScore++;
+			lobbyServer.getRoom(userSession.getUser().getRoomIndex()).blueScore++;
 		}
 		else if (goalTeam == 1) {
-			lobbyServer.getRoom(userSession.getUser().roomIndex).redScore++;
+			lobbyServer.getRoom(userSession.getUser().getRoomIndex()).redScore++;
 		}
 	}
 
@@ -52,7 +52,7 @@ public class HokeyGoalHandler extends LobbyHandler {
 	public void afterSend() throws IOException {
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
 		
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		if (room.blueScore == 3 || room.redScore == 3) {
 			int[] results = new int[8];
@@ -63,7 +63,7 @@ public class HokeyGoalHandler extends LobbyHandler {
 				results[i] = -1;
 				
 				if (room.getUserSession(i) != null) {
-					results[i] = (room.getUserSession(i).getUser().roomTeam == winningTeam) ? 1 : 2;
+					results[i] = (room.getUserSession(i).getUser().getRoomTeam() == winningTeam) ? 1 : 2;
 				}
 			}
 			

@@ -1,18 +1,16 @@
 package lobby.handlers;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-import database.Database;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.ExperienceHelper;
 import net.Messages;
 import net.UserSession;
 import net.objects.GameMode;
+import net.objects.GuildScore;
 import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
@@ -58,13 +56,13 @@ public class MonsterDeathHandler extends LobbyHandler {
 	public byte[] getResponse() throws SQLException {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.ENJOY_MODE_DEATH_RESPONSE);
 		
 		output.putInt(0x14, monsterIndex);
-		output.putInt(0x18, userSession.getUser().roomSlot); // slot
+		output.putInt(0x18, userSession.getUser().getRoomSlot()); // slot
 		output.putInt(0x1C, -1); // byte
 		output.putInt(0x20, -1);
 		
@@ -80,24 +78,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 		}
 		
 		// Update guild points
-//		Connection con = Database.getConnection();
-//		PreparedStatement ps = con.prepareStatement("UPDATE guild_score SET guild_score = guild_score + ? WHERE server_hostname = ? AND server_port = ? AND guild_name = ?;");
-//		
-//		int guildPoints;
-//		for (int i = 0; i < 8; i++) {
-//			guildPoints = ExperienceHelper.experienceToGuildPoints(experienceGained[i] * luckyMultiplier[i], room.getGameMode());
-//			
-//			if (guildPoints != 0) {
-//				ps.setInt(1, guildPoints);
-//				ps.setString(2, lobbyServer.hostname);
-//				ps.setInt(3, lobbyServer.port);
-//				ps.setString(4, room.getUserSession(i).getUser().guildName);
-//				ps.executeUpdate();
-//			}
-//		}
-//		
-//		ps.close();
-//		con.close();
+		GuildScore.updateGuildPoints(lobbyServer, room, experienceGained, luckyMultiplier);
 		
 		output.putInts(0x24, luckyMultiplier);
 		output.putInts(0x44, experienceGained);
@@ -106,10 +87,10 @@ public class MonsterDeathHandler extends LobbyHandler {
 		
 		for (int i = 0; i < 8; i++) {
 			if (room.getUserSession(i) != null) {
-				room.getUserSession(i).getUser().playerExperience += experienceGained[i] * luckyMultiplier[i];
-				room.getUserSession(i).getUser().playerCode += experienceGained[i] * luckyMultiplier[i];
-				room.getUserSession(i).getUser().playerLevel = ExperienceHelper.getLevel(room.getUserSession(i).getUser().playerExperience);
-				experiences[i] = room.getUserSession(i).getUser().playerExperience;
+				room.getUserSession(i).getUser().setPlayerExperience(room.getUserSession(i).getUser().getPlayerExperience() + experienceGained[i] * luckyMultiplier[i]);
+				room.getUserSession(i).getUser().setPlayerCode(room.getUserSession(i).getUser().getPlayerCode() + experienceGained[i] * luckyMultiplier[i]);
+				room.getUserSession(i).getUser().setPlayerLevel(ExperienceHelper.getLevel(room.getUserSession(i).getUser().getPlayerExperience()));
+				experiences[i] = room.getUserSession(i).getUser().getPlayerExperience();
 			}
 		}
 		
@@ -125,7 +106,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 		int elementMultiplier = ExperienceHelper.getLuckyMultiplier();
 		
 		if (elementAmount != 0) {
-			userSession.getUser().whiteCards[elementType - 1] += elementAmount * elementMultiplier;
+			userSession.getUser().setWhiteCard(elementType - 1, userSession.getUser().getWhiteCard(elementType - 1) + elementAmount * elementMultiplier);
 			output.putInt(0xA4, elementType);
 			output.putInt(0xA8, elementAmount);
 			output.putInt(0xAC, elementMultiplier);
@@ -138,27 +119,27 @@ public class MonsterDeathHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
 		
 		if (room.isQuestType() || room.getGameMode() == GameMode.RACE || room.getGameMode() == GameMode.MOLE || room.getGameMode() == GameMode.MISSION) {
 			if (room.getGameMode() == GameMode.RACE && monsterIndex == 33) {
 				int[] results = new int[8];
 				
-				int winningTeam = userSession.getUser().roomTeam;
+				int winningTeam = userSession.getUser().getRoomTeam();
 				
 				for (int i = 0; i < 8; i++) {
 					results[i] = -1;
 					
 					if (room.getUserSession(i) != null) {
-						results[i] = (room.getUserSession(i).getUser().roomTeam == winningTeam) ? 1 : 2;
+						results[i] = (room.getUserSession(i).getUser().getRoomTeam() == winningTeam) ? 1 : 2;
 					}
 				}
 				
 				lobbyServer.sendRoomMessage(userSession, new GameCompletedHandler(lobbyServer, userSession).getResponse(results, -1), true);
 			}
 			else if (room.getGameMode() == GameMode.MOLE) {
-				int userTeam = userSession.getUser().roomTeam;
+				int userTeam = userSession.getUser().getRoomTeam();
 				
 				if (userTeam == 10) {
 					room.blueScore += molePoints;
@@ -184,7 +165,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 						results[i] = -1;
 						
 						if (room.getUserSession(i) != null) {
-							results[i] = (room.getUserSession(i).getUser().roomTeam == winningTeam) ? 1 : 2;
+							results[i] = (room.getUserSession(i).getUser().getRoomTeam() == winningTeam) ? 1 : 2;
 						}
 					}
 					
@@ -193,7 +174,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 			}
 		}
 		else if (room.getGameMode() == GameMode.SYMBOL) {
-			room.symbols[monsterIndex] = userSession.getUser().roomTeam;
+			room.symbols[monsterIndex] = userSession.getUser().getRoomTeam();
 			
 			int firstSymbol = room.symbols[0];
 			boolean isDone = true;
@@ -211,7 +192,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 					results[i] = -1;
 					
 					if (room.getUserSession(i) != null) {
-						results[i] = (room.getUserSession(i).getUser().roomTeam == firstSymbol) ? 1 : 2;
+						results[i] = (room.getUserSession(i).getUser().getRoomTeam() == firstSymbol) ? 1 : 2;
 					}
 				}
 				
@@ -219,7 +200,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 			}
 		}
 		else if (room.getGameMode() == GameMode.CRYSTAL) {
-			room.symbols[monsterIndex] = userSession.getUser().roomTeam;
+			room.symbols[monsterIndex] = userSession.getUser().getRoomTeam();
 			
 			int firstSymbol = room.symbols[0];
 			boolean isDone = true;
@@ -249,13 +230,13 @@ public class MonsterDeathHandler extends LobbyHandler {
 						results[i] = 0;
 						
 						if (room.blueScore == 4 || room.redScore == 4) {
-							results[i] = (room.getUserSession(i).getUser().roomTeam == userTeam) ? 1 : 2;
+							results[i] = (room.getUserSession(i).getUser().getRoomTeam() == userTeam) ? 1 : 2;
 							
 							if (results[i] == 1) {
-								room.getUserSession(i).getUser().playerWins++;
+								room.getUserSession(i).getUser().setPlayerWins(room.getUserSession(i).getUser().getPlayerWins() + 1);
 							}
 							else {
-								room.getUserSession(i).getUser().playerLoses++;
+								room.getUserSession(i).getUser().setPlayerLoses(room.getUserSession(i).getUser().getPlayerLoses() + 1);
 							}
 						}
 					}
@@ -268,19 +249,19 @@ public class MonsterDeathHandler extends LobbyHandler {
 			int[] oldPoints = Arrays.copyOf(room.infinityPoints, room.infinityPoints.length);
 			
 			UserSession currentUserSession;
-			int scoringTeam = userSession.getUser().roomTeam;
+			int scoringTeam = userSession.getUser().getRoomTeam();
 			
 			for (int i = 0; i < 8; i++) {
 				currentUserSession = room.getUserSession(i);
 				
 				if (currentUserSession != null) {
 					if (room.symbols[monsterIndex] == 0) {
-						if (currentUserSession.getUser().roomTeam == scoringTeam) {
+						if (currentUserSession.getUser().getRoomTeam() == scoringTeam) {
 							room.infinityPoints[i]++;
 						}
 					}
 					else {
-						if (currentUserSession.getUser().roomTeam == scoringTeam) {
+						if (currentUserSession.getUser().getRoomTeam() == scoringTeam) {
 							room.infinityPoints[i]++;
 						}
 						else {
@@ -290,7 +271,7 @@ public class MonsterDeathHandler extends LobbyHandler {
 				}
 			}
 			
-			room.infinityPoints[userSession.getUser().roomSlot]++;
+			room.infinityPoints[userSession.getUser().getRoomSlot()]++;
 			
 			int[] difference = new int[8];
 			for (int i = 0; i < 8; i++) {
@@ -298,13 +279,13 @@ public class MonsterDeathHandler extends LobbyHandler {
 			}
 			
 			lobbyServer.sendRoomMessage(userSession, new InfinityKingPointsHandler(lobbyServer, userSession).getResponse(difference, 2, monsterIndex), true);
-			room.symbols[monsterIndex] = userSession.getUser().roomTeam;
+			room.symbols[monsterIndex] = userSession.getUser().getRoomTeam();
 		}
 	}
 
 	@Override
 	public void processMessage() {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
-		room.getUserSession(userSession.getUser().roomSlot).getUser().gameKO++;
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
+		room.getUserSession(userSession.getUser().getRoomSlot()).getUser().setGameKO(room.getUserSession(userSession.getUser().getRoomSlot()).getUser().getGameKO() + 1);
 	}
 }

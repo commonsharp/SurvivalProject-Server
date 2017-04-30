@@ -29,7 +29,7 @@ public class SymbolStateChanged extends LobbyHandler {
 
 	@Override
 	public void processMessage() {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		room.numberOfCrystals = 4;
 		for (int i = 0; i < 4; i++) {

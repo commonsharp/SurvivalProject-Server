@@ -42,11 +42,11 @@ public class InfinityPointsHandler extends LobbyHandler {
 		
 		output.putInts(0x14, results);
 		
-		output.putInt(0x34, user.gameKO); // ko
+		output.putInt(0x34, user.getGameKO()); // ko
 		output.putInt(0x38, 0); // ?
-		output.putLong(0x40, user.playerExperience); // old points amount
-		output.putLong(0x48, user.playerCode); // old code amount
-		output.putLong(0x50, user.avatarMoney); // old coin amount
+		output.putLong(0x40, user.getPlayerExperience()); // old points amount
+		output.putLong(0x48, user.getPlayerCode()); // old code amount
+		output.putLong(0x50, user.getAvatarMoney()); // old coin amount
 		
 		for (int i = 0; i < 8; i++) {
 			output.putInt(0x58 + 4 * i, 8000); // experience gained
@@ -62,14 +62,13 @@ public class InfinityPointsHandler extends LobbyHandler {
 			output.putInt(0x198 + 4 * i, 0); // ?
 		}
 		
-		int mySlot = userSession.getUser().roomSlot;
-		
-		userSession.getUser().whiteCards[elements[mySlot] - 1] += 5 * (luckyMultiplier[mySlot] + 1);
-		userSession.getUser().playerLevel = levels[mySlot];
-		userSession.getUser().playerCode += 8000 * luckyMultiplier[mySlot];
-		userSession.getUser().playerExperience += 8000 * luckyMultiplier[mySlot];
-		userSession.getUser().avatarMoney += coins[mySlot] * 2;
-		userSession.getUser().saveUser();
+		int mySlot = userSession.getUser().getRoomSlot();
+		userSession.getUser().setWhiteCard(elements[mySlot] - 1, userSession.getUser().getWhiteCard(elements[mySlot] - 1) + 5 * (luckyMultiplier[mySlot] + 1));
+		userSession.getUser().setPlayerLevel(levels[mySlot]);
+		userSession.getUser().setPlayerCode(userSession.getUser().getPlayerCode() + 8000 * luckyMultiplier[mySlot]);
+		userSession.getUser().setPlayerExperience(userSession.getUser().getPlayerExperience() + 8000 * luckyMultiplier[mySlot]);
+		userSession.getUser().setAvatarMoney(userSession.getUser().getAvatarMoney() + coins[mySlot] * 2);
+		User.saveUser(userSession.getUser());
 		
 		output.putInt(0x1B8, 0); // no use it seems
 
@@ -78,7 +77,7 @@ public class InfinityPointsHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		if (room != null) {
 			room.isStarted = false;

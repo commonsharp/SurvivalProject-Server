@@ -84,7 +84,7 @@ public class CreateRoomHandler extends LobbyHandler {
 		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(roomNumber)));
 		
 		RoomPlayersUpdateHandler rpuh = new RoomPlayersUpdateHandler(lobbyServer, userSession);
-		sendTCPMessage(rpuh.getResponse(userSession.getUser()));
+		sendTCPMessage(rpuh.getResponse(userSession));
 //		rpuh.afterSend();
 		sendTCPMessage(new NewMasterHandler(lobbyServer, userSession).getResponse());
 		
@@ -95,25 +95,25 @@ public class CreateRoomHandler extends LobbyHandler {
 	@Override
 	public byte[] getResponse() {
 		cardsLimit = -1;
-		Room room = new Room(roomNumber, roomName, password, userSession.getUser().username, gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger);
+		Room room = new Room(roomNumber, roomName, password, userSession.getUser().getUsername(), gameType, gameMap, numberOfPlayers, isWithScrolls, isWithTeams, cardsLimit, isLimitAnger);
 		lobbyServer.setRoom(roomNumber, room);
-		userSession.getUser().isInRoom = true;
-		userSession.getUser().roomSlot = lobbyServer.getRoom(roomNumber).getSlot();
-		userSession.getUser().roomTeam = room.getTeam();
-		userSession.getUser().roomCharacter = userSession.getUser().mainCharacter;
-		userSession.getUser().roomReady = 0;
+		userSession.getUser().setInRoom(true);
+		userSession.getUser().setRoomSlot(lobbyServer.getRoom(roomNumber).getSlot());
+		userSession.getUser().setRoomTeam(room.getTeam());
+		userSession.getUser().setRoomCharacter(userSession.getUser().getMainCharacter());
+		userSession.getUser().setRoomReady((byte) 0);
 		
 		if (room.isTrainingType()) {
-			userSession.getUser().roomCharacter = 10; // xyrho
-			userSession.getUser().roomReady = 1;
+			userSession.getUser().setRoomCharacter(10); // xyrho
+			userSession.getUser().setRoomReady((byte) 1);
 		}
 		
 		if (room.getGameMode() == GameMode.MISSION) {
-			room.missionLevel = userSession.getUser().missionLevel;
+			room.missionLevel = userSession.getUser().getMissionLevel();
 		}
 		
-		userSession.getUser().roomIndex = roomNumber;
-		lobbyServer.getRoom(roomNumber).setUserSession(userSession.getUser().roomSlot, userSession);
+		userSession.getUser().setRoomIndex(roomNumber);
+		lobbyServer.getRoom(roomNumber).setUserSession(userSession.getUser().getRoomSlot(), userSession);
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 
@@ -133,10 +133,10 @@ public class CreateRoomHandler extends LobbyHandler {
 		output.putInt(0x54, numberOfPlayers);
 		output.putBoolean(0x58, isWithScrolls);
 		output.putByte(0x59, (byte) 1); // this is master card bonus
-		output.putInt(0x5C, userSession.getUser().roomTeam); // team
+		output.putInt(0x5C, userSession.getUser().getRoomTeam()); // team
 		output.putBoolean(0x60, isWithTeams);
 		output.putInt(0x64, cardsLimit);
-		output.putShort(0x68, (short) userSession.getUser().guildRank); // guild rank. zero based. you get a bonus for server capture if you're high enough
+		output.putShort(0x68, (short) userSession.getUser().getGuildRank()); // guild rank. zero based. you get a bonus for server capture if you're high enough
 		output.putBoolean(0x6A, isLimitAnger);
 		output.putByte(0x6B, (byte) 1); // not used.
 		
@@ -145,6 +145,6 @@ public class CreateRoomHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() {
-		userSession.getUser().isJoined = false;
+		userSession.getUser().setJoined(false);
 	}
 }

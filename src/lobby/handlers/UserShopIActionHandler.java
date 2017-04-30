@@ -50,18 +50,18 @@ public class UserShopIActionHandler extends LobbyHandler {
 				int cardIndex = input.getInt(0x54 + i * 4);
 				
 				if (cardIndex != -1) {
-					Card card = userSession.getUser().cards[cardIndex];
-					bigUserShop.addShop(new UserShop(fromUsername, cardIndex, card.getId(), card.getPremiumDays(), card.getLevel(), card.getSkill(), input.getLong(0xA8 + 8 * i)), i);
+					Card card = userSession.getUser().getCard(cardIndex);
+					bigUserShop.addShop(new UserShop(fromUsername, cardIndex, card.getCardID(), card.getCardPremiumDays(), card.getCardLevel(), card.getCardSkill(), input.getLong(0xA8 + 8 * i)), i);
 				}
 			}
 			
-			userSession.getUser().bigUserShop = bigUserShop;
+			userSession.getUser().setBigUserShop(bigUserShop);
 		}
 		else if (requestType == 2 || requestType == 3) {
-			bigUserShop = lobbyServer.findUserSession(toUsername).getUser().bigUserShop;
+			bigUserShop = lobbyServer.findUserSession(toUsername).getUser().getBigUserShop();
 		}
 		else if (requestType == 5) {
-			bigUserShop = userSession.getUser().bigUserShop;
+			bigUserShop = userSession.getUser().getBigUserShop();
 		}
 		
 		System.out.println("From User: " + input.getString(0x14));
@@ -103,11 +103,11 @@ public class UserShopIActionHandler extends LobbyHandler {
 //		output.putInt(0x4, Messages.USER_SHOP_OPEN_RESPONSE);
 //		User user = userSession.getUser();
 //		if (itemType == 1) {
-//			lobbyServer.addShop(user.username, user.items[itemIndex], 0, 0, code);
+//			lobbyServer.addShop(user.username, user.items[cardIndex], 0, 0, code);
 //		}
 //		// itemType = 2. elements
 //		else {
-//			lobbyServer.addShop(user.username, null, itemIndex / 10000, itemIndex % 10000, code);
+//			lobbyServer.addShop(user.username, null, cardIndex / 10000, cardIndex % 10000, code);
 //		}
 	}
 

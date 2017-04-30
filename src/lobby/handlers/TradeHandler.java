@@ -9,6 +9,7 @@ import net.Messages;
 import net.UserSession;
 import net.objects.Card;
 import net.objects.Trade;
+import net.objects.User;
 import net.objects.Trade.TradeState;
 import tools.ExtendedByteBuffer;
 import tools.HexTools;
@@ -83,7 +84,7 @@ public class TradeHandler extends LobbyHandler {
 		
 		// Start a new trade
 		if (actionType == 1) {
-			if (!lobbyServer.getRoom(userSession.getUser().roomIndex).containsPlayer(toUsername)) {
+			if (!lobbyServer.getRoom(userSession.getUser().getRoomIndex()).containsPlayer(toUsername)) {
 				response = 2;
 				return;
 			}
@@ -91,7 +92,7 @@ public class TradeHandler extends LobbyHandler {
 				response = 4;
 				return;
 			}
-			if (!lobbyServer.findUserSession(toUsername).getUser().isInGame) {
+			if (!lobbyServer.findUserSession(toUsername).getUser().isInGame()) {
 				response = 13;
 				return;
 			}
@@ -177,11 +178,11 @@ public class TradeHandler extends LobbyHandler {
 			
 			for (int i = 0; i < 4; i++) {
 				if (cards[i] != null) {
-					output.putInt(0x38 + 4 * i, cards[i].getIndex());
-					output.putInt(0x38 + 4 * i + 0x1C, cards[i].getId());
-					output.putInt(0x38 + 4 * i + 0x2C, cards[i].getPremiumDays());
-					output.putInt(0x38 + 4 * i + 0x3C, cards[i].getLevel());
-					output.putInt(0x38 + 4 * i + 0x4C, cards[i].getSkill());
+					output.putInt(0x38 + 4 * i, cards[i].getCardIndex());
+					output.putInt(0x38 + 4 * i + 0x1C, cards[i].getCardID());
+					output.putInt(0x38 + 4 * i + 0x2C, cards[i].getCardPremiumDays());
+					output.putInt(0x38 + 4 * i + 0x3C, cards[i].getCardLevel());
+					output.putInt(0x38 + 4 * i + 0x4C, cards[i].getCardSkill());
 				}
 				else {
 					output.putInt(0x38 + 4 * i, -1);
@@ -223,54 +224,62 @@ public class TradeHandler extends LobbyHandler {
 			
 			// Remove the cards
 			for (int i = 0; i < 4; i++) {
-				if (trade.firstCards[i] != null && trade.firstCards[i].getIndex() != -1) {
-					if (trade.firstCards[i].getIndex() >= 10000) {
-						firstUserSession.getUser().whiteCards[trade.firstCards[i].getIndex() / 10000 - 1] -= trade.firstCards[i].getIndex() % 10000;
+				if (trade.firstCards[i] != null && trade.firstCards[i].getCardIndex() != -1) {
+					if (trade.firstCards[i].getCardIndex() >= 10000) {
+						firstUserSession.getUser().setWhiteCard(trade.firstCards[i].getCardIndex() / 10000 - 1, firstUserSession.getUser().getWhiteCard(trade.firstCards[i].getCardIndex() / 10000 - 1) - trade.firstCards[i].getCardIndex() % 10000);
 					}
 					else {
-						firstUserSession.getUser().cards[trade.firstCards[i].getIndex()] = null;
+						firstUserSession.getUser().removeCard(trade.firstCards[i].getCardIndex());
 					}
 				}
 				
-				if (trade.secondCards[i] != null && trade.secondCards[i].getIndex() != -1) {
-					if (trade.secondCards[i].getIndex() >= 10000) {
-						secondUserSession.getUser().whiteCards[trade.secondCards[i].getIndex() / 10000 - 1] -= trade.secondCards[i].getIndex() % 10000;
+				if (trade.secondCards[i] != null && trade.secondCards[i].getCardIndex() != -1) {
+					if (trade.secondCards[i].getCardIndex() >= 10000) {
+						secondUserSession.getUser().setWhiteCard(trade.secondCards[i].getCardIndex() / 10000 - 1, secondUserSession.getUser().getWhiteCard(trade.secondCards[i].getCardIndex() / 10000 - 1) - trade.secondCards[i].getCardIndex() % 10000);
 					}
 					else {
-						secondUserSession.getUser().cards[trade.secondCards[i].getIndex()] = null;
+						secondUserSession.getUser().removeCard(trade.secondCards[i].getCardIndex());
 					}
 				}
 			}
 			
 			// Add new cards
 			for (int i = 0; i < 4; i++) {
-				if (trade.firstCards[i] != null && trade.firstCards[i].getIndex() != -1) {
-					if (trade.firstCards[i].getIndex() >= 10000) {
-						secondUserSession.getUser().whiteCards[trade.firstCards[i].getIndex() / 10000 - 1] += trade.firstCards[i].getIndex() % 10000;
+				if (trade.firstCards[i] != null && trade.firstCards[i].getCardIndex() != -1) {
+					if (trade.firstCards[i].getCardIndex() >= 10000) {
+						secondUserSession.getUser().setWhiteCard(trade.firstCards[i].getCardIndex() / 10000 - 1, secondUserSession.getUser().getWhiteCard(trade.firstCards[i].getCardIndex() / 10000 - 1) + trade.firstCards[i].getCardIndex() % 10000);
 					}
 					else {
-						secondUserSession.getUser().cards[secondUserSession.getUser().getEmptyCardSlot()] = trade.firstCards[i];
+						secondUserSession.getUser().addCard(trade.firstCards[i]);
 					}
 				}
 				
-				if (trade.secondCards[i] != null && trade.secondCards[i].getIndex() != -1) {
-					if (trade.secondCards[i].getIndex() >= 10000) {
-						firstUserSession.getUser().whiteCards[trade.secondCards[i].getIndex() / 10000 - 1] += trade.secondCards[i].getIndex() % 10000;
+				if (trade.secondCards[i] != null && trade.secondCards[i].getCardIndex() != -1) {
+					if (trade.secondCards[i].getCardIndex() >= 10000) {
+						firstUserSession.getUser().setWhiteCard(trade.secondCards[i].getCardIndex() / 10000 - 1, firstUserSession.getUser().getWhiteCard(trade.secondCards[i].getCardIndex() / 10000 - 1) + trade.secondCards[i].getCardIndex() % 10000);
 					}
 					else {
-						firstUserSession.getUser().cards[firstUserSession.getUser().getEmptyCardSlot()] = trade.secondCards[i];
+						firstUserSession.getUser().addCard(trade.secondCards[i]);
 					}
 				}
 			}
 			
-			firstUserSession.getUser().playerCode += trade.secondCode - trade.firstCode;
-			secondUserSession.getUser().playerCode += trade.firstCode - trade.secondCode;
+			firstUserSession.getUser().setPlayerCode(firstUserSession.getUser().getPlayerCode() + trade.secondCode - trade.firstCode);
+			secondUserSession.getUser().setPlayerCode(secondUserSession.getUser().getPlayerCode() + trade.firstCode - trade.secondCode);
 			
-			firstUserSession.getUser().saveUser();
-			secondUserSession.getUser().saveUser();
+			User.saveUser(firstUserSession.getUser());
+			User.saveUser(secondUserSession.getUser());
 			
-			firstUserSession.sendMessage(new TradeCompletedHandler(lobbyServer, firstUserSession).getResponse(firstUserSession, secondUserSession.getUser().username));
-			secondUserSession.sendMessage(new TradeCompletedHandler(lobbyServer, secondUserSession).getResponse(secondUserSession, firstUserSession.getUser().username));
+			int[] indexes = new int[96];
+			for (int i = 0; i < 96; i++) {
+				indexes[i] = i;
+			}
+			
+			User.saveCards(firstUserSession.getUser(), indexes);
+			User.saveCards(secondUserSession.getUser(), indexes);
+			
+			firstUserSession.sendMessage(new TradeCompletedHandler(lobbyServer, firstUserSession).getResponse(firstUserSession, secondUserSession.getUser().getUsername()));
+			secondUserSession.sendMessage(new TradeCompletedHandler(lobbyServer, secondUserSession).getResponse(secondUserSession, firstUserSession.getUser().getUsername()));
 		}
 	}
 }

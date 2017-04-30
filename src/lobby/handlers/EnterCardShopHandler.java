@@ -34,7 +34,7 @@ public class EnterCardShopHandler extends LobbyHandler {
 		
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.ENTER_CARD_SHOP_RESPONSE);
-		output.putLong(0x14, userSession.getUser().cash); // cash
+		output.putLong(0x14, userSession.getUser().getCash()); // cash
 		
 		return output.toArray();
 	}

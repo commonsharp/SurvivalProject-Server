@@ -180,11 +180,11 @@ public class Room {
 		int[] characters = new int[8];
 		for (int i = 0; i < 8; i++) {
 			if (users[i] != null) {
-				if (users[i].getUser().roomTeam == 10) {
-					characters[getEmpty(characters, 0)] = users[i].getUser().roomCharacter;
+				if (users[i].getUser().getRoomTeam() == 10) {
+					characters[getEmpty(characters, 0)] = users[i].getUser().getRoomCharacter();
 				}
 				else {
-					characters[getEmpty(characters, 1)] = users[i].getUser().roomCharacter;
+					characters[getEmpty(characters, 1)] = users[i].getUser().getRoomCharacter();
 				}
 			}
 		}
@@ -229,7 +229,7 @@ public class Room {
 				
 				if (currentSession != null) {
 					// If someone is not ready, don't start
-					if (currentSession.getUser().roomReady != 1)
+					if (currentSession.getUser().getRoomReady() != 1)
 						isStart = false;
 				}
 			}
@@ -252,13 +252,11 @@ public class Room {
 		}
 		
 		// Otherwise, check if the user's ready
-		return users[slot].getUser().roomReady == 1;
+		return users[slot].getUser().getRoomReady() == 1;
 	}
 	
 	private boolean isWaitForAll() {
 		switch (gameMode) {
-		case CHAMP_ASSAULT:
-			return true;
 		case KING_SLAYER:
 			return true;
 		case FIGHT_CLUB:
@@ -317,6 +315,24 @@ public class Room {
 		case HOKEY:
 		case MOLE:
 			return true;
+		case AUTO_TEAM:
+			return true;
+		case BIG_MATCH_SURVIVAL:
+			return false;
+		case CHAMP_KING_SLAYER:
+		case CHAMP_TEAM:
+		case CHAMP_TOURNAMENT:
+		case CHAMP_ASSAULT:
+			return true;
+		case TOURNAMENT:
+			return true;
+		case FIRST_TRAINING:
+		case TRAINING_1:
+		case TRAINING_2:
+		case TRAINING_3:
+		case TRAINING_4:
+		case TRAINING_5:
+			return false;
 		}
 		
 		Log.error("No wait for all case");
@@ -379,8 +395,6 @@ public class Room {
 		// 2 = only blue team (in quests)
 		// 3 = hero mode
 		switch (gameMode) {
-		case CHAMP_ASSAULT:
-			return 1;
 		case KING_SLAYER:
 			return 1;
 		case FIGHT_CLUB:
@@ -439,6 +453,24 @@ public class Room {
 		case HOKEY:
 		case MOLE:
 			return 1;
+		case AUTO_TEAM:
+			return 1;
+		case BIG_MATCH_SURVIVAL:
+			return 0;
+		case CHAMP_KING_SLAYER:
+		case CHAMP_TEAM:
+		case CHAMP_TOURNAMENT:
+		case CHAMP_ASSAULT:
+			return 1;
+		case TOURNAMENT:
+			return 1;
+		case FIRST_TRAINING:
+		case TRAINING_1:
+		case TRAINING_2:
+		case TRAINING_3:
+		case TRAINING_4:
+		case TRAINING_5:
+			return 2;
 		}
 		
 		return 0;
@@ -467,8 +499,8 @@ public class Room {
 		
 		for (int i = 0; i < 8; i++) {
 			// If the player is alive or if he's dead but has an extra life in quest modes, then the team isn't dead
-			if (getUserSession(i) != null && (isAlive[i] || ((isQuestType() || getGameMode() == GameMode.MISSION) && getUserSession(i).getUser().gameExtraLife))) {
-				if (getUserSession(i).getUser().roomTeam == 10) {
+			if (getUserSession(i) != null && (isAlive[i] || ((isQuestType() || getGameMode() == GameMode.MISSION) && getUserSession(i).getUser().isGameExtraLife()))) {
+				if (getUserSession(i).getUser().getRoomTeam() == 10) {
 					isBlueDead = false;
 				}
 				else {
@@ -485,7 +517,7 @@ public class Room {
 		
 		for (int i = 0; i < 40; i++) {
 			if (isAlive[i]) {
-				if (i >= 24 || (i < 8 && getUserSession(i) != null && getUserSession(i).getUser().roomTeam == 20)) {
+				if (i >= 24 || (i < 8 && getUserSession(i) != null && getUserSession(i).getUser().getRoomTeam() == 20)) {
 					isRedDead = false;
 				}
 				else {
@@ -509,7 +541,7 @@ public class Room {
 	
 	public boolean containsPlayer(String username) {
 		for (int i = 0; i < 8; i++) {
-			if (users[i] != null && users[i].getUser().username.equals(username)) {
+			if (users[i] != null && users[i].getUser().getUsername().equals(username)) {
 				return true;
 			}
 		}

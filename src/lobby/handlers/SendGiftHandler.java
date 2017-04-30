@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import org.hibernate.Session;
 
 import database.Database;
-import database.DatabaseHelper;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
 import net.objects.Card;
 import net.objects.Gift;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class SendGiftHandler extends LobbyHandler {
@@ -38,24 +38,28 @@ public class SendGiftHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		if (lobbyServer.findUserSession(toUsername) != null || DatabaseHelper.isUserExists(toUsername)) {
+		if (lobbyServer.findUserSession(toUsername) != null || User.isUserExists(toUsername)) {
 			response = 1;
 			
 			if (giftType == 1) {
-				card = userSession.getUser().cards[(int) amountOrIndex];
-				userSession.getUser().cards[(int) amountOrIndex] = null;
+				card = userSession.getUser().getCard((int) amountOrIndex);
+				userSession.getUser().removeCard((int) amountOrIndex);
 			}
 			else if (giftType == 2) {
-				userSession.getUser().whiteCards[(int) amountOrIndex / 10000 - 1] -= (int) amountOrIndex % 10000;
+				userSession.getUser().setWhiteCard((int) amountOrIndex / 10000 - 1, userSession.getUser().getWhiteCard((int) amountOrIndex / 10000 - 1) - (int) amountOrIndex % 10000);
 			}
 			else if (giftType == 3) {
-				userSession.getUser().playerCode -= amountOrIndex;
+				userSession.getUser().setPlayerCode(userSession.getUser().getPlayerCode() - amountOrIndex);
 			}
 			
 			// you always lose 19000 code per gift
-			userSession.getUser().playerCode -= 19000;
+			userSession.getUser().setPlayerCode(userSession.getUser().getPlayerCode() - 19000);
 			
-			userSession.getUser().saveUser();
+			User.saveUser(userSession.getUser());
+			
+			if (giftType == 1) {
+				User.saveCards(userSession.getUser(), (int) amountOrIndex);
+			}
 		}
 		else {
 			response = 2;
@@ -103,23 +107,23 @@ public class SendGiftHandler extends LobbyHandler {
 					toUserSession.sendMessage(new CardGiftReceivedHandler(lobbyServer, userSession).getResponse(toUserSession, card));
 				}
 				else if (giftType == 2 || giftType == 3) {
-					toUserSession.sendMessage(new ElementsOrCodeGiftReceivedHandler(lobbyServer, userSession).getResponse(userSession.getUser().username, toUserSession, giftType, amountOrIndex));
+					toUserSession.sendMessage(new ElementsOrCodeGiftReceivedHandler(lobbyServer, userSession).getResponse(userSession.getUser().getUsername(), toUserSession, giftType, amountOrIndex));
 				}
 			}
 			else {
 				Session session = Database.getSession();
 				session.beginTransaction();
 				Gift gift = new Gift();
-				gift.setFromUsername(userSession.getUser().username);
+				gift.setFromUsername(userSession.getUser().getUsername());
 				gift.setToUsername(toUsername);
 				gift.setGiftType(giftType);
 				gift.setAmount(amountOrIndex);
 				
 				if (giftType == 1) {
-					gift.setCardID(card.getId());
-					gift.setCardPremiumDays(card.getPremiumDays());
-					gift.setCardLevel(card.getLevel());
-					gift.setCardSkill(card.getSkill());
+					gift.setCardID(card.getCardID());
+					gift.setCardPremiumDays(card.getCardPremiumDays());
+					gift.setCardLevel(card.getCardLevel());
+					gift.setCardSkill(card.getCardSkill());
 				}
 				else {
 					// Everything is 0

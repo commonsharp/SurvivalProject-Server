@@ -37,8 +37,8 @@ public class LeaveGameHandler extends LobbyHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.LEAVE_GAME_RESPONSE);
-		output.putInt(0x14, userSession.getUser().roomSlot);
-		output.putString(0x18, userSession.getUser().username);
+		output.putInt(0x14, userSession.getUser().getRoomSlot());
+		output.putString(0x18, userSession.getUser().getUsername());
 		output.putInt(0x28, 0); // this value is added to MyInfo+3198
 		output.putInt(0x2C, 0); // this value is added to MyInfo+319C
 		output.putByte(0x30, (byte) 0); // master card
@@ -48,7 +48,7 @@ public class LeaveGameHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
 		sendTCPMessage(new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(room));
@@ -58,16 +58,16 @@ public class LeaveGameHandler extends LobbyHandler {
 			lobbyServer.setRoom(room.getRoomID(), null);
 		}
 		else {
-			if (room.masterIndex == userSession.getUser().roomSlot) {
+			if (room.masterIndex == userSession.getUser().getRoomSlot()) {
 				room.masterIndex = room.getAnyPlayerSlot();
 				lobbyServer.sendRoomMessage(userSession, new NewMasterHandler(lobbyServer, userSession).getResponse(room.masterIndex), true);
 			}
-			if (room.blueKingIndex == userSession.getUser().roomSlot) {
+			if (room.blueKingIndex == userSession.getUser().getRoomSlot()) {
 				room.blueKingIndex = room.getAnyPlayerSlot();
 				lobbyServer.sendRoomMessage(userSession, new NewKingHandler(lobbyServer, userSession).getResponse(), true);
 			}
 			
-			if (room.getGameMode() == GameMode.HERO && userSession.getUser().roomSlot == room.heroSlot) {
+			if (room.getGameMode() == GameMode.HERO && userSession.getUser().getRoomSlot() == room.heroSlot) {
 				int[] results = new int[8];
 				for (int i = 0; i < 8; i++) {
 					results[i] = -1;
@@ -81,7 +81,7 @@ public class LeaveGameHandler extends LobbyHandler {
 			}
 		}
 		
-		userSession.getUser().roomIndex = -1;
+		userSession.getUser().setRoomIndex(-1);
 		
 		if (!isDisconnected) {
 			lobbyServer.onJoinLobby(userSession);
@@ -94,24 +94,24 @@ public class LeaveGameHandler extends LobbyHandler {
 	}
 	
 	public void processMessage(UserSession userSession) {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
-		room.users[userSession.getUser().roomSlot] = null;
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
+		room.users[userSession.getUser().getRoomSlot()] = null;
 		room.setNumberOfUsers(room.getNumberOfPlayers() - 1);
-		room.isAlive[userSession.getUser().roomSlot] = false;
+		room.isAlive[userSession.getUser().getRoomSlot()] = false;
 		
-		if (userSession.getUser().roomTeam == 10) {
+		if (userSession.getUser().getRoomTeam() == 10) {
 			room.bluePlayersCount--;
 		}
 		else {
 			room.redPlayersCount--;
 		}
 		
-		userSession.getUser().isInRoom = false;
-		userSession.getUser().isInGame = false;
-		userSession.getUser().playerLoses++;
+		userSession.getUser().setInRoom(false);
+		userSession.getUser().setInGame(false);
+		userSession.getUser().setPlayerLoses(userSession.getUser().getPlayerLoses() + 1);
 		
 		if (room.getGameMode().getValue() != GameMode.COMMUNITY.getValue()) {
-			userSession.getUser().playerLoses++;
+			userSession.getUser().setPlayerLoses(userSession.getUser().getPlayerLoses() + 1);
 		}
 	}
 }

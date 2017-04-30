@@ -16,6 +16,7 @@ import net.UserSession;
 import net.objects.Card;
 import net.objects.Gift;
 import net.objects.Memo;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class JoinLobbyHandler extends LobbyHandler {
@@ -49,6 +50,8 @@ public class JoinLobbyHandler extends LobbyHandler {
 	int ioProtectVersion = 12;
 	int survivalprojectVersion = 13;
 	
+	String username;
+	
 	public JoinLobbyHandler(LobbyServer lobbyServer, UserSession tcpServer, byte[] messageBytes) {
 		super(lobbyServer, tcpServer, messageBytes);
 		// TODO Auto-generated constructor stub
@@ -56,7 +59,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 
 	@Override
 	public void interpretBytes() {
-		userSession.getUser().username = input.getString(0x14);
+		username = input.getString(0x14);
 		System.out.println(input.getString(0x14));
 		System.out.println(input.getString(0x21));
 		System.out.println(input.getString(0x3A));
@@ -82,7 +85,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 		// Get the memos
 		session = Database.getSession();
 		session.beginTransaction();
-		List<Memo> memos = session.createQuery("FROM Memo WHERE toUsername = :toUsername").setParameter("toUsername", userSession.getUser().username).list();
+		List<Memo> memos = session.createQuery("FROM Memo WHERE toUsername = :toUsername").setParameter("toUsername", userSession.getUser().getUsername()).list();
 		
 		for (Memo memo : memos) {
 			userSession.sendMessage(new MemoArrivalHandler(lobbyServer, userSession).getResponse(memo));
@@ -95,7 +98,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 		// Get the gifts
 		session = Database.getSession();
 		session.beginTransaction();
-		List<Gift> gifts = session.createQuery("FROM Gift WHERE toUsername = :toUsername").setParameter("toUsername", userSession.getUser().username).list();
+		List<Gift> gifts = session.createQuery("FROM Gift WHERE toUsername = :toUsername").setParameter("toUsername", userSession.getUser().getUsername()).list();
 		
 		for (Gift gift : gifts) {
 			if (gift.getGiftType() == 1) {
@@ -103,7 +106,7 @@ public class JoinLobbyHandler extends LobbyHandler {
 				sendTCPMessage(new CardGiftReceivedHandler(lobbyServer, userSession).getResponse(userSession, card));
 			}
 			else if (gift.getGiftType() == 2 || gift.getGiftType() == 3) {
-				sendTCPMessage(new ElementsOrCodeGiftReceivedHandler(lobbyServer, userSession).getResponse(userSession.getUser().username, userSession, gift.getGiftType(), gift.getAmount()));
+				sendTCPMessage(new ElementsOrCodeGiftReceivedHandler(lobbyServer, userSession).getResponse(userSession.getUser().getUsername(), userSession, gift.getGiftType(), gift.getAmount()));
 			}
 			
 			session.delete(gift);
@@ -112,9 +115,9 @@ public class JoinLobbyHandler extends LobbyHandler {
 		session.getTransaction().commit();
 		session.close();
 		
-		if (userSession.getUser().playerLevel >= 29) {
+		if (userSession.getUser().getPlayerLevel() >= 29) {
 			lobbyServer.sendBroadcastGameMessage(userSession, new GameNotificationHandler(lobbyServer.gameServer).getResponse(
-					GameAnnouncementResult.JOIN_SERVER, userSession.getUser().username, userSession.getUser().playerLevel, 0));
+					GameAnnouncementResult.JOIN_SERVER, userSession.getUser().getUsername(), userSession.getUser().getPlayerLevel(), 0));
 		}
 	}
 
@@ -124,32 +127,27 @@ public class JoinLobbyHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.JOIN_LOBBY_RESPONSE);
 		output.putInt(0x14, response); // 0x14
-		output.putString(0x18, userSession.getUser().guildName); // 0x18
-		output.putString(0x25, userSession.getUser().guildDuty); // 0x25
-		output.putBoolean(0x32, userSession.getUser().isMale);
-		output.putInt(0x34, userSession.getUser().playerWins); // 0x34
-		output.putInt(0x38, userSession.getUser().playerLoses); // 0x38
+		output.putString(0x18, userSession.getUser().getGuildName()); // 0x18
+		output.putString(0x25, userSession.getUser().getGuildDuty()); // 0x25
+		output.putBoolean(0x32, userSession.getUser().isMale());
+		output.putInt(0x34, userSession.getUser().getPlayerWins()); // 0x34
+		output.putInt(0x38, userSession.getUser().getPlayerLoses()); // 0x38
 		output.putInt(0x3c, 1); // not used. getting read but nothing is done with its value
 		output.putInt(0x40, 1);
-		output.putInt(0x44, userSession.getUser().playerKOs); // 0x44
-		output.putInt(0x48, userSession.getUser().playerDowns); // 0x48
+		output.putInt(0x44, userSession.getUser().getPlayerKOs()); // 0x44
+		output.putInt(0x48, userSession.getUser().getPlayerDowns()); // 0x48
 		output.putInt(0x50, 1); // 0x50
 		output.putInt(0x54, 1); // 0x54
 		output.putInt(0x58, 1); // not sure if this should even be here
 		output.putInt(0x5c, 1); // 0x5c
-		output.putLong(0x60, userSession.getUser().playerExperience); // 0x60
-		output.putLong(0x68, userSession.getUser().playerCode); // 0x68
-		output.putLong(0x70, userSession.getUser().avatarMoney); // 0x70
-		output.putInt(0x78, userSession.getUser().playerLevel); // 0x78
-		output.putInt(0x7C, userSession.getUser().usuableCharacterCount); // 0x7c
-		output.putInt(0x80, userSession.getUser().scrolls[0]); // 0x80
-		output.putInt(0x84, userSession.getUser().scrolls[1]); // 0x84
-		output.putInt(0x88, userSession.getUser().scrolls[2]); // 0x88
-		output.putInt(0x8C, userSession.getUser().whiteCards[0]); // 0x8c
-		output.putInt(0x90, userSession.getUser().whiteCards[1]); // 0x90
-		output.putInt(0x94, userSession.getUser().whiteCards[2]); // 0x94
-		output.putInt(0x98, userSession.getUser().whiteCards[3]); // 0x98
-		output.putInt(0x9C, userSession.getUser().userType); // which channels you can connect
+		output.putLong(0x60, userSession.getUser().getPlayerExperience()); // 0x60
+		output.putLong(0x68, userSession.getUser().getPlayerCode()); // 0x68
+		output.putLong(0x70, userSession.getUser().getAvatarMoney()); // 0x70
+		output.putInt(0x78, userSession.getUser().getPlayerLevel()); // 0x78
+		output.putInt(0x7C, userSession.getUser().getUsuableCharacterCount()); // 0x7c
+		output.putInts(0x80, userSession.getUser().getScrolls());
+		output.putInts(0x8C, userSession.getUser().getWhiteCards()); // 0x8c
+		output.putInt(0x9C, userSession.getUser().getUserType()); // which channels you can connect
 		
 		for (int i = 0; i < 96; i++) {
 			if (userSession.getUser().getItemID(i) != -1) {
@@ -174,10 +172,10 @@ public class JoinLobbyHandler extends LobbyHandler {
 			output.putInt(0x700 + i * 4, userSession.getUser().getItemSkill(i));
 		}
 		
-		output.putInt(0x880, userSession.getUser().playerInventorySlots); // 0x880
+		output.putInt(0x880, userSession.getUser().getPlayerInventorySlots()); // 0x880
 		output.putInts(0x884, minPointForeveDword); // 0x884
 		output.putLongs(0x8F8, minPointForLevelQword); //0x8F8
-		output.putInt(0x918, userSession.getUser().channelType); // 0x918
+		output.putInt(0x918, userSession.getUser().getChannelType()); // 0x918
 		output.putInt(0x91C, spVersion); // 0x91c
 		output.putInt(0x920, ioProtectVersion); // 0x920
 		output.putInt(0x924, survivalprojectVersion); // 0x924
@@ -186,20 +184,20 @@ public class JoinLobbyHandler extends LobbyHandler {
 		output.putInt(0x930, visitBonusElements);
 		output.putInt(0x934, visitBonusElementsMultiplier);
 		output.putInt(0x938, visitBonusAvatarMoney);
-		output.putBytes(0x93C, userSession.getUser().playerEventFlags); // 0x93C
+		output.putBytes(0x93C, userSession.getUser().getPlayerEventFlags()); // 0x93C
 		output.putInt(0x944, playerRank); // 0x944
 		output.putByte(0x948, (byte) 0); // if it's 1 then the next strings are used somewhere: "Server recapturing battle has ended", "Server recapturing in progress", "Server capturing battle continue next Tuesday". something with packet 0x1132
 		output.putInt(0x94C, LobbyServer.MAX_ROOMS); // 0x94c
-		output.putInt(0x950, userSession.getUser().footIndex);
-		output.putInt(0x954, userSession.getUser().bodyIndex);
-		output.putInt(0x958, userSession.getUser().hand1Index);
-		output.putInt(0x95C, userSession.getUser().hand2Index);
-		output.putInt(0x960, userSession.getUser().faceIndex);
-		output.putInt(0x964, userSession.getUser().hairIndex);
-		output.putInt(0x968, userSession.getUser().headIndex);
+		output.putInt(0x950, userSession.getUser().getFootIndex());
+		output.putInt(0x954, userSession.getUser().getBodyIndex());
+		output.putInt(0x958, userSession.getUser().getHand1Index());
+		output.putInt(0x95C, userSession.getUser().getHand2Index());
+		output.putInt(0x960, userSession.getUser().getFaceIndex());
+		output.putInt(0x964, userSession.getUser().getHairIndex());
+		output.putInt(0x968, userSession.getUser().getHeadIndex());
 		output.putInt(0x96C, 1); // something with guild mark
 		output.putInt(0x970, 1); // 0x970 = field_A0 in Login.something with event flag 5 and 7. special values: 244h, 230h
-		output.putInt(0x974, userSession.getUser().playerType); // 0x974
+		output.putInt(0x974, userSession.getUser().getPlayerType()); // 0x974
 		output.putByte(0x978, (byte) 0); // boolean. 1 = the account will be deleted after 15 inactive days.
 		
 		return output.toArray();
@@ -207,8 +205,8 @@ public class JoinLobbyHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException, IOException {
-		userSession.getUser().loadUser(lobbyServer);
-		userSession.getUser().channelType = lobbyServer.server.getChannelType() + 1;
+		userSession.setUser(User.loadUser(username, lobbyServer));
+		userSession.getUser().setChannelType(lobbyServer.server.getChannelType() + 1);
 		lobbyServer.moveToCorrectPlace();
 		
 		// This is here because the mission level needs to get sent before the join lobby response.

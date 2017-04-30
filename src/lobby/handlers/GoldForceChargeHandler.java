@@ -8,6 +8,7 @@ import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
 import net.objects.Card;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class GoldForceChargeHandler extends LobbyHandler {
@@ -32,7 +33,7 @@ public class GoldForceChargeHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		Card card = userSession.getUser().cards[cardIndex];
+		Card card = userSession.getUser().getCard(cardIndex);
 		
 		int premiumDays;
 		
@@ -64,10 +65,11 @@ public class GoldForceChargeHandler extends LobbyHandler {
 			premiumDays = 0;
 		}
 		
-		userSession.getUser().cards[forceCardIndex] = null;
+		userSession.getUser().removeCard(forceCardIndex);
 		
-		card.setPremiumDays(card.getPremiumDays() + premiumDays);
-		userSession.getUser().saveUser();
+		card.setCardPremiumDays(card.getCardPremiumDays() + premiumDays);
+		User.saveUser(userSession.getUser());
+		User.saveCards(userSession.getUser(), cardIndex, forceCardIndex);
 	}
 
 	@Override

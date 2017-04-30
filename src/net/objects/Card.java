@@ -1,11 +1,25 @@
 package net.objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
+@Table(name = "card")
 public class Card {
-	protected int id;
-	protected int index;
-	protected int premiumDays;
-	protected int level;
-	protected int skill;
+	private int cardUniqueID;
+	private String username;
+	
+	private int cardID;
+	private int cardIndex;
+	private int cardPremiumDays;
+	private int cardLevel;
+	private int cardSkill;
 	
 	int BootSkill1[] = {110,111,112,113,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171};
 	int ArmorSkill1[] = {102,103,104,105,106,107,108,109,142,143,144,145,146,147,148,149,150,151,152,153,154,155};
@@ -66,68 +80,109 @@ public class Card {
 	public static final int PACKAGE_CARD_CARD_18 = 2507;
 	
 	
+	public Card() {
+
+	}
+	
 	public Card(int id, int premiumDays, int level, int skill) {
 		this(0, id, premiumDays, level, skill);
 	}
 	
 	public Card(int index, int id, int premiumDays, int level, int skill) {
-		this.index = index;
-		this.id = id;
-		this.premiumDays = premiumDays;
-		this.level = level;
-		this.skill = skill;
+		this.cardIndex = index;
+		this.cardID = id;
+		this.cardPremiumDays = premiumDays;
+		this.cardLevel = level;
+		this.cardSkill = skill;
 	}
 
-	public int getId() {
-		return id;
+	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
+	@Column(name = "card_unique_id")
+	public int getCardUniqueID() {
+		return cardUniqueID;
 	}
 	
-	public int getIndex() {
-		return index;
+	@Column(name = "username")
+	public String getUsername() {
+		return username;
 	}
 	
-	public int getPremiumDays() {
-		return premiumDays;
+	@Column(name = "card_id")
+	public int getCardID() {
+		return cardID;
 	}
 	
-	public int getLevel() {
-		return level;
+	@Column(name = "card_index")
+	public int getCardIndex() {
+		return cardIndex;
 	}
 	
-	public int getSkill() {
-		return skill;
+	@Column(name = "card_premium_days")
+	public int getCardPremiumDays() {
+		return cardPremiumDays;
+	}
+	
+	@Column(name = "card_level")
+	public int getCardLevel() {
+		return cardLevel;
+	}
+	
+	@Column(name = "card_skill")
+	public int getCardSkill() {
+		return cardSkill;
+	}
+	
+	public void setCardUniqueID(int uniqueID) {
+		this.cardUniqueID = uniqueID;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public void setCardID(int id) {
+		this.cardID = id;
+	}
+	
+	public void setCardIndex(int index) {
+		this.cardIndex = index;
 	}
 
-	public void setPremiumDays(int premiumDays) {
-		this.premiumDays = premiumDays;
+	public void setCardPremiumDays(int premiumDays) {
+		this.cardPremiumDays = premiumDays;
 	}
 
-	public void setLevel(int level) {
-		this.level = level;
+	public void setCardLevel(int level) {
+		this.cardLevel = level;
 	}
 
-	public void setSkill(int skill) {
-		this.skill = skill;
+	public void setCardSkill(int skill) {
+		this.cardSkill = skill;
 	}
 	
+	@Transient
 	public int getCardType() {
-		return (id / 100) % 10;
+		return (cardID / 100) % 10;
 	}
 	
+	@Transient
 	public int getElement() {
-		return (id / 10) % 10;
+		return (cardID / 10) % 10;
 	}
 	
+	@Transient
 	public int getSubType() {
-		return id % 10;
+		return cardID % 10;
 	}
 
-	// 1 - only first skill. 2 - only second skill. 0 - anything
+	// 1 - only first cardSkill. 2 - only second cardSkill. 0 - anything
 	public int getRandomSkill(int skill) {
 		/*
 		 * First 3 digits - x
 		 * Next 3 digits - x
-		 * Last 3 digits - skill activation success chance
+		 * Last 3 digits - cardSkill activation success chance
 		 */
 		int chance = 100;
 		int firstSkill = getSkill1();
@@ -188,28 +243,31 @@ public class Card {
 		return chance * 1000000 + firstSkill * 1000 + secondSkill;
 	}
 	
+	@Transient
 	public int getSkillSuccess() {
-		return skill / 1000000;
+		return cardSkill / 1000000;
 	}
 	
+	@Transient
 	public int getSkill1() {
-		return (skill / 1000) % 1000;
+		return (cardSkill / 1000) % 1000;
 	}
 	
+	@Transient
 	public int getSkill2() {
-		return skill % 1000;
+		return cardSkill % 1000;
 	}
-	
-	@Override
-	public String toString() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("Index: ").append(index).append("\t");
-		buffer.append("ID: ").append(id).append("\t");
-		buffer.append("Premium days: ").append(premiumDays).append("\t");
-		buffer.append("Level: ").append(level).append("\t");
-		buffer.append("Skill: ").append(skill).append("\t");
-		buffer.append("\n");
-		
-		return buffer.toString();
-	}
+//	
+//	@Override
+//	public String toString() {
+//		StringBuffer buffer = new StringBuffer();
+//		buffer.append("Index: ").append(cardIndex).append("\t");
+//		buffer.append("ID: ").append(cardID).append("\t");
+//		buffer.append("Premium days: ").append(cardPremiumDays).append("\t");
+//		buffer.append("Level: ").append(cardLevel).append("\t");
+//		buffer.append("Skill: ").append(cardSkill).append("\t");
+//		buffer.append("\n");
+//		
+//		return buffer.toString();
+//	}
 }

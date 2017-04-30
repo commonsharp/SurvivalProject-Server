@@ -7,7 +7,6 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
-import net.objects.Room;
 import tools.ExtendedByteBuffer;
 
 public class InfinityKingPointsHandler extends LobbyHandler {
@@ -33,7 +32,7 @@ public class InfinityKingPointsHandler extends LobbyHandler {
 	}
 	
 	public byte[] getResponse(int[] pointsDifference, int type, int monsterIndex) {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+//		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);

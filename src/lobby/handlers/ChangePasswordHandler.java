@@ -26,7 +26,7 @@ public class ChangePasswordHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		lobbyServer.getRoom(userSession.getUser().roomIndex).password = newPassword;
+		lobbyServer.getRoom(userSession.getUser().getRoomIndex()).password = newPassword;
 	}
 
 	@Override
@@ -41,6 +41,6 @@ public class ChangePasswordHandler extends LobbyHandler {
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(userSession.getUser().roomIndex)));
+		lobbyServer.sendBroadcastMessage(userSession, new LobbyRoomsChangedHandler(lobbyServer, userSession).getResponse(lobbyServer.getRoom(userSession.getUser().getRoomIndex())));
 	}
 }

@@ -68,14 +68,14 @@ public class RoomGameModeChangedHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.ROOM_GAME_MODE_CHANGED_RESPONSE);
 		
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		output.putInt(0x14, room.getGameMode().getValue());
 		output.putInt(0x18, room.getGameMap());
 		// dunno:
 		
 		for (int i = 0; i < 8; i++) {
 			if (room.getUserSession(i) != null) {
-				output.putInt(0x1C + 4 * i, room.getUserSession(i).getUser().roomTeam);
+				output.putInt(0x1C + 4 * i, room.getUserSession(i).getUser().getRoomTeam());
 			}
 		}
 		output.putInt(0x3C, 2);

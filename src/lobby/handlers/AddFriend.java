@@ -3,11 +3,11 @@ package lobby.handlers;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import database.DatabaseHelper;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class AddFriend extends LobbyHandler {
@@ -31,7 +31,7 @@ public class AddFriend extends LobbyHandler {
 	@Override
 	public void processMessage() throws SQLException {
 		if (isAdd) {
-			if (DatabaseHelper.isUserExists(friendName)) {
+			if (User.isUserExists(friendName)) {
 				userSession.getUser().addFriend(friendName);
 				response = 1;
 			}
@@ -50,7 +50,7 @@ public class AddFriend extends LobbyHandler {
 //			}
 		}
 		
-		userSession.getUser().saveUser();
+		User.saveUser(userSession.getUser());
 	}
 
 	@Override

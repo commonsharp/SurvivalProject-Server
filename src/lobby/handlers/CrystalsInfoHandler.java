@@ -19,7 +19,7 @@ public class CrystalsInfoHandler extends LobbyHandler {
 	@Override
 	public void interpretBytes() {
 		System.out.println(input.getInt(0x14));
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		int numberOfCrystals = 0;
 		for (int i = 0; i < 4; i++) {

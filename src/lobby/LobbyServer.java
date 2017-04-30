@@ -2,9 +2,6 @@ package lobby;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,6 +91,7 @@ import net.objects.GuildMember;
 import net.objects.Room;
 import net.objects.Server;
 import net.objects.Trade;
+import net.objects.User;
 import net.objects.UserShop;
 import tools.HexTools;
 
@@ -345,7 +343,7 @@ public class LobbyServer extends GenericTCPServer {
 		for (UserSession currentUserSession : userSessions) {
 			// Send the message to everyone but yourself
 			
-			if (!currentUserSession.getUser().username.equals(userSession.getUser().username)) {
+			if (!currentUserSession.getUser().getUsername().equals(userSession.getUser().getUsername())) {
 				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
 				currentUserSession.sendMessage(HexTools.duplicateArray(message));
 			}
@@ -354,7 +352,7 @@ public class LobbyServer extends GenericTCPServer {
 	
 	public void sendBroadcastGameMessage(UserSession userSession, byte[] message) throws IOException {
 		for (UserSession currentUserSession : userSessions) {
-			if (currentUserSession.getUser().udpIPAddress != null) {
+			if (currentUserSession.udpIPAddress != null) {
 				// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
 				gameServer.sendMessage(userSession, currentUserSession, HexTools.duplicateArray(message));
 			}
@@ -362,7 +360,7 @@ public class LobbyServer extends GenericTCPServer {
 	}
 	
 	public void sendFriendsMessage(UserSession userSession, byte[] message) throws IOException {
-		for (Friend friend : userSession.getUser().friends) {
+		for (Friend friend : userSession.getUser().getFriends()) {
 			UserSession friendSession = findUserSession(friend.getFriendName());
 			
 			if (friendSession != null) {
@@ -376,7 +374,7 @@ public class LobbyServer extends GenericTCPServer {
 	public void sendGuildMessage(UserSession userSession, byte[] message, boolean sendToSelf) throws IOException, SQLException {
 		Session session = Database.getSession();
 		session.beginTransaction();
-		List<GuildMember> guildMembers = session.createQuery("from GuildMember where guildName = :guildName").setParameter("guildName", userSession.getUser().guildName).list();
+		List<GuildMember> guildMembers = session.createQuery("from GuildMember where guildName = :guildName").setParameter("guildName", userSession.getUser().getGuildName()).list();
 		
 		for (GuildMember member : guildMembers) {
 			UserSession guildMemberSession = findUserSession(member.getUsername());
@@ -392,14 +390,14 @@ public class LobbyServer extends GenericTCPServer {
 	}
 	
 	public void sendRoomMessage(UserSession userSession, byte[] message, boolean sendToSelf) throws IOException {
-		int roomID = userSession.getUser().roomIndex;
+		int roomID = userSession.getUser().getRoomIndex();
 		
 		if (getRoom(roomID) != null) {
 			for (UserSession currentUserSession : getRoom(roomID).getUsers()) {
 				// If the user is not null
 				if (currentUserSession != null) {
 					// If the user is someone else
-					if (sendToSelf || currentUserSession.getUser().roomSlot != userSession.getUser().roomSlot) {
+					if (sendToSelf || currentUserSession.getUser().getRoomSlot() != userSession.getUser().getRoomSlot()) {
 						// We need to duplicate the array because message is getting changed (some fields are changing. also the message is encrypted)
 						currentUserSession.sendMessage(HexTools.duplicateArray(message));
 					}
@@ -418,10 +416,10 @@ public class LobbyServer extends GenericTCPServer {
 		
 		while (low <= high) {
 	        int middle = (low + high) / 2;
-	        if (username.compareTo(userSessions.get(middle).getUser().username) > 0) {
+	        if (username.compareTo(userSessions.get(middle).getUser().getUsername()) > 0) {
 	        	low = middle + 1;
 	        }
-	        else if (username.compareTo(userSessions.get(middle).getUser().username) < 0) {
+	        else if (username.compareTo(userSessions.get(middle).getUser().getUsername()) < 0) {
 	        	high = middle - 1;
 	        }
 	        else {
@@ -444,7 +442,7 @@ public class LobbyServer extends GenericTCPServer {
 
 	public UserSession findUserSession(InetAddress ipAddress, int port) {
 		for (UserSession userSession : userSessions) {
-			if (userSession.getUser().udpIPAddress != null && userSession.getUser().udpIPAddress.equals(ipAddress) && userSession.getUser().udpPort == port) {
+			if (userSession.udpIPAddress != null && userSession.udpIPAddress.equals(ipAddress) && userSession.udpPort == port) {
 				return userSession;
 			}
 		}
@@ -510,20 +508,18 @@ public class LobbyServer extends GenericTCPServer {
 	
 	@Override
 	public void onUserDisconnect(UserSession userSession) throws SQLException, IOException {
-		userSession.getUser().saveUser();
-		
 		// Send a leave lobby message
 		sendBroadcastMessage(userSession, new GetLobbyUsersHandler(this, userSession).getResponse(userSession, false));
 		
 		// Leave a game/room
-		if (userSession.getUser().isInRoom) {
+		if (userSession.getUser().isInRoom()) {
 			LeaveRoomHandler leaveRoomHandler = new LeaveRoomHandler(this, userSession);
 			leaveRoomHandler.processMessage(userSession);
 			sendRoomMessage(userSession, leaveRoomHandler.getResponse(userSession), false);
 			leaveRoomHandler.isDisconnected = true;
 			leaveRoomHandler.afterSend();
 		}
-		else if (userSession.getUser().isInGame) {
+		else if (userSession.getUser().isInGame()) {
 			LeaveGameHandler leaveGameHandler = new LeaveGameHandler(this, userSession);
 			leaveGameHandler.processMessage(userSession);
 			sendRoomMessage(userSession, leaveGameHandler.getResponse(userSession), false);
@@ -539,15 +535,15 @@ public class LobbyServer extends GenericTCPServer {
 		session.getTransaction().commit();
 		session.close();
 		
-		// Set server hostname, server port and isConnected
-		Connection con = Database.getConnection();
-		PreparedStatement ps = con.prepareStatement("UPDATE users SET is_connected = false WHERE username = ?;");
-		ps.setString(1, userSession.getUser().username);
-		ps.executeUpdate();
-		ps.close();
-		
-		con.close();
-		
+		// Set server ID and isConnected
+		session = Database.getSession();
+		session.beginTransaction();
+		userSession.getUser().setConnected(false);
+		userSession.getUser().setServer(null);
+		session.update(userSession.getUser());
+		session.getTransaction().commit();
+		session.close();
+				
 		// Send your connectivity to anyone else in your guild
 		sendGuildMessage(userSession, new GuildMemberOnlineStatusHandler(this, userSession).getResponse(userSession, false), false);
 	}
@@ -585,7 +581,7 @@ public class LobbyServer extends GenericTCPServer {
 		// Get connectivities from anyone who's connected in the guild
 		Session session = Database.getSession();
 		session.beginTransaction();
-		List<GuildMember> guildMembers = session.createQuery("from GuildMember where guildName = :guildName").setParameter("guildName", userSession.getUser().guildName).list();
+		List<GuildMember> guildMembers = session.createQuery("from GuildMember where guildName = :guildName").setParameter("guildName", userSession.getUser().getGuildName()).list();
 		
 		for (GuildMember member : guildMembers) {
 			UserSession guildMemberSession = findUserSession(member.getUsername());
@@ -595,17 +591,14 @@ public class LobbyServer extends GenericTCPServer {
 			}
 		}
 		
-		Connection con = Database.getConnection();
-		PreparedStatement ps;
-		
-		// Set server hostname, server port and isConnected
-		ps = con.prepareStatement("UPDATE users SET server_hostname = ?, server_port = ?, is_connected = true WHERE username = ?;");
-		ps.setString(1, server.getHostname());
-		ps.setInt(2, server.getPort());
-		ps.setString(3, userSession.getUser().username);
-		ps.executeUpdate();
-		
-		con.close();
+		// Set server ID and isConnected
+		session = Database.getSession();
+		session.beginTransaction();
+		userSession.getUser().setConnected(true);
+		userSession.getUser().setServer(server);
+		session.update(userSession.getUser());
+		session.getTransaction().commit();
+		session.close();
 	}
 	
 	public void setGameServer(GameServer gameServer) {
@@ -616,8 +609,8 @@ public class LobbyServer extends GenericTCPServer {
 		UserSession userSession = findUserSession(ipAddress, port);
 		
 		if (userSession != null) {
-			if (userSession.getUser().isInGame) {
-				Room room = getRoom(userSession.getUser().roomIndex);
+			if (userSession.getUser().isInGame()) {
+				Room room = getRoom(userSession.getUser().getRoomIndex());
 				
 				room.totalTicks++;
 				
@@ -628,10 +621,10 @@ public class LobbyServer extends GenericTCPServer {
 					sendRoomMessage(userSession, new SpawnCodeHandler(this, userSession).getResponse(), true);
 				}
 			}
-			userSession.getUser().totalTicks++;
+			userSession.getUser().setTotalTicks(userSession.getUser().getTotalTicks() + 1);
 			
-			if (userSession.getUser().totalTicks % 200 == 0) {
-				int times = userSession.getUser().totalTicks / 200;
+			if (userSession.getUser().getTotalTicks() % 200 == 0) {
+				int times = userSession.getUser().getTotalTicks() / 200;
 				
 				if (times >= 4) {
 					times = 4;
@@ -639,12 +632,12 @@ public class LobbyServer extends GenericTCPServer {
 				
 				int amount = (int) Math.pow(2, times);
 				
-				if (userSession.getUser().timeBonus) {
+				if (userSession.getUser().isTimeBonus()) {
 					amount *= 2;
 				}
 				
-				userSession.getUser().whiteCards[userSession.getUser().getElementType() - 1] += amount;
-				userSession.getUser().saveUser();
+				userSession.getUser().setWhiteCard(userSession.getUser().getElementType() - 1, userSession.getUser().getWhiteCard(userSession.getUser().getElementType() - 1) + amount);
+				User.saveUser(userSession.getUser());
 			}
 		}
 	}
@@ -732,7 +725,7 @@ public class LobbyServer extends GenericTCPServer {
 			
 			if (currentUserSession != null) {
 				elements[i] = (int) (Math.random() * 4) + 1;
-				levels[i] = ExperienceHelper.getLevel(currentUserSession.getUser().playerExperience + 8000 * luckyMultiplier[i]);
+				levels[i] = ExperienceHelper.getLevel(currentUserSession.getUser().getPlayerExperience() + 8000 * luckyMultiplier[i]);
 			}
 		}
 		

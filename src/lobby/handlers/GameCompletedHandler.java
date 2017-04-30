@@ -29,7 +29,7 @@ public class GameCompletedHandler extends LobbyHandler {
 	}
 
 	public byte[] getResponse(int[] results, int scoringTeam) {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		for (int i = 0; i < 8; i++) {
 			if (room.getUserSession(i) != null) {
@@ -51,7 +51,7 @@ public class GameCompletedHandler extends LobbyHandler {
 		
 		// result array. -1 = do nothing. 0 = next round. 1 = win. 2 = lose. 3 = draw. others = leaves the game with no message
 		output.putInts(0x14, results);
-		output.putInt(0x34, userSession.getUser().gameKO); // ko
+		output.putInt(0x34, userSession.getUser().getGameKO()); // ko
 		output.putInt(0x38, 0);
 		output.putInt(0x3C, 0);
 		output.putLong(0x40, 1234); // new experience

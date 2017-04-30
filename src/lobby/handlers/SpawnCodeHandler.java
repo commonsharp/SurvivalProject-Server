@@ -33,9 +33,9 @@ public class SpawnCodeHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.SPAWN_CODE_RESPONSE);
 		
-		output.putInt(0x14, userSession.getUser().roomSlot);
+		output.putInt(0x14, userSession.getUser().getRoomSlot());
 		output.putInt(0x18, (int)(Math.random() * 2)); // type
-		output.putInt(0x1C, lobbyServer.getRoom(userSession.getUser().roomIndex).coinLocation++); // an index of a predefined set of locations. i think there are only 4 locations. it takes index % 4, so 0 and 4 are the same locations.
+		output.putInt(0x1C, lobbyServer.getRoom(userSession.getUser().getRoomIndex()).coinLocation++); // an index of a predefined set of locations. i think there are only 4 locations. it takes index % 4, so 0 and 4 are the same locations.
 		output.putInt(0x20, 0); // dx
 		output.putInt(0x24, 0); // dy. up to 941 (included)
 		output.putInt(0x28, 20000); // time before pop in ms

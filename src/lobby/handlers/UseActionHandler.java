@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.UserSession;
+import net.objects.User;
 
 public class UseActionHandler extends LobbyHandler {
 	protected int actionType;
@@ -37,8 +38,8 @@ public class UseActionHandler extends LobbyHandler {
 	@Override
 	public void processMessage() throws SQLException {
 		if (actionType == 2) {
-			userSession.getUser().scrolls[subType] = 0;
-			userSession.getUser().saveUser();
+			userSession.getUser().setScroll(subType, 0);
+			User.saveUser(userSession.getUser());
 		}
 	}
 

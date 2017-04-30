@@ -1,15 +1,16 @@
 package login.handlers;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
+import org.hibernate.Session;
 
 import database.Database;
 import login.LoginHandler;
 import net.Messages;
 import net.UserSession;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class LoginCredentialsHandler extends LoginHandler {
@@ -22,6 +23,9 @@ public class LoginCredentialsHandler extends LoginHandler {
     int unknown5;
     int unknown6;
     int unknown7;
+    
+    String username;
+    String password;
 	
 	public LoginCredentialsHandler(UserSession tcpServer, byte[] messageBytes) {
 		super(tcpServer, messageBytes);
@@ -29,8 +33,8 @@ public class LoginCredentialsHandler extends LoginHandler {
 	
 	@Override
 	public void interpretBytes() {
-		userSession.getUser().username = input.getString(0x3C);
-		userSession.getUser().password = input.getString(0x49);
+		username = input.getString(0x3C);
+		password = input.getString(0x49);
 		
 		System.out.println(input.getInt(0x38));
 		System.out.println("Username: " + input.getString(0x3C));
@@ -46,6 +50,7 @@ public class LoginCredentialsHandler extends LoginHandler {
 		sendTCPMessage(new Test2924Handler(userSession).getResponse());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void processMessage() throws SQLException {
 		response = 1;
@@ -62,34 +67,31 @@ public class LoginCredentialsHandler extends LoginHandler {
 //			DatabaseConnection.setUser(userSession.getUser());
 //		}
 		
-		Connection con = Database.getConnection();
-		PreparedStatement ps = con.prepareStatement("Select * FROM users WHERE username = ?");
-		ps.setString(1, userSession.getUser().username);
-		ResultSet rs = ps.executeQuery();
+		Session session = Database.getSession();
+		session.beginTransaction();
+		List<User> users = session.createQuery("from User where username = :username").setParameter("username", username).list();
 		
-		if (rs.next()) {
-			String password = rs.getString("password");
-			response = password.equals(userSession.getUser().password) ? 1 : 0; // if the username and password matched, the response is set to 1. otherwise, wrong password
-			rs.close();
-			ps.close();
+		if (!users.isEmpty()) {
+			String password = users.get(0).getPassword();
+			response = password.equals(password) ? 1 : 0; // if the username and password matched, the response is set to 1. otherwise, wrong password
 		}
 		else {
-			rs.close();
-			ps.close();
 			response = 1;
 			
 			// create new username
-			ps = con.prepareStatement("INSERT INTO users (username, password) VALUES (?, ?)");
-			ps.setString(1, userSession.getUser().username);
-			ps.setString(2, userSession.getUser().password);
-			ps.executeUpdate();
+			User user = new User();
+			user.setUsername(username);
+			user.setPassword(password);
+			
+			session.save(user);
 		}
 		
+		session.getTransaction().commit();
+		session.close();
+
 		if (response == 1) {
-			userSession.getUser().loadUser(null);
+			userSession.setUser(User.loadUser(username, null));
 		}
-		
-		con.close();
 	}
 	
 	@Override
@@ -113,17 +115,17 @@ public class LoginCredentialsHandler extends LoginHandler {
 		output.putInt(0x14, response);
 		
 		if (response == 1) {
-			output.putInt(0x18, userSession.getUser().userType);
-			output.putInt(0x1C, userSession.getUser().mainCharacter);
-			output.putInt(0x20, userSession.getUser().playerLevel);
-			output.putInt(0x24, userSession.getUser().usuableCharacterCount);
-			output.putInt(0x28, userSession.getUser().isMuted);
-			output.putInt(0x2C, userSession.getUser().banDays);
-			output.putInt(0x30, userSession.getUser().ageRestriction);
-			output.putLong(0x38, userSession.getUser().playerExperience);
-			output.putLong(0x40, userSession.getUser().playerCode);
-			output.putString(0x48, userSession.getUser().guildName);
-			output.putString(0x55, userSession.getUser().guildDuty);
+			output.putInt(0x18, userSession.getUser().getUserType());
+			output.putInt(0x1C, userSession.getUser().getMainCharacter());
+			output.putInt(0x20, userSession.getUser().getPlayerLevel());
+			output.putInt(0x24, userSession.getUser().getUsuableCharacterCount());
+			output.putInt(0x28, userSession.getUser().getIsMuted());
+			output.putInt(0x2C, userSession.getUser().getBanDays());
+			output.putInt(0x30, userSession.getUser().getAgeRestriction());
+			output.putLong(0x38, userSession.getUser().getPlayerExperience());
+			output.putLong(0x40, userSession.getUser().getPlayerCode());
+			output.putString(0x48, userSession.getUser().getGuildName());
+			output.putString(0x55, userSession.getUser().getGuildDuty());
 			output.putLong(0x70, unknown1);
 			output.putString(0x78, unknown3);
 			output.putString(0x91, unknown4);

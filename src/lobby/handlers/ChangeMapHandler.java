@@ -33,7 +33,7 @@ public class ChangeMapHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.CHANGE_MAP_RESPONSE);
 		
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		output.putInt(0x14, room.getGameMap()); // map
 		output.putInt(0x18, 1); // sub map. 0 = random map
 		output.putInt(0x1C, 5); // current round. 0 based

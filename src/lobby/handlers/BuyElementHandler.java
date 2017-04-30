@@ -7,6 +7,7 @@ import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class BuyElementHandler extends LobbyHandler {
@@ -27,8 +28,8 @@ public class BuyElementHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		userSession.getUser().whiteCards[elementType] += amount;
-		userSession.getUser().saveUser();
+		userSession.getUser().setWhiteCard(elementType, userSession.getUser().getWhiteCard(elementType) + amount);
+		User.saveUser(userSession.getUser());
 	}
 
 	@Override
@@ -43,8 +44,8 @@ public class BuyElementHandler extends LobbyHandler {
 		 * 8 - Not enough Code
 		 */
 		output.putInt(0x14, 1); // response
-		output.putLong(0x18, userSession.getUser().playerCode);
-		output.putInts(0x20, userSession.getUser().whiteCards);
+		output.putLong(0x18, userSession.getUser().getPlayerCode());
+		output.putInts(0x20, userSession.getUser().getWhiteCards());
 		
 		return output.toArray();
 	}

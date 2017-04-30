@@ -31,7 +31,7 @@ public class StartCountdownHandler extends LobbyHandler {
 		System.out.println("Start countdown - 0x18: " + input.getInt(0x18));
 		System.out.println("Start countdown - 0x1C: " + input.getInt(0x1C));
 		
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		if (time != 0) {
 			room.roomTimerTime = time;
@@ -40,7 +40,7 @@ public class StartCountdownHandler extends LobbyHandler {
 
 	@Override
 	public byte[] getResponse() {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);

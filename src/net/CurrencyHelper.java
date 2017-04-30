@@ -18,17 +18,17 @@ public class CurrencyHelper {
 		int[] magic = {4, 7, 13, 50, 100, 800, 1600, 3200};
 		
 		if (card.getCardType() == Card.MAGIC) {
-			return magic[card.getLevel()];
+			return magic[card.getCardLevel()];
 		}
 		else if (card.getCardType() == Card.WEAPON) {
-			return weapons[card.getLevel()];
+			return weapons[card.getCardLevel()];
 		}
 		else {
 			switch (card.getSubType()) {
-			case Card.SHIELD: return shield[card.getLevel()];
-			case Card.PENDANT: return pendant[card.getLevel()];
-			case Card.ARMOR: return armor[card.getLevel()];
-			case Card.BOOTS: return boots[card.getLevel()];
+			case Card.SHIELD: return shield[card.getCardLevel()];
+			case Card.PENDANT: return pendant[card.getCardLevel()];
+			case Card.ARMOR: return armor[card.getCardLevel()];
+			case Card.BOOTS: return boots[card.getCardLevel()];
 			}
 		}
 		
@@ -44,17 +44,17 @@ public class CurrencyHelper {
 		int[] magic = {1250, 2500, 5000, 20000, 40000, 320000, 640000, 1280000};
 		
 		if (card.getCardType() == Card.MAGIC) {
-			return magic[card.getLevel()];
+			return magic[card.getCardLevel()];
 		}
 		else if (card.getCardType() == Card.WEAPON) {
-			return weapons[card.getLevel()];
+			return weapons[card.getCardLevel()];
 		}
 		else {
 			switch (card.getSubType()) {
-			case Card.SHIELD: return shield[card.getLevel()];
-			case Card.PENDANT: return pendant[card.getLevel()];
-			case Card.ARMOR: return armor[card.getLevel()];
-			case Card.BOOTS: return boots[card.getLevel()];
+			case Card.SHIELD: return shield[card.getCardLevel()];
+			case Card.PENDANT: return pendant[card.getCardLevel()];
+			case Card.ARMOR: return armor[card.getCardLevel()];
+			case Card.BOOTS: return boots[card.getCardLevel()];
 			}
 		}
 		
@@ -64,9 +64,9 @@ public class CurrencyHelper {
 	public static int getLevelFusionLevelSuccessRate(Card card) {
 		int[] successes = {100, 100, 100, 100, 100, 20, 10, 5};
 		
-		int success = successes[card.getLevel()];
+		int success = successes[card.getCardLevel()];
 		
-		if (card.getPremiumDays() > 0) {
+		if (card.getCardPremiumDays() > 0) {
 			success *= 2;
 			
 			if (success > 100) {
@@ -86,17 +86,17 @@ public class CurrencyHelper {
 		int[] magic = {2, 2, 4, 7, 25, 50, 400, 800, 1600};
 		
 		if (card.getCardType() == Card.MAGIC) {
-			return magic[card.getLevel()];
+			return magic[card.getCardLevel()];
 		}
 		else if (card.getCardType() == Card.WEAPON) {
-			return weapons[card.getLevel()];
+			return weapons[card.getCardLevel()];
 		}
 		else {
 			switch (card.getSubType()) {
-			case Card.SHIELD: return shield[card.getLevel()];
-			case Card.PENDANT: return pendant[card.getLevel()];
-			case Card.ARMOR: return armor[card.getLevel()];
-			case Card.BOOTS: return boots[card.getLevel()];
+			case Card.SHIELD: return shield[card.getCardLevel()];
+			case Card.PENDANT: return pendant[card.getCardLevel()];
+			case Card.ARMOR: return armor[card.getCardLevel()];
+			case Card.BOOTS: return boots[card.getCardLevel()];
 			}
 		}
 		
@@ -112,17 +112,17 @@ public class CurrencyHelper {
 		int[] magic = {600, 1250, 2500, 5000, 10000, 20000, 160000, 320000, 640000};
 		
 		if (card.getCardType() == Card.MAGIC) {
-			return magic[card.getLevel()];
+			return magic[card.getCardLevel()];
 		}
 		else if (card.getCardType() == Card.WEAPON) {
-			return weapons[card.getLevel()];
+			return weapons[card.getCardLevel()];
 		}
 		else {
 			switch (card.getSubType()) {
-			case Card.SHIELD: return shield[card.getLevel()];
-			case Card.PENDANT: return pendant[card.getLevel()];
-			case Card.ARMOR: return armor[card.getLevel()];
-			case Card.BOOTS: return boots[card.getLevel()];
+			case Card.SHIELD: return shield[card.getCardLevel()];
+			case Card.PENDANT: return pendant[card.getCardLevel()];
+			case Card.ARMOR: return armor[card.getCardLevel()];
+			case Card.BOOTS: return boots[card.getCardLevel()];
 			}
 		}
 		

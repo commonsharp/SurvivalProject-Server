@@ -1,19 +1,18 @@
 package lobby.handlers;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-import database.Database;
 import lobby.LobbyHandler;
 import lobby.LobbyServer;
 import net.ExperienceHelper;
 import net.Messages;
 import net.UserSession;
 import net.objects.GameMode;
+import net.objects.GuildScore;
 import net.objects.Room;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class PlayerDeathHandler extends LobbyHandler {
@@ -47,7 +46,7 @@ public class PlayerDeathHandler extends LobbyHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.PLAYER_DEATH_RESPONSE);
-		output.putInt(0x14, userSession.getUser().roomSlot); // killed slot
+		output.putInt(0x14, userSession.getUser().getRoomSlot()); // killed slot
 		output.putInt(0x18, killerIndex); // killer slot
 		
 		output.putInts(0x1C, luckyMultiplier);
@@ -61,14 +60,14 @@ public class PlayerDeathHandler extends LobbyHandler {
 			output.putInt(0xA4, elementMultiplier);
 		}
 		
-		output.putBoolean(0xA8, userSession.getUser().gameExtraLife); // can resurrect
+		output.putBoolean(0xA8, userSession.getUser().isGameExtraLife()); // can resurrect
 		
 		return output.toArray();
 	}
 
 	@Override
 	public void afterSend() throws IOException, SQLException {
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		lobbyServer.sendRoomMessage(userSession, getResponse(), false);
 		
@@ -79,23 +78,23 @@ public class PlayerDeathHandler extends LobbyHandler {
 				results[i] = -1;
 			}
 			
-			if (userSession.getUser().lives > 0) {
-				results[userSession.getUser().roomSlot] = 0;
+			if (userSession.getUser().getLives() > 0) {
+				results[userSession.getUser().getRoomSlot()] = 0;
 			}
 			else {
-				if (userSession.getUser().gameKO > 0) {
-					results[userSession.getUser().roomSlot] = 1;
-					userSession.getUser().playerWins++;
+				if (userSession.getUser().getGameKO() > 0) {
+					results[userSession.getUser().getRoomSlot()] = 1;
+					userSession.getUser().setPlayerWins(userSession.getUser().getPlayerWins() + 1);
 				}
 				else {
-					results[userSession.getUser().roomSlot] = 2;
-					userSession.getUser().playerLoses++;
+					results[userSession.getUser().getRoomSlot()] = 2;
+					userSession.getUser().setPlayerLoses(userSession.getUser().getPlayerLoses() + 1);
 				}
 			}
 			
 			lobbyServer.sendRoomMessage(userSession, new GameCompletedHandler(lobbyServer, userSession).getResponse(results, -1), true);
 			
-			if (room.getGameMode() == GameMode.KING_SURVIVAL && userSession.getUser().roomSlot == room.blueKingIndex) {
+			if (room.getGameMode() == GameMode.KING_SURVIVAL && userSession.getUser().getRoomSlot() == room.blueKingIndex) {
 				room.blueKingIndex = killerIndex;
 				lobbyServer.sendRoomMessage(userSession, new NewKingHandler(lobbyServer, userSession).getResponse(), true);
 			}
@@ -103,7 +102,7 @@ public class PlayerDeathHandler extends LobbyHandler {
 		else if (room.getGameMode() == GameMode.TEAMPLAY || room.getGameMode() == GameMode.DODGE || room.getGameMode() == GameMode.DUEL ||
 				room.getGameMode() == GameMode.ASSAULT || room.getGameMode() == GameMode.HERO) {
 			if (room.isAllTeamDead()) {
-				int score = (userSession.getUser().roomTeam == 10) ? 20 : 10;
+				int score = (userSession.getUser().getRoomTeam() == 10) ? 20 : 10;
 				
 				if (score == 10) {
 					room.blueScore++;
@@ -121,13 +120,13 @@ public class PlayerDeathHandler extends LobbyHandler {
 						results[i] = 0;
 						
 						if (room.blueScore == 3 || room.redScore == 3) {
-							results[i] = (room.getUserSession(i).getUser().roomTeam == score) ? 1 : 2;
+							results[i] = (room.getUserSession(i).getUser().getRoomTeam() == score) ? 1 : 2;
 							
 							if (results[i] == 1) {
-								room.getUserSession(i).getUser().playerWins++;
+								room.getUserSession(i).getUser().setPlayerWins(room.getUserSession(i).getUser().getPlayerWins() + 1);
 							}
 							else {
-								room.getUserSession(i).getUser().playerLoses++;
+								room.getUserSession(i).getUser().setPlayerLoses(room.getUserSession(i).getUser().getPlayerLoses() + 1);
 							}
 						}
 					}
@@ -143,21 +142,21 @@ public class PlayerDeathHandler extends LobbyHandler {
 				results[i] = -1;
 			}
 			
-			if (room.getUserSession(killerIndex).getUser().gameKO >= 3) {
+			if (room.getUserSession(killerIndex).getUser().getGameKO() >= 3) {
 				for (int i = 0; i < 8; i++) {
 					if (room.getUserSession(i) != null) {
 						if (i != killerIndex) {
 							results[i] = 2;
-							room.getUserSession(i).getUser().playerLoses++;
+							room.getUserSession(i).getUser().setPlayerLoses(room.getUserSession(i).getUser().getPlayerLoses() + 1);
 						}
 					}
 				}
 				
-				room.getUserSession(killerIndex).getUser().playerWins++;
+				room.getUserSession(killerIndex).getUser().setPlayerWins(room.getUserSession(killerIndex).getUser().getPlayerWins() + 1);
 				results[killerIndex] = 1;
 			}
 			else {
-				results[userSession.getUser().roomSlot] = 0;
+				results[userSession.getUser().getRoomSlot()] = 0;
 			}
 			
 			lobbyServer.sendRoomMessage(userSession, new GameCompletedHandler(lobbyServer, userSession).getResponse(results, -1), true);
@@ -184,25 +183,25 @@ public class PlayerDeathHandler extends LobbyHandler {
 					
 					if (room.getUserSession(i) != null) {
 						results[i] = 2;
-						room.getUserSession(i).getUser().playerLoses++;
+						room.getUserSession(i).getUser().setPlayerLoses(room.getUserSession(i).getUser().getPlayerLoses() + 1);
 					}
 				}
 				
 				lobbyServer.sendRoomMessage(userSession, new CrystalDeathHandler(lobbyServer, userSession).getResponse(results), true);
 			}
 			
-			userSession.getUser().gameExtraLife = false;
+			userSession.getUser().setGameExtraLife(false);
 		}
 		else if (room.getGameMode() == GameMode.FIGHT_CLUB) {
 			int result;
 			
-			if (userSession.getUser().gameKO > 0) {
+			if (userSession.getUser().getGameKO() > 0) {
 				result = 1;
-				userSession.getUser().playerWins++;
+				userSession.getUser().setPlayerWins(userSession.getUser().getPlayerWins() + 1);
 			}
 			else {
 				result = 2;
-				userSession.getUser().playerLoses++;
+				userSession.getUser().setPlayerLoses(userSession.getUser().getPlayerLoses() + 1);
 			}
 			
 			sendTCPMessage(new RoundCompletedHandler(lobbyServer, userSession).getResponse(result));
@@ -214,13 +213,13 @@ public class PlayerDeathHandler extends LobbyHandler {
 		else if (room.getGameMode() == GameMode.TRAINING_5) {
 			int result;
 			
-			if (userSession.getUser().gameKO > 0) {
+			if (userSession.getUser().getGameKO() > 0) {
 				result = 1;
-				userSession.getUser().playerWins++;
+				userSession.getUser().setPlayerWins(userSession.getUser().getPlayerWins() + 1);
 			}
 			else {
 				result = 2;
-				userSession.getUser().playerLoses++;
+				userSession.getUser().setPlayerLoses(userSession.getUser().getPlayerLoses() + 1);
 			}
 			
 			sendTCPMessage(new RoundCompletedHandler(lobbyServer, userSession).getResponse(result));
@@ -228,23 +227,23 @@ public class PlayerDeathHandler extends LobbyHandler {
 		else if (room.getGameMode() == GameMode.INFINITY_KING) {
 			int[] oldPoints = Arrays.copyOf(room.infinityPoints, room.infinityPoints.length);
 			
-			if (userSession.getUser().roomSlot == room.blueKingIndex || userSession.getUser().roomSlot == room.redKingIndex) {
-				int team = (userSession.getUser().roomSlot == room.blueKingIndex) ? 10 : 20;
+			if (userSession.getUser().getRoomSlot() == room.blueKingIndex || userSession.getUser().getRoomSlot() == room.redKingIndex) {
+				int team = (userSession.getUser().getRoomSlot() == room.blueKingIndex) ? 10 : 20;
 				int otherTeamNumberOfPlayers = team == 10 ? room.bluePlayersCount : room.redPlayersCount;
-				int splitPoints = (int) Math.ceil(room.infinityPoints[userSession.getUser().roomSlot] / (float) otherTeamNumberOfPlayers);
-				room.infinityPoints[userSession.getUser().roomSlot] = 1;
+				int splitPoints = (int) Math.ceil(room.infinityPoints[userSession.getUser().getRoomSlot()] / (float) otherTeamNumberOfPlayers);
+				room.infinityPoints[userSession.getUser().getRoomSlot()] = 1;
 				
 				for (int i = 0; i < 8; i++) {
 					UserSession currentUserSession = room.getUserSession(i);
 					if (currentUserSession != null) {
-						if (currentUserSession.getUser().roomTeam != team) {
+						if (currentUserSession.getUser().getRoomTeam() != team) {
 							room.infinityPoints[i] += splitPoints;
 						}
 					}
 				}
 			}
 			else {
-				room.infinityPoints[userSession.getUser().roomSlot]++;
+				room.infinityPoints[userSession.getUser().getRoomSlot()]++;
 			}
 			
 			int[] difference = new int[8];
@@ -258,10 +257,10 @@ public class PlayerDeathHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		userSession.getUser().lives--;
-		userSession.getUser().playerDowns++;
+		userSession.getUser().setLives(userSession.getUser().getLives() - 1);
+		userSession.getUser().setPlayerDowns(userSession.getUser().getPlayerDowns() + 1);
 		
-		Room room = lobbyServer.getRoom(userSession.getUser().roomIndex);
+		Room room = lobbyServer.getRoom(userSession.getUser().getRoomIndex());
 		
 		int randomLucky = ExperienceHelper.getLuckyMultiplier();
 		experienceGained = ExperienceHelper.getExperience(damageDone);
@@ -278,33 +277,16 @@ public class PlayerDeathHandler extends LobbyHandler {
 		
 		for (int i = 0; i < 8; i++) {
 			if (room.getUserSession(i) != null) {
-				room.getUserSession(i).getUser().playerExperience += experienceGained[i] * luckyMultiplier[i];
-				room.getUserSession(i).getUser().playerCode += experienceGained[i] * luckyMultiplier[i];
-				room.getUserSession(i).getUser().playerLevel = ExperienceHelper.getLevel(room.getUserSession(i).getUser().playerExperience);
-				room.getUserSession(i).getUser().saveUser();
-				experiences[i] = room.getUserSession(i).getUser().playerExperience;
+				room.getUserSession(i).getUser().setPlayerExperience(room.getUserSession(i).getUser().getPlayerExperience() + experienceGained[i] * luckyMultiplier[i]);
+				room.getUserSession(i).getUser().setPlayerCode(room.getUserSession(i).getUser().getPlayerCode() + experienceGained[i] * luckyMultiplier[i]);
+				room.getUserSession(i).getUser().setPlayerLevel(ExperienceHelper.getLevel(room.getUserSession(i).getUser().getPlayerExperience()));
+				User.saveUser(room.getUserSession(i).getUser());
+				experiences[i] = room.getUserSession(i).getUser().getPlayerExperience();
 			}
 		}
 		
 		// Update guild points
-		Connection con = Database.getConnection();
-		PreparedStatement ps = con.prepareStatement("UPDATE guild_score SET guild_score = guild_score + ? WHERE server_hostname = ? AND server_port = ? AND guild_name = ?;");
-		
-//		int guildPoints;
-//		for (int i = 0; i < 8; i++) {
-//			guildPoints = ExperienceHelper.experienceToGuildPoints(experienceGained[i] * luckyMultiplier[i], room.getGameMode());
-//			
-//			if (guildPoints != 0) {
-//				ps.setInt(1, guildPoints);
-//				ps.setString(2, lobbyServer.hostname);
-//				ps.setInt(3, lobbyServer.port);
-//				ps.setString(4, room.getUserSession(i).getUser().guildName);
-//				ps.executeUpdate();
-//			}
-//		}
-		
-		ps.close();
-		con.close();
+		GuildScore.updateGuildPoints(lobbyServer, room, experienceGained, luckyMultiplier);
 				
 		elementType = (int)(Math.random() * 4) + 1;
 		elementAmount = ExperienceHelper.getElementCount(true);
@@ -312,26 +294,14 @@ public class PlayerDeathHandler extends LobbyHandler {
 		
 		// not sure if this is needed.
 		if (killerIndex < 8) {
-			room.getUserSession(killerIndex).getUser().gameKO++;
-			room.getUserSession(killerIndex).getUser().playerKOs++;
+			room.getUserSession(killerIndex).getUser().setGameKO(room.getUserSession(killerIndex).getUser().getGameKO() + 1);
+			room.getUserSession(killerIndex).getUser().setPlayerKOs(room.getUserSession(killerIndex).getUser().getPlayerKOs() + 1);
 			
-			con = Database.getConnection();
-			ps = con.prepareStatement("UPDATE users SET koCount=? WHERE username=?");
-			ps.setInt(1, room.getUserSession(killerIndex).getUser().playerKOs);
-			ps.setString(2, room.getUserSession(killerIndex).getUser().username);
-			ps.executeUpdate();
-			ps.close();
-			
-			ps = con.prepareStatement("UPDATE users SET downCount=? WHERE username=?");
-			ps.setInt(1, userSession.getUser().playerDowns);
-			ps.setString(2, userSession.getUser().username);
-			ps.executeUpdate();
-			ps.close();
-			
-			con.close();
+			User.saveUser(room.getUserSession(killerIndex).getUser());
+			User.saveUser(userSession.getUser());
 		}
 		
-		lobbyServer.getRoom(userSession.getUser().roomIndex).isAlive[userSession.getUser().roomSlot] = false;
+		lobbyServer.getRoom(userSession.getUser().getRoomIndex()).isAlive[userSession.getUser().getRoomSlot()] = false;
 	}
 
 }

@@ -13,7 +13,6 @@ import login.LoginServer;
 import net.objects.Server;
 
 public class Main {
-	public static final boolean IS_RELEASE = false;
 	public static final boolean FORCE_LATENCY = false;
 	public static final int FORCE_LATENCY_TIME = 150;
 	
@@ -38,14 +37,6 @@ public class Main {
 		LoginServer loginServer = new LoginServer(21000, 100);
 		loginServer.startServer();
 		
-		//192.99.73.148
-		//10.0.0.50
-		String ip = "10.0.0.50";
-		
-		if (IS_RELEASE) {
-			ip = "192.99.73.148";
-		}
-		
 		Session session = Database.getSession();
 		session.beginTransaction();
 		List<Server> servers = session.createQuery("FROM Server").list();
@@ -63,49 +54,14 @@ public class Main {
 		
 		session.getTransaction().commit();
 		session.close();
-		
-////		SessionFactory factory = new Configuration().configure(new File("resources/hibernate.cfg.xml")).buildSessionFactory();
-//		SessionFactory factory = new Configuration().configure().buildSessionFactory();
-//		
-////		
-//		Session session = factory.openSession();
-//		Transaction tx = session.beginTransaction();
-//		@SuppressWarnings("unchecked")
-//		List<UserShop> shops = session.createQuery("FROM UserShop").list();
-//		
-//		for (UserShop shop : shops) {
-//			System.out.println(shop.getCode());
-//		}
-//		
-//		tx.commit();
-//		
-//		factory.close();
-		
-		
-//		DatabaseConnection.setupDatabase();
-//		Session session = DatabaseConnection.getSession();
-//		session.beginTransaction();
-//		List<UserShop> shops = session.createQuery("FROM UserShop WHERE cardID LIKE ?").setParameter(0, 1222).list();
-//		for (UserShop shop : shops) {
-//			System.out.println(shop.getCardID());
-//		}
-//		session.getTransaction().commit();
-//		session.close();
-//		
-//		
-//		DatabaseConnection.closeDatabase();
 	}
 	
 	public static void resetDatabase() throws SQLException {
-//		Connection con = DatabaseConnection.getConnection();
-//		PreparedStatement ps = con.prepareStatement("UPDATE users SET server_hostname = NULL, server_port = NULL, is_connected = false;");
-//		ps.executeUpdate();
-//		ps.close();
-//		
-//		ps = con.prepareStatement("UPDATE servers SET population = 0;");
-//		ps.executeUpdate();
-//		ps.close();
-//		
-//		con.close();
+		Session session = Database.getSession();
+		session.beginTransaction();
+		session.createQuery("update User set connected = false, server_id = null").executeUpdate();
+		session.createQuery("update Server set population = 0").executeUpdate();
+		session.getTransaction().commit();
+		session.close();
 	}
 }

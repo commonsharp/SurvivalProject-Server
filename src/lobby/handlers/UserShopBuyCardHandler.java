@@ -1,9 +1,10 @@
 package lobby.handlers;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import database.Database;
 import lobby.LobbyHandler;
@@ -47,61 +48,61 @@ public class UserShopBuyCardHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		userSession.getUser().playerCode -= code;
+		userSession.getUser().setPlayerCode(userSession.getUser().getPlayerCode() - code);
 		
+		int addedSlot = -1;
 		// If you bought a card
 		if (card != null) {
-			int newSlot = userSession.getUser().getEmptyCardSlot();
-			userSession.getUser().cards[newSlot] = card;
+			addedSlot = userSession.getUser().addCard(card);
 			
-			if (card.getId() == 0x7D7 || card.getId() == 0x7D8 || card.getId() == 0x7DC) {
-				userSession.getUser().booster = card.getId();
+			if (card.getCardID() == 0x7D7 || card.getCardID() == 0x7D8 || card.getCardID() == 0x7DC) {
+				userSession.getUser().setBooster(card.getCardID());
 			}
 		}
 		// If you bought an element
 		else {
-			userSession.getUser().whiteCards[elementType - 1] += elementCount;
+			userSession.getUser().setWhiteCard(elementType - 1, userSession.getUser().getWhiteCard(elementType - 1) + elementCount);
 		}
 		
-		userSession.getUser().saveUser();
+		User.saveUser(userSession.getUser());
+		
+		if (addedSlot != -1) {
+			User.saveCards(userSession.getUser(), addedSlot);
+		}
 		
 		// Change the owner's code
 		UserSession ownerUserSession = lobbyServer.findUserSession(username);
 		
 		if (ownerUserSession != null) {
-			ownerUserSession.getUser().playerCode -= code;
-			ownerUserSession.getUser().saveUser();
-		}
-		else {
-			Connection con = Database.getConnection();
-			PreparedStatement ps = con.prepareStatement("UPDATE users SET code = code - ? WHERE username = ?;");
-			ps.setLong(1, code);
-			ps.setString(2, username);
-			ps.executeUpdate();
-			ps.close();
-			con.close();
+			ownerUserSession.getUser().setPlayerCode(ownerUserSession.getUser().getPlayerCode() - code);
 		}
 		
+		User.saveUser(userSession.getUser());
 		
 		// Remove the card from the usershop
-		Connection con = Database.getConnection();
-		PreparedStatement ps = con.prepareStatement("DELETE FROM user_shop WHERE username = ? AND card_id = ? AND card_premium_days = ? AND card_level = ? AND card_skill = ? AND code = ?;");
-		ps.setString(1, username);
+		Session session = Database.getSession();
+		session.beginTransaction();
+		Query<?> query = session.createQuery("delete from UserShop where username = :username and cardID = :cardID and cardPremiumDays = :cardPremiumDays and cardLevel = :cardLevel and cardSkill = :cardSkill and code = :code");
+		query.setParameter("username", username);
+		query.setParameter("code", code);
 		
 		if (card != null) {
-			ps.setInt(2, card.getId());
-			ps.setInt(3, card.getPremiumDays());
-			ps.setInt(4, card.getLevel());
-			ps.setInt(5, card.getSkill());
+			query.setParameter("cardID", card.getCardID());
+			query.setParameter("cardPremiumDays", card.getCardPremiumDays());
+			query.setParameter("cardLevel", card.getCardLevel());
+			query.setParameter("cardSkill", card.getCardSkill());
 		}
 		else {
-			ps.setInt(2, elementType * 10000 + elementCount);
+			query.setParameter("cardID", elementType * 10000 + elementCount);
+			query.setParameter("cardPremiumDays", 0);
+			query.setParameter("cardLevel", 0);
+			query.setParameter("cardSkill", 0);
 		}
 		
-		ps.setLong(6, code);
-		ps.executeUpdate();
-		ps.close();
-		con.close();
+		query.executeUpdate();
+		
+		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -134,8 +135,8 @@ public class UserShopBuyCardHandler extends LobbyHandler {
 			}
 		}
 		
-		output.putLong(0x678, userSession.getUser().playerCode);
-		output.putInts(0x680, userSession.getUser().whiteCards);
+		output.putLong(0x678, userSession.getUser().getPlayerCode());
+		output.putInts(0x680, userSession.getUser().getWhiteCards());
 		
 		output.putInt(0x690, response);
 		

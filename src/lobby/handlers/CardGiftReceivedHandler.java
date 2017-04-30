@@ -8,6 +8,7 @@ import lobby.LobbyServer;
 import net.Messages;
 import net.UserSession;
 import net.objects.Card;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class CardGiftReceivedHandler extends LobbyHandler {
@@ -25,8 +26,6 @@ public class CardGiftReceivedHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -39,15 +38,16 @@ public class CardGiftReceivedHandler extends LobbyHandler {
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.CARD_GIFT_RECEIVED_RESPONSE);
 		
-		int emptySlot = userSession.getUser().getEmptyCardSlot();
-		userSession.getUser().cards[emptySlot] = card;
-		userSession.getUser().saveUser();
+		
+		int emptySlot = userSession.getUser().addCard(card);
+		User.saveUser(userSession.getUser());
+		User.saveCards(userSession.getUser(), emptySlot);
 		
 		output.putInt(0x14, emptySlot);
-		output.putInt(0x18, card.getId());
-		output.putInt(0x1C, card.getPremiumDays());
-		output.putInt(0x20, card.getLevel());
-		output.putInt(0x24, card.getSkill());
+		output.putInt(0x18, card.getCardID());
+		output.putInt(0x1C, card.getCardPremiumDays());
+		output.putInt(0x20, card.getCardLevel());
+		output.putInt(0x24, card.getCardSkill());
 		
 		return output.toArray();
 	}

@@ -6,6 +6,7 @@ import login.LoginHandler;
 import net.Messages;
 import net.UserSession;
 import net.objects.Card;
+import net.objects.User;
 import tools.ExtendedByteBuffer;
 
 public class TutorialCompletedHandler extends LoginHandler {
@@ -55,11 +56,12 @@ public class TutorialCompletedHandler extends LoginHandler {
 		item2ID = 1200 + 10 * element + (int)(Math.random() * 4);
 		petID = (int) (Math.random() * 3) + 5000;
 
-		userSession.getUser().playerLevel = 1;
-		userSession.getUser().playerCode = 1010;
-		userSession.getUser().cards[0] = new Card(item1ID, 0, 0, 0);
-		userSession.getUser().cards[1] = new Card(item2ID, 0, 0, 0);
-		userSession.getUser().cards[2] = new Card(petID, 0, 0, 0); // This must be an unlimited time card because it's premium days are 10000 
-		userSession.getUser().saveUser();
+		userSession.getUser().setPlayerLevel(1);
+		userSession.getUser().setPlayerCode(1010);
+		userSession.getUser().addCard(new Card(item1ID, 0, 0, 0));
+		userSession.getUser().addCard(new Card(item2ID, 0, 0, 0));
+		userSession.getUser().addCard(new Card(petID, 0, 0, 0)); // This must be an unlimited time card because it's premium days are 10000
+		User.saveUser(userSession.getUser());
+		User.saveCards(userSession.getUser(), 0, 1, 2);
 	}
 }

@@ -33,8 +33,8 @@ public class BuyScrollHandler extends LobbyHandler {
 	@Override
 	public void processMessage() throws SQLException {
 		if (isSell) {
-			userSession.getUser().scrolls[scrollID] = 0;
-			userSession.getUser().playerCode += CurrencyHelper.getScrollCode(scrollID);
+			userSession.getUser().setScroll(scrollID, 0);
+			userSession.getUser().setPlayerCode(userSession.getUser().getPlayerCode() + CurrencyHelper.getScrollCode(scrollID));
 			scrollIndex = scrollID;
 			response = 0;
 		}
@@ -43,8 +43,8 @@ public class BuyScrollHandler extends LobbyHandler {
 			
 			if (emptyScrollIndex != -1) {
 				response = 0;
-				userSession.getUser().scrolls[emptyScrollIndex] = scrollID + 1;
-				userSession.getUser().playerCode -= CurrencyHelper.getScrollCode(scrollID);
+				userSession.getUser().setScroll(emptyScrollIndex, scrollID + 1);
+				userSession.getUser().setPlayerCode(userSession.getUser().getPlayerCode() - CurrencyHelper.getScrollCode(scrollID));
 				scrollIndex = emptyScrollIndex;
 			}
 			else {
@@ -62,7 +62,7 @@ public class BuyScrollHandler extends LobbyHandler {
 		output.putInt(0x18, response); // response. 0 - good. 1 - not enough code. 2 - not enough space
 		output.putInt(0x1C, scrollIndex); // the scroll index - 0, 1 or 2.
 		output.putInt(0x20, scrollID + 1);
-		output.putLong(0x28, userSession.getUser().playerCode);
+		output.putLong(0x28, userSession.getUser().getPlayerCode());
 		
 		return output.toArray();
 	}

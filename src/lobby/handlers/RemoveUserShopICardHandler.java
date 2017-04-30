@@ -21,7 +21,7 @@ public class RemoveUserShopICardHandler extends LobbyHandler {
 
 	@Override
 	public void processMessage() throws SQLException {
-		userSession.getUser().bigUserShop.addShop(null, shopIndex);
+		userSession.getUser().getBigUserShop().addShop(null, shopIndex);
 	}
 
 	@Override

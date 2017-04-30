@@ -66,15 +66,15 @@ public class GetTopGuildsHandler extends LobbyHandler {
 //		ps.close();
 		
 		// Load guild rank
-        if (lobbyServer != null && userSession.getUser().guildName != null) {
+        if (lobbyServer != null && userSession.getUser().getGuildName() != null) {
 			int myScore = 0;
 			int myRank = 0;
 			
 			session = Database.getSession();
-			Query query = session.createQuery("SELECT score FROM GuildScore WHERE serverID = :serverID AND guildName = :guildName");
+			Query<?> query = session.createQuery("SELECT score FROM GuildScore WHERE serverID = :serverID AND guildName = :guildName");
 			query.setParameter("serverID", lobbyServer.server.getId());
-			query.setParameter("guildName", userSession.getUser().guildName);
-			List<Integer> guildScores2 = query.list();
+			query.setParameter("guildName", userSession.getUser().getGuildName());
+			List<Integer> guildScores2 = (List<Integer>) query.list();
 			
 			if (!guildScores2.isEmpty()) {
 				myScore = guildScores2.get(0);
@@ -83,12 +83,12 @@ public class GetTopGuildsHandler extends LobbyHandler {
 				query.setParameter("serverID", lobbyServer.server.getId());
 				query.setParameter("score", myScore);
 				
-				List<Long> count = query.list();
+				List<Long> count = (List<Long>) query.list();
 				
 				myRank = count.get(0).intValue() + 1;
 			}
 			
-			userSession.getUser().guildRank = myRank - 1;
+			userSession.getUser().setGuildRank(myRank - 1);
 			output.putInt(0xE8, myRank - 1);
 			output.putInt(0xEC, myScore);
 		}

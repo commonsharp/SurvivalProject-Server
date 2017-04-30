@@ -35,14 +35,14 @@ public class GetLobbyUsersHandler extends LobbyHandler {
 		ExtendedByteBuffer output = new ExtendedByteBuffer(RESPONSE_LENGTH);
 		output.putInt(0x0, RESPONSE_LENGTH);
 		output.putInt(0x4, Messages.GET_LOBBY_USERS_RESPONSE);
-		output.putString(0x14, userSession.getUser().username); // name
-		output.putInt(0x24, userSession.getUser().playerLevel); // level
+		output.putString(0x14, userSession.getUser().getUsername()); // name
+		output.putInt(0x24, userSession.getUser().getPlayerLevel()); // level
 		output.putInt(0x28, 0);
 		output.putInt(0x2C, 0);
-		output.putBoolean(0x30, userSession.getUser().isMale); // isMale
+		output.putBoolean(0x30, userSession.getUser().isMale()); // isMale
 		output.putBoolean(0x31, isOnline); // is online
 		output.putInt(0x34, 0);
-		output.putInt(0x38, userSession.getUser().missionLevel); // mission level
+		output.putInt(0x38, userSession.getUser().getMissionLevel()); // mission level
 		return output.toArray();
 	}
 
