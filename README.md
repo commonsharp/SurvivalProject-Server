@@ -60,7 +60,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [x] Implement Hibernate (or any other ORM framework).
 - [ ] Change the guild points formula to the correct one.
 - [ ] Some premium cards also give you elements when you purchase them. **Packages too!**
-- [ ] Change every saveUser call to a shorter SQL query to reduce database operations.
+- [x] Change every saveUser call to a shorter SQL query to reduce database operations.
 - [x] Rename each SQL table according to the naming convention.
 - [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
 - [ ] Add foreign keys in the database.
@@ -93,6 +93,8 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 
 # 30/04/2017
 * Finally finished implementing Hibernate.
+* When making any change that requires updating the database, a saveUser method was called. The method used 97 queries, one for the user information (level, coins and so on) and one for each card the user has. Even if the user only gained experience and the user's cards weren't changed in any way, 97 queries were used. Now only 1 query is used in such cases. Also if only certain cards change, only the appropriate card was changed in the database, and not all the 96. This results in a much faster server.
+* Fixed a bug where if you didn't lose the level fusion card when using it.
 
 # 29/04/2017
 * Almost finished implementing Hibernate.
