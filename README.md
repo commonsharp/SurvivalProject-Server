@@ -72,6 +72,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] The experience/code a player gains after a mission isn't correct.
 - [ ] Change the mission lost packet to GameCompletedHandler.
 - [ ] After a chat command is completed, send the user a response.
+- [ ] After a trade, a 96 cards saveCards method is called. Change that to 8.
 
 # TODOs that can't be completed at the moment
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
