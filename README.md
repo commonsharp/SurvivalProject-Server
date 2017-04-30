@@ -62,7 +62,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] Some premium cards also give you elements when you purchase them. **Packages too!**
 - [x] Change every saveUser call to a shorter SQL query to reduce database operations.
 - [x] Rename each SQL table according to the naming convention.
-- [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
+- [x] The sorting of userSessions is done in O(nlgn) instead of O(n).
 - [x] Add foreign keys in the database.
 - [ ] Lose code/cash/coins when you make a purchase.
 - [ ] Change every game over message to a round over message.
@@ -95,6 +95,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * Finally finished implementing Hibernate.
 * When making any change that requires updating the database, a saveUser method was called. The method used 97 queries, one for the user information (level, coins and so on) and one for each card the user has. Even if the user only gained experience and the user's cards weren't changed in any way, 97 queries were used. Now only 1 query is used in such cases. Also if only certain cards change, only the appropriate card was changed in the database, and not all the 96. This results in a much faster server.
 * Added foreign keys in the database. If a user gets deleted, his cards, memos, gifts and everything else is also getting deleted. There are also more checks for integrity now, i.e, if you're trying to set the guild of a user to one that does not exist, an error would be thrown.
+* The sorting of the UserSession list is now done in O(n). It means that when a new player joins the server, the server will do less calculations.
 * Fixed a bug where if you didn't lose the level fusion card when using it.
 
 # 29/04/2017
