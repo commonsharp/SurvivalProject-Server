@@ -59,24 +59,26 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 # TODO
 - [ ] Change the server sockets to NIO sockets.
 - [x] Implement Hibernate (or any other ORM framework).
-- [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
 - [ ] Change the guild points formula to the correct one.
-- [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
 - [ ] Some premium cards also give you elements when you purchase them. **Packages too!**
 - [ ] Change every saveUser call to a shorter SQL query to reduce database operations.
-- [ ] Rename each SQL table according to the naming convention.
+- [x] Rename each SQL table according to the naming convention.
 - [ ] The sorting of userSessions is done in O(nlgn) instead of O(n).
 - [ ] Add foreign keys in the database.
 - [ ] Lose code/cash/coins when you make a purchase.
-- [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [ ] Change every game over message to a round over message.
 - [ ] Premium cards are only working when you buy them in the cards shop (will be changed once trades/user shops are completely implemented).
 - [ ] Lose premium days when a day passes.
 - [ ] Clean the game modes code a bit.
-- [ ] The stats after a mission isn't correct.
-- [ ] The stats after every game mode isn't correct.
+- [ ] The experience/code a player gains after a mission isn't correct.
 - [ ] Change the mission lost packet to GameCompletedHandler.
 - [ ] After a chat command is completed, send the user a response.
+
+# TODOs that can't be completed at the moment
+- [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
+- [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
+- [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
+- [ ] The experience/code a player gains after every game mode (except missions and infinity game modes) isn't correct - no videos or data about how much code and experience a player should get after a game is completed was found.
 
 # Known bugs
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
