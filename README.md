@@ -58,7 +58,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 
 # TODO
 - [ ] Change the server sockets to NIO sockets.
-- [ ] Implement Hibernate (or any other ORM framework).
+- [x] Implement Hibernate (or any other ORM framework).
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
 - [ ] Change the guild points formula to the correct one.
 - [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
@@ -88,6 +88,9 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If you use a random character, people in the lobby can't see that you picked a random character.
 * If you have 2 players on one team in hero mode, the game starts.
 * If a user puts two cards of the same type and same price in the user shop, and someone purchase it, the two of them are removed.
+
+# 30/04/2017
+* Finally finished implementing Hibernate.
 
 # 29/04/2017
 * Almost finished implementing Hibernate.
