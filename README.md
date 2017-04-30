@@ -52,7 +52,6 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] Master card
 - [ ] Visit bonus x2
 - [ ] Elemental bonus x3
-- [ ] Premium Event - **This card gives you a better bonus in every event. I'm not going to implement that card until I find a way to get the events to work**
 - [ ] SuperSilver
 - [ ] User shop I
 
@@ -79,6 +78,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [ ] The experience/code a player gains after every game mode (except missions and infinity game modes) isn't correct - no videos or data about how much code and experience a player should get after a game is completed was found.
+- [ ] Implementing the card 'Premium Event' - This card gives you a better bonus in every event. I'm not going to implement that card until I find a way to get the events to work.
 
 # Known bugs
 * Quest death experience/code gain is getting executed multiple times (because getResponse() is getting called multiple times).
