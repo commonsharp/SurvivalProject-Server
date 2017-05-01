@@ -23,10 +23,11 @@ If you get an error while running sp2.exe, run it as administrator.
 
 # Installing the server
 **The server files are not completed yet, therefore you would have to compile them yourself using any Java IDE.**
+**You would need to download the src folder, resources/hibernate.cfg.xml and MySQL/spgame.sql. from this repository**
 
-* Install MySQL workbench. Create a new database called spgame. Import the tables included in MySQL directory in this git. Make sure you also install Connector-J.
+* Install MySQL workbench. Create a new database called spgame. Import the tables from spgame.sql. Make sure you also install Connector-J.
 
-* Change the IP in the servers table (in your database) to your own IP (not the local one), or to 127.0.0.1 if you're playing alone. The channelType field in that table is as follows - 0 for beginner, 1 for hero and 2 for epic. The serverID field is should be 0 for the first server in the list (of the same channel), 1 for the second one and so on.
+* Change the IP in the server table (in your database) to your own IP (not the local one), or to 127.0.0.1 if you're playing alone. The channelType field in that table is as follows - 0 for beginner, 1 for hero and 2 for epic. The serverID field is should be 0 for the first server in the list (of the same channel), 1 for the second one and so on.
 
 * Create a new Java project. Put the src folder in your project. Create a new folder called resources and put hibernate.cfg.xml in it.
 
@@ -42,4 +43,4 @@ If you get an error while running sp2.exe, run it as administrator.
 
 * The server should be running now, and you can run the client.
 
-* If you're hosting a server for others to play, you would need to forward port 21000, 21001, 21002 and 21003 to your machine. I can't help you with that as it's router-specific.
+* If you're hosting a server for others to play, you would need to forward port 21000, 21001, 21002 and 21003 to your machine (or basically, 21000 and any other port you set in the server table). I can't help you with that as it's router-specific.
