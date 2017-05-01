@@ -93,7 +93,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If a user puts two cards of the same type and same price in the user shop, and someone purchase it, the two of them are removed.
 
 # 01/05/2017
-* You now get a visit bonus every 4 hours. You get 1~20 elements per visit, 1000 code and 1~20 coins.
+* You now get a visit bonus every 4 hours. You get 1-20 elements per visit, 1000 code and 1-20 coins.
 * The premium card "Visit bonus" is now working. It gives you double the elements/code/coins per visit. After 20 uses, the card disappears.
 * If a card is gold forced and a day passes, one day is subtracted from the gold forced days.
 
