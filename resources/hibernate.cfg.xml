@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/spgame?useSSL=false</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">1234</property>
+		<property name="hibernate.connection.pool_size">100</property>
+		
+		<mapping class="net.objects.UserShop"/>
+		<mapping class="net.objects.Friend"/>
+		<mapping class="net.objects.Memo"/>
+		<mapping class="net.objects.Gift"/>
+		<mapping class="net.objects.Server"/>
+		<mapping class="net.objects.Guild"/>
+		<mapping class="net.objects.GuildScore"/>
+		<mapping class="net.objects.GuildMember"/>
+		<mapping class="net.objects.User"/>
+		<mapping class="net.objects.Card"/>
+
+	</session-factory>
+</hibernate-configuration>
