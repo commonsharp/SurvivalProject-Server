@@ -93,6 +93,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If a user puts two cards of the same type and same price in the user shop, and someone purchase it, the two of them are removed.
 
 # 01/05/2017
+* Updated the instructions on how to install the server after implementing Hibernate.
 * You now get a visit bonus every 4 hours. You get 1-20 elements per visit, 1000 code and 1-20 coins.
 * When you visit the game (every 4 hours), the player's rank is correctly showed. The rank is based on the player's points (experience). The player with the most points is first.
 * The premium card "Visit bonus" is now working. It gives you double the elements/code/coins per visit. After 20 uses, the card disappears.
