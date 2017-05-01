@@ -23,6 +23,7 @@ If you get an error while running sp2.exe, run it as administrator.
 
 # Installing the server
 **The server files are not completed yet, therefore you would have to compile them yourself using any Java IDE.**
+
 **You would need to download the src folder, resources/hibernate.cfg.xml and MySQL/spgame.sql. from this repository**
 
 * Install MySQL workbench. Create a new database called spgame. Import the tables from spgame.sql. Make sure you also install Connector-J.
