@@ -26,6 +26,8 @@ If you get an error while running sp2.exe, run it as administrator.
 
 **You would need to download the src folder, resources/hibernate.cfg.xml and MySQL/spgame.sql from this repository.**
 
+**The instructions are for Eclipse IDE but it can work on any IDE**
+
 * Install MySQL workbench. Create a new database called spgame. Import the tables from spgame.sql. Make sure you also install Connector-J.
 
 * Change the IP in the server table (in your database) to your own IP (not the local one), or to 127.0.0.1 if you're playing alone. The channelType field in that table is as follows - 0 for beginner, 1 for hero and 2 for epic. The serverID field is should be 0 for the first server in the list (of the same channel), 1 for the second one and so on.
