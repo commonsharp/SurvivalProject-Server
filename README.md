@@ -94,6 +94,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 
 # 01/05/2017
 * You now get a visit bonus every 4 hours. You get 1-20 elements per visit, 1000 code and 1-20 coins.
+* When you visit the game (every 4 hours), the player's rank is correctly showed. The rank is based on the player's points (experience). The player with the most points is first.
 * The premium card "Visit bonus" is now working. It gives you double the elements/code/coins per visit. After 20 uses, the card disappears.
 * If a card is gold forced and a day passes, one day is subtracted from the gold forced days.
 
