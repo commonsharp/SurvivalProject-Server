@@ -50,7 +50,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 
 # Premiums cards that aren't working yet
 - [ ] Master card
-- [ ] Visit bonus x2
+- [x] Visit bonus x2
 - [ ] Elemental bonus x3
 - [ ] SuperSilver
 - [ ] User shop I
@@ -91,6 +91,10 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If you use a random character, people in the lobby can't see that you picked a random character.
 * If you have 2 players on one team in hero mode, the game starts.
 * If a user puts two cards of the same type and same price in the user shop, and someone purchase it, the two of them are removed.
+
+# 01/05/2017
+* You now get a visit bonus every 4 hours. You get 1~20 elements per visit, 1000 code and 1~20 coins.
+* The premium card "Visit bonus" is now working. It gives you double the elements/code/coins per visit. After 20 uses, the card disappears.
 
 # 30/04/2017
 * Finally finished implementing Hibernate.
