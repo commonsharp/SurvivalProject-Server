@@ -97,6 +97,11 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * When you visit the game (every 4 hours), the player's rank is correctly showed. The rank is based on the player's points (experience). The player with the most points is first.
 * The premium card "Visit bonus" is now working. It gives you double the elements/code/coins per visit. After 20 uses, the card disappears.
 * If a card is gold forced and a day passes, one day is subtracted from the gold forced days.
+* Fixed a bug where applying a gold force card didn't do anything.
+* Fixed a bug where card slot+6 or card slot+12 didn't add cards slots if you logged out right after using them.
+* Fixed a bug where purchasing scrolls didn't work if you logged out right after the purchase.
+* Fixed a bug where random code bubbles didn't spawn.
+* Fixed a bug where picking an element or a code bubble wasn't registered in the database.
 
 # 30/04/2017
 * Finally finished implementing Hibernate.
