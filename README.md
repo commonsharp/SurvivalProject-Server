@@ -67,7 +67,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] Lose code/cash/coins when you make a purchase.
 - [ ] Change every game over message to a round over message.
 - [ ] Premium cards are only working when you buy them in the cards shop (will be changed once trades/user shops are completely implemented).
-- [ ] Lose premium days when a day passes.
+- [x] Lose premium days when a day passes.
 - [ ] Clean the game modes code a bit.
 - [ ] The experience/code a player gains after a mission isn't correct.
 - [ ] Change the mission lost packet to GameCompletedHandler.
@@ -95,6 +95,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 # 01/05/2017
 * You now get a visit bonus every 4 hours. You get 1~20 elements per visit, 1000 code and 1~20 coins.
 * The premium card "Visit bonus" is now working. It gives you double the elements/code/coins per visit. After 20 uses, the card disappears.
+* If a card is gold forced and a day passes, one day is subtracted from the gold forced days.
 
 # 30/04/2017
 * Finally finished implementing Hibernate.
