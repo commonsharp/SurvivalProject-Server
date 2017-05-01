@@ -1,0 +1,165 @@
+Name : LogInConnectWnd id : 2
+
+Name : WhisperWnd id : 4
+
+Name : GameTabGameWnd id : 5
+
+Name : ObtainWnd id : 6
+
+Name : ReadyWnd id : 6
+
+Name : ReadyWnd id : 6
+
+Name : ReadyWnd id : 6
+
+Name : ObtainWnd id : 7
+
+Name : ioWnd id : 8
+
+Name : IDListMyWnd id : 8
+
+Name : IDListMyWnd id : 8
+
+Name : RoomMakeWnd id : 8
+
+Name : MakeNewPasswordWnd id : 9
+
+Name : CardShopMyCardWnd id : 15
+
+Name : MyCharWnd id : 24
+
+Name : CommunityWnd id : 24
+
+Name : TradeMainWnd id : 28
+
+Name : VisitWnd id : 31
+
+Name : ChannelUpWnd id : 37
+
+Name : ChannelUpWnd id : 37
+
+Name : EmoticonWnd id : 39
+
+Name : CardFusionWnd id : 42
+
+Name : CardFusionSkillWnd id : 43
+
+Name : ServerRankWnd id : 45
+
+Name : UserShopMakeWnd id : 47
+
+Name : EventCardWnd id : 47
+
+Name : EventCardWnd id : 47
+
+Name : CardSortWnd id : 47
+
+Name : UserShopSellWnd id : 48
+
+Name : RoomChampWnd id : 53
+
+Name : MessageRecvWnd id : 55
+
+Name : TrainingHelpWnd id : 57
+
+Name : CChampCardWnd id : 57
+
+Name : ElementWnd id : 58
+
+Name : ElementWnd id : 58
+
+Name : TrainingResultWnd id : 59
+
+Name : TrainingSelectWnd id : 71
+
+Name : GlobalUserShopWnd id : 72
+
+Name : UserShopSearchWnd id : 97
+
+Name : LogoWnd id : 100
+
+Name : RoomTitleWnd id : 102
+
+Name : CardShopCodeWnd id : 102
+
+Name : PresentWnd id : 105
+
+Name : PresentLicenseWnd id : 106
+
+Name : PresentSendWnd id : 107
+
+Name : CardShopCoinWnd id : 108
+
+Name : CEventBtnWnd id : 120
+
+Name : CEventBtnWnd id : 120
+
+Name : CEventBtnWnd id : 120
+
+Name : CEventBtnWnd id : 120
+
+Name : EventCardWnd id : 123
+
+Name : CharacterWnd id : 124
+
+Name : CharSelectBtnWnd id : 125
+
+Name : GMWnd id : 126
+
+Name : GMBtnWnd id : 127
+
+Name : LevelUpWnd id : 128
+
+Name : LevelUpWnd id : 129
+
+Name : EventCardWnd id : 131
+
+Name : EventCardWnd id : 132
+
+Name : CardFusionSkillWnd id : 134
+
+Name : EventCardWnd id : 134
+
+Name : CardFusionWnd id : 135
+
+Name : EventCardWnd id : 140
+
+Name : EventCardWnd id : 141
+
+Name : EventCardWnd id : 142
+
+Name : EventCardWnd id : 143
+
+Name : AvatarEquipWnd id : 152
+
+Name : GuildMessageRecvWnd id : 154
+
+Name : ChannelUp3CardWnd id : 161
+
+Name : TemporaryUserWnd id : 177
+
+Name : TemporaryUserWnd id : 178
+
+Name : TemporaryUserWnd id : 179
+
+Name : ChannelUpEventCardWnd id : 188
+
+Name : EventShopCardBuyWnd id : 197
+
+Name : FindWnd id : 200
+
+Name : UserShopSignWnd id : 300
+
+Name : UserShopSignWnd id : 301
+
+Name : UserShopSignWnd id : 302
+
+Name : UserShopSignWnd id : 303
+
+Name : UserShopSignWnd id : 304
+
+Name : UserShopSignWnd id : 305
+
+Name : UserShopSignWnd id : 306
+
+Name : UserShopSignWnd id : 307
