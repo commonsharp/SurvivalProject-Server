@@ -24,15 +24,21 @@ If you get an error while running sp2.exe, run it as administrator.
 # Installing the server
 **The server files are not completed yet, therefore you would have to compile them yourself using any Java IDE.**
 
-* Install MySQL workbench. Create a new database called spgame. Import the tables included in MySQL directory in this git. Make sure your MySQL port is 3306. If you change it to a different port, make sure you change it in DatabaseConnection.java in the server files as well.
+* Install MySQL workbench. Create a new database called spgame. Import the tables included in MySQL directory in this git. Make sure you also install Connector-J.
 
 * Change the IP in the servers table (in your database) to your own IP (not the local one), or to 127.0.0.1 if you're playing alone. The channelType field in that table is as follows - 0 for beginner, 1 for hero and 2 for epic. The serverID field is should be 0 for the first server in the list (of the same channel), 1 for the second one and so on.
 
-* Every server needs a different IP/port.
+* Create a new Java project. Put the src folder in your project. Create a new folder called resources and put hibernate.cfg.xml in it.
 
-* Change the IP and port in src/main/Main.class to the IP and port you have used in the servers table in the database.
+* Change your SQL username and password in hibernate.cfg.xml to the ones you configured in the MySQL installation.
 
-* Compile the server files using any Java IDE and run /src/main/Main.java.
+* Download Hibernate from here - http://hibernate.org/orm/downloads. Create a new folder in your source project called libs. Put all of the jars in the lib/required folder of your Hibernate rar in your libs folder.
+
+* Copy mysql-connector-java-5.1.40-bin.jar from your MySQL installation folder to your libs folder.
+
+* Right click your project, select properties, then select java build path. Under the source tab, click on add folder and add your resources folder. Under the Libraries tab, click on add jars and add the jars in your libs folder.
+
+* Compile the server files and run /src/main/Main.java.
 
 * The server should be running now, and you can run the client.
 
