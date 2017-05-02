@@ -92,6 +92,9 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If you have 2 players on one team in hero mode, the game starts.
 * If a user puts two cards of the same type and same price in the user shop, and someone purchase it, the two of them are removed.
 
+# 02/05/2017
+* Found a way to decompress PGF files and compress PNG/BMP files. This means it is now possible to edit the graphics of the game. Credits also go to FunG who guided me on how to decompress the PGF files.
+
 # 01/05/2017
 * Updated the instructions on how to install the server after implementing Hibernate.
 * You now get a visit bonus every 4 hours. You get 1-20 elements per visit, 1000 code and 1-20 coins.
