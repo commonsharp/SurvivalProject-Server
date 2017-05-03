@@ -10,7 +10,7 @@ Time spent on the project: **7 weeks**.
 For a weekly summary of the progress I'm making, follow me here:
 https://www.reddit.com/r/survivalproject/comments/5zm36i/started_writing_a_private_server_in_java
 
-**Not going to work on hokey mode because I can't fucking score a goal -_-"**
+**Not going to work on hockey mode because I can't fucking score a goal -_-"**
 
 # Built-in chat commands
 Apparently Survival Project has some built in commands. Unfortunately, most of them are in Korean.
@@ -46,7 +46,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] King slayer mode
 - [x] Fight club mode
 - [x] Tournament mode
-- [ ] Ice hokey mode :(
+- [ ] Ice hockey mode :(
 
 # Premiums cards that aren't working yet
 - [ ] Master card
