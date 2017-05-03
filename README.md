@@ -45,7 +45,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 - [ ] Infinity survival mode
 - [ ] King slayer mode
 - [x] Fight club mode
-- [ ] Tournament mode
+- [x] Tournament mode
 - [ ] Ice hokey mode :(
 
 # Premiums cards that aren't working yet
@@ -91,9 +91,11 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If you use a random character, people in the lobby can't see that you picked a random character.
 * If you have 2 players on one team in hero mode, the game starts.
 * If a user puts two cards of the same type and same price in the user shop, and someone purchase it, the two of them are removed.
+* There's a bug that if there are 4 people in a room, sometimes the user player update message isn't getting sent. It happened in hero mode. Possible fix - make room methods synchronized. It also happened once when I played in a 1v1 tournament on two VMs and once when I played with someone else in survival mode on Windows 10.
 
 # 03/05/2017
 * Fight club mode is now working.
+* Tournament mode is now working.
 
 # 02/05/2017
 * Found a way to decompress PGF files and compress PNG/BMP files. This means it is now possible to edit the graphics of the game. Credits also go to FunG who guided me on how to decompress the PGF files.
