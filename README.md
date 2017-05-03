@@ -76,7 +76,8 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 
 # TODOs that can't be completed at the moment
 - [ ] Try to find a way to translate the korean macros and if I can't, change the built-in korean commands to my own commands.
-- [ ] The option to send send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
+- [ ] The option to send a reject message (after an invitation) is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
+- [ ] The option to change a character's color is grayed out for some reason. If I manage to fix it, I need to make sure it actually works.
 - [ ] Unpack b6oy's sp2.exe and get rid of the badboys.
 - [ ] The experience/code a player gains after every game mode (except missions and infinity game modes) isn't correct - no videos or data about how much code and experience a player should get after a game is completed was found.
 - [ ] Implementing the card 'Premium Event' - This card gives you a better bonus in every event. I'm not going to implement that card until I find a way to get the events to work.
@@ -87,15 +88,17 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * Quests with multiple players isn't working well. Sometimes they work, sometimes they don't.
 * Big match experience/code gained doesn't work well (it seems slot 0 keeps getting exp).
 * Level xx5 missions aren't working.
-* When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
+* ~~When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.~~
 * If you use a random character, people in the lobby can't see that you picked a random character.
-* If you have 2 players on one team in hero mode, the game starts.
+* ~~If you have 2 players on one team in hero mode, the game starts.~~
 * If a user puts two cards of the same type and same price in the user shop, and someone purchase it, the two of them are removed.
 * There's a bug that if there are 4 people in a room, sometimes the user player update message isn't getting sent. It happened in hero mode. Possible fix - make room methods synchronized. It also happened once when I played in a 1v1 tournament on two VMs and once when I played with someone else in survival mode on Windows 10.
 
 # 03/05/2017
 * Fight club mode is now working.
 * Tournament mode is now working.
+* Bug fix: When you create a new mission room, you have to make an action (change character/cards) at least once for the correct level to be shown.
+* Bug fix: If you have 2 players on one team in hero mode, the game starts.
 
 # 02/05/2017
 * Found a way to decompress PGF files and compress PNG/BMP files. This means it is now possible to edit the graphics of the game. Credits also go to FunG who guided me on how to decompress the PGF files.
