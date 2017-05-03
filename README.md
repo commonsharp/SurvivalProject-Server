@@ -44,7 +44,7 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 # Game modes that aren't working yet
 - [ ] Infinity survival mode
 - [ ] King slayer mode
-- [ ] Fight club mode
+- [x] Fight club mode
 - [ ] Tournament mode
 - [ ] Ice hokey mode :(
 
@@ -91,6 +91,9 @@ There are some visual bugs in the client that the server cannot fix. To fix them
 * If you use a random character, people in the lobby can't see that you picked a random character.
 * If you have 2 players on one team in hero mode, the game starts.
 * If a user puts two cards of the same type and same price in the user shop, and someone purchase it, the two of them are removed.
+
+# 03/05/2017
+* Fight club mode is now working.
 
 # 02/05/2017
 * Found a way to decompress PGF files and compress PNG/BMP files. This means it is now possible to edit the graphics of the game. Credits also go to FunG who guided me on how to decompress the PGF files.
